@@ -16,6 +16,7 @@ using NetCoreWithAngular.DataAccess;
 using NetCoreWithAngular.Models;
 using NetCoreWithAngular.ViewModels;
 using NetCoreWithAngular.Services;
+using Microsoft.AspNetCore.SpaServices.Webpack;
 using CoreLibrary;
 using AutoMapper;
 
@@ -54,6 +55,10 @@ namespace NetCoreWithAngular
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                app.UseWebpackDevMiddleware(new WebpackDevMiddlewareOptions
+                {
+                    HotModuleReplacement = true
+                });
             }
             else
             {
@@ -62,6 +67,8 @@ namespace NetCoreWithAngular
 
             app.UseHttpsRedirection();
             app.UseMvc();
+            app.UseDefaultFiles();
+            app.UseStaticFiles();
         }
     }
 }
