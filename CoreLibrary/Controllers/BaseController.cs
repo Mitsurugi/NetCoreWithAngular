@@ -23,7 +23,7 @@ namespace CoreLibrary
         [HttpGet]
         public virtual async Task<IActionResult> Index()
         {
-            ViewData["PageCount"] = await _service.GetTotalPages(_pageSize);
+            ViewData["PageCount"] = await _service.GetPagesCount(_pageSize);
             return View();
         }
 

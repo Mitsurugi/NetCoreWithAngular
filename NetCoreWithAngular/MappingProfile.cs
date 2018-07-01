@@ -9,6 +9,7 @@ namespace NetCoreWithAngular
         public MappingProfile()
         {
             CreateMap<Book, BookViewModel>().ReverseMap();
+            CreateMap<Anime, AnimeViewModel>().ReverseMap();
         }
     }
 }

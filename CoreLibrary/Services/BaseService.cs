@@ -92,7 +92,7 @@ namespace CoreLibrary
             return await _repository.GetQuery().Skip(pageSize * (pageNumber - 1)).Take(pageSize).ProjectTo<TEntityGrid>().ToListAsync();
         }
 
-        public virtual async Task<int> GetTotalPages(int pageSize)
+        public virtual async Task<int> GetPagesCount(int pageSize)
         {
             var count = await _repository.GetQuery().CountAsync();
 

@@ -180,6 +180,22 @@ namespace NetCoreWithAngular.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
+            modelBuilder.Entity("NetCoreWithAngular.Models.Anime", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("SeasonCount");
+
+                    b.Property<string>("Title")
+                        .IsRequired();
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Animes");
+                });
+
             modelBuilder.Entity("NetCoreWithAngular.Models.Book", b =>
                 {
                     b.Property<int>("Id")

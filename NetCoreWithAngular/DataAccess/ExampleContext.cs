@@ -14,6 +14,8 @@ namespace NetCoreWithAngular.DataAccess
 
         public DbSet<Book> Books { get; set; }
 
+        public DbSet<Anime> Animes { get; set; }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);

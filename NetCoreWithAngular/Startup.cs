@@ -46,7 +46,7 @@ namespace NetCoreWithAngular
             services.AddScoped(typeof(IBaseService<,,,,>), typeof(BaseService<,,,,>));
 
             services.AddScoped<IBaseService<Book, int, BookViewModel, BookViewModel, BookViewModel>, BookService>();
-            services.AddScoped<IBookService, BookService>();
+            services.AddScoped<IBaseService<Anime, int, AnimeViewModel, AnimeViewModel, AnimeViewModel>, AnimeService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -65,10 +65,10 @@ namespace NetCoreWithAngular
                 app.UseHsts();
             }
 
-            app.UseHttpsRedirection();
-            app.UseMvc();
+            app.UseHttpsRedirection();            
             app.UseDefaultFiles();
             app.UseStaticFiles();
+            app.UseMvc(routes => routes.MapSpaFallbackRoute("angular-fallback", new { controller = "Home", action = "Index" }));
         }
     }
 }

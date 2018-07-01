@@ -18,7 +18,7 @@ namespace CoreLibrary
         Task<TEntityEdit> Edit(TKey id);
         Task Delete(TKey id);
         Task Delete(TKey[] ids);
-        Task<int> GetTotalPages(int pageSize);
+        Task<int> GetPagesCount(int pageSize);
         Task<List<TEntityGrid>> GetGrid(int pageSize, int pageNumber);
     }
 }

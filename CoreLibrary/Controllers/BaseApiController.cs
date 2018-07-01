@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CoreLibrary
 {
+    [Route("api/[controller]/[action]")]
     public class BaseApiController<TEntity, TKey, TEntityCreate, TEntityEdit, TEntityGrid> : Controller
         where TEntity : class, IEntity<TKey>, new()
         where TEntityCreate : class, IEntity<TKey>, new()
@@ -19,7 +20,14 @@ namespace CoreLibrary
         {
             _service = service;
             _pageSize = 10;
-        }        
+        }
+
+        [HttpGet]
+        public virtual async Task<int> GetPagesCount(int? pageSize = null)
+        {
+            if (!pageSize.HasValue) pageSize = _pageSize;
+            return await _service.GetPagesCount(pageSize.Value);
+        }
 
         [HttpGet]
         public virtual async Task<List<TEntityGrid>> Grid(int pageNumber, int? pageSize = null)
@@ -54,9 +62,9 @@ namespace CoreLibrary
         }
 
         [HttpGet]
-        public virtual async Task<IActionResult> Edit(TKey id)
+        public virtual async Task<TEntityEdit> Edit(TKey id)
         {
-            return View(await _service.Edit(id));
+            return await _service.Edit(id);
         }
 
         [HttpPost]
@@ -80,7 +88,7 @@ namespace CoreLibrary
             }
         }
 
-        [HttpGet]
+        [HttpDelete]
         public virtual async Task<IActionResult> Delete(TKey id)
         {
             try
@@ -94,7 +102,7 @@ namespace CoreLibrary
             }
         }
 
-        [HttpGet]
+        [HttpDelete]
         public virtual async Task<IActionResult> DeleteMany(TKey[] ids)
         {
             try

@@ -8,7 +8,7 @@ using System.Linq;
 
 namespace NetCoreWithAngular.Services
 {
-    public class BookService : BaseService<Book, int, BookViewModel, BookViewModel, BookViewModel>, IBookService
+    public class BookService : BaseService<Book, int, BookViewModel, BookViewModel, BookViewModel>
     {
         public BookService(IRepository<Book, int> repository, IMapper mapper) : base(repository, mapper)
         {            

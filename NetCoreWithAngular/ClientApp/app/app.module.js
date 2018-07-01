@@ -7,14 +7,22 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
+import { RouterModule } from '@angular/router';
 import { AppComponent } from './app.component';
+import { BookComponent } from '../Components/Book/book.component';
+import { AnimeComponent } from '../Components/Anime/anime.component';
+var appRoutes = [
+    { path: 'anime', component: AnimeComponent },
+    { path: 'book', component: BookComponent }
+];
 var AppModule = /** @class */ (function () {
     function AppModule() {
     }
     AppModule = __decorate([
         NgModule({
-            imports: [BrowserModule, FormsModule],
-            declarations: [AppComponent],
+            imports: [BrowserModule, FormsModule, HttpClientModule, RouterModule.forRoot(appRoutes)],
+            declarations: [AppComponent, AnimeComponent, BookComponent],
             bootstrap: [AppComponent]
         })
     ], AppModule);
