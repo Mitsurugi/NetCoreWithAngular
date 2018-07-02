@@ -13,7 +13,8 @@ export class CoreComponent<TGrid, TEdit, TCreate> implements OnInit {
     itemCreate: TCreate;
     currentPage: number = 1;
     pageSize: number = 5;
-    pageCount: number = 1;    
+    pageCount: number = 1;
+    error: string = null;
 
     constructor(service: CoreService<TGrid, TEdit, TCreate>, typeGrid: (new () => TGrid), typeEdit: (new () => TEdit), typeCreate: (new () => TCreate))
     {
@@ -23,8 +24,9 @@ export class CoreComponent<TGrid, TEdit, TCreate> implements OnInit {
         this.itemCreate = new typeCreate();
     }
     refreshPage() {
-        this._service.getPagesCount(this.pageSize).subscribe((data: number) => this.pageCount = data);
-        this._service.getGrid(this.currentPage, this.pageSize).subscribe((data: TGrid[]) => this.items = data);
+        this.error = null;
+        this._service.getPagesCount(this.pageSize).subscribe((data: number) => this.pageCount = data, (e) => { this.error = JSON.stringify(e.error); });
+        this._service.getGrid(this.currentPage, this.pageSize).subscribe((data: TGrid[]) => this.items = data, (e) => { this.error = JSON.stringify(e.error); });
     }
 
     ngOnInit() {
@@ -46,22 +48,27 @@ export class CoreComponent<TGrid, TEdit, TCreate> implements OnInit {
     }
 
     getCreate() {
-        this._service.getCreate().subscribe((data: TCreate) => this.itemCreate = data);
+        this.error = null;
+        this._service.getCreate().subscribe((data: TCreate) => this.itemCreate = data, (e) => { this.error = JSON.stringify(e.error); });
     }
 
     getEdit(id: number) {
-        this._service.getEdit(id).subscribe((data: TEdit) => this.itemEdit = data);
+        this.error = null;
+        this._service.getEdit(id).subscribe((data: TEdit) => this.itemEdit = data, (e) => { this.error = JSON.stringify(e.error); });
     }
 
     delete(id: number) {
-        this._service.delete(id).subscribe((data) => { this.refreshPage(); });        
+        this.error = null;
+        this._service.delete(id).subscribe((data) => { this.refreshPage(); }, (e) => { this.error = JSON.stringify(e.error); });        
     }
 
     postCreate() {
-        this._service.postCreate(this.itemCreate).subscribe((data: TCreate) => { this.getCreate(); this.refreshPage(); });
+        this.error = null;
+        this._service.postCreate(this.itemCreate).subscribe((data: TCreate) => { this.getCreate(); this.refreshPage(); }, (e) => { this.error = JSON.stringify(e.error); });
     }
 
     postEdit() {
-        this._service.postEdit(this.itemEdit).subscribe((data: TEdit) => { this.itemEdit = data; this.refreshPage(); });
+        this.error = null;
+        this._service.postEdit(this.itemEdit).subscribe((data: TEdit) => { this.itemEdit = data; this.refreshPage(); }, (e) => { this.error = JSON.stringify(e.error); });
     }
 }

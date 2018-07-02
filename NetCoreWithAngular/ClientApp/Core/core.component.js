@@ -14,6 +14,7 @@ var CoreComponent = /** @class */ (function () {
         this.currentPage = 1;
         this.pageSize = 5;
         this.pageCount = 1;
+        this.error = null;
         this._service = service;
         this.items = new Array();
         this.itemEdit = new typeEdit();
@@ -21,8 +22,9 @@ var CoreComponent = /** @class */ (function () {
     }
     CoreComponent.prototype.refreshPage = function () {
         var _this = this;
-        this._service.getPagesCount(this.pageSize).subscribe(function (data) { return _this.pageCount = data; });
-        this._service.getGrid(this.currentPage, this.pageSize).subscribe(function (data) { return _this.items = data; });
+        this.error = null;
+        this._service.getPagesCount(this.pageSize).subscribe(function (data) { return _this.pageCount = data; }, function (e) { _this.error = JSON.stringify(e.error); });
+        this._service.getGrid(this.currentPage, this.pageSize).subscribe(function (data) { return _this.items = data; }, function (e) { _this.error = JSON.stringify(e.error); });
     };
     CoreComponent.prototype.ngOnInit = function () {
         this.refreshPage();
@@ -41,23 +43,28 @@ var CoreComponent = /** @class */ (function () {
     };
     CoreComponent.prototype.getCreate = function () {
         var _this = this;
-        this._service.getCreate().subscribe(function (data) { return _this.itemCreate = data; });
+        this.error = null;
+        this._service.getCreate().subscribe(function (data) { return _this.itemCreate = data; }, function (e) { _this.error = JSON.stringify(e.error); });
     };
     CoreComponent.prototype.getEdit = function (id) {
         var _this = this;
-        this._service.getEdit(id).subscribe(function (data) { return _this.itemEdit = data; });
+        this.error = null;
+        this._service.getEdit(id).subscribe(function (data) { return _this.itemEdit = data; }, function (e) { _this.error = JSON.stringify(e.error); });
     };
     CoreComponent.prototype.delete = function (id) {
         var _this = this;
-        this._service.delete(id).subscribe(function (data) { _this.refreshPage(); });
+        this.error = null;
+        this._service.delete(id).subscribe(function (data) { _this.refreshPage(); }, function (e) { _this.error = JSON.stringify(e.error); });
     };
     CoreComponent.prototype.postCreate = function () {
         var _this = this;
-        this._service.postCreate(this.itemCreate).subscribe(function (data) { _this.getCreate(); _this.refreshPage(); });
+        this.error = null;
+        this._service.postCreate(this.itemCreate).subscribe(function (data) { _this.getCreate(); _this.refreshPage(); }, function (e) { _this.error = JSON.stringify(e.error); });
     };
     CoreComponent.prototype.postEdit = function () {
         var _this = this;
-        this._service.postEdit(this.itemEdit).subscribe(function (data) { _this.itemEdit = data; _this.refreshPage(); });
+        this.error = null;
+        this._service.postEdit(this.itemEdit).subscribe(function (data) { _this.itemEdit = data; _this.refreshPage(); }, function (e) { _this.error = JSON.stringify(e.error); });
     };
     CoreComponent = __decorate([
         Component({}),

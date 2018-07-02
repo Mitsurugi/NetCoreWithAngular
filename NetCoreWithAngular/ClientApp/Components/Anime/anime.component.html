@@ -1,4 +1,7 @@
-﻿<div>
+﻿<div *ngIf="error" class="form-group">
+    Error: {{error}}
+</div>
+<div>
     <h2>Grid</h2>
     <table>
         <tr>
