@@ -32,8 +32,9 @@
 
 <div>
     <h2>Pagination</h2>
-    <input [(ngModel)]="currentPage" placeholder="Page number" />
-    <button (click)="refreshPage()">Change page</button>
+    <button (click)="prevPage()">Previous</button>
+    <label> Page {{currentPage}} of {{pageCount}} </label>
+    <button (click)="nextPage()">Next</button>
 </div>
 <div>
     <h2>Create new</h2>

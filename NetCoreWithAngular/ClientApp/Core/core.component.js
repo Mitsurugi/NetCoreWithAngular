@@ -27,6 +27,18 @@ var CoreComponent = /** @class */ (function () {
     CoreComponent.prototype.ngOnInit = function () {
         this.refreshPage();
     };
+    CoreComponent.prototype.nextPage = function () {
+        if (this.currentPage < this.pageCount) {
+            this.currentPage++;
+            this.refreshPage();
+        }
+    };
+    CoreComponent.prototype.prevPage = function () {
+        if (this.currentPage > 1) {
+            this.currentPage--;
+            this.refreshPage();
+        }
+    };
     CoreComponent.prototype.getCreate = function () {
         var _this = this;
         this._service.getCreate().subscribe(function (data) { return _this.itemCreate = data; });

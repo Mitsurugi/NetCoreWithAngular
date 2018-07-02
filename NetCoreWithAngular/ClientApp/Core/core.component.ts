@@ -31,6 +31,20 @@ export class CoreComponent<TGrid, TEdit, TCreate> implements OnInit {
         this.refreshPage();
     }
 
+    nextPage() {
+        if (this.currentPage < this.pageCount) {
+            this.currentPage++;
+            this.refreshPage();
+        }
+    }
+
+    prevPage() {
+        if (this.currentPage > 1) {
+            this.currentPage--;
+            this.refreshPage();
+        }
+    }
+
     getCreate() {
         this._service.getCreate().subscribe((data: TCreate) => this.itemCreate = data);
     }
