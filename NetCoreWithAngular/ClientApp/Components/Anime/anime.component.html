@@ -2,7 +2,7 @@
 <div *ngIf="error" class="form-group">
     <span class="error">Error: {{error}}</span>
 </div>
-<div class="grid">    
+<div class="grid">
     <div class="pagination">
         <button class="btn btn-default" (click)="prevPage()">Previous</button>
         <span>Page {{currentPage}} of {{pageCount}}</span>
@@ -15,23 +15,30 @@
                 <th>Title</th>
                 <th>Season count</th>
                 <th></th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let i of items;">
-                <td>
-                    {{i.id}}
-                </td>
-                <td>
-                    {{i.title}}
-                </td>
-                <td>
-                    {{i.seasonCount}}
-                </td>
-                <td>
-                    <button class="btn btn-default" (click)="delete(i.id)">Удалить</button>
-                </td>
-            </tr>
+            <ng-template ngFor let-i [ngForOf]="items" let-n="index">
+                <tr>
+                    <td>
+                        {{i.id}}
+                    </td>
+                    <td>
+                        {{i.title}}
+                    </td>
+                    <td>
+                        {{i.seasonCount}}
+                    </td>
+                    <td>
+                        <button class="btn btn-default" (click)="toggleEdit(n, i.id)">Edit</button>
+                    </td>
+                    <td>
+                        <button class="btn btn-default" (click)="delete(i.id)">Delete</button>
+                    </td>
+                </tr>
+                <tr *ngIf="isShowEdit[n]; then edit"></tr>
+            </ng-template>
         </tbody>
     </table>
 </div>
@@ -41,20 +48,42 @@
     <div *ngIf="isShowCreate; then create"></div>
 </div>
 
+<ng-template #edit>
+    <tr>
+        <td colspan="5">
+            <div class="edit-div">
+                <form>
+                    <div class="form-group col-sm-3">
+                        <label>Title</label>
+                        <input class="form-control" name="title" [(ngModel)]="itemEdit.title"/>
+                    </div>
+                    <div class="form-group col-sm-3">
+                        <label>Season count</label>
+                        <input class="form-control" name="seasonCount" [(ngModel)]="itemEdit.seasonCount"/>
+                    </div>
+                    <div class="form-group col-sm-10">
+                        <button class="btn btn-default" (click)="postEdit()">Submit</button>
+                    </div>
+                </form>
+            </div>
+        </td>
+    </tr>
+</ng-template>
+
 <ng-template #create>
     <div>
         <form>
-            <div class="form-group">
+            <div class="form-group col-sm-3">
                 <label>Title</label>
                 <input class="form-control" name="title" [(ngModel)]="itemCreate.title" />
             </div>
-            <div class="form-group">
+            <div class="form-group col-sm-3">
                 <label>Season count</label>
                 <input class="form-control" name="seasonCount" [(ngModel)]="itemCreate.seasonCount" />
             </div>
-            <div class="form-group">
+            <div class="form-group col-sm-10">
                 <button class="btn btn-default" (click)="postCreate()">Submit</button>
             </div>
         </form>
-    </div>    
+    </div>
 </ng-template>

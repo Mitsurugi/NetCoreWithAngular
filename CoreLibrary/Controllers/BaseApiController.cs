@@ -68,7 +68,6 @@ namespace CoreLibrary
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public virtual async Task<IActionResult> Edit(TEntityEdit edit)
         {
 

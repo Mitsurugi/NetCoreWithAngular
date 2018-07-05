@@ -16,6 +16,7 @@ var CoreComponent = /** @class */ (function () {
         this.pageCount = 1;
         this.error = null;
         this.isShowCreate = false;
+        this.isShowEdit = new Array();
         this._service = service;
         this.items = new Array();
         this.itemEdit = new typeEdit();
@@ -26,8 +27,17 @@ var CoreComponent = /** @class */ (function () {
             this.isShowCreate = false;
         }
         else {
-            this.isShowCreate = true;
             this.getCreate();
+            this.isShowCreate = true;
+        }
+    };
+    CoreComponent.prototype.toggleEdit = function (index, id) {
+        if (this.isShowEdit[index]) {
+            this.isShowEdit[index] = false;
+        }
+        else {
+            this.getEdit(id);
+            this.isShowEdit[index] = true;
         }
     };
     CoreComponent.prototype.refreshPage = function () {
@@ -35,6 +45,10 @@ var CoreComponent = /** @class */ (function () {
         this.error = null;
         this._service.getPagesCount(this.pageSize).subscribe(function (data) { return _this.pageCount = data; }, function (e) { _this.error = JSON.stringify(e.error); });
         this._service.getGrid(this.currentPage, this.pageSize).subscribe(function (data) { return _this.items = data; }, function (e) { _this.error = JSON.stringify(e.error); });
+        this.isShowEdit = new Array();
+        for (var i = 0; i < this.items.length; i++) {
+            this.isShowEdit.push(false);
+        }
     };
     CoreComponent.prototype.ngOnInit = function () {
         this.refreshPage();

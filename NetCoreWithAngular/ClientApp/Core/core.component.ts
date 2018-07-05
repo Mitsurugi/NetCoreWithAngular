@@ -16,6 +16,7 @@ export class CoreComponent<TGrid, TEdit, TCreate> implements OnInit {
     pageCount: number = 1;
     error: string = null;
     isShowCreate = false;
+    isShowEdit: boolean[] = new Array<boolean>();
 
     constructor(service: CoreService<TGrid, TEdit, TCreate>, typeGrid: (new () => TGrid), typeEdit: (new () => TEdit), typeCreate: (new () => TCreate))
     {
@@ -30,8 +31,18 @@ export class CoreComponent<TGrid, TEdit, TCreate> implements OnInit {
             this.isShowCreate = false;
         }
         else {
-            this.isShowCreate = true;
             this.getCreate();
+            this.isShowCreate = true;            
+        }
+    }
+
+    toggleEdit(index: number, id: number) {
+        if (this.isShowEdit[index]) {
+            this.isShowEdit[index] = false;
+        }
+        else {
+            this.getEdit(id);
+            this.isShowEdit[index] = true;
         }
     }
 
@@ -39,6 +50,10 @@ export class CoreComponent<TGrid, TEdit, TCreate> implements OnInit {
         this.error = null;
         this._service.getPagesCount(this.pageSize).subscribe((data: number) => this.pageCount = data, (e) => { this.error = JSON.stringify(e.error); });
         this._service.getGrid(this.currentPage, this.pageSize).subscribe((data: TGrid[]) => this.items = data, (e) => { this.error = JSON.stringify(e.error); });
+        this.isShowEdit = new Array<boolean>();
+        for (let i = 0; i < this.items.length; i++) {
+            this.isShowEdit.push(false);
+        }
     }
 
     ngOnInit() {

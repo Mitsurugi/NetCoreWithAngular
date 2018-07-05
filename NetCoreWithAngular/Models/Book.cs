@@ -8,9 +8,8 @@ namespace NetCoreWithAngular.Models
         [Required]
         public int Id { get; set; }
 
-        [Required]
         public string Title { get; set; }
 
-        public int SeasonCount { get; set; }
+        public int? SeasonCount { get; set; }
     }
 }
