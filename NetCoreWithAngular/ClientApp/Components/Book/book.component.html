@@ -1,8 +1,13 @@
-﻿<div *ngIf="error" class="form-group">
+﻿<h2>Books</h2>
+<div *ngIf="error" class="form-group">
     <span class="error">Error: {{error}}</span>
 </div>
-<div class="grid">
-    <h2>Books</h2>
+<div class="grid">    
+    <div class="pagination">
+        <button class="btn btn-default" (click)="prevPage()">Previous</button>
+        <span>Page {{currentPage}} of {{pageCount}}</span>
+        <button class="btn btn-default" (click)="nextPage()">Next</button>
+    </div>
     <table class="table">
         <thead>
             <tr>
@@ -33,11 +38,6 @@
             </tr>
         </tbody>
     </table>
-    <div class="pagination">
-        <button class="btn btn-default" (click)="prevPage()">Previous</button>
-        <span>Page {{currentPage}} of {{pageCount}}</span>
-        <button class="btn btn-default" (click)="nextPage()">Next</button>
-    </div>
 </div>
 
 <div class="create-new">
@@ -46,21 +46,23 @@
 </div>
 
 <ng-template #create>
-    <form>
-        <div class="form-group">
-            <label>Title</label>
-            <input class="form-control" name="title" [(ngModel)]="itemCreate.title" />
-        </div>
-        <div class="form-group">
-            <label>Author</label>
-            <input class="form-control" name="author" [(ngModel)]="itemCreate.author" />
-        </div>
-        <div class="form-group">
-            <label>Page count</label>
-            <input class="form-control" name="pageCount" [(ngModel)]="itemCreate.pageCount" />
-        </div>
-        <div class="form-group">
-            <button class="btn btn-default" (click)="postCreate()">Submit</button>
-        </div>
-    </form>
+    <div>
+        <form>
+            <div class="form-group">
+                <label>Title</label>
+                <input class="form-control" name="title" [(ngModel)]="itemCreate.title" />
+            </div>
+            <div class="form-group">
+                <label>Author</label>
+                <input class="form-control" name="author" [(ngModel)]="itemCreate.author" />
+            </div>
+            <div class="form-group">
+                <label>Page count</label>
+                <input class="form-control" name="pageCount" [(ngModel)]="itemCreate.pageCount" />
+            </div>
+            <div class="form-group">
+                <button class="btn btn-default" (click)="postCreate()">Submit</button>
+            </div>
+        </form>
+    </div>    
 </ng-template> 

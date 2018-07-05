@@ -14,7 +14,7 @@ import { MenuComponent } from '../Components/Menu/menu.component';
 import { BookComponent } from '../Components/Book/book.component';
 import { AnimeComponent } from '../Components/Anime/anime.component';
 var appRoutes = [
-    { path: '', component: BookComponent },
+    { path: '', component: AnimeComponent },
     { path: 'anime', component: AnimeComponent },
     { path: 'book', component: BookComponent }
 ];

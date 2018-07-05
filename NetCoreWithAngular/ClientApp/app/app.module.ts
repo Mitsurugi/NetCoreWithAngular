@@ -10,7 +10,7 @@ import { BookComponent } from '../Components/Book/book.component'
 import { AnimeComponent } from '../Components/Anime/anime.component'
 
 const appRoutes: Routes = [
-    { path: '', component: BookComponent },
+    { path: '', component: AnimeComponent },
     { path: 'anime', component: AnimeComponent },
     { path: 'book', component: BookComponent }
 ];

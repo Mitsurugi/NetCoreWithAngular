@@ -1,8 +1,13 @@
-﻿<div *ngIf="error" class="form-group">
+﻿<h2>Anime</h2>
+<div *ngIf="error" class="form-group">
     <span class="error">Error: {{error}}</span>
 </div>
-<div class="grid">
-    <h2>Anime</h2>
+<div class="grid">    
+    <div class="pagination">
+        <button class="btn btn-default" (click)="prevPage()">Previous</button>
+        <span>Page {{currentPage}} of {{pageCount}}</span>
+        <button class="btn btn-default" (click)="nextPage()">Next</button>
+    </div>
     <table class="table">
         <thead>
             <tr>
@@ -29,11 +34,6 @@
             </tr>
         </tbody>
     </table>
-    <div class="pagination">
-        <button class="btn btn-default" (click)="prevPage()">Previous</button>
-        <span>Page {{currentPage}} of {{pageCount}}</span>
-        <button class="btn btn-default" (click)="nextPage()">Next</button>
-    </div>
 </div>
 
 <div class="create-new">
@@ -42,17 +42,19 @@
 </div>
 
 <ng-template #create>
-    <form>
-        <div class="form-group">
-            <label>Title</label>
-            <input class="form-control" [(ngModel)]="itemCreate.title" />
-        </div>
-        <div class="form-group">
-            <label>Season count</label>
-            <input class="form-control" [(ngModel)]="itemCreate.seasonCount" />
-        </div>
-        <div class="form-group">
-            <button class="btn btn-default" (click)="postCreate()">Submit</button>
-        </div>
-    </form>
+    <div>
+        <form>
+            <div class="form-group">
+                <label>Title</label>
+                <input class="form-control" name="title" [(ngModel)]="itemCreate.title" />
+            </div>
+            <div class="form-group">
+                <label>Season count</label>
+                <input class="form-control" name="seasonCount" [(ngModel)]="itemCreate.seasonCount" />
+            </div>
+            <div class="form-group">
+                <button class="btn btn-default" (click)="postCreate()">Submit</button>
+            </div>
+        </form>
+    </div>    
 </ng-template>
