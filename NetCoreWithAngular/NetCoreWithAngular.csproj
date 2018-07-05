@@ -11,6 +11,7 @@
     <None Remove="ClientApp\app\app.module.ts" />
     <None Remove="ClientApp\app\main.ts" />
     <None Remove="ClientApp\Components\Book\book.component.ts" />
+    <None Remove="ClientApp\Components\Menu\menu.component.ts" />
     <None Remove="ClientApp\Core\core.component.ts" />
     <None Remove="ClientApp\Core\core.service.ts" />
     <None Remove="ClientApp\Models\Anime.ts" />
@@ -37,6 +38,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <TypeScriptCompile Include="ClientApp\Components\Menu\menu.component.ts" />
     <TypeScriptCompile Include="ClientApp\Components\Anime\anime.component.ts" />
     <TypeScriptCompile Include="ClientApp\app\app.component.ts" />
     <TypeScriptCompile Include="ClientApp\app\app.module.ts" />
@@ -52,6 +54,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="ClientApp\Components\Menu\menu.component.js">
+      <DependentUpon>menu.component.ts</DependentUpon>
+    </None>
     <None Update="ClientApp\Components\Anime\anime.component.js">
       <DependentUpon>anime.component.ts</DependentUpon>
     </None>

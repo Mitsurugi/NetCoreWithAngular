@@ -1,55 +1,58 @@
 ﻿<div *ngIf="error" class="form-group">
-    Error: {{error}}
+    <span class="error">Error: {{error}}</span>
 </div>
-<div>
-    <h2>Grid</h2>
-    <table>
-        <tr>
-            <td>
-                Id
-            </td>
-            <td>
-                Title
-            </td>
-            <td>
-                Season count
-            </td>
-            <td></td>
-        </tr>
-        <tr *ngFor="let i of items;">
-            <td>
-                {{i.id}}
-            </td>
-            <td>
-                {{i.title}}
-            </td>
-            <td>
-                {{i.seasonCount}}
-            </td>
-            <td>
-                <button class="btn btn-default" (click)="delete(i.id)">Удалить</button>
-            </td>
-        </tr>
+<div class="grid">
+    <h2>Anime</h2>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Title</th>
+                <th>Season count</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let i of items;">
+                <td>
+                    {{i.id}}
+                </td>
+                <td>
+                    {{i.title}}
+                </td>
+                <td>
+                    {{i.seasonCount}}
+                </td>
+                <td>
+                    <button class="btn btn-default" (click)="delete(i.id)">Удалить</button>
+                </td>
+            </tr>
+        </tbody>
     </table>
+    <div class="pagination">
+        <button class="btn btn-default" (click)="prevPage()">Previous</button>
+        <span>Page {{currentPage}} of {{pageCount}}</span>
+        <button class="btn btn-default" (click)="nextPage()">Next</button>
+    </div>
 </div>
 
-<div>
-    <h2>Pagination</h2>
-    <button (click)="prevPage()">Previous</button>
-    <label> Page {{currentPage}} of {{pageCount}} </label>
-    <button (click)="nextPage()">Next</button>
+<div class="create-new">
+    <button class="btn btn-default" (click)="toggleCreate()">Create new</button>
+    <div *ngIf="isShowCreate; then create"></div>
 </div>
-<div>
-    <h2>Create new</h2>
-    <div class="form-group">
-        <label>Title</label>
-        <input class="form-control" [(ngModel)]="itemCreate.title" />
-    </div>
-    <div class="form-group">
-        <label>Season count</label>
-        <input class="form-control" [(ngModel)]="itemCreate.seasonCount" />
-    </div>
-    <div class="form-group">
-        <button class="btn btn-default" (click)="postCreate()">Отправить</button>
-    </div>
-</div>
+
+<ng-template #create>
+    <form>
+        <div class="form-group">
+            <label>Title</label>
+            <input class="form-control" [(ngModel)]="itemCreate.title" />
+        </div>
+        <div class="form-group">
+            <label>Season count</label>
+            <input class="form-control" [(ngModel)]="itemCreate.seasonCount" />
+        </div>
+        <div class="form-group">
+            <button class="btn btn-default" (click)="postCreate()">Submit</button>
+        </div>
+    </form>
+</ng-template>

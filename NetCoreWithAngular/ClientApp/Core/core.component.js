@@ -15,11 +15,21 @@ var CoreComponent = /** @class */ (function () {
         this.pageSize = 5;
         this.pageCount = 1;
         this.error = null;
+        this.isShowCreate = false;
         this._service = service;
         this.items = new Array();
         this.itemEdit = new typeEdit();
         this.itemCreate = new typeCreate();
     }
+    CoreComponent.prototype.toggleCreate = function () {
+        if (this.isShowCreate) {
+            this.isShowCreate = false;
+        }
+        else {
+            this.isShowCreate = true;
+            this.getCreate();
+        }
+    };
     CoreComponent.prototype.refreshPage = function () {
         var _this = this;
         this.error = null;
@@ -59,7 +69,7 @@ var CoreComponent = /** @class */ (function () {
     CoreComponent.prototype.postCreate = function () {
         var _this = this;
         this.error = null;
-        this._service.postCreate(this.itemCreate).subscribe(function (data) { _this.getCreate(); _this.refreshPage(); }, function (e) { _this.error = JSON.stringify(e.error); });
+        this._service.postCreate(this.itemCreate).subscribe(function (data) { _this.getCreate(); _this.isShowCreate = false; _this.refreshPage(); }, function (e) { _this.error = JSON.stringify(e.error); });
     };
     CoreComponent.prototype.postEdit = function () {
         var _this = this;

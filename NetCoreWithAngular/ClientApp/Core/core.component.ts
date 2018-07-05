@@ -15,6 +15,7 @@ export class CoreComponent<TGrid, TEdit, TCreate> implements OnInit {
     pageSize: number = 5;
     pageCount: number = 1;
     error: string = null;
+    isShowCreate = false;
 
     constructor(service: CoreService<TGrid, TEdit, TCreate>, typeGrid: (new () => TGrid), typeEdit: (new () => TEdit), typeCreate: (new () => TCreate))
     {
@@ -23,6 +24,17 @@ export class CoreComponent<TGrid, TEdit, TCreate> implements OnInit {
         this.itemEdit = new typeEdit();
         this.itemCreate = new typeCreate();
     }
+
+    toggleCreate() {
+        if (this.isShowCreate) {
+            this.isShowCreate = false;
+        }
+        else {
+            this.isShowCreate = true;
+            this.getCreate();
+        }
+    }
+
     refreshPage() {
         this.error = null;
         this._service.getPagesCount(this.pageSize).subscribe((data: number) => this.pageCount = data, (e) => { this.error = JSON.stringify(e.error); });
@@ -64,7 +76,7 @@ export class CoreComponent<TGrid, TEdit, TCreate> implements OnInit {
 
     postCreate() {
         this.error = null;
-        this._service.postCreate(this.itemCreate).subscribe((data: TCreate) => { this.getCreate(); this.refreshPage(); }, (e) => { this.error = JSON.stringify(e.error); });
+        this._service.postCreate(this.itemCreate).subscribe((data: TCreate) => { this.getCreate(); this.isShowCreate = false; this.refreshPage(); }, (e) => { this.error = JSON.stringify(e.error); });
     }
 
     postEdit() {
