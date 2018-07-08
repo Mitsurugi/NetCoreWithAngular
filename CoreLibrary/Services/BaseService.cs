@@ -31,7 +31,7 @@ namespace CoreLibrary
 
         public virtual async Task<TEntity> Get(TKey id)
         {
-            return await _repository.Single(id);
+            return await GetQuery().SingleAsync(i => i.Id.Equals(id));
         }
 
         public virtual async Task<TEntityCreate> Create(TEntityCreate createView)
@@ -89,12 +89,12 @@ namespace CoreLibrary
             if (pageSize < 1)
                 throw new Exception($"Wrong pageSize = {pageSize}. Must be 1 or greater");
 
-            return await _repository.GetQuery().Skip(pageSize * (pageNumber - 1)).Take(pageSize).ProjectTo<TEntityGrid>().ToListAsync();
+            return await GetQuery().Skip(pageSize * (pageNumber - 1)).Take(pageSize).ProjectTo<TEntityGrid>().ToListAsync();
         }
 
         public virtual async Task<int> GetPagesCount(int pageSize)
         {
-            var count = await _repository.GetQuery().CountAsync();
+            var count = await GetQuery().CountAsync();
 
             int pages = (int)Math.Floor((double)count / pageSize);
 

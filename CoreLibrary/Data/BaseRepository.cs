@@ -26,26 +26,6 @@ namespace CoreLibrary
             return DbSet.AsQueryable();
         }
 
-        public virtual async Task<TEntity> Single(TKey key)
-        {
-            return await GetQuery().SingleAsync(ExpPrimaryKeyEquals(key));
-        }
-
-        public virtual async Task<TEntity> SingleOrDefault(TKey key)
-        {
-            return await GetQuery().SingleOrDefaultAsync(ExpPrimaryKeyEquals(key));
-        }
-
-        public virtual async Task<TEntity> First(TKey key)
-        {
-            return await GetQuery().FirstAsync(ExpPrimaryKeyEquals(key));
-        }
-
-        public virtual async Task<TEntity> FirstOrDefault(TKey key)
-        {
-            return await GetQuery().FirstOrDefaultAsync(ExpPrimaryKeyEquals(key));
-        }
-
         public virtual async Task<TEntity> Add(TEntity entity)
         {
             if (entity == null)
@@ -68,7 +48,7 @@ namespace CoreLibrary
             if (entity == null)
                 throw new ArgumentNullException("entity");
 
-            var updateEntity = await GetQuery().SingleAsync(ExpPrimaryKeyEquals(entity));
+            var updateEntity = await GetQuery().SingleAsync(i => i.Id.Equals(entity.Id));
 
             DbContext.Entry(updateEntity).CurrentValues.SetValues(entity);
 
@@ -118,23 +98,6 @@ namespace CoreLibrary
                 if (DbContext != null)
                     DbContext.Dispose();
             }
-        }
-
-        public Expression<Func<TEntity, bool>> ExpPrimaryKeyEquals(TEntity entity)
-        {
-            var keyPropertyInfo = typeof(TEntity).GetProperty(PrimaryKey);
-            var keyValue = (TKey)keyPropertyInfo.GetValue(entity, null);
-
-            return ExpPrimaryKeyEquals(keyValue);
-        }
-
-        public Expression<Func<TEntity, bool>> ExpPrimaryKeyEquals(TKey key)
-        {
-            var parameter = Expression.Parameter(typeof(TEntity));
-
-            var body = Expression.Equal(Expression.Property(parameter, PrimaryKey), Expression.Constant(key));
-
-            return Expression.Lambda<Func<TEntity, bool>>(body, parameter);
         }
     }
 }

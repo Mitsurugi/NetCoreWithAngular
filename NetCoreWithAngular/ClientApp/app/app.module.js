@@ -10,13 +10,22 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { AppComponent } from './app.component';
-import { MenuComponent } from '../Components/Menu/menu.component';
-import { BookComponent } from '../Components/Book/book.component';
-import { AnimeComponent } from '../Components/Anime/anime.component';
-var appRoutes = [
+import { AdminComponent } from './Admin/Components/AdminMain/admin.component';
+import { MenuComponent } from './Admin/Components/Menu/menu.component';
+import { BookComponent } from './Admin/Components/Book/book.component';
+import { AnimeComponent } from './Admin/Components/Anime/anime.component';
+import { FrontComponent } from './Front/Components/Front/front.component';
+var adminRoutes = [
     { path: '', component: AnimeComponent },
     { path: 'anime', component: AnimeComponent },
     { path: 'book', component: BookComponent }
+];
+var frontRoutes = [
+    { path: '', component: FrontComponent }
+];
+var appRoutes = [
+    { path: '', component: FrontComponent, children: frontRoutes },
+    { path: 'admin', component: AdminComponent, children: adminRoutes }
 ];
 var AppModule = /** @class */ (function () {
     function AppModule() {
@@ -24,7 +33,7 @@ var AppModule = /** @class */ (function () {
     AppModule = __decorate([
         NgModule({
             imports: [BrowserModule, FormsModule, HttpClientModule, RouterModule.forRoot(appRoutes)],
-            declarations: [AppComponent, MenuComponent, AnimeComponent, BookComponent],
+            declarations: [AppComponent, AdminComponent, MenuComponent, AnimeComponent, BookComponent, FrontComponent],
             bootstrap: [AppComponent]
         })
     ], AppModule);

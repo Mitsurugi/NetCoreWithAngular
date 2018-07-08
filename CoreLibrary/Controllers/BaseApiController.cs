@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CoreLibrary
 {
+    [ApiController]
     [Route("api/[controller]/[action]")]
     public class BaseApiController<TEntity, TKey, TEntityCreate, TEntityEdit, TEntityGrid> : Controller
         where TEntity : class, IEntity<TKey>, new()

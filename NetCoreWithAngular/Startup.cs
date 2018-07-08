@@ -47,6 +47,8 @@ namespace NetCoreWithAngular
 
             services.AddScoped<IBaseService<Book, int, BookViewModel, BookViewModel, BookViewModel>, BookService>();
             services.AddScoped<IBaseService<Anime, int, AnimeViewModel, AnimeViewModel, AnimeViewModel>, AnimeService>();
+
+            services.AddScoped<IFrontDataService, FrontDataService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

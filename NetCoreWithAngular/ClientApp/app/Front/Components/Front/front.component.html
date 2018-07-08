@@ -1,0 +1,47 @@
+﻿<h2>Anime</h2>
+<div class="grid">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Title</th>
+            </tr>
+        </thead>
+        <tbody>
+            <ng-template ngFor let-i [ngForOf]="anime" let-n="index">
+                <tr>
+                    <td>
+                        {{i.id}}
+                    </td>
+                    <td>
+                        {{i.title}}
+                    </td>
+                </tr>
+            </ng-template>
+        </tbody>
+    </table>
+</div>
+
+<h2>Books</h2>
+<div class="grid">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Title</th>
+            </tr>
+        </thead>
+        <tbody>
+            <ng-template ngFor let-i [ngForOf]="books" let-n="index">
+                <tr>
+                    <td>
+                        {{i.id}}
+                    </td>
+                    <td>
+                        {{i.title}}
+                    </td>
+                </tr>
+            </ng-template>
+        </tbody>
+    </table>
+</div>

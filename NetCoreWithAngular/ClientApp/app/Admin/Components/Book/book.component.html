@@ -1,0 +1,137 @@
+﻿<h2>Books</h2>
+<div *ngIf="error" class="form-group">
+    <span class="error">Error: {{error}}</span>
+</div>
+<div class="grid">
+    <div class="pagination">
+        <button class="btn btn-default" (click)="prevPage()">Previous</button>
+        <span>Page {{currentPage}} of {{pageCount}}</span>
+        <button class="btn btn-default" (click)="nextPage()">Next</button>
+    </div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Title</th>
+                <th>Author</th>
+                <th>Page count</th>
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <ng-template ngFor let-i [ngForOf]="items" let-n="index">
+                <tr>
+                    <td>
+                        {{i.id}}
+                    </td>
+                    <td>
+                        {{i.title}}
+                    </td>
+                    <td>
+                        {{i.author}}
+                    </td>
+                    <td>
+                        {{i.pageCount}}
+                    </td>
+                    <td>
+                        <button class="btn btn-default" (click)="toggleEdit(n, i.id)">Edit</button>
+                    </td>
+                    <td>
+                        <button class="btn btn-default" (click)="delete(i.id)">Delete</button>
+                    </td>
+                </tr>
+                <tr *ngIf="isShowEdit[n]; then edit"></tr>
+            </ng-template>
+        </tbody>
+    </table>
+</div>
+
+<div class="create-new">
+    <button class="btn btn-default" (click)="toggleCreate()">Create new</button>
+    <div *ngIf="isShowCreate; then create"></div>
+</div>
+
+<ng-template #edit>
+    <tr>
+        <td colspan="5">
+            <div class="edit-div">
+                <form #editForm="ngForm">
+                    <div class="form-group col-sm-3">
+                        <label>Title *</label>
+                        <input class="form-control" name="title" [(ngModel)]="itemEdit.title" #title="ngModel" type="text" required />
+                        <div *ngIf="title.touched && title.invalid">
+                            <p *ngIf="title.errors.required" class="validation-text">
+                                Title required
+                            </p>
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-3">
+                        <label>Author *</label>
+                        <input class="form-control" name="author" [(ngModel)]="itemEdit.author" #author="ngModel" type="text" required pattern="^[a-zA-Z\s]*$" />
+                        <div *ngIf="author.touched && author.invalid">
+                            <p *ngIf="author.errors.required" class="validation-text">
+                                Author required
+                            </p>
+                            <p *ngIf="author.errors.pattern" class="validation-text">
+                                Only letters allowed
+                            </p>
+                        </div>                
+                    </div>
+                    <div class="form-group col-sm-3">
+                        <label>Page count *</label>
+                        <input class="form-control" name="pageCount" [(ngModel)]="itemEdit.pageCount" #pageCount="ngModel" type="number" required />
+                        <div *ngIf="pageCount.touched && pageCount.invalid">
+                            <p *ngIf="pageCount.errors.required" class="validation-text">
+                                Page count required
+                            </p>
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-10">
+                        <button class="btn btn-default" (click)="postEdit()" [disabled]="editForm.invalid">Submit</button>
+                    </div>
+                </form>
+            </div>
+        </td>
+    </tr>
+</ng-template>
+
+<ng-template #create>
+    <div>
+        <form #createForm="ngForm">
+            <div class="form-group col-sm-3">
+                <label>Title *</label>
+                <input class="form-control" name="title" [(ngModel)]="itemCreate.title" #title="ngModel" type="text" required />
+                <div *ngIf="title.touched && title.invalid">
+                    <p *ngIf="title.errors.required" class="validation-text">
+                        Title required
+                    </p>
+                </div>
+            </div>
+            <div class="form-group col-sm-3">
+                <label>Author *</label>
+                <input class="form-control" name="author" [(ngModel)]="itemCreate.author" #author="ngModel" type="text" required pattern="^[a-zA-Z\s]*$" />
+                <div *ngIf="author.touched && author.invalid">
+                    <p *ngIf="author.errors.required" class="validation-text">
+                        Author required
+                    </p>
+                    <p *ngIf="author.errors.pattern" class="validation-text">
+                        Only letters allowed
+                    </p>
+                </div>
+            </div>
+            <div class="form-group col-sm-3">
+                <label>Page count *</label>
+                <input class="form-control" name="pageCount" [(ngModel)]="itemCreate.pageCount" #pageCount="ngModel" type="number" required />
+                <div *ngIf="pageCount.touched && pageCount.invalid">
+                    <p *ngIf="pageCount.errors.required" class="validation-text">
+                        Page count required
+                    </p>
+                </div>
+            </div>
+            <div class="form-group col-sm-10">
+                <button class="btn btn-default" (click)="postCreate()" [disabled]="createForm.invalid">Submit</button>
+            </div>
+        </form>
+    </div>
+</ng-template>
