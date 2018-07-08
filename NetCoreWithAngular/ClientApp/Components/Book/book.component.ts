@@ -1,4 +1,5 @@
 ﻿import { Component, OnInit } from '@angular/core';
+import { NgForm } from '@angular/forms';
 import { CoreComponent } from '../../Core/core.component';
 import { BookService } from '../../Services/book.service';
 import { Book } from '../../Models/Book';

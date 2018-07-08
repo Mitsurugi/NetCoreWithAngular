@@ -7,3 +7,6 @@
 .create-new div{
     padding: 5px;
 }
+.validation-text {
+    color: red;
+}

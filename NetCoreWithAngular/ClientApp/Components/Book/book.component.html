@@ -56,21 +56,39 @@
     <tr>
         <td colspan="5">
             <div class="edit-div">
-                <form>
+                <form #editForm="ngForm">
                     <div class="form-group col-sm-3">
-                        <label>Title</label>
-                        <input class="form-control" name="title" [(ngModel)]="itemEdit.title" required/>
+                        <label>Title *</label>
+                        <input class="form-control" name="title" [(ngModel)]="itemEdit.title" #title="ngModel" type="text" required />
+                        <div *ngIf="title.touched && title.invalid">
+                            <p *ngIf="title.errors.required" class="validation-text">
+                                Title required
+                            </p>
+                        </div>
                     </div>
                     <div class="form-group col-sm-3">
-                        <label>Author</label>
-                        <input class="form-control" name="author" [(ngModel)]="itemEdit.author" required/>
+                        <label>Author *</label>
+                        <input class="form-control" name="author" [(ngModel)]="itemEdit.author" #author="ngModel" type="text" required pattern="^[a-zA-Z\s]*$" />
+                        <div *ngIf="author.touched && author.invalid">
+                            <p *ngIf="author.errors.required" class="validation-text">
+                                Author required
+                            </p>
+                            <p *ngIf="author.errors.pattern" class="validation-text">
+                                Only letters allowed
+                            </p>
+                        </div>                
                     </div>
                     <div class="form-group col-sm-3">
-                        <label>Page count</label>
-                        <input class="form-control" name="pageCount" [(ngModel)]="itemEdit.pageCount" required/>
+                        <label>Page count *</label>
+                        <input class="form-control" name="pageCount" [(ngModel)]="itemEdit.pageCount" #pageCount="ngModel" type="number" required />
+                        <div *ngIf="pageCount.touched && pageCount.invalid">
+                            <p *ngIf="pageCount.errors.required" class="validation-text">
+                                Page count required
+                            </p>
+                        </div>
                     </div>
                     <div class="form-group col-sm-10">
-                        <button class="btn btn-default" (click)="postEdit()">Submit</button>
+                        <button class="btn btn-default" (click)="postEdit()" [disabled]="editForm.invalid">Submit</button>
                     </div>
                 </form>
             </div>
@@ -80,21 +98,39 @@
 
 <ng-template #create>
     <div>
-        <form>
+        <form #createForm="ngForm">
             <div class="form-group col-sm-3">
-                <label>Title</label>
-                <input class="form-control" name="title" [(ngModel)]="itemCreate.title" required/>
+                <label>Title *</label>
+                <input class="form-control" name="title" [(ngModel)]="itemCreate.title" #title="ngModel" type="text" required />
+                <div *ngIf="title.touched && title.invalid">
+                    <p *ngIf="title.errors.required" class="validation-text">
+                        Title required
+                    </p>
+                </div>
             </div>
             <div class="form-group col-sm-3">
-                <label>Author</label>
-                <input class="form-control" name="author" [(ngModel)]="itemCreate.author" required/>
+                <label>Author *</label>
+                <input class="form-control" name="author" [(ngModel)]="itemCreate.author" #author="ngModel" type="text" required pattern="^[a-zA-Z\s]*$" />
+                <div *ngIf="author.touched && author.invalid">
+                    <p *ngIf="author.errors.required" class="validation-text">
+                        Author required
+                    </p>
+                    <p *ngIf="author.errors.pattern" class="validation-text">
+                        Only letters allowed
+                    </p>
+                </div>
             </div>
             <div class="form-group col-sm-3">
-                <label>Page count</label>
-                <input class="form-control" name="pageCount" [(ngModel)]="itemCreate.pageCount" required/>
+                <label>Page count *</label>
+                <input class="form-control" name="pageCount" [(ngModel)]="itemCreate.pageCount" #pageCount="ngModel" type="number" required />
+                <div *ngIf="pageCount.touched && pageCount.invalid">
+                    <p *ngIf="pageCount.errors.required" class="validation-text">
+                        Page count required
+                    </p>
+                </div>
             </div>
             <div class="form-group col-sm-10">
-                <button class="btn btn-default" (click)="postCreate()">Submit</button>
+                <button class="btn btn-default" (click)="postCreate()" [disabled]="createForm.invalid">Submit</button>
             </div>
         </form>
     </div>

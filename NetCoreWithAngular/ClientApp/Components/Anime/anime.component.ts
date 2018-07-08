@@ -1,4 +1,5 @@
 ﻿import { Component, OnInit } from '@angular/core';
+import { NgForm } from '@angular/forms';
 import { CoreComponent } from '../../Core/core.component';
 import { AnimeService } from '../../Services/anime.service';
 import { Anime } from '../../Models/Anime';

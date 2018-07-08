@@ -14,6 +14,11 @@ namespace NetCoreWithAngular.Services
         {            
         }
 
+        public override IQueryable<Anime> GetQuery()
+        {
+            return base.GetQuery().OrderByDescending(i => i.Id);
+        }
+
         public override Task<List<AnimeViewModel>> GetGrid(int pageSize, int pageNumber)
         {
             if (!_repository.GetQuery().Any())
@@ -24,6 +29,7 @@ namespace NetCoreWithAngular.Services
                 }
                 _repository.SaveChanges();
             }
+
             return base.GetGrid(pageSize, pageNumber);
         }
     }
