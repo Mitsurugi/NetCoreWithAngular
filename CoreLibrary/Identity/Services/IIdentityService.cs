@@ -12,10 +12,11 @@ namespace CoreLibrary.Identity
         where TUserManager : UserManager<TIdentityUser>
         where TRoleManager : RoleManager<TIdentityRole>
         where TSignInManager : SignInManager<TIdentityUser>
-    {
+    {        
         Task SignOut();
         Task<SignInResult> SignIn(string userName, string password, bool isPersistent = false, bool lockOnFailure = false);
         Task<bool> VerifyPassword(string userName, string password);
+        Task<string> GetToken(string userName, string password);
 
         IQueryable<TIdentityUser> GetUsersQuery();        
         Task CreateUser(TIdentityUser user, string password);        

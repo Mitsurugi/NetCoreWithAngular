@@ -1,8 +1,12 @@
 ﻿using System;
+using System.Text;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Security.Claims;
 using Microsoft.AspNetCore.Identity;
+using System.IdentityModel.Tokens.Jwt;
+using Microsoft.IdentityModel.Tokens;
 
 namespace CoreLibrary.Identity
 {
@@ -17,11 +21,49 @@ namespace CoreLibrary.Identity
         protected readonly TRoleManager _roleManager;
         protected readonly TSignInManager _signInManager;
 
+        protected string _privateKey = "";
+        protected string _issuer = "";
+        protected string _audience = "";
+        protected TimeSpan _tokenLifeTime = new TimeSpan(1, 0, 0);
+
         public IdentityServiceBase(TUserManager userManager, TRoleManager roleManager, TSignInManager signInManager)
         {
             _userManager = userManager;
             _roleManager = roleManager;
             _signInManager = signInManager;
+        }
+
+        public virtual async Task<string> GetToken(string userName, string password)
+        {
+            var valid = await VerifyPassword(userName, password);
+            if (!valid)
+                throw new Exception("Wrong login or password");
+            var user = await FindUserByName(userName);
+
+            var claims = new List<Claim>();
+            claims.Add(new Claim(ClaimsIdentity.DefaultNameClaimType, user.UserName));
+            var roles = await GetRolesForUser(user.Id);
+            if (roles.Any())
+            {
+                string r = "";
+                foreach(var role in roles)
+                {
+                    r += $"{role}, ";
+                }
+                r = r.Trim(new char[] { ',', ' ' });
+                claims.Add(new Claim(ClaimsIdentity.DefaultRoleClaimType, r));
+            }
+
+
+            var jwt = new JwtSecurityToken(
+                    issuer: _issuer,
+                    audience: _audience,
+                    notBefore: DateTime.Now,
+                    claims: claims,
+                    expires: DateTime.Now.Add(_tokenLifeTime),
+                    signingCredentials: new SigningCredentials(new SymmetricSecurityKey(Encoding.ASCII.GetBytes(_privateKey)), SecurityAlgorithms.HmacSha256));
+
+            return new JwtSecurityTokenHandler().WriteToken(jwt);
         }
 
         public virtual async Task<SignInResult> SignIn(string userName, string password, bool isPersistent = false, bool lockOnFailure = false)
