@@ -6,7 +6,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="ClientApp\app\Admin\Components\Account\account.component.ts" />
     <None Remove="ClientApp\app\Admin\Components\AdminMain\admin.component.ts" />
+    <None Remove="ClientApp\app\Admin\Models\login.ts" />
+    <None Remove="ClientApp\app\Admin\Services\account.service.ts" />
     <None Remove="ClientApp\app\anime.component.ts" />
     <None Remove="ClientApp\app\app.component.ts" />
     <None Remove="ClientApp\app\app.module.ts" />
@@ -16,10 +19,13 @@
     <None Remove="ClientApp\app\main.ts" />
     <None Remove="ClientApp\app\Admin\Components\Book\book.component.ts" />
     <None Remove="ClientApp\app\Admin\Components\Menu\menu.component.ts" />
+    <None Remove="ClientApp\Core\account.component.ts" />
+    <None Remove="ClientApp\Core\account.service.ts" />
     <None Remove="ClientApp\Core\core.component.ts" />
     <None Remove="ClientApp\Core\core.service.ts" />
     <None Remove="ClientApp\app\Admin\Models\Anime.ts" />
     <None Remove="ClientApp\app\Admin\Models\Book.ts" />
+    <None Remove="ClientApp\Core\token.interceptor.ts" />
     <None Remove="ClientApp\polyfills.ts" />
     <None Remove="ClientApp\app\Admin\Services\anime.service.ts" />
     <None Remove="ClientApp\app\Admin\Services\book.service.ts" />
@@ -44,14 +50,20 @@
 
   <ItemGroup>
     <TypeScriptCompile Include="ClientApp\app\Admin\Components\AdminMain\admin.component.ts" />
+    <TypeScriptCompile Include="ClientApp\app\Admin\Components\Account\account.component.ts" />
     <TypeScriptCompile Include="ClientApp\app\Admin\Components\Menu\menu.component.ts" />
     <TypeScriptCompile Include="ClientApp\app\Admin\Components\Anime\anime.component.ts" />
+    <TypeScriptCompile Include="ClientApp\app\Admin\Models\login.ts" />
+    <TypeScriptCompile Include="ClientApp\app\Admin\Services\account.service.ts" />
     <TypeScriptCompile Include="ClientApp\app\app.component.ts" />
     <TypeScriptCompile Include="ClientApp\app\app.module.ts" />
     <TypeScriptCompile Include="ClientApp\app\Admin\Components\Book\book.component.ts" />
     <TypeScriptCompile Include="ClientApp\app\Front\Components\Front\front.component.ts" />
     <TypeScriptCompile Include="ClientApp\app\Front\Models\frontData.ts" />
     <TypeScriptCompile Include="ClientApp\app\Front\Services\frontData.service.ts" />
+    <TypeScriptCompile Include="ClientApp\Core\account.service.ts" />
+    <TypeScriptCompile Include="ClientApp\Core\account.component.ts" />
+    <TypeScriptCompile Include="ClientApp\Core\token.interceptor.ts" />
     <TypeScriptCompile Include="ClientApp\Core\core.component.ts" />
     <TypeScriptCompile Include="ClientApp\Core\core.service.ts" />
     <TypeScriptCompile Include="ClientApp\main.ts" />

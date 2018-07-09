@@ -37,7 +37,7 @@ namespace CoreLibrary.Identity
         {
             var valid = await VerifyPassword(userName, password);
             if (!valid)
-                throw new Exception("Wrong login or password");
+                throw new Exception("Invalid login or password");
             var user = await FindUserByName(userName);
 
             var claims = new List<Claim>();

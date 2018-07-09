@@ -18,24 +18,24 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 import { Component } from '@angular/core';
-import { CoreComponent } from '../../Core/core.component';
-import { AnimeService } from '../../Services/anime.service';
-import { Anime } from '../../Models/Anime';
-var AnimeComponent = /** @class */ (function (_super) {
-    __extends(AnimeComponent, _super);
-    function AnimeComponent(service) {
-        return _super.call(this, service, Anime, Anime, Anime) || this;
+import { CoreAccountComponent } from '../../../../Core/account.component';
+import { AccountService } from '../../Services/account.service';
+import { LoginModel } from '../../Models/login';
+var AccountComponent = /** @class */ (function (_super) {
+    __extends(AccountComponent, _super);
+    function AccountComponent(service) {
+        return _super.call(this, service, LoginModel) || this;
     }
-    AnimeComponent = __decorate([
+    AccountComponent = __decorate([
         Component({
-            selector: 'anime',
-            templateUrl: './anime.component.html',
-            styleUrls: ['./anime.component.css'],
-            providers: [AnimeService]
+            selector: 'account',
+            templateUrl: './account.component.html',
+            styleUrls: ['./account.component.css'],
+            providers: [AccountService]
         }),
-        __metadata("design:paramtypes", [AnimeService])
-    ], AnimeComponent);
-    return AnimeComponent;
-}(CoreComponent));
-export { AnimeComponent };
-//# sourceMappingURL=anime.component.js.map
+        __metadata("design:paramtypes", [AccountService])
+    ], AccountComponent);
+    return AccountComponent;
+}(CoreAccountComponent));
+export { AccountComponent };
+//# sourceMappingURL=account.component.js.map

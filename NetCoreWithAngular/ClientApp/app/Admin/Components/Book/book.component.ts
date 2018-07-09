@@ -20,5 +20,5 @@ export class BookComponent extends CoreComponent<Book, Book, Book> {
     postCreate() {
         this.itemCreate.title = '*' + this.itemCreate.title + '*';
         super.postCreate();
-    }
+    }    
 }

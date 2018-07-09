@@ -1,0 +1,40 @@
+﻿<div *ngIf="isTokenPresent()">
+    <h2>Logged in as {{getUserName()}}</h2>
+    <div class="form-group">
+        <button class="btn btn-default" (click)="deleteToken()">Logout</button>
+    </div>    
+</div>
+<div *ngIf="!isTokenPresent()">
+    <h2>Login</h2>
+    <div *ngIf="error" class="form-group">
+        <span class="error">Error: {{error}}</span>
+    </div>
+    <div>
+        <form #loginForm="ngForm">
+            <div class="form-group">
+                <label>Login *</label>
+                <input class="form-control" name="login" [(ngModel)]="loginData.login" #login="ngModel" type="text" required pattern="^[a-zA-Z0-9]*$" />
+                <div *ngIf="login.touched && login.invalid">
+                    <p *ngIf="login.errors.required" class="validation-text">
+                        Login required
+                    </p>
+                    <p *ngIf="login.errors.pattern" class="validation-text">
+                        Only letters and numbers allowed
+                    </p>
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Password *</label>
+                <input class="form-control" name="password" [(ngModel)]="loginData.password" #password="ngModel" type="password" required />
+                <div *ngIf="password.touched && password.invalid">
+                    <p *ngIf="password.errors.required" class="validation-text">
+                        Password required
+                    </p>
+                </div>
+            </div>
+            <div class="form-group">
+                <button class="btn btn-default" (click)="getToken()" [disabled]="loginForm.invalid">LogIn</button>
+            </div>
+        </form>
+    </div>
+</div>

@@ -17,31 +17,21 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-import { Component } from '@angular/core';
-import { CoreComponent } from '../../Core/core.component';
-import { BookService } from '../../Services/book.service';
-import { Book } from '../../Models/Book';
-var BookComponent = /** @class */ (function (_super) {
-    __extends(BookComponent, _super);
-    function BookComponent(service) {
-        var _this = _super.call(this, service, Book, Book, Book) || this;
-        _this.pageSize = 10;
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { CoreAccountService } from '../../../Core/account.service';
+var AccountService = /** @class */ (function (_super) {
+    __extends(AccountService, _super);
+    function AccountService(http) {
+        var _this = _super.call(this, http) || this;
+        _this._loginPath = '/api/identity/gettoken';
         return _this;
     }
-    BookComponent.prototype.postCreate = function () {
-        this.itemCreate.title = '*' + this.itemCreate.title + '*';
-        _super.prototype.postCreate.call(this);
-    };
-    BookComponent = __decorate([
-        Component({
-            selector: 'book',
-            templateUrl: './book.component.html',
-            styleUrls: ['./book.component.css'],
-            providers: [BookService]
-        }),
-        __metadata("design:paramtypes", [BookService])
-    ], BookComponent);
-    return BookComponent;
-}(CoreComponent));
-export { BookComponent };
-//# sourceMappingURL=book.component.js.map
+    AccountService = __decorate([
+        Injectable(),
+        __metadata("design:paramtypes", [HttpClient])
+    ], AccountService);
+    return AccountService;
+}(CoreAccountService));
+export { AccountService };
+//# sourceMappingURL=account.service.js.map

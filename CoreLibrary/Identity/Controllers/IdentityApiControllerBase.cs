@@ -32,8 +32,8 @@ namespace CoreLibrary.Identity
 
             try
             {
-                string token = await _service.GetToken(model.Login, model.Password);
-                return Ok(token);
+                string t = await _service.GetToken(model.Login, model.Password);
+                return Ok(new { token = t, login = model.Login });
             }
             catch (Exception ex)
             {
