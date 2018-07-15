@@ -19,12 +19,16 @@ var TokenInterceptor = /** @class */ (function () {
         var token = localStorage.getItem("token");
         if (token) {
             var cloned = req.clone({ headers: req.headers.set("Authorization", "Bearer " + token) });
-            return next.handle(cloned).pipe(map(function (response) { return response; }), catchError(function (e, c) { if (e.status === 401)
-                _this.router.navigate(['/admin/account']); throw e; }));
+            return next.handle(cloned).pipe(map(function (response) { return response; }), catchError(function (e, c) { if (e.status === 401) {
+                localStorage.removeItem("token");
+                _this.router.navigate(['/admin/account']);
+            } throw e; }));
         }
         else {
-            return next.handle(req).pipe(map(function (response) { return response; }), catchError(function (e, c) { if (e.status === 401)
-                _this.router.navigate(['/admin/account']); _this.router.navigate(['/admin/account']); throw e; }));
+            return next.handle(req).pipe(map(function (response) { return response; }), catchError(function (e, c) { if (e.status === 401) {
+                localStorage.removeItem("token");
+                _this.router.navigate(['/admin/account']);
+            } throw e; }));
         }
     };
     TokenInterceptor = __decorate([

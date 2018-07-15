@@ -4,9 +4,9 @@ import { tick } from '@angular/core/src/render3';
 
 @Component({
 })
-export class CoreComponent<TGrid, TEdit, TCreate> implements OnInit {
+export class CoreComponent<TGrid, TCreate, TEdit> implements OnInit {
 
-    _service: CoreService<TGrid, TEdit, TCreate>;
+    _service: CoreService<TGrid, TCreate, TEdit>;
 
     items: TGrid[];
     itemEdit: TEdit;
@@ -18,7 +18,7 @@ export class CoreComponent<TGrid, TEdit, TCreate> implements OnInit {
     isShowCreate = false;
     isShowEdit: boolean[] = new Array<boolean>();
 
-    constructor(service: CoreService<TGrid, TEdit, TCreate>, typeGrid: (new () => TGrid), typeEdit: (new () => TEdit), typeCreate: (new () => TCreate))
+    constructor(service: CoreService<TGrid, TCreate, TEdit>, typeGrid: (new () => TGrid), typeCreate: (new () => TCreate), typeEdit: (new () => TEdit))
     {
         this._service = service;
         this.items = new Array<TGrid>();

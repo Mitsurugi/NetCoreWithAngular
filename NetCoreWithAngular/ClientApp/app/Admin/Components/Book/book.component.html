@@ -14,6 +14,7 @@
                 <th>Id</th>
                 <th>Title</th>
                 <th>Author</th>
+                <th>Genre</th>
                 <th>Page count</th>
                 <th></th>
                 <th></th>
@@ -30,6 +31,9 @@
                     </td>
                     <td>
                         {{i.author}}
+                    </td>
+                    <td>
+                        {{i.genre}}
                     </td>
                     <td>
                         {{i.pageCount}}
@@ -76,7 +80,15 @@
                             <p *ngIf="author.errors.pattern" class="validation-text">
                                 Only letters allowed
                             </p>
-                        </div>                
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-3">
+                        <label>Genre</label>
+                        <select class="form-control" name="genre" [(ngModel)]="itemEdit.genre" #genre="ngModel">
+                            <ng-template ngFor let-i [ngForOf]="itemEdit.genreList" let-n="index">
+                                <option value="{{i.value}}" [disabled]="i.disabled">{{i.text}}</option>
+                            </ng-template>
+                        </select>
                     </div>
                     <div class="form-group col-sm-3">
                         <label>Page count *</label>
@@ -119,6 +131,14 @@
                         Only letters allowed
                     </p>
                 </div>
+            </div>
+            <div class="form-group col-sm-3">
+                <label>Genre</label>
+                <select class="form-control" name="genre" [(ngModel)]="itemCreate.genre" #genre="ngModel">
+                    <ng-template ngFor let-i [ngForOf]="itemCreate.genreList" let-n="index">
+                        <option value="{{i.value}}" [disabled]="i.disabled">{{i.text}}</option>
+                    </ng-template>
+                </select>
             </div>
             <div class="form-group col-sm-3">
                 <label>Page count *</label>

@@ -12,12 +12,7 @@ namespace NetCoreWithAngular.Services
     {
         public AnimeService(IRepository<Anime, int> repository, IMapper mapper) : base(repository, mapper)
         {            
-        }
-
-        public override IQueryable<Anime> GetQuery()
-        {
-            return base.GetQuery().OrderByDescending(i => i.Id);
-        }
+        }        
 
         public override Task<List<AnimeViewModel>> GetGrid(int pageSize, int pageNumber)
         {

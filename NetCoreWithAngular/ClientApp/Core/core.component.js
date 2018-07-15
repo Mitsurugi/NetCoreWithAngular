@@ -10,7 +10,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 import { Component } from '@angular/core';
 import { CoreService } from './core.service';
 var CoreComponent = /** @class */ (function () {
-    function CoreComponent(service, typeGrid, typeEdit, typeCreate) {
+    function CoreComponent(service, typeGrid, typeCreate, typeEdit) {
         this.currentPage = 1;
         this.pageSize = 5;
         this.pageCount = 1;

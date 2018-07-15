@@ -3,6 +3,7 @@ import { NgForm } from '@angular/forms';
 import { CoreComponent } from '../../../../Core/core.component';
 import { BookService } from '../../Services/book.service';
 import { Book } from '../../Models/Book';
+import { BookGrid } from '../../Models/bookGrid';
 
 @Component({
     selector: 'book',
@@ -10,10 +11,10 @@ import { Book } from '../../Models/Book';
     styleUrls: ['./book.component.css'],
     providers: [BookService]
 })
-export class BookComponent extends CoreComponent<Book, Book, Book> {
+export class BookComponent extends CoreComponent<BookGrid, Book, Book> {
 
     constructor(service: BookService) {
-        super(service, Book, Book, Book);
+        super(service, BookGrid, Book, Book);
         this.pageSize = 10;
     }
 

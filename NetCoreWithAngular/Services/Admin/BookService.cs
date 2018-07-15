@@ -8,13 +8,18 @@ using System.Linq;
 
 namespace NetCoreWithAngular.Services
 {
-    public class BookService : BaseService<Book, int, BookViewModel, BookViewModel, BookViewModel>
+    public class BookService : BaseService<Book, int, BookGridModel, BookViewModel, BookViewModel>
     {
         public BookService(IRepository<Book, int> repository, IMapper mapper) : base(repository, mapper)
         {
         }
 
-        public override Task<List<BookViewModel>> GetGrid(int pageSize, int pageNumber)
+        public override IQueryable<Book> GetQuery()
+        {
+            return base.GetQuery().OrderByDescending(i => i.Id);
+        }
+
+        public override Task<List<BookGridModel>> GetGrid(int pageSize, int pageNumber)
         {
             if (!_repository.GetQuery().Any())
             {

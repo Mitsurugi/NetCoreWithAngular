@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 @Injectable()
-export class CoreService<TGrid, TEdit, TCreate> {
+export class CoreService<TGrid, TCreate, TEdit> {
 
     _controller = "";
     protected _http: HttpClient;

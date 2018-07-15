@@ -8,11 +8,11 @@ using AutoMapper.QueryableExtensions;
 
 namespace CoreLibrary
 {
-    public class BaseService<TEntity, TKey, TEntityCreate, TEntityEdit, TEntityGrid> : IBaseService<TEntity, TKey, TEntityCreate, TEntityEdit, TEntityGrid>
+    public class BaseService<TEntity, TKey, TGrid, TCreate, TEdit> : IBaseService<TEntity, TKey, TGrid, TCreate, TEdit>
         where TEntity : class, IEntity<TKey>, new()
-        where TEntityCreate : class, IEntity<TKey>, new()
-        where TEntityEdit : class, IEntity<TKey>, new()
-        where TEntityGrid : class, IEntity<TKey>, new()
+        where TCreate : class, IEntity<TKey>, new()
+        where TEdit : class, IEntity<TKey>, new()
+        where TGrid : class, IEntity<TKey>, new()
     {
         protected readonly IRepository<TEntity, TKey> _repository;
 
@@ -34,33 +34,33 @@ namespace CoreLibrary
             return await GetQuery().SingleAsync(i => i.Id.Equals(id));
         }
 
-        public virtual async Task<TEntityCreate> Create(TEntityCreate createView)
+        public virtual async Task<TCreate> Create(TCreate createView)
         {
-            var create = _mapper.Map<TEntityCreate, TEntity>(createView);
+            var create = _mapper.Map<TCreate, TEntity>(createView);
 
             create = await _repository.Add(create);
             await _repository.SaveChanges();
 
-            return _mapper.Map<TEntity, TEntityCreate>(create);
+            return _mapper.Map<TEntity, TCreate>(create);
         }
 
-        public virtual async Task<TEntityCreate> Create()
+        public virtual async Task<TCreate> Create()
         {
-            return new TEntityCreate();
+            return new TCreate();
         }        
 
-        public virtual async Task<TEntityEdit> Edit(TEntityEdit editView)
+        public virtual async Task<TEdit> Edit(TEdit editView)
         {
-            var edit = await _repository.Update(_mapper.Map<TEntityEdit, TEntity>(editView));
+            var edit = await _repository.Update(_mapper.Map<TEdit, TEntity>(editView));
             await _repository.SaveChanges();
-            return _mapper.Map<TEntity, TEntityEdit>(edit);
+            return _mapper.Map<TEntity, TEdit>(edit);
         }
 
-        public virtual async Task<TEntityEdit> Edit(TKey id)
+        public virtual async Task<TEdit> Edit(TKey id)
         {
             var entity = await Get(id);
 
-            var edit = _mapper.Map<TEntity, TEntityEdit>(entity);
+            var edit = _mapper.Map<TEntity, TEdit>(entity);
 
             return edit;
         }
@@ -82,25 +82,34 @@ namespace CoreLibrary
             }
         }
 
-        public virtual async Task<List<TEntityGrid>> GetGrid(int pageSize, int pageNumber)
+        public virtual async Task<List<TGrid>> GetGrid(int pageSize, int pageNumber)
         {
             if (pageNumber < 1)
                 throw new Exception($"Wrong pageNumber = {pageNumber}. Must be 1 or greater");
             if (pageSize < 1)
                 throw new Exception($"Wrong pageSize = {pageSize}. Must be 1 or greater");
 
-            return await GetQuery().Skip(pageSize * (pageNumber - 1)).Take(pageSize).ProjectTo<TEntityGrid>().ToListAsync();
+            var query = GetQuery();
+
+            return await query.Skip(pageSize * (pageNumber - 1)).Take(pageSize).ProjectTo<TGrid>().ToListAsync();
         }
 
         public virtual async Task<int> GetPagesCount(int pageSize)
         {
-            var count = await GetQuery().CountAsync();
+            var query = GetQuery();
+
+            var count = await query.CountAsync();
 
             int pages = (int)Math.Floor((double)count / pageSize);
 
             if ((double)count / pageSize > pages) pages = pages + 1;
 
             return pages;
+        }
+
+        protected virtual IQueryable<TEntity> ApplyFilter(IQueryable<TEntity> query)
+        {
+            return query;
         }
     }
 }

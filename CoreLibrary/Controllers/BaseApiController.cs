@@ -7,17 +7,17 @@ namespace CoreLibrary
 {
     [ApiController]
     [Route("api/[controller]/[action]")]
-    public class BaseApiController<TEntity, TKey, TEntityCreate, TEntityEdit, TEntityGrid> : Controller
+    public class BaseApiController<TEntity, TKey, TGrid, TCreate, TEdit> : Controller
         where TEntity : class, IEntity<TKey>, new()
-        where TEntityCreate : class, IEntity<TKey>, new()
-        where TEntityEdit : class, IEntity<TKey>, new()
-        where TEntityGrid : class, IEntity<TKey>, new()
+        where TCreate : class, IEntity<TKey>, new()
+        where TEdit : class, IEntity<TKey>, new()
+        where TGrid : class, IEntity<TKey>, new()
     {        
-        protected IBaseService<TEntity, TKey, TEntityCreate, TEntityEdit, TEntityGrid> _service { get; set; }
+        protected IBaseService<TEntity, TKey, TGrid, TCreate, TEdit> _service { get; set; }
 
         protected int _pageSize { get; set; }
 
-        public BaseApiController(IBaseService<TEntity, TKey, TEntityCreate, TEntityEdit, TEntityGrid> service)
+        public BaseApiController(IBaseService<TEntity, TKey, TGrid, TCreate, TEdit> service)
         {
             _service = service;
             _pageSize = 10;
@@ -31,20 +31,20 @@ namespace CoreLibrary
         }
 
         [HttpGet]
-        public virtual async Task<List<TEntityGrid>> Grid(int pageNumber, int? pageSize = null)
+        public virtual async Task<List<TGrid>> Grid(int pageNumber, int? pageSize = null)
         {
             if (!pageSize.HasValue) pageSize = _pageSize;
             return await _service.GetGrid(pageSize.Value, pageNumber);
         }
 
         [HttpGet]
-        public virtual async Task<TEntityCreate> Create()
+        public virtual async Task<TCreate> Create()
         {
             return await _service.Create();
         }
 
         [HttpPost]
-        public virtual async Task<IActionResult> Create(TEntityCreate create)
+        public virtual async Task<IActionResult> Create(TCreate create)
         {
             if (!ModelState.IsValid)
             {
@@ -63,13 +63,13 @@ namespace CoreLibrary
         }
 
         [HttpGet]
-        public virtual async Task<TEntityEdit> Edit(TKey id)
+        public virtual async Task<TEdit> Edit(TKey id)
         {
             return await _service.Edit(id);
         }
 
         [HttpPost]
-        public virtual async Task<IActionResult> Edit(TEntityEdit edit)
+        public virtual async Task<IActionResult> Edit(TEdit edit)
         {
 
             if (!ModelState.IsValid)

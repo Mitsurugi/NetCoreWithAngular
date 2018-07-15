@@ -4,9 +4,10 @@ import { CoreService } from '../../../Core/core.service';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Book } from '../Models/Book';
+import { BookGrid } from '../Models/bookGrid'
 
 @Injectable()
-export class BookService extends CoreService<Book, Book, Book> {
+export class BookService extends CoreService<BookGrid, Book, Book> {
 
     constructor(http: HttpClient) { super(http); this._controller = 'book'; }
 
@@ -15,9 +16,9 @@ export class BookService extends CoreService<Book, Book, Book> {
         return super.postCreate(item);
     }
     
-    getGrid(pageNumber: number, pageSize: number): Observable<Book[]> {
-        return super.getGrid(pageNumber, pageSize).pipe<Book[]>(map(response => {
-            let b = new Book();
+    getGrid(pageNumber: number, pageSize: number): Observable<BookGrid[]> {
+        return super.getGrid(pageNumber, pageSize).pipe<BookGrid[]>(map(response => {
+            let b = new BookGrid();
             b.id = 999;
             b.title = "fromService";
             b.author = "fromService";

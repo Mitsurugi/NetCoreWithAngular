@@ -21,10 +21,11 @@ import { Component } from '@angular/core';
 import { CoreComponent } from '../../../../Core/core.component';
 import { BookService } from '../../Services/book.service';
 import { Book } from '../../Models/Book';
+import { BookGrid } from '../../Models/bookGrid';
 var BookComponent = /** @class */ (function (_super) {
     __extends(BookComponent, _super);
     function BookComponent(service) {
-        var _this = _super.call(this, service, Book, Book, Book) || this;
+        var _this = _super.call(this, service, BookGrid, Book, Book) || this;
         _this.pageSize = 10;
         return _this;
     }

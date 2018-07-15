@@ -78,7 +78,7 @@ namespace NetCoreWithAngular
 
             services.AddScoped<IIdentityService<IdentityUser, IdentityRole, UserManager<IdentityUser>, RoleManager<IdentityRole>, SignInManager<IdentityUser>>, IdentityService>();
 
-            services.AddScoped<IBaseService<Book, int, BookViewModel, BookViewModel, BookViewModel>, BookService>();
+            services.AddScoped<IBaseService<Book, int, BookGridModel, BookViewModel, BookViewModel>, BookService>();
             services.AddScoped<IBaseService<Anime, int, AnimeViewModel, AnimeViewModel, AnimeViewModel>, AnimeService>();
 
             services.AddScoped<IFrontDataService, FrontDataService>();

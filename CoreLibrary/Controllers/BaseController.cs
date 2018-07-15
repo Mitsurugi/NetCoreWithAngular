@@ -4,17 +4,17 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CoreLibrary
 {
-    public class BaseController<TEntity, TKey, TEntityCreate, TEntityEdit, TEntityGrid> : Controller
+    public class BaseController<TEntity, TKey, TGrid, TCreate, TEdit> : Controller
         where TEntity : class, IEntity<TKey>, new()
-        where TEntityCreate : class, IEntity<TKey>, new()
-        where TEntityEdit : class, IEntity<TKey>, new()
-        where TEntityGrid : class, IEntity<TKey>, new()
+        where TCreate : class, IEntity<TKey>, new()
+        where TEdit : class, IEntity<TKey>, new()
+        where TGrid : class, IEntity<TKey>, new()
     {        
-        protected IBaseService<TEntity, TKey, TEntityCreate, TEntityEdit, TEntityGrid> _service { get; set; }
+        protected IBaseService<TEntity, TKey, TGrid, TCreate, TEdit> _service { get; set; }
 
         protected int _pageSize { get; set; }
 
-        public BaseController(IBaseService<TEntity, TKey, TEntityCreate, TEntityEdit, TEntityGrid> service)
+        public BaseController(IBaseService<TEntity, TKey, TGrid, TCreate, TEdit> service)
         {
             _service = service;
             _pageSize = 10;
@@ -42,7 +42,7 @@ namespace CoreLibrary
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public virtual async Task<IActionResult> Create(TEntityCreate create)
+        public virtual async Task<IActionResult> Create(TCreate create)
         {
             if (!ModelState.IsValid)
             {
@@ -69,7 +69,7 @@ namespace CoreLibrary
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public virtual async Task<IActionResult> Edit(TEntityEdit edit)
+        public virtual async Task<IActionResult> Edit(TEdit edit)
         {
 
             if (!ModelState.IsValid)
