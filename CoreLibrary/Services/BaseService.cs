@@ -8,11 +8,12 @@ using AutoMapper.QueryableExtensions;
 
 namespace CoreLibrary
 {
-    public class BaseService<TEntity, TKey, TGrid, TCreate, TEdit> : IBaseService<TEntity, TKey, TGrid, TCreate, TEdit>
+    public class BaseService<TEntity, TKey, TGrid, TCreate, TEdit, TFilter> : IBaseService<TEntity, TKey, TGrid, TCreate, TEdit, TFilter>
         where TEntity : class, IEntity<TKey>, new()
         where TCreate : class, IEntity<TKey>, new()
         where TEdit : class, IEntity<TKey>, new()
         where TGrid : class, IEntity<TKey>, new()
+        where TFilter : class, new()
     {
         protected readonly IRepository<TEntity, TKey> _repository;
 
@@ -82,21 +83,21 @@ namespace CoreLibrary
             }
         }
 
-        public virtual async Task<List<TGrid>> GetGrid(int pageSize, int pageNumber)
+        public virtual async Task<List<TGrid>> GetGrid(int pageSize, int pageNumber, TFilter filter)
         {
             if (pageNumber < 1)
                 throw new Exception($"Wrong pageNumber = {pageNumber}. Must be 1 or greater");
             if (pageSize < 1)
                 throw new Exception($"Wrong pageSize = {pageSize}. Must be 1 or greater");
 
-            var query = GetQuery();
+            var query = ApplyFilter(GetQuery(), filter);
 
             return await query.Skip(pageSize * (pageNumber - 1)).Take(pageSize).ProjectTo<TGrid>().ToListAsync();
         }
 
-        public virtual async Task<int> GetPagesCount(int pageSize)
+        public virtual async Task<int> GetPagesCount(int pageSize, TFilter filter)
         {
-            var query = GetQuery();
+            var query = ApplyFilter(GetQuery(), filter);
 
             var count = await query.CountAsync();
 
@@ -107,7 +108,12 @@ namespace CoreLibrary
             return pages;
         }
 
-        protected virtual IQueryable<TEntity> ApplyFilter(IQueryable<TEntity> query)
+        public virtual async Task<TFilter> GetFilter()
+        {
+            return new TFilter();
+        }
+
+        protected virtual IQueryable<TEntity> ApplyFilter(IQueryable<TEntity> query, TFilter filter)
         {
             return query;
         }

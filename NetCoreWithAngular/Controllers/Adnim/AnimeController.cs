@@ -6,9 +6,9 @@ using Microsoft.AspNetCore.Authorization;
 namespace NetCoreWithAngular.Controllers
 {        
     [Authorize]
-    public class AnimeController : BaseApiController<Anime, int, AnimeViewModel, AnimeViewModel, AnimeViewModel>
+    public class AnimeController : BaseApiController<Anime, int, AnimeViewModel, AnimeViewModel, AnimeViewModel, AnimeViewModel>
     {        
-        public AnimeController(IBaseService<Anime, int, AnimeViewModel, AnimeViewModel, AnimeViewModel> service) : base(service)
+        public AnimeController(IBaseService<Anime, int, AnimeViewModel, AnimeViewModel, AnimeViewModel, AnimeViewModel> service) : base(service)
         {
         }
     }

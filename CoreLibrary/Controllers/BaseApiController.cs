@@ -7,34 +7,35 @@ namespace CoreLibrary
 {
     [ApiController]
     [Route("api/[controller]/[action]")]
-    public class BaseApiController<TEntity, TKey, TGrid, TCreate, TEdit> : Controller
+    public class BaseApiController<TEntity, TKey, TGrid, TCreate, TEdit, TFilter> : Controller
         where TEntity : class, IEntity<TKey>, new()
         where TCreate : class, IEntity<TKey>, new()
         where TEdit : class, IEntity<TKey>, new()
         where TGrid : class, IEntity<TKey>, new()
+        where TFilter : class, new()
     {        
-        protected IBaseService<TEntity, TKey, TGrid, TCreate, TEdit> _service { get; set; }
+        protected IBaseService<TEntity, TKey, TGrid, TCreate, TEdit, TFilter> _service { get; set; }
 
         protected int _pageSize { get; set; }
 
-        public BaseApiController(IBaseService<TEntity, TKey, TGrid, TCreate, TEdit> service)
+        public BaseApiController(IBaseService<TEntity, TKey, TGrid, TCreate, TEdit, TFilter> service)
         {
             _service = service;
             _pageSize = 10;
         }
 
-        [HttpGet]
-        public virtual async Task<int> GetPagesCount(int? pageSize = null)
+        [HttpPost]
+        public virtual async Task<int> GetPagesCount([FromBody] TFilter filter, [FromQuery] int? pageSize = null)
         {
             if (!pageSize.HasValue) pageSize = _pageSize;
-            return await _service.GetPagesCount(pageSize.Value);
+            return await _service.GetPagesCount(pageSize.Value, filter);
         }
 
-        [HttpGet]
-        public virtual async Task<List<TGrid>> Grid(int pageNumber, int? pageSize = null)
+        [HttpPost]
+        public virtual async Task<List<TGrid>> Grid([FromBody] TFilter filter, [FromQuery] int pageNumber, [FromQuery] int? pageSize = null)
         {
             if (!pageSize.HasValue) pageSize = _pageSize;
-            return await _service.GetGrid(pageSize.Value, pageNumber);
+            return await _service.GetGrid(pageSize.Value, pageNumber, filter);
         }
 
         [HttpGet]
@@ -114,6 +115,12 @@ namespace CoreLibrary
             {
                 return BadRequest(ex);
             }
+        }
+
+        [HttpGet]
+        public virtual async Task<TFilter> GetFilter()
+        {
+            return await _service.GetFilter();
         }
     }
 }

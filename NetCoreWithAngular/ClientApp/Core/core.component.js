@@ -10,10 +10,10 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 import { Component } from '@angular/core';
 import { CoreService } from './core.service';
 var CoreComponent = /** @class */ (function () {
-    function CoreComponent(service, typeGrid, typeCreate, typeEdit) {
+    function CoreComponent(service, typeGrid, typeCreate, typeEdit, typeFilter) {
         this.currentPage = 1;
         this.pageSize = 5;
-        this.pageCount = 1;
+        this.totalPages = 1;
         this.error = null;
         this.isShowCreate = false;
         this.isShowEdit = new Array();
@@ -21,7 +21,45 @@ var CoreComponent = /** @class */ (function () {
         this.items = new Array();
         this.itemEdit = new typeEdit();
         this.itemCreate = new typeCreate();
+        this.filter = new typeFilter();
+        this.typeGrid = typeGrid;
+        this.typeCreate = typeCreate;
+        this.typeEdit = typeEdit;
+        this.typeFilter = typeFilter;
     }
+    CoreComponent.prototype.ngOnInit = function () {
+        var _this = this;
+        this.refreshPage();
+        this._service.getFilter().subscribe(function (data) { return _this.filter = data; }, function (e) { _this.error = JSON.stringify(e.error); });
+    };
+    CoreComponent.prototype.refreshPage = function () {
+        var _this = this;
+        this.error = null;
+        this._service.getPagesCount(this.pageSize, this.filter).subscribe(function (data) { return _this.totalPages = data; }, function (e) { _this.error = JSON.stringify(e.error); });
+        this._service.getGrid(this.currentPage, this.pageSize, this.filter).subscribe(function (data) { return _this.items = data; }, function (e) { _this.error = JSON.stringify(e.error); });
+        this.isShowEdit = new Array();
+        for (var i = 0; i < this.items.length; i++) {
+            this.isShowEdit.push(false);
+        }
+    };
+    CoreComponent.prototype.clearFilter = function () {
+        var _this = this;
+        this.filter = new this.typeFilter();
+        this._service.getFilter().subscribe(function (data) { return _this.filter = data; }, function (e) { _this.error = JSON.stringify(e.error); });
+        this.refreshPage();
+    };
+    CoreComponent.prototype.nextPage = function () {
+        if (this.currentPage < this.totalPages) {
+            this.currentPage++;
+            this.refreshPage();
+        }
+    };
+    CoreComponent.prototype.prevPage = function () {
+        if (this.currentPage > 1) {
+            this.currentPage--;
+            this.refreshPage();
+        }
+    };
     CoreComponent.prototype.toggleCreate = function () {
         if (this.isShowCreate) {
             this.isShowCreate = false;
@@ -38,31 +76,6 @@ var CoreComponent = /** @class */ (function () {
         else {
             this.getEdit(id);
             this.isShowEdit[index] = true;
-        }
-    };
-    CoreComponent.prototype.refreshPage = function () {
-        var _this = this;
-        this.error = null;
-        this._service.getPagesCount(this.pageSize).subscribe(function (data) { return _this.pageCount = data; }, function (e) { _this.error = JSON.stringify(e.error); });
-        this._service.getGrid(this.currentPage, this.pageSize).subscribe(function (data) { return _this.items = data; }, function (e) { _this.error = JSON.stringify(e.error); });
-        this.isShowEdit = new Array();
-        for (var i = 0; i < this.items.length; i++) {
-            this.isShowEdit.push(false);
-        }
-    };
-    CoreComponent.prototype.ngOnInit = function () {
-        this.refreshPage();
-    };
-    CoreComponent.prototype.nextPage = function () {
-        if (this.currentPage < this.pageCount) {
-            this.currentPage++;
-            this.refreshPage();
-        }
-    };
-    CoreComponent.prototype.prevPage = function () {
-        if (this.currentPage > 1) {
-            this.currentPage--;
-            this.refreshPage();
         }
     };
     CoreComponent.prototype.getCreate = function () {
@@ -92,7 +105,7 @@ var CoreComponent = /** @class */ (function () {
     };
     CoreComponent = __decorate([
         Component({}),
-        __metadata("design:paramtypes", [CoreService, Function, Function, Function])
+        __metadata("design:paramtypes", [CoreService, Function, Function, Function, Function])
     ], CoreComponent);
     return CoreComponent;
 }());

@@ -20,11 +20,11 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 import { Component } from '@angular/core';
 import { CoreComponent } from '../../../../Core/core.component';
 import { AnimeService } from '../../Services/anime.service';
-import { Anime } from '../../Models/Anime';
+import { Anime } from '../../Models/Anime/anime';
 var AnimeComponent = /** @class */ (function (_super) {
     __extends(AnimeComponent, _super);
     function AnimeComponent(service) {
-        return _super.call(this, service, Anime, Anime, Anime) || this;
+        return _super.call(this, service, Anime, Anime, Anime, Anime) || this;
     }
     AnimeComponent = __decorate([
         Component({

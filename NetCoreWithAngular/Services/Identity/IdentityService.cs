@@ -10,7 +10,6 @@ namespace NetCoreWithAngular.Services
             _audience = "NetCoreWithAngular";
             _issuer = "NetCoreWithAngular";
             _privateKey = "PrivateKey_YouShallNotPass";
-            _tokenLifeTime = new System.TimeSpan(0, 2, 0);
         }
     }
 }

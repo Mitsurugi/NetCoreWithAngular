@@ -11,4 +11,4 @@ var Book = /** @class */ (function () {
     return Book;
 }());
 export { Book };
-//# sourceMappingURL=Book.js.map
+//# sourceMappingURL=book.js.map

@@ -2,7 +2,7 @@
 import { NgForm } from '@angular/forms';
 import { CoreComponent } from '../../../../Core/core.component';
 import { AnimeService } from '../../Services/anime.service';
-import { Anime } from '../../Models/Anime';
+import { Anime } from '../../Models/Anime/anime';
 
 @Component({
     selector: 'anime',
@@ -10,9 +10,9 @@ import { Anime } from '../../Models/Anime';
     styleUrls: ['./anime.component.css'],
     providers: [AnimeService]
 })
-export class AnimeComponent extends CoreComponent<Anime, Anime, Anime> {
+export class AnimeComponent extends CoreComponent<Anime, Anime, Anime, Anime> {
 
     constructor(service: AnimeService) {
-        super(service, Anime, Anime, Anime);
+        super(service, Anime, Anime, Anime, Anime);
     }
 }

@@ -8,13 +8,13 @@ using System.Linq;
 
 namespace NetCoreWithAngular.Services
 {
-    public class AnimeService : BaseService<Anime, int, AnimeViewModel, AnimeViewModel, AnimeViewModel>
+    public class AnimeService : BaseService<Anime, int, AnimeViewModel, AnimeViewModel, AnimeViewModel, AnimeViewModel>
     {
         public AnimeService(IRepository<Anime, int> repository, IMapper mapper) : base(repository, mapper)
         {            
         }        
 
-        public override Task<List<AnimeViewModel>> GetGrid(int pageSize, int pageNumber)
+        public override Task<List<AnimeViewModel>> GetGrid(int pageSize, int pageNumber, AnimeViewModel filter = null)
         {
             if (!_repository.GetQuery().Any())
             {
@@ -25,7 +25,7 @@ namespace NetCoreWithAngular.Services
                 _repository.SaveChanges();
             }
 
-            return base.GetGrid(pageSize, pageNumber);
+            return base.GetGrid(pageSize, pageNumber, filter);
         }
     }
 }

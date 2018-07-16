@@ -20,13 +20,14 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 import { Component } from '@angular/core';
 import { CoreComponent } from '../../../../Core/core.component';
 import { BookService } from '../../Services/book.service';
-import { Book } from '../../Models/Book';
-import { BookGrid } from '../../Models/bookGrid';
+import { Book } from '../../Models/Book/book';
+import { BookGrid } from '../../Models/book/bookGrid';
+import { BookFilter } from '../../Models/book/bookFilter';
 var BookComponent = /** @class */ (function (_super) {
     __extends(BookComponent, _super);
     function BookComponent(service) {
-        var _this = _super.call(this, service, BookGrid, Book, Book) || this;
-        _this.pageSize = 10;
+        var _this = _super.call(this, service, BookGrid, Book, Book, BookFilter) || this;
+        _this.pageSize = 3;
         return _this;
     }
     BookComponent.prototype.postCreate = function () {

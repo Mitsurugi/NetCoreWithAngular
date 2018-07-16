@@ -8,6 +8,7 @@
   <ItemGroup>
     <None Remove="ClientApp\app\Admin\Components\Account\account.component.ts" />
     <None Remove="ClientApp\app\Admin\Components\AdminMain\admin.component.ts" />
+    <None Remove="ClientApp\app\Admin\Models\bookFilter.ts" />
     <None Remove="ClientApp\app\Admin\Models\bookGrid.ts" />
     <None Remove="ClientApp\app\Admin\Models\login.ts" />
     <None Remove="ClientApp\app\Admin\Services\account.service.ts" />
@@ -55,7 +56,8 @@
     <TypeScriptCompile Include="ClientApp\app\Admin\Components\Account\account.component.ts" />
     <TypeScriptCompile Include="ClientApp\app\Admin\Components\Menu\menu.component.ts" />
     <TypeScriptCompile Include="ClientApp\app\Admin\Components\Anime\anime.component.ts" />
-    <TypeScriptCompile Include="ClientApp\app\Admin\Models\bookGrid.ts" />
+    <TypeScriptCompile Include="ClientApp\app\Admin\Models\Book\bookFilter.ts" />
+    <TypeScriptCompile Include="ClientApp\app\Admin\Models\Book\bookGrid.ts" />
     <TypeScriptCompile Include="ClientApp\app\Admin\Models\login.ts" />
     <TypeScriptCompile Include="ClientApp\app\Admin\Services\account.service.ts" />
     <TypeScriptCompile Include="ClientApp\app\app.component.ts" />
@@ -71,8 +73,8 @@
     <TypeScriptCompile Include="ClientApp\Core\core.component.ts" />
     <TypeScriptCompile Include="ClientApp\Core\core.service.ts" />
     <TypeScriptCompile Include="ClientApp\main.ts" />
-    <TypeScriptCompile Include="ClientApp\app\Admin\Models\anime.ts" />
-    <TypeScriptCompile Include="ClientApp\app\Admin\Models\book.ts" />
+    <TypeScriptCompile Include="ClientApp\app\Admin\Models\Anime\anime.ts" />
+    <TypeScriptCompile Include="ClientApp\app\Admin\Models\Book\book.ts" />
     <TypeScriptCompile Include="ClientApp\polyfills.ts" />
     <TypeScriptCompile Include="ClientApp\app\Admin\Services\anime.service.ts" />
     <TypeScriptCompile Include="ClientApp\app\Admin\Services\book.service.ts" />
@@ -85,8 +87,11 @@
     <None Update="ClientApp\app\Admin\Components\Anime\anime.component.js">
       <DependentUpon>anime.component.ts</DependentUpon>
     </None>
-    <None Update="ClientApp\app\Admin\Models\Anime.js">
+    <None Update="ClientApp\app\Admin\Models\Anime\Anime.js">
       <DependentUpon>anime.ts</DependentUpon>
+    </None>
+    <None Update="ClientApp\app\Admin\Models\Book\bookFilter.js">
+      <DependentUpon>bookFilter.ts</DependentUpon>
     </None>
     <None Update="ClientApp\app\Admin\Services\anime.service.js">
       <DependentUpon>anime.service.ts</DependentUpon>

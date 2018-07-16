@@ -24,7 +24,7 @@ namespace CoreLibrary.Identity
         protected string _privateKey = "";
         protected string _issuer = "";
         protected string _audience = "";
-        protected TimeSpan _tokenLifeTime = new TimeSpan(1, 0, 0);
+        protected TimeSpan _tokenLifeTime = new TimeSpan(24, 0, 0);
 
         public IdentityServiceBase(TUserManager userManager, TRoleManager roleManager, TSignInManager signInManager)
         {

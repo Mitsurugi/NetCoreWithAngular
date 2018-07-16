@@ -4,34 +4,35 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CoreLibrary
 {
-    public class BaseController<TEntity, TKey, TGrid, TCreate, TEdit> : Controller
+    public class BaseController<TEntity, TKey, TGrid, TCreate, TEdit, TFilter> : Controller
         where TEntity : class, IEntity<TKey>, new()
         where TCreate : class, IEntity<TKey>, new()
         where TEdit : class, IEntity<TKey>, new()
         where TGrid : class, IEntity<TKey>, new()
+        where TFilter: class, new()
     {        
-        protected IBaseService<TEntity, TKey, TGrid, TCreate, TEdit> _service { get; set; }
+        protected IBaseService<TEntity, TKey, TGrid, TCreate, TEdit, TFilter> _service { get; set; }
 
         protected int _pageSize { get; set; }
 
-        public BaseController(IBaseService<TEntity, TKey, TGrid, TCreate, TEdit> service)
+        public BaseController(IBaseService<TEntity, TKey, TGrid, TCreate, TEdit, TFilter> service)
         {
             _service = service;
             _pageSize = 10;
         }
 
         [HttpGet]
-        public virtual async Task<IActionResult> Index()
+        public virtual async Task<IActionResult> Index([FromQuery] TFilter filter = null)
         {
-            ViewData["PageCount"] = await _service.GetPagesCount(_pageSize);
+            ViewData["PageCount"] = await _service.GetPagesCount(_pageSize, filter);
             return View();
         }
 
         [HttpGet]
-        public virtual async Task<IActionResult> Grid(int pageNumber, int? pageSize = null)
+        public virtual async Task<IActionResult> Grid(int pageNumber, int? pageSize = null, [FromQuery] TFilter filter = null)
         {
             if (!pageSize.HasValue) pageSize = _pageSize;
-            return View(await _service.GetGrid(pageSize.Value, pageNumber));
+            return View(await _service.GetGrid(pageSize.Value, pageNumber, filter));
         }
 
         [HttpGet]

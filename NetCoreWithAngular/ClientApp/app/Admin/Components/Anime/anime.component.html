@@ -5,7 +5,7 @@
 <div class="grid">
     <div class="pagination">
         <button class="btn btn-default" (click)="prevPage()">Previous</button>
-        <span>Page {{currentPage}} of {{pageCount}}</span>
+        <span>Page {{currentPage}} of {{totalPages}}</span>
         <button class="btn btn-default" (click)="nextPage()">Next</button>
     </div>
     <table class="table">
@@ -60,7 +60,7 @@
                             <p *ngIf="title.errors.required" class="validation-text">
                                 Title required
                             </p>
-                        </div>                        
+                        </div>
                     </div>
                     <div class="form-group col-sm-3">
                         <label>Season count *</label>
@@ -69,12 +69,13 @@
                             <p *ngIf="seasonCount.errors.required" class="validation-text">
                                 Season count required
                             </p>
-                        </div>                
+                        </div>
                     </div>
                     <div class="form-group col-sm-10">
                         <button class="btn btn-default" (click)="postEdit()" [disabled]="editForm.invalid">Submit</button>
                     </div>
                 </form>
+                <div style="clear:both"></div>
             </div>
         </td>
     </tr>
@@ -94,7 +95,7 @@
             </div>
             <div class="form-group col-sm-3">
                 <label>Season count *</label>
-                <input class="form-control" name="seasonCount" [(ngModel)]="itemCreate.seasonCount" #seasonCount="ngModel" type="number" required/>
+                <input class="form-control" name="seasonCount" [(ngModel)]="itemCreate.seasonCount" #seasonCount="ngModel" type="number" required />
                 <div *ngIf="seasonCount.touched && seasonCount.invalid">
                     <p *ngIf="seasonCount.errors.required" class="validation-text">
                         Season count required
@@ -105,5 +106,6 @@
                 <button class="btn btn-default" (click)="postCreate()" [disabled]="createForm.invalid">Submit</button>
             </div>
         </form>
+        <div style="clear:both"></div>
     </div>
 </ng-template>

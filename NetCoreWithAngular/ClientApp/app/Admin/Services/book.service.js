@@ -21,7 +21,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { CoreService } from '../../../Core/core.service';
 import { map } from 'rxjs/operators';
-import { BookGrid } from '../Models/bookGrid';
+import { BookGrid } from '../Models/book/bookGrid';
 var BookService = /** @class */ (function (_super) {
     __extends(BookService, _super);
     function BookService(http) {
@@ -33,8 +33,8 @@ var BookService = /** @class */ (function (_super) {
         item.title = '!' + item.title + '!';
         return _super.prototype.postCreate.call(this, item);
     };
-    BookService.prototype.getGrid = function (pageNumber, pageSize) {
-        return _super.prototype.getGrid.call(this, pageNumber, pageSize).pipe(map(function (response) {
+    BookService.prototype.getGrid = function (pageNumber, pageSize, filter) {
+        return _super.prototype.getGrid.call(this, pageNumber, pageSize, filter).pipe(map(function (response) {
             var b = new BookGrid();
             b.id = 999;
             b.title = "fromService";

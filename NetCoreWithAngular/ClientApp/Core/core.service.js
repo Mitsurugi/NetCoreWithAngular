@@ -14,11 +14,11 @@ var CoreService = /** @class */ (function () {
         this._controller = "";
         this._http = http;
     }
-    CoreService.prototype.getPagesCount = function (pageSize) {
-        return this._http.get('api/' + this._controller + '/getPagesCount?pageSize=' + pageSize);
+    CoreService.prototype.getPagesCount = function (pageSize, filter) {
+        return this._http.post('api/' + this._controller + '/getPagesCount?pageSize=' + pageSize, filter);
     };
-    CoreService.prototype.getGrid = function (pageNumber, pageSize) {
-        return this._http.get('api/' + this._controller + '/grid?pageNumber=' + pageNumber + '&pageSize=' + pageSize);
+    CoreService.prototype.getGrid = function (pageNumber, pageSize, filter) {
+        return this._http.post('api/' + this._controller + '/grid?pageNumber=' + pageNumber + '&pageSize=' + pageSize, filter);
     };
     CoreService.prototype.getCreate = function () {
         return this._http.get('api/' + this._controller + '/create');
@@ -34,6 +34,9 @@ var CoreService = /** @class */ (function () {
     };
     CoreService.prototype.delete = function (id) {
         return this._http.delete('api/' + this._controller + '/delete?id=' + id);
+    };
+    CoreService.prototype.getFilter = function () {
+        return this._http.get('api/' + this._controller + '/getFilter');
     };
     CoreService = __decorate([
         Injectable(),

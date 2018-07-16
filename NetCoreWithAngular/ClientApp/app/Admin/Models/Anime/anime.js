@@ -4,4 +4,4 @@ var Anime = /** @class */ (function () {
     return Anime;
 }());
 export { Anime };
-//# sourceMappingURL=Anime.js.map
+//# sourceMappingURL=anime.js.map

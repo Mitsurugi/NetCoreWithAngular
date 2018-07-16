@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 @Injectable()
-export class CoreService<TGrid, TCreate, TEdit> {
+export class CoreService<TGrid, TCreate, TEdit, TFilter> {
 
     _controller = "";
     protected _http: HttpClient;
@@ -12,12 +12,12 @@ export class CoreService<TGrid, TCreate, TEdit> {
         this._http = http;
     }
 
-    getPagesCount(pageSize: number): Observable<number> {
-        return this._http.get<number>('api/' + this._controller + '/getPagesCount?pageSize=' + pageSize);
+    getPagesCount(pageSize: number, filter: TFilter): Observable<number> {
+        return this._http.post<number>('api/' + this._controller + '/getPagesCount?pageSize=' + pageSize, filter);
     }
 
-    getGrid(pageNumber: number, pageSize: number): Observable<TGrid[]> {
-        return this._http.get<TGrid[]>('api/' + this._controller + '/grid?pageNumber=' + pageNumber + '&pageSize=' + pageSize);
+    getGrid(pageNumber: number, pageSize: number, filter: TFilter): Observable<TGrid[]> {
+        return this._http.post<TGrid[]>('api/' + this._controller + '/grid?pageNumber=' + pageNumber + '&pageSize=' + pageSize, filter);
     }
 
     getCreate(): Observable<TCreate> {
@@ -38,5 +38,8 @@ export class CoreService<TGrid, TCreate, TEdit> {
 
     delete(id: any) {
         return this._http.delete('api/' + this._controller + '/delete?id=' + id);
+    }
+    getFilter(): Observable<TFilter> {
+        return this._http.get<TFilter>('api/' + this._controller + '/getFilter');
     }
 }
