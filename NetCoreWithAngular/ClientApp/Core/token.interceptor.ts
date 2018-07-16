@@ -15,10 +15,10 @@ export class TokenInterceptor implements HttpInterceptor {
 
         if (token) {
             const cloned = req.clone({ headers: req.headers.set("Authorization", "Bearer " + token) });
-            return next.handle(cloned).pipe(map(response => { return response; }), catchError((e, c) => { if (e.status === 401) { localStorage.removeItem("token"); this.router.navigate(['/admin/account']); } throw e; }));
+            return next.handle(cloned).pipe(map(response => { return response; }), catchError((e, c) => { if (e.status === 401 || e.status === 403) { localStorage.removeItem("token"); this.router.navigate(['/admin/account']); } throw e; }));
         }
         else {
-            return next.handle(req).pipe(map(response => { return response; }), catchError((e, c) => { if (e.status === 401) { localStorage.removeItem("token"); this.router.navigate(['/admin/account']); } throw e; }));
+            return next.handle(req).pipe(map(response => { return response; }), catchError((e, c) => { if (e.status === 401 || e.status === 403) { localStorage.removeItem("token"); this.router.navigate(['/admin/account']); } throw e; }));
         }
     }
 }

@@ -12,34 +12,34 @@ export class CoreService<TGrid, TCreate, TEdit, TFilter> {
         this._http = http;
     }
 
-    getPagesCount(pageSize: number, filter: TFilter): Observable<number> {
-        return this._http.post<number>('api/' + this._controller + '/getPagesCount?pageSize=' + pageSize, filter);
+    async getPagesCount(pageSize: number, filter: TFilter): Promise<number> {
+        return await this._http.post<number>('api/' + this._controller + '/getPagesCount?pageSize=' + pageSize, filter).toPromise();
     }
 
-    getGrid(pageNumber: number, pageSize: number, filter: TFilter): Observable<TGrid[]> {
-        return this._http.post<TGrid[]>('api/' + this._controller + '/grid?pageNumber=' + pageNumber + '&pageSize=' + pageSize, filter);
+    async getGrid(pageNumber: number, pageSize: number, filter: TFilter): Promise<TGrid[]> {
+        return await this._http.post<TGrid[]>('api/' + this._controller + '/grid?pageNumber=' + pageNumber + '&pageSize=' + pageSize, filter).toPromise();
     }
 
-    getCreate(): Observable<TCreate> {
-        return this._http.get<TCreate>('api/' + this._controller + '/create');
+    async getCreate(): Promise<TCreate> {
+        return await this._http.get<TCreate>('api/' + this._controller + '/create').toPromise();
     }
 
-    postCreate(item: TCreate): Observable<TCreate> {
-        return this._http.post<TCreate>('/api/' + this._controller + '/create', item);
+    async postCreate(item: TCreate): Promise<TCreate> {
+        return await this._http.post<TCreate>('/api/' + this._controller + '/create', item).toPromise();
     }
 
-    getEdit(id: any): Observable<TEdit> {
-        return this._http.get<TEdit>('api/' + this._controller + '/edit?id=' + id);
+    async getEdit(id: any): Promise<TEdit> {
+        return await this._http.get<TEdit>('api/' + this._controller + '/edit?id=' + id).toPromise();
     }
 
-    postEdit(item: TEdit): Observable<TEdit> {
-        return this._http.post<TEdit>('/api/' + this._controller + '/edit', item);
+    async postEdit(item: TEdit): Promise<TEdit> {
+        return await this._http.post<TEdit>('/api/' + this._controller + '/edit', item).toPromise();
     }
 
-    delete(id: any) {
-        return this._http.delete('api/' + this._controller + '/delete?id=' + id);
+    async delete(id: any) {
+        await this._http.delete('api/' + this._controller + '/delete?id=' + id).toPromise();
     }
-    getFilter(): Observable<TFilter> {
-        return this._http.get<TFilter>('api/' + this._controller + '/getFilter');
+    async getFilter(): Promise<TFilter> {
+        return await this._http.get<TFilter>('api/' + this._controller + '/getFilter').toPromise();
     }
 }

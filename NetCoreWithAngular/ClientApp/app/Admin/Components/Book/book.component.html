@@ -129,7 +129,7 @@
                     </div>
                     <div class="form-group col-sm-3">
                         <label>Page count *</label>
-                        <input class="form-control" name="pageCount" [(ngModel)]="itemEdit.pageCount" #pageCount="ngModel" type="number" required />
+                        <input class="form-control" name="pageCount" [(ngModel)]="itemEdit.pageCount" #pageCount="ngModel" type="text" required />
                         <div *ngIf="pageCount.touched && pageCount.invalid">
                             <p *ngIf="pageCount.errors.required" class="validation-text">
                                 Page count required

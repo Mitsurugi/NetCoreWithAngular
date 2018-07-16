@@ -15,14 +15,20 @@ namespace NetCoreWithAngular.Controllers
         {
         }
 
-        public override Task<IActionResult> GetToken(LoginModel model)
+        public override async Task<IActionResult> GetToken(LoginModel model)
         {
+            var anyRoles = _service.GetRoles().Any();
+            if (!anyRoles)
+            {
+                await _service.CreateRole(new IdentityRole { Name = "Admin" });
+                await _service.CreateRole(new IdentityRole { Name = "AnimeOnly" });
+            }
             var anyUsers = _service.GetUsersQuery().Any();
             if (!anyUsers)
             {
-                _service.CreateUser(new IdentityUser { UserName = "admin" }, "11!!qqQQqq");
+                await _service.CreateUser(new IdentityUser { UserName = "admin" }, "11!!qqQQqq");
             }
-            return base.GetToken(model);
+            return await base.GetToken(model);
         }
     }
 }

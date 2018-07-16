@@ -1,10 +1,11 @@
-﻿<div *ngIf="isTokenPresent()">
-    <h2>Logged in as {{getUserName()}}</h2>
+﻿<div *ngIf="isLogged">
+    <h2>Logged in as {{userName}}</h2>
+    <h2>Role: {{role}}</h2>
     <div class="form-group">
         <button class="btn btn-default" (click)="deleteToken()">Logout</button>
     </div>    
 </div>
-<div *ngIf="!isTokenPresent()">
+<div *ngIf="!isLogged">
     <h2>Login</h2>
     <div *ngIf="error" class="form-group">
         <span class="error">Error: {{error}}</span>

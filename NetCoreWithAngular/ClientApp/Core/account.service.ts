@@ -1,11 +1,11 @@
 ﻿import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
 
 class TokenResponse {
     token: string;
     login: string;
+    role: string;
 }
 
 @Injectable()
@@ -18,13 +18,17 @@ export class CoreAccountService<TLoginModel> {
         this._http = http;
     }
 
-    getToken(model: TLoginModel) {
-        return this._http.post<TokenResponse>(this._loginPath, model).pipe(map(data => { localStorage.setItem('token', data.token); localStorage.setItem('login', data.login); return data; }));
+    async getToken(model: TLoginModel) {
+        let data = await this._http.post<TokenResponse>(this._loginPath, model).toPromise();
+        localStorage.setItem('token', data.token);
+        localStorage.setItem('login', data.login);
+        localStorage.setItem('role', data.role);
     }
 
     deleteToken() {
         localStorage.removeItem("token");
         localStorage.removeItem("login");
+        localStorage.removeItem("role");
     }
 
     isTokenPresent(): boolean {
@@ -35,5 +39,8 @@ export class CoreAccountService<TLoginModel> {
 
     getUserName(): string {
         return localStorage.getItem("login");
+    }
+    getRole(): string {
+        return localStorage.getItem("role");
     }
 }

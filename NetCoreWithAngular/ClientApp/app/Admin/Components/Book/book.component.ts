@@ -19,8 +19,8 @@ export class BookComponent extends CoreComponent<BookGrid, Book, Book, BookFilte
         this.pageSize = 3;
     }
 
-    postCreate() {
+    async postCreate() {
         this.itemCreate.title = '*' + this.itemCreate.title + '*';
-        super.postCreate();
+        await super.postCreate();
     }    
 }

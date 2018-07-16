@@ -22,7 +22,7 @@
                         Anime
                     </a>
                 </li>
-                <li [routerLinkActive]='["link-active"]'>
+                <li *ngIf="localStorage.getItem('role') == 'Admin'" [routerLinkActive]='["link-active"]'>
                     <a [routerLink]='["/admin/book"]' (click)='collapse()'>
                         Books
                     </a>

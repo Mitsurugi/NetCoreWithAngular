@@ -10,6 +10,9 @@ li.link-active a:focus {
     color: white;
 }
 
+a {
+    cursor:pointer;
+}
 /* Keep the nav menu independent of scrolling and on top of other items */
 .main-nav {
     position: fixed;

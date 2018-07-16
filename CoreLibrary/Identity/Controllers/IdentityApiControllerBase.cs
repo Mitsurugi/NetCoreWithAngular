@@ -3,6 +3,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
+using System.Linq;
+
 
 namespace CoreLibrary.Identity
 {
@@ -33,7 +35,10 @@ namespace CoreLibrary.Identity
             try
             {
                 string t = await _service.GetToken(model.Login, model.Password);
-                return Ok(new { token = t, login = model.Login });
+                var user = await _service.FindUserByName(model.Login);
+                var roles = await _service.GetRolesForUser(user.Id);
+                var r = roles.FirstOrDefault();
+                return Ok(new { token = t, login = model.Login, role = r });
             }
             catch (Exception ex)
             {

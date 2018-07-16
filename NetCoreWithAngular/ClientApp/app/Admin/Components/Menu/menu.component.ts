@@ -7,6 +7,7 @@
 })
 export class MenuComponent {
     isExpanded = false;
+    role: string;
 
     collapse() {
         this.isExpanded = false;

@@ -1,36 +1,53 @@
 ﻿import { Component, OnInit } from '@angular/core';
 import { CoreAccountService } from './account.service';
-import { retry } from 'rxjs/operators';
 
 @Component({
 })
-export class CoreAccountComponent<TLoginModel> {
+export class CoreAccountComponent<TLoginModel> implements OnInit {
 
     _service: CoreAccountService<TLoginModel>;
 
     loginData: TLoginModel;
     error: string = null;
+    userName: string;
+    role: string;
+    isLogged: boolean = false;
+
+    typeLogin: (new () => TLoginModel);
 
     constructor(service: CoreAccountService<TLoginModel>, typeLogin: (new () => TLoginModel))
     {
         this._service = service;
         this.loginData = new typeLogin();
+        this.typeLogin = typeLogin;
     }
 
-    getToken() {
+    ngOnInit() {
+        this.isLogged = this._service.isTokenPresent();
+        this.userName = this._service.getUserName();
+        this.role = this._service.getRole();
+    }
+
+    async getToken() {
         this.error = null;
-        this._service.getToken(this.loginData).subscribe(null, (e) => { this.error = "Invalid login or password"; })
+        try {
+            await this._service.getToken(this.loginData);
+            this.userName = this._service.getUserName();
+            this.role = this._service.getRole();
+            this.isLogged = true;
+        }
+        catch (e) {
+            this.error = "Invalid login or password";
+        }
     }
 
     deleteToken() {
-        this._service.deleteToken();
-    }
-
-    isTokenPresent(): boolean {
-        return this._service.isTokenPresent();
-    }
-
-    getUserName(): string {
-        return this._service.getUserName();
+        try {
+            this._service.deleteToken();
+            this.isLogged = false;
+        }
+        catch (e) {
+            this.error = JSON.stringify(e);
+        }
     }
 }

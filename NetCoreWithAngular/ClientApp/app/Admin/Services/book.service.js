@@ -20,7 +20,6 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { CoreService } from '../../../Core/core.service';
-import { map } from 'rxjs/operators';
 import { BookGrid } from '../Models/book/bookGrid';
 var BookService = /** @class */ (function (_super) {
     __extends(BookService, _super);
@@ -34,7 +33,7 @@ var BookService = /** @class */ (function (_super) {
         return _super.prototype.postCreate.call(this, item);
     };
     BookService.prototype.getGrid = function (pageNumber, pageSize, filter) {
-        return _super.prototype.getGrid.call(this, pageNumber, pageSize, filter).pipe(map(function (response) {
+        return _super.prototype.getGrid.call(this, pageNumber, pageSize, filter).then(function (response) {
             var b = new BookGrid();
             b.id = 999;
             b.title = "fromService";
@@ -42,7 +41,7 @@ var BookService = /** @class */ (function (_super) {
             b.pageCount = 999;
             response.push(b);
             return response;
-        }));
+        });
     };
     BookService = __decorate([
         Injectable(),

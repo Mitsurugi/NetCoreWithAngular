@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace NetCoreWithAngular.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Admin")]
     public class BookController : BaseApiController<Book, int, BookGridModel, BookViewModel, BookViewModel, BookFilterModel>
     {
         public BookController(IBaseService<Book, int, BookGridModel, BookViewModel, BookViewModel, BookFilterModel> service) : base(service)
