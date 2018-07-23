@@ -3,6 +3,7 @@ import { NgForm } from '@angular/forms';
 import { CoreAccountComponent } from '../../../../Core/account.component';
 import { AccountService } from '../../Services/account.service';
 import { LoginModel } from '../../Models/login';
+import { AccountGlobals } from '../../../../Core/AccountGlobals';
 
 @Component({
     selector: 'account',
@@ -12,7 +13,7 @@ import { LoginModel } from '../../Models/login';
 })
 export class AccountComponent extends CoreAccountComponent<LoginModel> {
 
-    constructor(service: AccountService) {
-        super(service, LoginModel);
+    constructor(service: AccountService, accGlobals: AccountGlobals) {
+        super(service, accGlobals, LoginModel);
     }
 }

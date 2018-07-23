@@ -16,11 +16,11 @@ export class BookComponent extends CoreComponent<BookGrid, Book, Book, BookFilte
 
     constructor(service: BookService) {
         super(service, BookGrid, Book, Book, BookFilter);
-        this.pageSize = 3;
+        this._pageSize = 3;
     }
 
     async postCreate() {
-        this.itemCreate.title = '*' + this.itemCreate.title + '*';
+        this._itemCreate.title = '*' + this._itemCreate.title + '*';
         await super.postCreate();
     }    
 }

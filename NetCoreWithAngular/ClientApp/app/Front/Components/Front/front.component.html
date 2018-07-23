@@ -8,7 +8,7 @@
             </tr>
         </thead>
         <tbody>
-            <ng-template ngFor let-i [ngForOf]="anime" let-n="index">
+            <ng-template ngFor let-i [ngForOf]="_anime" let-n="index">
                 <tr>
                     <td>
                         {{i.id}}
@@ -32,7 +32,7 @@
             </tr>
         </thead>
         <tbody>
-            <ng-template ngFor let-i [ngForOf]="books" let-n="index">
+            <ng-template ngFor let-i [ngForOf]="_books" let-n="index">
                 <tr>
                     <td>
                         {{i.id}}

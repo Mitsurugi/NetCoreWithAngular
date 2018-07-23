@@ -1,6 +1,7 @@
 ﻿import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { AccountGlobals } from './AccountGlobals';
 
 class TokenResponse {
     token: string;
@@ -11,11 +12,13 @@ class TokenResponse {
 @Injectable()
 export class CoreAccountService<TLoginModel> {
 
+    _accGlobals: AccountGlobals;
     _loginPath = "/api/identity/gettoken";
-    protected _http: HttpClient;
+    _http: HttpClient;
 
-    constructor(http: HttpClient) {
+    constructor(http: HttpClient, accGlobals: AccountGlobals) {
         this._http = http;
+        this._accGlobals = accGlobals;
     }
 
     async getToken(model: TLoginModel) {
@@ -23,12 +26,18 @@ export class CoreAccountService<TLoginModel> {
         localStorage.setItem('token', data.token);
         localStorage.setItem('login', data.login);
         localStorage.setItem('role', data.role);
+        this._accGlobals.isLogged = true;
+        this._accGlobals.login = data.login;
+        this._accGlobals.role = data.role;
     }
 
     deleteToken() {
         localStorage.removeItem("token");
         localStorage.removeItem("login");
         localStorage.removeItem("role");
+        this._accGlobals.isLogged = false;
+        this._accGlobals.login = "";
+        this._accGlobals.role = "";
     }
 
     isTokenPresent(): boolean {

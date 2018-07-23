@@ -1,53 +1,47 @@
 ﻿import { Component, OnInit } from '@angular/core';
 import { CoreAccountService } from './account.service';
+import { AccountGlobals } from './AccountGlobals';
 
 @Component({
 })
 export class CoreAccountComponent<TLoginModel> implements OnInit {
 
     _service: CoreAccountService<TLoginModel>;
-
-    loginData: TLoginModel;
-    error: string = null;
-    userName: string;
-    role: string;
-    isLogged: boolean = false;
-
+    _accGlobals: AccountGlobals;
+    _loginModel: TLoginModel;
+    _error: string = null;    
     typeLogin: (new () => TLoginModel);
 
-    constructor(service: CoreAccountService<TLoginModel>, typeLogin: (new () => TLoginModel))
+    constructor(service: CoreAccountService<TLoginModel>, accGlobals: AccountGlobals, typeLogin: (new () => TLoginModel))
     {
         this._service = service;
-        this.loginData = new typeLogin();
+        this._accGlobals = accGlobals;
+        this._loginModel = new typeLogin();
         this.typeLogin = typeLogin;
     }
 
     ngOnInit() {
-        this.isLogged = this._service.isTokenPresent();
-        this.userName = this._service.getUserName();
-        this.role = this._service.getRole();
+        this._accGlobals.isLogged = this._service.isTokenPresent();
+        this._accGlobals.login = this._service.getUserName();
+        this._accGlobals.role = this._service.getRole();
     }
 
     async getToken() {
-        this.error = null;
+        this._error = null;
         try {
-            await this._service.getToken(this.loginData);
-            this.userName = this._service.getUserName();
-            this.role = this._service.getRole();
-            this.isLogged = true;
+            await this._service.getToken(this._loginModel);
         }
         catch (e) {
-            this.error = "Invalid login or password";
+            this._error = "Invalid login or password";
         }
     }
 
     deleteToken() {
         try {
             this._service.deleteToken();
-            this.isLogged = false;
         }
         catch (e) {
-            this.error = JSON.stringify(e);
+            this._error = JSON.stringify(e);
         }
     }
 }

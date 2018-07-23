@@ -46,17 +46,17 @@ import { Component } from '@angular/core';
 import { CoreService } from './core.service';
 var CoreComponent = /** @class */ (function () {
     function CoreComponent(service, typeGrid, typeCreate, typeEdit, typeFilter) {
-        this.currentPage = 1;
-        this.pageSize = 5;
-        this.totalPages = 1;
-        this.error = null;
-        this.isShowCreate = false;
-        this.isShowEdit = new Array();
+        this._currentPage = 1;
+        this._pageSize = 5;
+        this._totalPages = 1;
+        this._error = null;
+        this._isShowCreate = false;
+        this._isShowEdit = new Array();
         this._service = service;
-        this.items = new Array();
-        this.itemEdit = new typeEdit();
-        this.itemCreate = new typeCreate();
-        this.filter = new typeFilter();
+        this._items = new Array();
+        this._itemEdit = new typeEdit();
+        this._itemCreate = new typeCreate();
+        this._filter = new typeFilter();
         this.typeGrid = typeGrid;
         this.typeCreate = typeCreate;
         this.typeEdit = typeEdit;
@@ -72,14 +72,14 @@ var CoreComponent = /** @class */ (function () {
                         _a = this;
                         return [4 /*yield*/, this._service.getFilter()];
                     case 1:
-                        _a.filter = _b.sent();
+                        _a._filter = _b.sent();
                         return [4 /*yield*/, this.refreshPage()];
                     case 2:
                         _b.sent();
                         return [3 /*break*/, 4];
                     case 3:
                         e_1 = _b.sent();
-                        this.error = JSON.stringify(e_1.error);
+                        this._error = JSON.stringify(e_1.error);
                         return [3 /*break*/, 4];
                     case 4: return [2 /*return*/];
                 }
@@ -92,26 +92,26 @@ var CoreComponent = /** @class */ (function () {
             return __generator(this, function (_c) {
                 switch (_c.label) {
                     case 0:
-                        this.error = null;
+                        this._error = null;
                         _c.label = 1;
                     case 1:
                         _c.trys.push([1, 4, , 5]);
                         _a = this;
-                        return [4 /*yield*/, this._service.getPagesCount(this.pageSize, this.filter)];
+                        return [4 /*yield*/, this._service.getPagesCount(this._pageSize, this._filter)];
                     case 2:
-                        _a.totalPages = _c.sent();
+                        _a._totalPages = _c.sent();
                         _b = this;
-                        return [4 /*yield*/, this._service.getGrid(this.currentPage, this.pageSize, this.filter)];
+                        return [4 /*yield*/, this._service.getGrid(this._currentPage, this._pageSize, this._filter)];
                     case 3:
-                        _b.items = _c.sent();
-                        this.isShowEdit = new Array();
-                        for (i = 0; i < this.items.length; i++) {
-                            this.isShowEdit.push(false);
+                        _b._items = _c.sent();
+                        this._isShowEdit = new Array();
+                        for (i = 0; i < this._items.length; i++) {
+                            this._isShowEdit.push(false);
                         }
                         return [3 /*break*/, 5];
                     case 4:
                         e_2 = _c.sent();
-                        this.error = JSON.stringify(e_2.error);
+                        this._error = JSON.stringify(e_2.error);
                         return [3 /*break*/, 5];
                     case 5: return [2 /*return*/];
                 }
@@ -124,21 +124,21 @@ var CoreComponent = /** @class */ (function () {
             return __generator(this, function (_b) {
                 switch (_b.label) {
                     case 0:
-                        this.filter = new this.typeFilter();
+                        this._filter = new this.typeFilter();
                         _b.label = 1;
                     case 1:
                         _b.trys.push([1, 4, , 5]);
                         _a = this;
                         return [4 /*yield*/, this._service.getFilter()];
                     case 2:
-                        _a.filter = _b.sent();
+                        _a._filter = _b.sent();
                         return [4 /*yield*/, this.refreshPage()];
                     case 3:
                         _b.sent();
                         return [3 /*break*/, 5];
                     case 4:
                         e_3 = _b.sent();
-                        this.error = JSON.stringify(e_3.error);
+                        this._error = JSON.stringify(e_3.error);
                         return [3 /*break*/, 5];
                     case 5: return [2 /*return*/];
                 }
@@ -151,8 +151,8 @@ var CoreComponent = /** @class */ (function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        if (!(this.currentPage < this.totalPages)) return [3 /*break*/, 4];
-                        this.currentPage++;
+                        if (!(this._currentPage < this._totalPages)) return [3 /*break*/, 4];
+                        this._currentPage++;
                         _a.label = 1;
                     case 1:
                         _a.trys.push([1, 3, , 4]);
@@ -162,7 +162,7 @@ var CoreComponent = /** @class */ (function () {
                         return [3 /*break*/, 4];
                     case 3:
                         e_4 = _a.sent();
-                        this.error = JSON.stringify(e_4.error);
+                        this._error = JSON.stringify(e_4.error);
                         return [3 /*break*/, 4];
                     case 4: return [2 /*return*/];
                 }
@@ -175,8 +175,8 @@ var CoreComponent = /** @class */ (function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        if (!(this.currentPage > 1)) return [3 /*break*/, 4];
-                        this.currentPage--;
+                        if (!(this._currentPage > 1)) return [3 /*break*/, 4];
+                        this._currentPage--;
                         _a.label = 1;
                     case 1:
                         _a.trys.push([1, 3, , 4]);
@@ -186,7 +186,7 @@ var CoreComponent = /** @class */ (function () {
                         return [3 /*break*/, 4];
                     case 3:
                         e_5 = _a.sent();
-                        this.error = JSON.stringify(e_5.error);
+                        this._error = JSON.stringify(e_5.error);
                         return [3 /*break*/, 4];
                     case 4: return [2 /*return*/];
                 }
@@ -199,19 +199,19 @@ var CoreComponent = /** @class */ (function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        if (!this.isShowCreate) return [3 /*break*/, 1];
-                        this.isShowCreate = false;
+                        if (!this._isShowCreate) return [3 /*break*/, 1];
+                        this._isShowCreate = false;
                         return [3 /*break*/, 4];
                     case 1:
                         _a.trys.push([1, 3, , 4]);
                         return [4 /*yield*/, this.getCreate()];
                     case 2:
                         _a.sent();
-                        this.isShowCreate = true;
+                        this._isShowCreate = true;
                         return [3 /*break*/, 4];
                     case 3:
                         e_6 = _a.sent();
-                        this.error = JSON.stringify(e_6.error);
+                        this._error = JSON.stringify(e_6.error);
                         return [3 /*break*/, 4];
                     case 4: return [2 /*return*/];
                 }
@@ -224,19 +224,19 @@ var CoreComponent = /** @class */ (function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        if (!this.isShowEdit[index]) return [3 /*break*/, 1];
-                        this.isShowEdit[index] = false;
+                        if (!this._isShowEdit[index]) return [3 /*break*/, 1];
+                        this._isShowEdit[index] = false;
                         return [3 /*break*/, 4];
                     case 1:
                         _a.trys.push([1, 3, , 4]);
                         return [4 /*yield*/, this.getEdit(id)];
                     case 2:
                         _a.sent();
-                        this.isShowEdit[index] = true;
+                        this._isShowEdit[index] = true;
                         return [3 /*break*/, 4];
                     case 3:
                         e_7 = _a.sent();
-                        this.error = JSON.stringify(e_7.error);
+                        this._error = JSON.stringify(e_7.error);
                         return [3 /*break*/, 4];
                     case 4: return [2 /*return*/];
                 }
@@ -249,18 +249,18 @@ var CoreComponent = /** @class */ (function () {
             return __generator(this, function (_b) {
                 switch (_b.label) {
                     case 0:
-                        this.error = null;
+                        this._error = null;
                         _b.label = 1;
                     case 1:
                         _b.trys.push([1, 3, , 4]);
                         _a = this;
                         return [4 /*yield*/, this._service.getCreate()];
                     case 2:
-                        _a.itemCreate = _b.sent();
+                        _a._itemCreate = _b.sent();
                         return [3 /*break*/, 4];
                     case 3:
                         e_8 = _b.sent();
-                        this.error = JSON.stringify(e_8.error);
+                        this._error = JSON.stringify(e_8.error);
                         return [3 /*break*/, 4];
                     case 4: return [2 /*return*/];
                 }
@@ -273,18 +273,18 @@ var CoreComponent = /** @class */ (function () {
             return __generator(this, function (_b) {
                 switch (_b.label) {
                     case 0:
-                        this.error = null;
+                        this._error = null;
                         _b.label = 1;
                     case 1:
                         _b.trys.push([1, 3, , 4]);
                         _a = this;
                         return [4 /*yield*/, this._service.getEdit(id)];
                     case 2:
-                        _a.itemEdit = _b.sent();
+                        _a._itemEdit = _b.sent();
                         return [3 /*break*/, 4];
                     case 3:
                         e_9 = _b.sent();
-                        this.error = JSON.stringify(e_9.error);
+                        this._error = JSON.stringify(e_9.error);
                         return [3 /*break*/, 4];
                     case 4: return [2 /*return*/];
                 }
@@ -297,7 +297,7 @@ var CoreComponent = /** @class */ (function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        this.error = null;
+                        this._error = null;
                         _a.label = 1;
                     case 1:
                         _a.trys.push([1, 4, , 5]);
@@ -310,7 +310,7 @@ var CoreComponent = /** @class */ (function () {
                         return [3 /*break*/, 5];
                     case 4:
                         e_10 = _a.sent();
-                        this.error = JSON.stringify(e_10.error);
+                        this._error = JSON.stringify(e_10.error);
                         return [3 /*break*/, 5];
                     case 5: return [2 /*return*/];
                 }
@@ -323,14 +323,14 @@ var CoreComponent = /** @class */ (function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        this.error = null;
+                        this._error = null;
                         _a.label = 1;
                     case 1:
                         _a.trys.push([1, 5, , 6]);
-                        return [4 /*yield*/, this._service.postCreate(this.itemCreate)];
+                        return [4 /*yield*/, this._service.postCreate(this._itemCreate)];
                     case 2:
                         _a.sent();
-                        this.isShowCreate = false;
+                        this._isShowCreate = false;
                         return [4 /*yield*/, this.getCreate()];
                     case 3:
                         _a.sent();
@@ -340,7 +340,7 @@ var CoreComponent = /** @class */ (function () {
                         return [3 /*break*/, 6];
                     case 5:
                         e_11 = _a.sent();
-                        this.error = JSON.stringify(e_11.error);
+                        this._error = JSON.stringify(e_11.error);
                         return [3 /*break*/, 6];
                     case 6: return [2 /*return*/];
                 }
@@ -353,21 +353,21 @@ var CoreComponent = /** @class */ (function () {
             return __generator(this, function (_b) {
                 switch (_b.label) {
                     case 0:
-                        this.error = null;
+                        this._error = null;
                         _b.label = 1;
                     case 1:
                         _b.trys.push([1, 4, , 5]);
                         _a = this;
-                        return [4 /*yield*/, this._service.postEdit(this.itemEdit)];
+                        return [4 /*yield*/, this._service.postEdit(this._itemEdit)];
                     case 2:
-                        _a.itemEdit = _b.sent();
+                        _a._itemEdit = _b.sent();
                         return [4 /*yield*/, this.refreshPage()];
                     case 3:
                         _b.sent();
                         return [3 /*break*/, 5];
                     case 4:
                         e_12 = _b.sent();
-                        this.error = JSON.stringify(e_12.error);
+                        this._error = JSON.stringify(e_12.error);
                         return [3 /*break*/, 5];
                     case 5: return [2 /*return*/];
                 }

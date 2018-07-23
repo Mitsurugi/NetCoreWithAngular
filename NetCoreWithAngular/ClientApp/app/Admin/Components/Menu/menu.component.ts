@@ -1,4 +1,5 @@
 ﻿import { Component, OnInit } from '@angular/core';
+import { AccountGlobals } from '../../../../Core/AccountGlobals';
 
 @Component({
     selector: 'menu',
@@ -6,14 +7,18 @@
     styleUrls: ['./menu.component.css']
 })
 export class MenuComponent {
-    isExpanded = false;
-    role: string;
+    _isExpanded = false;
+    _accGlobals: AccountGlobals;
+
+    constructor(accGlobals: AccountGlobals) {
+        this._accGlobals = accGlobals;
+    }
 
     collapse() {
-        this.isExpanded = false;
+        this._isExpanded = false;
     }
 
     toggle() {
-        this.isExpanded = !this.isExpanded;
+        this._isExpanded = !this._isExpanded;
     }
 }

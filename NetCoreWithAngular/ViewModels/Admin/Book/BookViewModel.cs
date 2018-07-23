@@ -17,16 +17,15 @@ namespace NetCoreWithAngular.ViewModels
 
         public Genre? Genre { get; set; }
 
-        public List<SelectListItem> GenreList
+        public IEnumerable<SelectListItem> GenreList
         {
             get
             {
-                var list = new List<SelectListItem> { new SelectListItem { Value = "", Text = "", Selected = !Genre.HasValue }};
-                list.Add(new SelectListItem { Value = ((int)Models.Genre.Drama).ToString(), Text = Models.Genre.Drama.ToString(), Disabled = true });
-                list.Add(new SelectListItem { Value = ((int)Models.Genre.Fantasy).ToString(), Text = Models.Genre.Fantasy.ToString() });
-                list.Add(new SelectListItem { Value = ((int)Models.Genre.Horror).ToString(), Text = Models.Genre.Horror.ToString() });
-                list.Add(new SelectListItem { Value = ((int)Models.Genre.SciFi).ToString(), Text = Models.Genre.SciFi.ToString() });
-                return list;
+                yield return new SelectListItem { Value = "", Text = "", Selected = !Genre.HasValue };
+                yield return new SelectListItem { Value = ((int)Models.Genre.Drama).ToString(), Text = Models.Genre.Drama.ToString(), Disabled = true };
+                yield return new SelectListItem { Value = ((int)Models.Genre.Fantasy).ToString(), Text = Models.Genre.Fantasy.ToString() };
+                yield return new SelectListItem { Value = ((int)Models.Genre.Horror).ToString(), Text = Models.Genre.Horror.ToString() };
+                yield return new SelectListItem { Value = ((int)Models.Genre.SciFi).ToString(), Text = Models.Genre.SciFi.ToString() };
             }
         }
     }

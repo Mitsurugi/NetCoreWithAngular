@@ -44,15 +44,17 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { AccountGlobals } from './AccountGlobals';
 var TokenResponse = /** @class */ (function () {
     function TokenResponse() {
     }
     return TokenResponse;
 }());
 var CoreAccountService = /** @class */ (function () {
-    function CoreAccountService(http) {
+    function CoreAccountService(http, accGlobals) {
         this._loginPath = "/api/identity/gettoken";
         this._http = http;
+        this._accGlobals = accGlobals;
     }
     CoreAccountService.prototype.getToken = function (model) {
         return __awaiter(this, void 0, void 0, function () {
@@ -65,6 +67,9 @@ var CoreAccountService = /** @class */ (function () {
                         localStorage.setItem('token', data.token);
                         localStorage.setItem('login', data.login);
                         localStorage.setItem('role', data.role);
+                        this._accGlobals.isLogged = true;
+                        this._accGlobals.login = data.login;
+                        this._accGlobals.role = data.role;
                         return [2 /*return*/];
                 }
             });
@@ -74,6 +79,9 @@ var CoreAccountService = /** @class */ (function () {
         localStorage.removeItem("token");
         localStorage.removeItem("login");
         localStorage.removeItem("role");
+        this._accGlobals.isLogged = false;
+        this._accGlobals.login = "";
+        this._accGlobals.role = "";
     };
     CoreAccountService.prototype.isTokenPresent = function () {
         if (localStorage.getItem("token"))
@@ -89,7 +97,7 @@ var CoreAccountService = /** @class */ (function () {
     };
     CoreAccountService = __decorate([
         Injectable(),
-        __metadata("design:paramtypes", [HttpClient])
+        __metadata("design:paramtypes", [HttpClient, AccountGlobals])
     ], CoreAccountService);
     return CoreAccountService;
 }());

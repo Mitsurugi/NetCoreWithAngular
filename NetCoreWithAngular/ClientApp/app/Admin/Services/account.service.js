@@ -20,16 +20,17 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { CoreAccountService } from '../../../Core/account.service';
+import { AccountGlobals } from '../../../Core/AccountGlobals';
 var AccountService = /** @class */ (function (_super) {
     __extends(AccountService, _super);
-    function AccountService(http) {
-        var _this = _super.call(this, http) || this;
+    function AccountService(http, accGlobals) {
+        var _this = _super.call(this, http, accGlobals) || this;
         _this._loginPath = '/api/identity/gettoken';
         return _this;
     }
     AccountService = __decorate([
         Injectable(),
-        __metadata("design:paramtypes", [HttpClient])
+        __metadata("design:paramtypes", [HttpClient, AccountGlobals])
     ], AccountService);
     return AccountService;
 }(CoreAccountService));

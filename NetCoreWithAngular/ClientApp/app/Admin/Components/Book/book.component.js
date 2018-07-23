@@ -62,7 +62,7 @@ var BookComponent = /** @class */ (function (_super) {
     __extends(BookComponent, _super);
     function BookComponent(service) {
         var _this = _super.call(this, service, BookGrid, Book, Book, BookFilter) || this;
-        _this.pageSize = 3;
+        _this._pageSize = 3;
         return _this;
     }
     BookComponent.prototype.postCreate = function () {
@@ -70,7 +70,7 @@ var BookComponent = /** @class */ (function (_super) {
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        this.itemCreate.title = '*' + this.itemCreate.title + '*';
+                        this._itemCreate.title = '*' + this._itemCreate.title + '*';
                         return [4 /*yield*/, _super.prototype.postCreate.call(this)];
                     case 1:
                         _a.sent();

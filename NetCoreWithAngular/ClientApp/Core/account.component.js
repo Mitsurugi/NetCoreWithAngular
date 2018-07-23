@@ -44,18 +44,19 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 import { Component } from '@angular/core';
 import { CoreAccountService } from './account.service';
+import { AccountGlobals } from './AccountGlobals';
 var CoreAccountComponent = /** @class */ (function () {
-    function CoreAccountComponent(service, typeLogin) {
-        this.error = null;
-        this.isLogged = false;
+    function CoreAccountComponent(service, accGlobals, typeLogin) {
+        this._error = null;
         this._service = service;
-        this.loginData = new typeLogin();
+        this._accGlobals = accGlobals;
+        this._loginModel = new typeLogin();
         this.typeLogin = typeLogin;
     }
     CoreAccountComponent.prototype.ngOnInit = function () {
-        this.isLogged = this._service.isTokenPresent();
-        this.userName = this._service.getUserName();
-        this.role = this._service.getRole();
+        this._accGlobals.isLogged = this._service.isTokenPresent();
+        this._accGlobals.login = this._service.getUserName();
+        this._accGlobals.role = this._service.getRole();
     };
     CoreAccountComponent.prototype.getToken = function () {
         return __awaiter(this, void 0, void 0, function () {
@@ -63,20 +64,17 @@ var CoreAccountComponent = /** @class */ (function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        this.error = null;
+                        this._error = null;
                         _a.label = 1;
                     case 1:
                         _a.trys.push([1, 3, , 4]);
-                        return [4 /*yield*/, this._service.getToken(this.loginData)];
+                        return [4 /*yield*/, this._service.getToken(this._loginModel)];
                     case 2:
                         _a.sent();
-                        this.userName = this._service.getUserName();
-                        this.role = this._service.getRole();
-                        this.isLogged = true;
                         return [3 /*break*/, 4];
                     case 3:
                         e_1 = _a.sent();
-                        this.error = "Invalid login or password";
+                        this._error = "Invalid login or password";
                         return [3 /*break*/, 4];
                     case 4: return [2 /*return*/];
                 }
@@ -86,15 +84,14 @@ var CoreAccountComponent = /** @class */ (function () {
     CoreAccountComponent.prototype.deleteToken = function () {
         try {
             this._service.deleteToken();
-            this.isLogged = false;
         }
         catch (e) {
-            this.error = JSON.stringify(e);
+            this._error = JSON.stringify(e);
         }
     };
     CoreAccountComponent = __decorate([
         Component({}),
-        __metadata("design:paramtypes", [CoreAccountService, Function])
+        __metadata("design:paramtypes", [CoreAccountService, AccountGlobals, Function])
     ], CoreAccountComponent);
     return CoreAccountComponent;
 }());

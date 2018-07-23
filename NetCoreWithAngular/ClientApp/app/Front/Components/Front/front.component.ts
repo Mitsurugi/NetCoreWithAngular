@@ -11,18 +11,18 @@ import { AnimeService } from '../../../Admin/Services/anime.service';
 })
 export class FrontComponent implements OnInit {
 
-    anime: FrontData[];
-    books: FrontData[];
+    _anime: FrontData[];
+    _books: FrontData[];
 
     _service: FrontDataService;
     constructor(service: FrontDataService) {
         this._service = service;
-        this.anime = new Array<FrontData>();
-        this.books = new Array<FrontData>();
+        this._anime = new Array<FrontData>();
+        this._books = new Array<FrontData>();
     }
 
     ngOnInit() {
-        this._service.getAllAnime().subscribe((data: FrontData[]) => this.anime = data);
-        this._service.getAllBooks().subscribe((data: FrontData[]) => this.books = data);
+        this._service.getAllAnime().subscribe((data: FrontData[]) => this._anime = data);
+        this._service.getAllBooks().subscribe((data: FrontData[]) => this._books = data);
     }
 }

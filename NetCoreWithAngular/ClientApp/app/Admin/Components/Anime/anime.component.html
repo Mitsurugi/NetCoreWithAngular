@@ -1,11 +1,11 @@
 ﻿<h2>Anime</h2>
-<div *ngIf="error" class="form-group">
-    <span class="error">Error: {{error}}</span>
+<div *ngIf="_error" class="form-group">
+    <span class="error">Error: {{_error}}</span>
 </div>
 <div class="grid">
     <div class="pagination">
         <button class="btn btn-default" (click)="prevPage()">Previous</button>
-        <span>Page {{currentPage}} of {{totalPages}}</span>
+        <span>Page {{_currentPage}} of {{_totalPages}}</span>
         <button class="btn btn-default" (click)="nextPage()">Next</button>
     </div>
     <table class="table">
@@ -19,7 +19,7 @@
             </tr>
         </thead>
         <tbody>
-            <ng-template ngFor let-i [ngForOf]="items" let-n="index">
+            <ng-template ngFor let-i [ngForOf]="_items" let-n="index">
                 <tr>
                     <td>
                         {{i.id}}
@@ -37,7 +37,7 @@
                         <button class="btn btn-default" (click)="delete(i.id)">Delete</button>
                     </td>
                 </tr>
-                <tr *ngIf="isShowEdit[n]; then edit"></tr>
+                <tr *ngIf="_isShowEdit[n]; then edit"></tr>
             </ng-template>
         </tbody>
     </table>
@@ -45,7 +45,7 @@
 
 <div class="create-new">
     <button class="btn btn-default" (click)="toggleCreate()">Create new</button>
-    <div *ngIf="isShowCreate; then create"></div>
+    <div *ngIf="_isShowCreate; then create"></div>
 </div>
 
 <ng-template #edit>
@@ -55,7 +55,7 @@
                 <form #editForm="ngForm">
                     <div class="form-group col-sm-3">
                         <label>Title *</label>
-                        <input class="form-control" name="title" [(ngModel)]="itemEdit.title" #title="ngModel" type="text" required />
+                        <input class="form-control" name="title" [(ngModel)]="_itemEdit.title" #title="ngModel" type="text" required />
                         <div *ngIf="title.touched && title.invalid">
                             <p *ngIf="title.errors.required" class="validation-text">
                                 Title required
@@ -64,7 +64,7 @@
                     </div>
                     <div class="form-group col-sm-3">
                         <label>Season count *</label>
-                        <input class="form-control" name="seasonCount" [(ngModel)]="itemEdit.seasonCount" #seasonCount="ngModel" type="number" required />
+                        <input class="form-control" name="seasonCount" [(ngModel)]="_itemEdit.seasonCount" #seasonCount="ngModel" type="number" required />
                         <div *ngIf="seasonCount.touched && seasonCount.invalid">
                             <p *ngIf="seasonCount.errors.required" class="validation-text">
                                 Season count required
@@ -86,7 +86,7 @@
         <form #createForm="ngForm">
             <div class="form-group col-sm-3">
                 <label>Title *</label>
-                <input class="form-control" name="title" [(ngModel)]="itemCreate.title" #title="ngModel" type="text" required />
+                <input class="form-control" name="title" [(ngModel)]="_itemCreate.title" #title="ngModel" type="text" required />
                 <div *ngIf="title.touched && title.invalid">
                     <p *ngIf="title.errors.required" class="validation-text">
                         Title required
@@ -95,7 +95,7 @@
             </div>
             <div class="form-group col-sm-3">
                 <label>Season count *</label>
-                <input class="form-control" name="seasonCount" [(ngModel)]="itemCreate.seasonCount" #seasonCount="ngModel" type="number" required />
+                <input class="form-control" name="seasonCount" [(ngModel)]="_itemCreate.seasonCount" #seasonCount="ngModel" type="number" required />
                 <div *ngIf="seasonCount.touched && seasonCount.invalid">
                     <p *ngIf="seasonCount.errors.required" class="validation-text">
                         Season count required

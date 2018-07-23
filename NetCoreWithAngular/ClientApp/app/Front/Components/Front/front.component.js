@@ -12,13 +12,13 @@ import { FrontDataService } from '../../Services/frontData.service';
 var FrontComponent = /** @class */ (function () {
     function FrontComponent(service) {
         this._service = service;
-        this.anime = new Array();
-        this.books = new Array();
+        this._anime = new Array();
+        this._books = new Array();
     }
     FrontComponent.prototype.ngOnInit = function () {
         var _this = this;
-        this._service.getAllAnime().subscribe(function (data) { return _this.anime = data; });
-        this._service.getAllBooks().subscribe(function (data) { return _this.books = data; });
+        this._service.getAllAnime().subscribe(function (data) { return _this._anime = data; });
+        this._service.getAllBooks().subscribe(function (data) { return _this._books = data; });
     };
     FrontComponent = __decorate([
         Component({

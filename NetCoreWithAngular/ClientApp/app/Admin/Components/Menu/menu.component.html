@@ -17,12 +17,12 @@
                         Account
                     </a>
                 </li>
-                <li [routerLinkActive]='["link-active"]' [routerLinkActiveOptions]='{ exact: true }'>
+                <li *ngIf="_accGlobals.isLogged == true" [routerLinkActive]='["link-active"]' [routerLinkActiveOptions]='{ exact: true }'>
                     <a [routerLink]='["/admin/anime"]' (click)='collapse()'>
                         Anime
                     </a>
                 </li>
-                <li *ngIf="localStorage.getItem('role') == 'Admin'" [routerLinkActive]='["link-active"]'>
+                <li *ngIf="_accGlobals.isLogged == true && _accGlobals.role == 'Admin'" [routerLinkActive]='["link-active"]'>
                     <a [routerLink]='["/admin/book"]' (click)='collapse()'>
                         Books
                     </a>

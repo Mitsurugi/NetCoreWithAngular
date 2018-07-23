@@ -21,10 +21,11 @@ import { Component } from '@angular/core';
 import { CoreAccountComponent } from '../../../../Core/account.component';
 import { AccountService } from '../../Services/account.service';
 import { LoginModel } from '../../Models/login';
+import { AccountGlobals } from '../../../../Core/AccountGlobals';
 var AccountComponent = /** @class */ (function (_super) {
     __extends(AccountComponent, _super);
-    function AccountComponent(service) {
-        return _super.call(this, service, LoginModel) || this;
+    function AccountComponent(service, accGlobals) {
+        return _super.call(this, service, accGlobals, LoginModel) || this;
     }
     AccountComponent = __decorate([
         Component({
@@ -33,7 +34,7 @@ var AccountComponent = /** @class */ (function (_super) {
             styleUrls: ['./account.component.css'],
             providers: [AccountService]
         }),
-        __metadata("design:paramtypes", [AccountService])
+        __metadata("design:paramtypes", [AccountService, AccountGlobals])
     ], AccountComponent);
     return AccountComponent;
 }(CoreAccountComponent));

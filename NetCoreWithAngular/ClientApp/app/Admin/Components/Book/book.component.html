@@ -1,17 +1,17 @@
 ﻿<h2>Books</h2>
-<div *ngIf="error" class="form-group">
-    <span class="error">Error: {{error}}</span>
+<div *ngIf="_error" class="form-group">
+    <span class="error">Error: {{_error}}</span>
 </div>
 <div class="filter">
     <h3>Filter</h3>
     <form #filterForm="ngForm">
         <div class="form-group col-sm-3">
             <label>Title</label>
-            <input class="form-control" name="title" [(ngModel)]="filter.title" #title="ngModel" type="text" />
+            <input class="form-control" name="title" [(ngModel)]="_filter.title" #title="ngModel" type="text" />
         </div>
         <div class="form-group col-sm-3">
             <label>Author</label>
-            <input class="form-control" name="author" [(ngModel)]="filter.author" #author="ngModel" type="text" pattern="^[a-zA-Z\s]*$" />
+            <input class="form-control" name="author" [(ngModel)]="_filter.author" #author="ngModel" type="text" pattern="^[a-zA-Z\s]*$" />
             <div *ngIf="author.touched && author.invalid">
                 <p *ngIf="author.errors.pattern" class="validation-text">
                     Only letters allowed
@@ -20,15 +20,15 @@
         </div>
         <div class="form-group col-sm-3">
             <label>Genre</label>
-            <select class="form-control" name="genre" [(ngModel)]="filter.genre" #genre="ngModel">
-                <ng-template ngFor let-i [ngForOf]="filter.genreList" let-n="index">
+            <select class="form-control" name="genre" [(ngModel)]="_filter.genre" #genre="ngModel">
+                <ng-template ngFor let-i [ngForOf]="_filter.genreList" let-n="index">
                     <option value="{{i.value}}" [disabled]="i.disabled">{{i.text}}</option>
                 </ng-template>
             </select>
         </div>
         <div class="form-group col-sm-3">
             <label>Page count</label>
-            <input class="form-control" name="pageCount" [(ngModel)]="filter.pageCount" #pageCount="ngModel" type="number" />
+            <input class="form-control" name="pageCount" [(ngModel)]="_filter.pageCount" #pageCount="ngModel" type="number" />
         </div>
         <div class="form-group col-sm-5">
             <button class="btn btn-default" (click)="refreshPage()" [disabled]="filterForm.invalid">Apply</button>
@@ -42,7 +42,7 @@
 <div class="grid">
     <div class="pagination">
         <button class="btn btn-default" (click)="prevPage()">Previous</button>
-        <span>Page {{currentPage}} of {{totalPages}}</span>
+        <span>Page {{_currentPage}} of {{_totalPages}}</span>
         <button class="btn btn-default" (click)="nextPage()">Next</button>
     </div>
     <table class="table">
@@ -58,7 +58,7 @@
             </tr>
         </thead>
         <tbody>
-            <ng-template ngFor let-i [ngForOf]="items" let-n="index">
+            <ng-template ngFor let-i [ngForOf]="_items" let-n="index">
                 <tr>
                     <td>
                         {{i.id}}
@@ -82,7 +82,7 @@
                         <button class="btn btn-default" (click)="delete(i.id)">Delete</button>
                     </td>
                 </tr>
-                <tr *ngIf="isShowEdit[n]; then edit"></tr>
+                <tr *ngIf="_isShowEdit[n]; then edit"></tr>
             </ng-template>
         </tbody>
     </table>
@@ -90,7 +90,7 @@
 
 <div class="create-new">
     <button class="btn btn-default" (click)="toggleCreate()">Create new</button>
-    <div *ngIf="isShowCreate; then create"></div>
+    <div *ngIf="_isShowCreate; then create"></div>
 </div>
 
 <ng-template #edit>
@@ -100,7 +100,7 @@
                 <form #editForm="ngForm">
                     <div class="form-group col-sm-3">
                         <label>Title *</label>
-                        <input class="form-control" name="title" [(ngModel)]="itemEdit.title" #title="ngModel" type="text" required />
+                        <input class="form-control" name="title" [(ngModel)]="_itemEdit.title" #title="ngModel" type="text" required />
                         <div *ngIf="title.touched && title.invalid">
                             <p *ngIf="title.errors.required" class="validation-text">
                                 Title required
@@ -109,7 +109,7 @@
                     </div>
                     <div class="form-group col-sm-3">
                         <label>Author *</label>
-                        <input class="form-control" name="author" [(ngModel)]="itemEdit.author" #author="ngModel" type="text" required pattern="^[a-zA-Z\s]*$" />
+                        <input class="form-control" name="author" [(ngModel)]="_itemEdit.author" #author="ngModel" type="text" required pattern="^[a-zA-Z\s]*$" />
                         <div *ngIf="author.touched && author.invalid">
                             <p *ngIf="author.errors.required" class="validation-text">
                                 Author required
@@ -121,15 +121,15 @@
                     </div>
                     <div class="form-group col-sm-3">
                         <label>Genre</label>
-                        <select class="form-control" name="genre" [(ngModel)]="itemEdit.genre" #genre="ngModel">
-                            <ng-template ngFor let-i [ngForOf]="itemEdit.genreList" let-n="index">
+                        <select class="form-control" name="genre" [(ngModel)]="_itemEdit.genre" #genre="ngModel">
+                            <ng-template ngFor let-i [ngForOf]="_itemEdit.genreList" let-n="index">
                                 <option value="{{i.value}}" [disabled]="i.disabled">{{i.text}}</option>
                             </ng-template>
                         </select>
                     </div>
                     <div class="form-group col-sm-3">
                         <label>Page count *</label>
-                        <input class="form-control" name="pageCount" [(ngModel)]="itemEdit.pageCount" #pageCount="ngModel" type="text" required />
+                        <input class="form-control" name="pageCount" [(ngModel)]="_itemEdit.pageCount" #pageCount="ngModel" type="text" required />
                         <div *ngIf="pageCount.touched && pageCount.invalid">
                             <p *ngIf="pageCount.errors.required" class="validation-text">
                                 Page count required
@@ -151,7 +151,7 @@
         <form #createForm="ngForm">
             <div class="form-group col-sm-3">
                 <label>Title *</label>
-                <input class="form-control" name="title" [(ngModel)]="itemCreate.title" #title="ngModel" type="text" required />
+                <input class="form-control" name="title" [(ngModel)]="_itemCreate.title" #title="ngModel" type="text" required />
                 <div *ngIf="title.touched && title.invalid">
                     <p *ngIf="title.errors.required" class="validation-text">
                         Title required
@@ -160,7 +160,7 @@
             </div>
             <div class="form-group col-sm-3">
                 <label>Author *</label>
-                <input class="form-control" name="author" [(ngModel)]="itemCreate.author" #author="ngModel" type="text" required pattern="^[a-zA-Z\s]*$" />
+                <input class="form-control" name="author" [(ngModel)]="_itemCreate.author" #author="ngModel" type="text" required pattern="^[a-zA-Z\s]*$" />
                 <div *ngIf="author.touched && author.invalid">
                     <p *ngIf="author.errors.required" class="validation-text">
                         Author required
@@ -172,15 +172,15 @@
             </div>
             <div class="form-group col-sm-3">
                 <label>Genre</label>
-                <select class="form-control" name="genre" [(ngModel)]="itemCreate.genre" #genre="ngModel">
-                    <ng-template ngFor let-i [ngForOf]="itemCreate.genreList" let-n="index">
+                <select class="form-control" name="genre" [(ngModel)]="_itemCreate.genre" #genre="ngModel">
+                    <ng-template ngFor let-i [ngForOf]="_itemCreate.genreList" let-n="index">
                         <option value="{{i.value}}" [disabled]="i.disabled">{{i.text}}</option>
                     </ng-template>
                 </select>
             </div>
             <div class="form-group col-sm-3">
                 <label>Page count *</label>
-                <input class="form-control" name="pageCount" [(ngModel)]="itemCreate.pageCount" #pageCount="ngModel" type="number" required />
+                <input class="form-control" name="pageCount" [(ngModel)]="_itemCreate.pageCount" #pageCount="ngModel" type="number" required />
                 <div *ngIf="pageCount.touched && pageCount.invalid">
                     <p *ngIf="pageCount.errors.required" class="validation-text">
                         Page count required

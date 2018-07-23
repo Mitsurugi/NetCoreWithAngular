@@ -23,6 +23,7 @@
     <None Remove="ClientApp\app\Admin\Components\Menu\menu.component.ts" />
     <None Remove="ClientApp\Core\account.component.ts" />
     <None Remove="ClientApp\Core\account.service.ts" />
+    <None Remove="ClientApp\Core\AccountGlobals.ts" />
     <None Remove="ClientApp\Core\core.component.ts" />
     <None Remove="ClientApp\Core\core.service.ts" />
     <None Remove="ClientApp\app\Admin\Models\Anime.ts" />
@@ -68,6 +69,7 @@
     <TypeScriptCompile Include="ClientApp\app\Front\Services\frontData.service.ts" />
     <TypeScriptCompile Include="ClientApp\Core\account.service.ts" />
     <TypeScriptCompile Include="ClientApp\Core\account.component.ts" />
+    <TypeScriptCompile Include="ClientApp\Core\AccountGlobals.ts" />
     <TypeScriptCompile Include="ClientApp\Core\SelectListItem.ts" />
     <TypeScriptCompile Include="ClientApp\Core\token.interceptor.ts" />
     <TypeScriptCompile Include="ClientApp\Core\core.component.ts" />
@@ -104,6 +106,9 @@
     </None>
     <None Update="ClientApp\app\Front\Services\frontData.service.js">
       <DependentUpon>frontData.service.ts</DependentUpon>
+    </None>
+    <None Update="ClientApp\Core\SelectListItem - Copy.js">
+      <DependentUpon>SelectListItem.ts</DependentUpon>
     </None>
     <None Update="ClientApp\Core\SelectListItem.js">
       <DependentUpon>SelectListItem.ts</DependentUpon>
