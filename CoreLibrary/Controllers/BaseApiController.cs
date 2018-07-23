@@ -122,5 +122,13 @@ namespace CoreLibrary
         {
             return await _service.GetFilter();
         }
+
+        [HttpPost]
+        public virtual async Task<IActionResult> ExcelExport(TFilter filter)
+        {
+            string FileName = typeof(TEntity).ToString();
+            byte[] reportData = await _service.ExcelExport(filter);
+            return File(reportData, "application/vnd.openxmlformat");
+        }
     }
 }

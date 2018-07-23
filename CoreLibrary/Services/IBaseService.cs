@@ -22,5 +22,6 @@ namespace CoreLibrary
         Task<int> GetPagesCount(int pageSize, TFilter filter);
         Task<List<TGrid>> GetGrid(int pageSize, int pageNumber, TFilter filter);
         Task<TFilter> GetFilter();
+        Task<byte[]> ExcelExport(TFilter filter);
     }
 }

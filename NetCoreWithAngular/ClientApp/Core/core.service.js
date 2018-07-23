@@ -131,6 +131,16 @@ var CoreService = /** @class */ (function () {
             });
         });
     };
+    CoreService.prototype.getExcelExport = function (filter) {
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, this._http.post('api/' + this._controller + '/ExcelExport', filter, { responseType: 'blob' }).toPromise()];
+                    case 1: return [2 /*return*/, _a.sent()];
+                }
+            });
+        });
+    };
     CoreService = __decorate([
         Injectable(),
         __metadata("design:paramtypes", [HttpClient])

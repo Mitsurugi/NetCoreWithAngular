@@ -44,6 +44,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 import { Component } from '@angular/core';
 import { CoreService } from './core.service';
+import { saveAs } from 'file-saver';
 var CoreComponent = /** @class */ (function () {
     function CoreComponent(service, typeGrid, typeCreate, typeEdit, typeFilter) {
         this._currentPage = 1;
@@ -370,6 +371,30 @@ var CoreComponent = /** @class */ (function () {
                         this._error = JSON.stringify(e_12.error);
                         return [3 /*break*/, 5];
                     case 5: return [2 /*return*/];
+                }
+            });
+        });
+    };
+    CoreComponent.prototype.excelExport = function () {
+        return __awaiter(this, void 0, void 0, function () {
+            var b, e_13;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        this._error = null;
+                        _a.label = 1;
+                    case 1:
+                        _a.trys.push([1, 3, , 4]);
+                        return [4 /*yield*/, this._service.getExcelExport(this._filter)];
+                    case 2:
+                        b = _a.sent();
+                        saveAs(b, "ExcelExport.xlsx");
+                        return [3 /*break*/, 4];
+                    case 3:
+                        e_13 = _a.sent();
+                        this._error = JSON.stringify(e_13.error);
+                        return [3 /*break*/, 4];
+                    case 4: return [2 /*return*/];
                 }
             });
         });

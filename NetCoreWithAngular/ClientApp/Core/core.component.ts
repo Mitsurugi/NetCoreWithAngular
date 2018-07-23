@@ -1,5 +1,6 @@
 ﻿import { Component, OnInit } from '@angular/core';
 import { CoreService } from './core.service';
+import { saveAs } from 'file-saver';
 
 @Component({
 })
@@ -175,6 +176,17 @@ export class CoreComponent<TGrid, TCreate, TEdit, TFilter> implements OnInit {
         try {
             this._itemEdit = await this._service.postEdit(this._itemEdit);
             await this.refreshPage();
+        }
+        catch (e) {
+            this._error = JSON.stringify(e.error);
+        }
+    }
+
+    async excelExport() {
+        this._error = null;
+        try {
+            let b = await this._service.getExcelExport(this._filter);
+            saveAs(b, "ExcelExport.xlsx");
         }
         catch (e) {
             this._error = JSON.stringify(e.error);

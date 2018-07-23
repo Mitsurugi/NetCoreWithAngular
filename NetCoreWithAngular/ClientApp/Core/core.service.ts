@@ -42,4 +42,8 @@ export class CoreService<TGrid, TCreate, TEdit, TFilter> {
     async getFilter(): Promise<TFilter> {
         return await this._http.get<TFilter>('api/' + this._controller + '/getFilter').toPromise();
     }
+    async getExcelExport(filter: TFilter): Promise<Blob> {
+        return await this._http.post<Blob>('api/' + this._controller + '/ExcelExport', filter, { responseType: 'blob' as 'json' }).toPromise();
+        
+    }
 }

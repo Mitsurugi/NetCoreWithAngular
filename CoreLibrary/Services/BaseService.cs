@@ -1,10 +1,13 @@
 ﻿using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
 using Microsoft.EntityFrameworkCore;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
+using ClosedXML.Excel;
 
 namespace CoreLibrary
 {
@@ -116,6 +119,50 @@ namespace CoreLibrary
         protected virtual IQueryable<TEntity> ApplyFilter(IQueryable<TEntity> query, TFilter filter)
         {
             return query;
+        }
+
+        public virtual async Task<byte[]> ExcelExport(TFilter filter)
+        {
+            var query = ApplyFilter(GetQuery(), filter);
+            var grid = await query.ProjectTo<TGrid>().ToListAsync();
+
+            var wb = new XLWorkbook();
+            var ws = wb.Worksheets.Add("Export");
+
+            int i = 1;
+            ws.Row(i).Style.Font.Bold = true;
+            var fields = typeof(TGrid).GetProperties();
+
+            int c = 1;
+            foreach (var field in fields)
+            {
+                var attr = field.GetCustomAttributes(typeof(DisplayAttribute), false).FirstOrDefault() as DisplayAttribute;
+                if (attr != null && !string.IsNullOrEmpty(attr.Name))
+                {
+                    ws.Row(i).Cell(c).Value = attr.Name;
+                } else
+                {
+                    ws.Row(i).Cell(c).Value = field.Name;
+                }                
+                c++;
+            }
+
+            i++;
+            foreach(var item in grid)
+            {
+                c = 1;
+                foreach (var field in fields)
+                {
+                    ws.Row(i).Cell(c).Value = typeof(TGrid).GetProperty(field.Name).GetValue(item);
+                    c++;
+                }
+                i++;
+            }
+
+            ws.Columns().AdjustToContents();
+            var ms = new MemoryStream();
+            wb.SaveAs(ms);
+            return ms.ToArray();
         }
     }
 }
