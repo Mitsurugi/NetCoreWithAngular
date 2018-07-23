@@ -67,9 +67,7 @@ var CoreAccountService = /** @class */ (function () {
                         localStorage.setItem('token', data.token);
                         localStorage.setItem('login', data.login);
                         localStorage.setItem('role', data.role);
-                        this._accGlobals.isLogged = true;
-                        this._accGlobals.login = data.login;
-                        this._accGlobals.role = data.role;
+                        this._accGlobals.refresh();
                         return [2 /*return*/];
                 }
             });
@@ -79,21 +77,7 @@ var CoreAccountService = /** @class */ (function () {
         localStorage.removeItem("token");
         localStorage.removeItem("login");
         localStorage.removeItem("role");
-        this._accGlobals.isLogged = false;
-        this._accGlobals.login = "";
-        this._accGlobals.role = "";
-    };
-    CoreAccountService.prototype.isTokenPresent = function () {
-        if (localStorage.getItem("token"))
-            return true;
-        else
-            return false;
-    };
-    CoreAccountService.prototype.getUserName = function () {
-        return localStorage.getItem("login");
-    };
-    CoreAccountService.prototype.getRole = function () {
-        return localStorage.getItem("role");
+        this._accGlobals.refresh();
     };
     CoreAccountService = __decorate([
         Injectable(),

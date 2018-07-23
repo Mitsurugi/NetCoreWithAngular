@@ -14,6 +14,9 @@ var MenuComponent = /** @class */ (function () {
         this._isExpanded = false;
         this._accGlobals = accGlobals;
     }
+    MenuComponent.prototype.ngOnInit = function () {
+        this._accGlobals.refresh();
+    };
     MenuComponent.prototype.collapse = function () {
         this._isExpanded = false;
     };

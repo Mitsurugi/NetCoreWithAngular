@@ -141,6 +141,30 @@ var CoreService = /** @class */ (function () {
             });
         });
     };
+    CoreService.prototype.getImportTemplate = function () {
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, this._http.get('api/' + this._controller + '/ImportTemplate', { responseType: 'blob' }).toPromise()];
+                    case 1: return [2 /*return*/, _a.sent()];
+                }
+            });
+        });
+    };
+    CoreService.prototype.postImport = function (file) {
+        return __awaiter(this, void 0, void 0, function () {
+            var formData;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        formData = new FormData();
+                        formData.append("file", file);
+                        return [4 /*yield*/, this._http.post('/api/' + this._controller + '/import', formData).toPromise()];
+                    case 1: return [2 /*return*/, _a.sent()];
+                }
+            });
+        });
+    };
     CoreService = __decorate([
         Injectable(),
         __metadata("design:paramtypes", [HttpClient])

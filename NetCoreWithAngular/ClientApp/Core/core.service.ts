@@ -43,7 +43,14 @@ export class CoreService<TGrid, TCreate, TEdit, TFilter> {
         return await this._http.get<TFilter>('api/' + this._controller + '/getFilter').toPromise();
     }
     async getExcelExport(filter: TFilter): Promise<Blob> {
-        return await this._http.post<Blob>('api/' + this._controller + '/ExcelExport', filter, { responseType: 'blob' as 'json' }).toPromise();
-        
+        return await this._http.post<Blob>('api/' + this._controller + '/ExcelExport', filter, { responseType: 'blob' as 'json' }).toPromise();        
+    }
+    async getImportTemplate(): Promise<Blob> {
+        return await this._http.get<Blob>('api/' + this._controller + '/ImportTemplate', { responseType: 'blob' as 'json' }).toPromise();
+    }
+    async postImport(file: File) {
+        let formData = new FormData();
+        formData.append("file", file);
+        return await this._http.post('/api/' + this._controller + '/import', formData).toPromise();
     }
 }

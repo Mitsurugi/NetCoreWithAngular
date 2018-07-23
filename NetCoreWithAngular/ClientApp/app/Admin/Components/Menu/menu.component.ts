@@ -6,12 +6,16 @@ import { AccountGlobals } from '../../../../Core/AccountGlobals';
     templateUrl: './menu.component.html',
     styleUrls: ['./menu.component.css']
 })
-export class MenuComponent {
+export class MenuComponent implements OnInit {    
     _isExpanded = false;
     _accGlobals: AccountGlobals;
 
     constructor(accGlobals: AccountGlobals) {
         this._accGlobals = accGlobals;
+    }
+
+    ngOnInit() {
+        this._accGlobals.refresh();
     }
 
     collapse() {

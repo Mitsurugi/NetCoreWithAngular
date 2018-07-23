@@ -18,6 +18,9 @@ export class CoreComponent<TGrid, TCreate, TEdit, TFilter> implements OnInit {
     _error: string = null;
     _isShowCreate = false;
     _isShowEdit: boolean[] = new Array<boolean>();
+    _importFile: File = null;
+    _importResult: string;
+    _isShowImport: boolean;
 
     typeGrid: (new () => TGrid);
     typeCreate: (new () => TCreate);
@@ -105,6 +108,21 @@ export class CoreComponent<TGrid, TCreate, TEdit, TFilter> implements OnInit {
             try {
                 await this.getCreate();
                 this._isShowCreate = true;
+                this._isShowImport = false;
+            }
+            catch (e) {
+                this._error = JSON.stringify(e.error);
+            }
+        }
+    }
+    async toggleImport() {
+        if (this._isShowImport) {
+            this._isShowImport = false;
+        }
+        else {
+            try {
+                this._isShowImport = true;
+                this._isShowCreate = false;
             }
             catch (e) {
                 this._error = JSON.stringify(e.error);
@@ -191,5 +209,36 @@ export class CoreComponent<TGrid, TCreate, TEdit, TFilter> implements OnInit {
         catch (e) {
             this._error = JSON.stringify(e.error);
         }
+    }
+
+    async importTemplate() {
+        this._error = null;
+        try {
+            let b = await this._service.getImportTemplate();
+            saveAs(b, "ImportTemplate.xlsx");
+        }
+        catch (e) {
+            this._error = JSON.stringify(e.error);
+        }
+    }
+
+    async postImport() {
+        if (this._importFile == null) {
+            this._importResult = "Import file not selected";
+        }
+        else {
+            try {
+                await this._service.postImport(this._importFile);
+                await this.refreshPage();
+                this._importResult = "Import successful";
+            }
+            catch (e) {
+                this._importResult = JSON.stringify(e.error.Message);
+            }
+        }        
+    }
+
+    setImportFile(file: File) {
+        this._importFile = file;
     }
 }

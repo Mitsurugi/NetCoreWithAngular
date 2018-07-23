@@ -1,12 +1,14 @@
-﻿.pagination span {
-    padding:10px;
+﻿a {
+    cursor: pointer;
+}
+.btn {
+    margin: 0px 5px;
+}
+.pagination span {
+    padding: 5px;
 }
 .error {
     color:red;
-}
-.create-new > div {
-    border: 1px solid grey;
-    padding: 10px;
 }
 .validation-text {
     color: red;
@@ -24,4 +26,8 @@
 }
 .create-new {
     padding:10px;
+}
+.create-new > div {
+    border: 1px solid grey;
+    padding: 10px;
 }

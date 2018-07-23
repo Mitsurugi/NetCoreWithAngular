@@ -1,7 +1,9 @@
 ﻿using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Http;
 
 namespace CoreLibrary
 {
@@ -126,9 +128,31 @@ namespace CoreLibrary
         [HttpPost]
         public virtual async Task<IActionResult> ExcelExport(TFilter filter)
         {
-            string FileName = typeof(TEntity).ToString();
             byte[] reportData = await _service.ExcelExport(filter);
             return File(reportData, "application/vnd.openxmlformat");
+        }
+
+        [HttpGet]
+        public virtual async Task<IActionResult> ImportTemplate()
+        {
+            byte[] reportData = await _service.ImportTemplate();
+            return File(reportData, "application/vnd.openxmlformat");
+        }
+
+        [HttpPost]
+        public virtual async Task<IActionResult> Import(IFormFile file)
+        {
+            if (file == null)
+                return BadRequest("File is null");
+            try
+            {                
+                await _service.Import(file.OpenReadStream());
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
+            return Ok();
         }
     }
 }

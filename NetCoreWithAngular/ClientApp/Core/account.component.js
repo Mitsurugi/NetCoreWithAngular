@@ -54,9 +54,7 @@ var CoreAccountComponent = /** @class */ (function () {
         this.typeLogin = typeLogin;
     }
     CoreAccountComponent.prototype.ngOnInit = function () {
-        this._accGlobals.isLogged = this._service.isTokenPresent();
-        this._accGlobals.login = this._service.getUserName();
-        this._accGlobals.role = this._service.getRole();
+        this._accGlobals.refresh();
     };
     CoreAccountComponent.prototype.getToken = function () {
         return __awaiter(this, void 0, void 0, function () {

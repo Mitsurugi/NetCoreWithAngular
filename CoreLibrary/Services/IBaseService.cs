@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.IO;
 
 namespace CoreLibrary
 {
@@ -23,5 +24,7 @@ namespace CoreLibrary
         Task<List<TGrid>> GetGrid(int pageSize, int pageNumber, TFilter filter);
         Task<TFilter> GetFilter();
         Task<byte[]> ExcelExport(TFilter filter);
+        Task<byte[]> ImportTemplate();
+        Task Import(Stream file);
     }
 }

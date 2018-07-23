@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using ClosedXML.Excel;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace CoreLibrary
 {
@@ -51,7 +52,7 @@ namespace CoreLibrary
         public virtual async Task<TCreate> Create()
         {
             return new TCreate();
-        }        
+        }
 
         public virtual async Task<TEdit> Edit(TEdit editView)
         {
@@ -140,15 +141,16 @@ namespace CoreLibrary
                 if (attr != null && !string.IsNullOrEmpty(attr.Name))
                 {
                     ws.Row(i).Cell(c).Value = attr.Name;
-                } else
+                }
+                else
                 {
                     ws.Row(i).Cell(c).Value = field.Name;
-                }                
+                }
                 c++;
             }
 
             i++;
-            foreach(var item in grid)
+            foreach (var item in grid)
             {
                 c = 1;
                 foreach (var field in fields)
@@ -163,6 +165,169 @@ namespace CoreLibrary
             var ms = new MemoryStream();
             wb.SaveAs(ms);
             return ms.ToArray();
+        }
+
+        public virtual async Task<byte[]> ImportTemplate()
+        {
+            var wb = new XLWorkbook();
+            var ws = wb.Worksheets.Add("Import");
+
+            int i = 1;
+            ws.Row(i).Style.Font.Bold = true;
+            var fields = typeof(TCreate).GetProperties();
+
+            int c = 1;
+            foreach (var field in fields)
+            {
+                var ignore = field.GetCustomAttributes(typeof(ImportIgnoreAttribute), false).FirstOrDefault() as ImportIgnoreAttribute;
+                if (ignore != null)
+                    continue;
+
+                var display = field.GetCustomAttributes(typeof(DisplayAttribute), false).FirstOrDefault() as DisplayAttribute;
+                if (display != null && !string.IsNullOrEmpty(display.Name))
+                {
+                    ws.Row(i).Cell(c).Value = display.Name;
+                }
+                else
+                {
+                    ws.Row(i).Cell(c).Value = field.Name;
+                }
+                c++;
+            }
+
+            ws.Columns().AdjustToContents();
+            var ms = new MemoryStream();
+            wb.SaveAs(ms);
+            return ms.ToArray();
+        }
+
+        public virtual async Task Import(Stream file)
+        {
+            var workbook = new XLWorkbook(file);
+            var rows = workbook.Worksheet(1).RowsUsed().Skip(1);
+
+            var items = new List<TCreate>();
+            string errors = "";
+
+
+            var fields = new List<System.Reflection.PropertyInfo>();
+            foreach (var field in typeof(TCreate).GetProperties())
+            {
+                var ignore = field.GetCustomAttributes(typeof(ImportIgnoreAttribute), false).FirstOrDefault() as ImportIgnoreAttribute;
+                if (ignore == null)
+                    fields.Add(field);
+            }
+
+            int rowNumber = 1;
+            foreach (var row in rows)
+            {
+                rowNumber++;
+                var item = new TCreate();
+
+                int colNumber = 0;
+                foreach (var field in fields)
+                {
+                    colNumber++;
+                    var cell = row.Cell(colNumber);                    
+                    try
+                    {                        
+                        string strVal = cell.GetValue<string>().Trim();
+                        var req = field.GetCustomAttributes(typeof(RequiredAttribute), false).FirstOrDefault() as RequiredAttribute;                        
+                        if (string.IsNullOrEmpty(strVal))
+                        {
+                            if (req != null)
+                            {
+                                throw new Exception("Value required");
+                            }
+                            continue;
+                        }
+
+                        var hasList = field.GetCustomAttributes(typeof(HasListAttribute), false).FirstOrDefault() as HasListAttribute;
+                        if (hasList != null && !string.IsNullOrEmpty(hasList.ListPropertyName))
+                        {
+                            var p = typeof(TCreate).GetProperty(hasList.ListPropertyName);
+                            if (p == null)
+                                throw new Exception($"HasListAttribute('{hasList.ListPropertyName}') invalid list attribute. Model property with name '{hasList.ListPropertyName}' not found");
+                            var list = p.GetValue(item) as IEnumerable<SelectListItem>;
+                            if (list == null)
+                                throw new Exception($"HasListAttribute('{hasList.ListPropertyName}') invalid list attribute. Model property with name '{hasList.ListPropertyName}' is not a 'IEnumerable<SelectListItem>'");
+
+                            var listItem = list.FirstOrDefault(i => i.Text.Equals(strVal, StringComparison.InvariantCultureIgnoreCase));
+                            if (listItem == null)
+                                throw new Exception($"Not found");
+                            strVal = listItem.Value;
+                        }
+
+                        var t = field.PropertyType;
+                        if (t.IsGenericType && t.GetGenericTypeDefinition() == typeof(Nullable<>))
+                        {
+                            t = Nullable.GetUnderlyingType(field.PropertyType);
+                        }
+
+                        if (t == typeof(string))
+                        {
+                            typeof(TCreate).GetProperty(field.Name).SetValue(item, strVal);
+                            continue;
+                        }                        
+                        if (t.IsPrimitive || t == typeof(DateTime))
+                        {
+                            try
+                            {
+                                object val = t.GetMethod("Parse", new[] { typeof(string) }).Invoke(null, new object[] { strVal });
+                                typeof(TCreate).GetProperty(field.Name).SetValue(item, val);
+                            }
+                            catch
+                            {
+                                throw new Exception($"Invalid value, must be {t.Name}");
+                            }
+                            continue;
+                        }
+                        if (t.IsEnum)
+                        {
+                            try
+                            {
+                                object val = Enum.Parse(t, strVal);
+                                typeof(TCreate).GetProperty(field.Name).SetValue(item, val);
+                            }
+                            catch
+                            {
+                                throw new Exception($"Invalid value, must be {t.Name}");
+                            }
+
+                            continue;
+                        }
+                        
+                        throw new Exception("Unsopported field type. Check your create model");
+
+                    }
+                    catch (Exception ex)
+                    {
+                        string name = "";
+                        var display = field.GetCustomAttributes(typeof(DisplayAttribute), false).FirstOrDefault() as DisplayAttribute;
+                        if (display != null && !string.IsNullOrEmpty(display.Name))
+                        {
+                            name = display.Name;
+                        }
+                        else
+                        {
+                            name = field.Name;
+                        }
+                        errors += $"Row {rowNumber} column '{name}' - {ex.Message}; ";
+                    }                    
+                }
+
+                items.Add(item);
+            }
+
+            if (string.IsNullOrEmpty(errors))
+            {
+                items.ForEach(async i => await _repository.Add(_mapper.Map<TCreate, TEntity>(i)));
+                await _repository.SaveChanges();
+            }
+            else
+            {
+                throw new Exception(errors);
+            }
         }
     }
 }

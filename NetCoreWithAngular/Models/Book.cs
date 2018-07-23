@@ -5,9 +5,13 @@ namespace NetCoreWithAngular.Models
 {
     public enum Genre
     {
+        [Display(Name ="Fantasy")]
         Fantasy = 1,
+        [Display(Name = "Horror")]
         Horror = 2,
+        [Display(Name = "Drama")]
         Drama = 3,
+        [Display(Name = "Sci-Fi")]
         SciFi = 4
     }
     public class Book : IEntity<int>

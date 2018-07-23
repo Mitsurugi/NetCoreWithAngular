@@ -8,6 +8,14 @@ import { Injectable } from '@angular/core';
 var AccountGlobals = /** @class */ (function () {
     function AccountGlobals() {
     }
+    AccountGlobals.prototype.refresh = function () {
+        if (localStorage.getItem("token"))
+            this.isLogged = true;
+        else
+            this.isLogged = false;
+        this.login = localStorage.getItem("login");
+        this.role = localStorage.getItem("role");
+    };
     AccountGlobals = __decorate([
         Injectable()
     ], AccountGlobals);

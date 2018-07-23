@@ -53,6 +53,7 @@ var CoreComponent = /** @class */ (function () {
         this._error = null;
         this._isShowCreate = false;
         this._isShowEdit = new Array();
+        this._importFile = null;
         this._service = service;
         this._items = new Array();
         this._itemEdit = new typeEdit();
@@ -209,6 +210,7 @@ var CoreComponent = /** @class */ (function () {
                     case 2:
                         _a.sent();
                         this._isShowCreate = true;
+                        this._isShowImport = false;
                         return [3 /*break*/, 4];
                     case 3:
                         e_6 = _a.sent();
@@ -216,6 +218,25 @@ var CoreComponent = /** @class */ (function () {
                         return [3 /*break*/, 4];
                     case 4: return [2 /*return*/];
                 }
+            });
+        });
+    };
+    CoreComponent.prototype.toggleImport = function () {
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                if (this._isShowImport) {
+                    this._isShowImport = false;
+                }
+                else {
+                    try {
+                        this._isShowImport = true;
+                        this._isShowCreate = false;
+                    }
+                    catch (e) {
+                        this._error = JSON.stringify(e.error);
+                    }
+                }
+                return [2 /*return*/];
             });
         });
     };
@@ -398,6 +419,61 @@ var CoreComponent = /** @class */ (function () {
                 }
             });
         });
+    };
+    CoreComponent.prototype.importTemplate = function () {
+        return __awaiter(this, void 0, void 0, function () {
+            var b, e_14;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        this._error = null;
+                        _a.label = 1;
+                    case 1:
+                        _a.trys.push([1, 3, , 4]);
+                        return [4 /*yield*/, this._service.getImportTemplate()];
+                    case 2:
+                        b = _a.sent();
+                        saveAs(b, "ImportTemplate.xlsx");
+                        return [3 /*break*/, 4];
+                    case 3:
+                        e_14 = _a.sent();
+                        this._error = JSON.stringify(e_14.error);
+                        return [3 /*break*/, 4];
+                    case 4: return [2 /*return*/];
+                }
+            });
+        });
+    };
+    CoreComponent.prototype.postImport = function () {
+        return __awaiter(this, void 0, void 0, function () {
+            var e_15;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        if (!(this._importFile == null)) return [3 /*break*/, 1];
+                        this._importResult = "Import file not selected";
+                        return [3 /*break*/, 5];
+                    case 1:
+                        _a.trys.push([1, 4, , 5]);
+                        return [4 /*yield*/, this._service.postImport(this._importFile)];
+                    case 2:
+                        _a.sent();
+                        return [4 /*yield*/, this.refreshPage()];
+                    case 3:
+                        _a.sent();
+                        this._importResult = "Import successful";
+                        return [3 /*break*/, 5];
+                    case 4:
+                        e_15 = _a.sent();
+                        this._importResult = JSON.stringify(e_15.error.Message);
+                        return [3 /*break*/, 5];
+                    case 5: return [2 /*return*/];
+                }
+            });
+        });
+    };
+    CoreComponent.prototype.setImportFile = function (file) {
+        this._importFile = file;
     };
     CoreComponent = __decorate([
         Component({}),

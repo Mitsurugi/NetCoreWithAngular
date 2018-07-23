@@ -21,9 +21,7 @@ export class CoreAccountComponent<TLoginModel> implements OnInit {
     }
 
     ngOnInit() {
-        this._accGlobals.isLogged = this._service.isTokenPresent();
-        this._accGlobals.login = this._service.getUserName();
-        this._accGlobals.role = this._service.getRole();
+        this._accGlobals.refresh();        
     }
 
     async getToken() {
