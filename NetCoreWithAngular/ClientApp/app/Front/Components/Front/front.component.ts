@@ -1,7 +1,6 @@
 ﻿import { Component, OnInit } from '@angular/core';
 import { FrontDataService } from '../../Services/frontData.service';
 import { FrontData } from '../../Models/FrontData';
-import { AnimeService } from '../../../Admin/Services/anime.service';
 
 @Component({
     selector: 'front',

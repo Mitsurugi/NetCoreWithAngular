@@ -7,6 +7,7 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { TokenInterceptor } from '../Core/token.interceptor';
 import { AppComponent } from './app.component';
+import { NotFoundComponent } from './Front/Components/NonFound/notFound.component';
 import { AdminComponent } from './Admin/Components/AdminMain/admin.component'
 import { AccountComponent } from './Admin/Components/Account/account.component'
 import { MenuComponent } from './Admin/Components/Menu/menu.component'
@@ -27,12 +28,13 @@ const frontRoutes: Routes = [
 
 const appRoutes: Routes = [
     { path: '', component: FrontComponent, children: frontRoutes },
-    { path: 'admin', component: AdminComponent, children: adminRoutes }
+    { path: 'admin', component: AdminComponent, children: adminRoutes },
+    { path: '**', component: NotFoundComponent }
 ];
 
 @NgModule({
     imports: [BrowserModule, FormsModule, HttpClientModule, RouterModule.forRoot(appRoutes)],
-    declarations: [AppComponent, AdminComponent, AccountComponent, MenuComponent, AnimeComponent, BookComponent, FrontComponent],
+    declarations: [AppComponent, NotFoundComponent, AdminComponent, AccountComponent, MenuComponent, AnimeComponent, BookComponent, FrontComponent],
     providers: [{ provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true }],
     bootstrap: [AppComponent]
 })
