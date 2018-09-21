@@ -96,7 +96,7 @@ namespace CoreLibrary
 
             var query = ApplyFilter(GetQuery(), filter);
 
-            return await query.Skip(pageSize * (pageNumber - 1)).Take(pageSize).ProjectTo<TGrid>().ToListAsync();
+            return await query.Skip(pageSize * (pageNumber - 1)).Take(pageSize).ProjectTo<TGrid>(_mapper.ConfigurationProvider).ToListAsync();
         }
 
         public virtual async Task<int> GetPagesCount(int pageSize, TFilter filter)
@@ -125,7 +125,7 @@ namespace CoreLibrary
         public virtual async Task<byte[]> ExcelExport(TFilter filter)
         {
             var query = ApplyFilter(GetQuery(), filter);
-            var grid = await query.ProjectTo<TGrid>().ToListAsync();
+            var grid = await query.ProjectTo<TGrid>(_mapper.ConfigurationProvider).ToListAsync();
 
             var wb = new XLWorkbook();
             var ws = wb.Worksheets.Add("Export");

@@ -13,21 +13,23 @@ namespace NetCoreWithAngular.Services
     {
         private readonly IRepository<Book, int> _bookRepository;
         private readonly IRepository<Anime, int> _animeRepository;
+        protected readonly IMapper _mapper;
 
         public FrontDataService(IRepository<Book, int> bookRepository, IRepository<Anime, int> animeRepository, IMapper mapper)
         {
             _bookRepository = bookRepository;
             _animeRepository = animeRepository;
+            _mapper = mapper;
         }
 
         public async Task<List<FrontDataViewModel>> GetAllAnime()
         {
-            return await _animeRepository.GetQuery().ProjectTo<FrontDataViewModel>().ToListAsync();
+            return await _animeRepository.GetQuery().ProjectTo<FrontDataViewModel>(_mapper.ConfigurationProvider).ToListAsync();
         }
 
         public async Task<List<FrontDataViewModel>> GetAllBooks()
         {
-            return await _bookRepository.GetQuery().ProjectTo<FrontDataViewModel>().ToListAsync();
+            return await _bookRepository.GetQuery().ProjectTo<FrontDataViewModel>(_mapper.ConfigurationProvider).ToListAsync();
         }
     }
 }

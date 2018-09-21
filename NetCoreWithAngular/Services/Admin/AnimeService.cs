@@ -11,7 +11,7 @@ namespace NetCoreWithAngular.Services
     public class AnimeService : BaseService<Anime, int, AnimeViewModel, AnimeViewModel, AnimeViewModel, AnimeViewModel>
     {
         public AnimeService(IRepository<Anime, int> repository, IMapper mapper) : base(repository, mapper)
-        {            
+        {
         }        
 
         public override Task<List<AnimeViewModel>> GetGrid(int pageSize, int pageNumber, AnimeViewModel filter = null)
