@@ -9,5 +9,7 @@ namespace NetCoreWithAngular.ViewModels
         public string Title { get; set; }
 
         public int? SeasonCount { get; set; }
+
+        public int? ImageId { get; set; }
     }
 }

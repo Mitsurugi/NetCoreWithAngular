@@ -67,7 +67,7 @@ namespace CoreLibrary
                 await DbContext.Entry(entity).Collection(collection).LoadAsync();
         }
 
-        public virtual void Delete(TEntity entity)
+        public virtual async Task Delete(TEntity entity)
         {
             if (entity == null)
                 throw new ArgumentNullException("entity");
@@ -77,7 +77,7 @@ namespace CoreLibrary
 
         public virtual async Task Delete(Expression<Func<TEntity, bool>> predicate)
         {
-            await GetQuery().Where(predicate).ForEachAsync(x => Delete(x));
+            await GetQuery().Where(predicate).ForEachAsync(async x => await Delete(x));
         }
 
         public virtual async Task SaveChanges()

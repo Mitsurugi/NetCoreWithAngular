@@ -3,10 +3,11 @@ using Microsoft.AspNetCore.Http;
 
 namespace CoreLibrary
 {
-    public interface IFileService<TKey>
+    public interface IFileService<TFile, TKey>
+        where TFile: FileModel<TKey>
     {
-        Task<FileModel<TKey>> Get(TKey id);
+        Task<TFile> Get(TKey id);
         Task Delete(TKey id);        
-        Task<FileModel<TKey>> Upload(IFormFile file);
+        Task<TFile> Upload(IFormFile file);
     }
 }

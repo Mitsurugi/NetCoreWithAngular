@@ -73,18 +73,13 @@ namespace CoreLibrary
         public virtual async Task Delete(TKey id)
         {
             var delete = await Get(id);
-            _repository.Delete(delete);
+            await _repository.Delete(delete);
             await _repository.SaveChanges();
         }
 
         public virtual async Task Delete(TKey[] ids)
         {
-            foreach (var id in ids)
-            {
-                var delete = await Get(id);
-                _repository.Delete(delete);
-                await _repository.SaveChanges();
-            }
+            await _repository.Delete(i => ids.Contains(i.Id));
         }
 
         public virtual async Task<List<TGrid>> GetGrid(int pageSize, int pageNumber, TFilter filter)

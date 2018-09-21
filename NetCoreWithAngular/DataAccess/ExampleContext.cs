@@ -16,8 +16,11 @@ namespace NetCoreWithAngular.DataAccess
 
         public DbSet<Anime> Animes { get; set; }
 
+        public DbSet<File> Files { get; set; }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
+            builder.Entity<Anime>().HasOne(m => m.Image).WithMany().HasForeignKey(m => m.ImageId).IsRequired(false).OnDelete(DeleteBehavior.SetNull);
             base.OnModelCreating(builder);
         }
     }

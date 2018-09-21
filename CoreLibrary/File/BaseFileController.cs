@@ -9,11 +9,12 @@ namespace CoreLibrary
 {
     [ApiController]
     [Route("api/[controller]/[action]")]
-    public class BaseFileController<TKey> : Controller
+    public class BaseFileController<TFile, TKey> : Controller
+        where TFile: FileModel<TKey>, new()
     {        
-        protected IFileService<TKey> _service { get; set; }
+        protected IFileService<TFile, TKey> _service { get; set; }
 
-        public BaseFileController(IFileService<TKey> service)
+        public BaseFileController(IFileService<TFile, TKey> service)
         {
             _service = service;
         }
@@ -47,13 +48,13 @@ namespace CoreLibrary
                 return BadRequest("File is null");
             try
             {                
-                await _service.Upload(file);
+                var entity = await _service.Upload(file);
+                return Ok(entity.Id);
             }
             catch (Exception ex)
             {
                 return BadRequest(ex);
-            }
-            return Ok();
+            }            
         }
     }
 }

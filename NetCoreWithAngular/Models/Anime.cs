@@ -11,5 +11,9 @@ namespace NetCoreWithAngular.Models
         public string Title { get; set; }
 
         public int? SeasonCount { get; set; }
+
+        public int? ImageId { get; set; }
+
+        public virtual File Image { get; set; }
     }
 }

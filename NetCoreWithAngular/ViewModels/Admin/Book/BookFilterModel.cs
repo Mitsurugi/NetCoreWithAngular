@@ -2,6 +2,7 @@
 using NetCoreWithAngular.Models;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Linq;
 
 namespace NetCoreWithAngular.ViewModels
 {
@@ -20,10 +21,10 @@ namespace NetCoreWithAngular.ViewModels
             get
             {
                 yield return new SelectListItem { Value = "", Text = "", Selected = !Genre.HasValue };
-                yield return new SelectListItem { Value = ((int)Models.Genre.Drama).ToString(), Text = Models.Genre.Drama.ToString(), Disabled = true };
-                yield return new SelectListItem { Value = ((int)Models.Genre.Fantasy).ToString(), Text = Models.Genre.Fantasy.ToString() };
-                yield return new SelectListItem { Value = ((int)Models.Genre.Horror).ToString(), Text = Models.Genre.Horror.ToString() };
-                yield return new SelectListItem { Value = ((int)Models.Genre.SciFi).ToString(), Text = Models.Genre.SciFi.ToString() };
+                foreach (var value in System.Enum.GetValues(typeof(Models.Genre)).Cast<Models.Genre>().ToList())
+                {
+                    yield return new SelectListItem { Value = ((int)value).ToString(), Text = value.GetDisplayName(), Disabled = value == Models.Genre.Drama };
+                }
             }
         }
     }

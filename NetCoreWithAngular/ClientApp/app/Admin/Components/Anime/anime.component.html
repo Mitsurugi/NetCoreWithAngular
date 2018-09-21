@@ -14,6 +14,7 @@
             <tr>
                 <th>Id</th>
                 <th>Title</th>
+                <th>Image</th>
                 <th>Season count</th>
                 <th></th>
                 <th></th>
@@ -27,6 +28,9 @@
                     </td>
                     <td>
                         {{i.title}}
+                    </td>
+                    <td>
+                        <img src="/api/File/Download?id={{i.imageId}}" style="width:100px" />
                     </td>
                     <td>
                         {{i.seasonCount}}
@@ -71,6 +75,10 @@
                             </p>
                         </div>
                     </div>
+                    <div class="form-group col-sm-3">
+                        <label>Image</label>
+                        <input type="file" (change)="uploadImageEdit($event.target.files[0])" />
+                    </div>
                     <div class="form-group col-sm-10">
                         <button class="btn btn-default" (click)="postEdit()" [disabled]="editForm.invalid">Submit</button>
                     </div>
@@ -101,6 +109,10 @@
                         Season count required
                     </p>
                 </div>
+            </div>
+            <div class="form-group col-sm-3">
+                <label>Image</label>
+                <input type="file" (change)="uploadImageCreate($event.target.files[0])" />
             </div>
             <div class="form-group col-sm-10">
                 <button class="btn btn-default" (click)="postCreate()" [disabled]="createForm.invalid">Submit</button>

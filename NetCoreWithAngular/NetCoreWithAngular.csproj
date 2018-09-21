@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.1</TargetFramework>
-    <TypeScriptToolsVersion>2.8</TypeScriptToolsVersion>
+    <TypeScriptToolsVersion>3.0</TypeScriptToolsVersion>
   </PropertyGroup>
 
   <ItemGroup>
@@ -29,6 +29,7 @@
     <None Remove="ClientApp\Core\core.service.ts" />
     <None Remove="ClientApp\app\Admin\Models\Anime.ts" />
     <None Remove="ClientApp\app\Admin\Models\Book.ts" />
+    <None Remove="ClientApp\Core\file.service.ts" />
     <None Remove="ClientApp\Core\SelectListItem.ts" />
     <None Remove="ClientApp\Core\token.interceptor.ts" />
     <None Remove="ClientApp\polyfills.ts" />
@@ -76,6 +77,7 @@
     <TypeScriptCompile Include="ClientApp\Core\account.service.ts" />
     <TypeScriptCompile Include="ClientApp\Core\account.component.ts" />
     <TypeScriptCompile Include="ClientApp\Core\AccountGlobals.ts" />
+    <TypeScriptCompile Include="ClientApp\Core\file.service.ts" />
     <TypeScriptCompile Include="ClientApp\Core\SelectListItem.ts" />
     <TypeScriptCompile Include="ClientApp\Core\token.interceptor.ts" />
     <TypeScriptCompile Include="ClientApp\Core\core.component.ts" />
@@ -115,6 +117,12 @@
     </None>
     <None Update="ClientApp\app\Front\Services\frontData.service.js">
       <DependentUpon>frontData.service.ts</DependentUpon>
+    </None>
+    <None Update="ClientApp\Core\file.service.js">
+      <DependentUpon>file.service.ts</DependentUpon>
+    </None>
+    <None Update="ClientApp\Core\file.service.js">
+      <DependentUpon>file.service.ts</DependentUpon>
     </None>
     <None Update="ClientApp\Core\SelectListItem - Copy.js">
       <DependentUpon>SelectListItem.ts</DependentUpon>
