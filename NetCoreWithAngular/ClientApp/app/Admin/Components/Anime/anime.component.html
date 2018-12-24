@@ -30,7 +30,7 @@
                         {{i.title}}
                     </td>
                     <td>
-                        <img src="/api/File/Download?id={{i.imageId}}" style="width:100px" />
+                        <img *ngIf="i.imageId" src="/api/File/Download?id={{i.imageId}}" style="width:100px" />
                     </td>
                     <td>
                         {{i.seasonCount}}
