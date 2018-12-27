@@ -1,12 +1,13 @@
 ﻿import { Component, OnInit } from '@angular/core';
 import { CoreService } from '../Services/core.service';
+import { IEntity } from '../Models/IEntity'
 import { saveAs } from 'file-saver';
 
 @Component({
 })
-export class CoreComponent<TGrid, TCreate, TEdit, TFilter> implements OnInit {
+export class CoreComponent<TKey, TGrid extends IEntity<TKey>, TCreate extends IEntity<TKey>, TEdit extends IEntity<TKey>, TFilter> implements OnInit {
 
-    _service: CoreService<TGrid, TCreate, TEdit, TFilter>;
+    _service: CoreService<TKey, TGrid, TCreate, TEdit, TFilter>;
 
     _items: TGrid[];
     _itemEdit: TEdit;
@@ -27,7 +28,7 @@ export class CoreComponent<TGrid, TCreate, TEdit, TFilter> implements OnInit {
     typeEdit: (new () => TEdit);
     typeFilter: (new () => TFilter);
 
-    constructor(service: CoreService<TGrid, TCreate, TEdit, TFilter>, typeGrid: (new () => TGrid), typeCreate: (new () => TCreate), typeEdit: (new () => TEdit), typeFilter: (new () => TFilter)) {
+    constructor(service: CoreService<TKey, TGrid, TCreate, TEdit, TFilter>, typeGrid: (new () => TGrid), typeCreate: (new () => TCreate), typeEdit: (new () => TEdit), typeFilter: (new () => TFilter)) {
         this._service = service;
         this._items = new Array<TGrid>();
         this._itemEdit = new typeEdit();

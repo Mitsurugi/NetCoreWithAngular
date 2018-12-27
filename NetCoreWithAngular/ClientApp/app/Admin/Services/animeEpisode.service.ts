@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 import { AnimeEpisode } from '../Models/AnimeEpisode/animeEpisode';
 
 @Injectable()
-export class AnimeEpisodeService extends DependentService<AnimeEpisode, AnimeEpisode, AnimeEpisode, AnimeEpisode> {
+export class AnimeEpisodeService extends DependentService<number, number, AnimeEpisode, AnimeEpisode, AnimeEpisode, AnimeEpisode> {
 
     constructor(http: HttpClient) { super(http); this._controller = 'animeEpisode'; }
 }

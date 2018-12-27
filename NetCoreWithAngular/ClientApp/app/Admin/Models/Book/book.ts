@@ -1,4 +1,5 @@
-﻿import { SelectListItem } from '../../../../Core/Models/SelectListItem';
+﻿import { IEntity } from '../../../../Core/Models/IEntity'
+import { SelectListItem } from '../../../../Core/Models/SelectListItem';
 
 enum Genre {
     Fantasy = 1,
@@ -7,7 +8,7 @@ enum Genre {
     SciFi = 4
 }
 
-export class Book {
+export class Book implements IEntity<number> {
     id?: number;
     title: string;
     author: string;

@@ -12,11 +12,11 @@ import { read } from 'fs';
     styleUrls: ['./anime.component.css'],
     providers: [AnimeService, FileService]
 })
-export class AnimeComponent extends CoreComponent<Anime, Anime, Anime, Anime> {
+export class AnimeComponent extends CoreComponent<number, Anime, Anime, Anime, Anime> {
 
-    _fileService: FileService;
+    _fileService: FileService<number>;
 
-    constructor(service: AnimeService, fileService: FileService) {
+    constructor(service: AnimeService, fileService: FileService<number>) {
         super(service, Anime, Anime, Anime, Anime);
         this._fileService = fileService;
     }

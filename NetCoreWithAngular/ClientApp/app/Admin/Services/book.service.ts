@@ -7,7 +7,7 @@ import { BookGrid } from '../Models/book/bookGrid'
 import { BookFilter } from '../Models/book/bookFilter'
 
 @Injectable()
-export class BookService extends CoreService<BookGrid, Book, Book, BookFilter> {
+export class BookService extends CoreService<number, BookGrid, Book, Book, BookFilter> {
 
     constructor(http: HttpClient) { super(http); this._controller = 'book'; }
 

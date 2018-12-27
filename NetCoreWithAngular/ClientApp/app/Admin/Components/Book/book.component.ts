@@ -12,7 +12,7 @@ import { BookFilter } from '../../Models/book/bookFilter';
     styleUrls: ['./book.component.css'],
     providers: [BookService]
 })
-export class BookComponent extends CoreComponent<BookGrid, Book, Book, BookFilter> {
+export class BookComponent extends CoreComponent<number, BookGrid, Book, Book, BookFilter> {
 
     constructor(service: BookService) {
         super(service, BookGrid, Book, Book, BookFilter);

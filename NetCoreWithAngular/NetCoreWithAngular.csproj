@@ -35,6 +35,8 @@
     <None Remove="ClientApp\Core\dependent.component.ts" />
     <None Remove="ClientApp\Core\dependent.service.ts" />
     <None Remove="ClientApp\Core\file.service.ts" />
+    <None Remove="ClientApp\Core\Models\IDependentEntity.ts" />
+    <None Remove="ClientApp\Core\Models\IEntity.ts" />
     <None Remove="ClientApp\Core\SelectListItem.ts" />
     <None Remove="ClientApp\Core\token.interceptor.ts" />
     <None Remove="ClientApp\polyfills.ts" />
@@ -86,6 +88,8 @@
     <TypeScriptCompile Include="ClientApp\Core\Account\account.component.ts" />
     <TypeScriptCompile Include="ClientApp\Core\Account\AccountGlobals.ts" />
     <TypeScriptCompile Include="ClientApp\Core\Components\dependent.component.ts" />
+    <TypeScriptCompile Include="ClientApp\Core\Models\IDependentEntity.ts" />
+    <TypeScriptCompile Include="ClientApp\Core\Models\IEntity.ts" />
     <TypeScriptCompile Include="ClientApp\Core\Services\dependent.service.ts" />
     <TypeScriptCompile Include="ClientApp\Core\Services\file.service.ts" />
     <TypeScriptCompile Include="ClientApp\Core\Models\SelectListItem.ts" />

@@ -12,7 +12,7 @@ import { ActivatedRoute } from "@angular/router";
     styleUrls: ['./animeEpisode.component.css'],
     providers: [AnimeEpisodeService]
 })
-export class AnimeEpisodeComponent extends DependentComponent<AnimeEpisode, AnimeEpisode, AnimeEpisode, AnimeEpisode> {
+export class AnimeEpisodeComponent extends DependentComponent<number, number, AnimeEpisode, AnimeEpisode, AnimeEpisode, AnimeEpisode> {
 
     constructor(service: AnimeEpisodeService, route: ActivatedRoute) {
         super(service, AnimeEpisode, AnimeEpisode, AnimeEpisode, AnimeEpisode, route);

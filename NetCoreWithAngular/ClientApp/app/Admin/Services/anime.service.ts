@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 import { Anime } from '../Models/Anime/anime';
 
 @Injectable()
-export class AnimeService extends CoreService<Anime, Anime, Anime, Anime> {
+export class AnimeService extends CoreService<number, Anime, Anime, Anime, Anime> {
 
     constructor(http: HttpClient) { super(http); this._controller = 'anime'; }
 }

@@ -1,9 +1,10 @@
 ﻿import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { IEntity } from '../Models/IEntity'
 
 @Injectable()
-export class CoreService<TGrid, TCreate, TEdit, TFilter> {
+export class CoreService<TKey, TGrid extends IEntity<TKey>, TCreate extends IEntity<TKey>, TEdit extends IEntity<TKey>, TFilter> {
 
     _controller = "";
     protected _http: HttpClient;

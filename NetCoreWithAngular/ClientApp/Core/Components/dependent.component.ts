@@ -1,13 +1,14 @@
 ﻿import { Component, OnInit } from '@angular/core';
 import { DependentService } from '../Services/dependent.service';
+import { IDependentEntity } from '../Models/IDependentEntity';
 import { ActivatedRoute } from "@angular/router";
 import { saveAs } from 'file-saver';
 
 @Component({
 })
-export class DependentComponent<TGrid, TCreate, TEdit, TFilter> implements OnInit {
+export class DependentComponent<TKey, TParentKey, TGrid extends IDependentEntity<TKey, TParentKey>, TCreate extends IDependentEntity<TKey, TParentKey>, TEdit extends IDependentEntity<TKey, TParentKey>, TFilter> implements OnInit {
 
-    _service: DependentService<TGrid, TCreate, TEdit, TFilter>;
+    _service: DependentService<TKey, TParentKey, TGrid, TCreate, TEdit, TFilter>;
 
     _parentId: any;
     _items: TGrid[];
@@ -29,7 +30,7 @@ export class DependentComponent<TGrid, TCreate, TEdit, TFilter> implements OnIni
     typeEdit: (new () => TEdit);
     typeFilter: (new () => TFilter);
 
-    constructor(service: DependentService<TGrid, TCreate, TEdit, TFilter>, typeGrid: (new () => TGrid), typeCreate: (new () => TCreate), typeEdit: (new () => TEdit), typeFilter: (new () => TFilter), route: ActivatedRoute) {
+    constructor(service: DependentService<TKey, TParentKey, TGrid, TCreate, TEdit, TFilter>, typeGrid: (new () => TGrid), typeCreate: (new () => TCreate), typeEdit: (new () => TEdit), typeFilter: (new () => TFilter), route: ActivatedRoute) {
         this._service = service;
         this._items = new Array<TGrid>();
         this._itemEdit = new typeEdit();
