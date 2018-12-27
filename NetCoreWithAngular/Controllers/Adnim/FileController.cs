@@ -13,8 +13,7 @@ namespace NetCoreWithAngular.Controllers
         public FileController(IFileService<File, int> service) : base(service)
         {
         }
-
-        [AllowAnonymous]
+        
         public override Task<IActionResult> Download(int id)
         {
             return base.Download(id);

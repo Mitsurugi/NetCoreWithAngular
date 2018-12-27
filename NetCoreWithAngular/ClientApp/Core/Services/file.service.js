@@ -61,16 +61,6 @@ var FileService = /** @class */ (function () {
             });
         });
     };
-    FileService.prototype.download = function (id) {
-        return __awaiter(this, void 0, void 0, function () {
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0: return [4 /*yield*/, this._http.get('api/' + this._controller + '/download?id=' + id, { responseType: 'blob' }).toPromise()];
-                    case 1: return [2 /*return*/, _a.sent()];
-                }
-            });
-        });
-    };
     FileService.prototype.upload = function (file) {
         return __awaiter(this, void 0, void 0, function () {
             var formData;
@@ -80,6 +70,16 @@ var FileService = /** @class */ (function () {
                         formData = new FormData();
                         formData.append("file", file);
                         return [4 /*yield*/, this._http.post('/api/' + this._controller + '/upload', formData).toPromise()];
+                    case 1: return [2 /*return*/, _a.sent()];
+                }
+            });
+        });
+    };
+    FileService.prototype.download = function (id) {
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, this._http.get('api/' + this._controller + '/download?id=' + id, { responseType: 'blob' }).toPromise()];
                     case 1: return [2 /*return*/, _a.sent()];
                 }
             });
