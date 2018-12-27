@@ -56,9 +56,9 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 import { Component } from '@angular/core';
-import { CoreComponent } from '../../../../Core/core.component';
+import { CoreComponent } from '../../../../Core/Components/core.component';
 import { AnimeService } from '../../Services/anime.service';
-import { FileService } from '../../../../Core/file.service';
+import { FileService } from '../../../../Core/Services/file.service';
 import { Anime } from '../../Models/Anime/anime';
 var AnimeComponent = /** @class */ (function (_super) {
     __extends(AnimeComponent, _super);

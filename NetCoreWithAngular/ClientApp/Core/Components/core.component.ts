@@ -1,5 +1,5 @@
 ﻿import { Component, OnInit } from '@angular/core';
-import { CoreService } from './core.service';
+import { CoreService } from '../Services/core.service';
 import { saveAs } from 'file-saver';
 
 @Component({

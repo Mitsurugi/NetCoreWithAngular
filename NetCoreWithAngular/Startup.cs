@@ -76,11 +76,13 @@ namespace NetCoreWithAngular
             services.AddScoped(typeof(IRepository<,>), typeof(ExampleRepository<,>));
             services.AddScoped(typeof(IBaseService<,,,,,>), typeof(BaseService<,,,,,>));
             services.AddScoped(typeof(IFileService<,>), typeof(FileService<,>));
+            services.AddScoped(typeof(IDependentService<,,,,,,>), typeof(DependentService<,,,,,,>));
 
             services.AddScoped<IIdentityService<IdentityUser, IdentityRole, UserManager<IdentityUser>, RoleManager<IdentityRole>, SignInManager<IdentityUser>>, IdentityService>();            
 
             services.AddScoped<IBaseService<Book, int, BookGridModel, BookViewModel, BookViewModel, BookFilterModel>, BookService>();
             services.AddScoped<IBaseService<Anime, int, AnimeViewModel, AnimeViewModel, AnimeViewModel, AnimeViewModel>, AnimeService>();
+            services.AddScoped<IDependentService<AnimeEpisode, int, int, AnimeEpisodeViewModel, AnimeEpisodeViewModel, AnimeEpisodeViewModel, AnimeEpisodeViewModel>, AnimeEpisodeService>();
 
             services.AddScoped<IFrontDataService, FrontDataService>();
         }

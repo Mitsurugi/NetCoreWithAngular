@@ -56,7 +56,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 import { Component } from '@angular/core';
-import { CoreComponent } from '../../../../Core/core.component';
+import { CoreComponent } from '../../../../Core/Components/core.component';
 import { BookService } from '../../Services/book.service';
 import { Book } from '../../Models/Book/book';
 import { BookGrid } from '../../Models/book/bookGrid';

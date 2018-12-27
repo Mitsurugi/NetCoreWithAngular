@@ -43,7 +43,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 import { Component } from '@angular/core';
-import { CoreService } from './core.service';
+import { CoreService } from '../Services/core.service';
 import { saveAs } from 'file-saver';
 var CoreComponent = /** @class */ (function () {
     function CoreComponent(service, typeGrid, typeCreate, typeEdit, typeFilter) {

@@ -21,10 +21,10 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 import { Component } from '@angular/core';
-import { CoreAccountComponent } from '../../../../Core/account.component';
+import { CoreAccountComponent } from '../../../../Core/Account/account.component';
 import { AccountService } from '../../Services/account.service';
 import { LoginModel } from '../../Models/login';
-import { AccountGlobals } from '../../../../Core/AccountGlobals';
+import { AccountGlobals } from '../../../../Core/Account/AccountGlobals';
 var AccountComponent = /** @class */ (function (_super) {
     __extends(AccountComponent, _super);
     function AccountComponent(service, accGlobals) {

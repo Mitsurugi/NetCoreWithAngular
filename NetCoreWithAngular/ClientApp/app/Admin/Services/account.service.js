@@ -22,8 +22,8 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { CoreAccountService } from '../../../Core/account.service';
-import { AccountGlobals } from '../../../Core/AccountGlobals';
+import { CoreAccountService } from '../../../Core/Account/account.service';
+import { AccountGlobals } from '../../../Core/Account/AccountGlobals';
 var AccountService = /** @class */ (function (_super) {
     __extends(AccountService, _super);
     function AccountService(http, accGlobals) {

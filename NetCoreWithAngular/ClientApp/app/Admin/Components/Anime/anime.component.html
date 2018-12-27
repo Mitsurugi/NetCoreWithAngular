@@ -18,6 +18,7 @@
                 <th>Season count</th>
                 <th></th>
                 <th></th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
@@ -34,6 +35,9 @@
                     </td>
                     <td>
                         {{i.seasonCount}}
+                    </td>
+                    <td>
+                        <a href="/admin/AnimeEpisodes/{{i.id}}">View episodes</a>
                     </td>
                     <td>
                         <button class="btn btn-default" (click)="toggleEdit(n, i.id)">Edit</button>

@@ -1,9 +1,9 @@
 ﻿import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { CoreAccountComponent } from '../../../../Core/account.component';
+import { CoreAccountComponent } from '../../../../Core/Account/account.component';
 import { AccountService } from '../../Services/account.service';
 import { LoginModel } from '../../Models/login';
-import { AccountGlobals } from '../../../../Core/AccountGlobals';
+import { AccountGlobals } from '../../../../Core/Account/AccountGlobals';
 
 @Component({
     selector: 'account',

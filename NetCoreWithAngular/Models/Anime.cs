@@ -1,4 +1,5 @@
 ﻿using CoreLibrary;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace NetCoreWithAngular.Models
@@ -15,5 +16,7 @@ namespace NetCoreWithAngular.Models
         public int? ImageId { get; set; }
 
         public virtual File Image { get; set; }
+
+        public virtual List<AnimeEpisode> Episodes { get; set; }
     }
 }

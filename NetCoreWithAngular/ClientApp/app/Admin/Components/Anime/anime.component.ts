@@ -1,8 +1,8 @@
 ﻿import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { CoreComponent } from '../../../../Core/core.component';
+import { CoreComponent } from '../../../../Core/Components/core.component';
 import { AnimeService } from '../../Services/anime.service';
-import { FileService } from '../../../../Core/file.service';
+import { FileService } from '../../../../Core/Services/file.service';
 import { Anime } from '../../Models/Anime/anime';
 import { read } from 'fs';
 

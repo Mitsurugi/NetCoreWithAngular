@@ -15,7 +15,7 @@ namespace NetCoreWithAngular.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.1.3-rtm-32065")
+                .HasAnnotation("ProductVersion", "2.1.4-rtm-31024")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -199,6 +199,23 @@ namespace NetCoreWithAngular.Migrations
                     b.ToTable("Animes");
                 });
 
+            modelBuilder.Entity("NetCoreWithAngular.Models.AnimeEpisode", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("ParentId");
+
+                    b.Property<string>("Title");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ParentId");
+
+                    b.ToTable("AnimeEpisodes");
+                });
+
             modelBuilder.Entity("NetCoreWithAngular.Models.Book", b =>
                 {
                     b.Property<int>("Id")
@@ -286,6 +303,14 @@ namespace NetCoreWithAngular.Migrations
                         .WithMany()
                         .HasForeignKey("ImageId")
                         .OnDelete(DeleteBehavior.SetNull);
+                });
+
+            modelBuilder.Entity("NetCoreWithAngular.Models.AnimeEpisode", b =>
+                {
+                    b.HasOne("NetCoreWithAngular.Models.Anime", "Anime")
+                        .WithMany("Episodes")
+                        .HasForeignKey("ParentId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
         }

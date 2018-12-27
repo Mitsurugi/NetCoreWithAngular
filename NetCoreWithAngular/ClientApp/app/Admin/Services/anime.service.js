@@ -22,7 +22,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { CoreService } from '../../../Core/core.service';
+import { CoreService } from '../../../Core/Services/core.service';
 var AnimeService = /** @class */ (function (_super) {
     __extends(AnimeService, _super);
     function AnimeService(http) {

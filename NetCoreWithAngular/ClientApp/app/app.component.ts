@@ -1,5 +1,5 @@
 ﻿import { Component } from '@angular/core';
-import { AccountGlobals } from '../Core/AccountGlobals';
+import { AccountGlobals } from '../Core/Account/AccountGlobals';
 
 @Component({
     selector: 'app',

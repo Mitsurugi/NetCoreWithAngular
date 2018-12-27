@@ -8,10 +8,13 @@
   <ItemGroup>
     <None Remove="ClientApp\app\Admin\Components\Account\account.component.ts" />
     <None Remove="ClientApp\app\Admin\Components\AdminMain\admin.component.ts" />
+    <None Remove="ClientApp\app\Admin\Components\AnimeEpisode\animeEpisode.component.ts" />
+    <None Remove="ClientApp\app\Admin\Models\AnimeEpisode\animeEpisode.ts" />
     <None Remove="ClientApp\app\Admin\Models\bookFilter.ts" />
     <None Remove="ClientApp\app\Admin\Models\bookGrid.ts" />
     <None Remove="ClientApp\app\Admin\Models\login.ts" />
     <None Remove="ClientApp\app\Admin\Services\account.service.ts" />
+    <None Remove="ClientApp\app\Admin\Services\animeEpisode.service.ts" />
     <None Remove="ClientApp\app\anime.component.ts" />
     <None Remove="ClientApp\app\app.component.ts" />
     <None Remove="ClientApp\app\app.module.ts" />
@@ -29,6 +32,8 @@
     <None Remove="ClientApp\Core\core.service.ts" />
     <None Remove="ClientApp\app\Admin\Models\Anime.ts" />
     <None Remove="ClientApp\app\Admin\Models\Book.ts" />
+    <None Remove="ClientApp\Core\dependent.component.ts" />
+    <None Remove="ClientApp\Core\dependent.service.ts" />
     <None Remove="ClientApp\Core\file.service.ts" />
     <None Remove="ClientApp\Core\SelectListItem.ts" />
     <None Remove="ClientApp\Core\token.interceptor.ts" />
@@ -61,12 +66,15 @@
   <ItemGroup>
     <TypeScriptCompile Include="ClientApp\app\Admin\Components\AdminMain\admin.component.ts" />
     <TypeScriptCompile Include="ClientApp\app\Admin\Components\Account\account.component.ts" />
+    <TypeScriptCompile Include="ClientApp\app\Admin\Components\AnimeEpisode\animeEpisode.component.ts" />
     <TypeScriptCompile Include="ClientApp\app\Admin\Components\Menu\menu.component.ts" />
     <TypeScriptCompile Include="ClientApp\app\Admin\Components\Anime\anime.component.ts" />
+    <TypeScriptCompile Include="ClientApp\app\Admin\Models\AnimeEpisode\animeEpisode.ts" />
     <TypeScriptCompile Include="ClientApp\app\Admin\Models\Book\bookFilter.ts" />
     <TypeScriptCompile Include="ClientApp\app\Admin\Models\Book\bookGrid.ts" />
     <TypeScriptCompile Include="ClientApp\app\Admin\Models\login.ts" />
     <TypeScriptCompile Include="ClientApp\app\Admin\Services\account.service.ts" />
+    <TypeScriptCompile Include="ClientApp\app\Admin\Services\animeEpisode.service.ts" />
     <TypeScriptCompile Include="ClientApp\app\app.component.ts" />
     <TypeScriptCompile Include="ClientApp\app\app.module.ts" />
     <TypeScriptCompile Include="ClientApp\app\Admin\Components\Book\book.component.ts" />
@@ -74,14 +82,16 @@
     <TypeScriptCompile Include="ClientApp\app\Front\Components\Front\front.component.ts" />
     <TypeScriptCompile Include="ClientApp\app\Front\Models\frontData.ts" />
     <TypeScriptCompile Include="ClientApp\app\Front\Services\frontData.service.ts" />
-    <TypeScriptCompile Include="ClientApp\Core\account.service.ts" />
-    <TypeScriptCompile Include="ClientApp\Core\account.component.ts" />
-    <TypeScriptCompile Include="ClientApp\Core\AccountGlobals.ts" />
-    <TypeScriptCompile Include="ClientApp\Core\file.service.ts" />
-    <TypeScriptCompile Include="ClientApp\Core\SelectListItem.ts" />
-    <TypeScriptCompile Include="ClientApp\Core\token.interceptor.ts" />
-    <TypeScriptCompile Include="ClientApp\Core\core.component.ts" />
-    <TypeScriptCompile Include="ClientApp\Core\core.service.ts" />
+    <TypeScriptCompile Include="ClientApp\Core\Account\account.service.ts" />
+    <TypeScriptCompile Include="ClientApp\Core\Account\account.component.ts" />
+    <TypeScriptCompile Include="ClientApp\Core\Account\AccountGlobals.ts" />
+    <TypeScriptCompile Include="ClientApp\Core\Components\dependent.component.ts" />
+    <TypeScriptCompile Include="ClientApp\Core\Services\dependent.service.ts" />
+    <TypeScriptCompile Include="ClientApp\Core\Services\file.service.ts" />
+    <TypeScriptCompile Include="ClientApp\Core\Models\SelectListItem.ts" />
+    <TypeScriptCompile Include="ClientApp\Core\Account\token.interceptor.ts" />
+    <TypeScriptCompile Include="ClientApp\Core\Components\core.component.ts" />
+    <TypeScriptCompile Include="ClientApp\Core\Services\core.service.ts" />
     <TypeScriptCompile Include="ClientApp\main.ts" />
     <TypeScriptCompile Include="ClientApp\app\Admin\Models\Anime\anime.ts" />
     <TypeScriptCompile Include="ClientApp\app\Admin\Models\Book\book.ts" />
@@ -91,17 +101,26 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="ClientApp\app\Admin\Components\AnimeEpisode\animeEpisode.component.js">
+      <DependentUpon>animeEpisode.component.ts</DependentUpon>
+    </None>
     <None Update="ClientApp\app\Admin\Components\Menu\menu.component.js">
       <DependentUpon>menu.component.ts</DependentUpon>
     </None>
     <None Update="ClientApp\app\Admin\Components\Anime\anime.component.js">
       <DependentUpon>anime.component.ts</DependentUpon>
     </None>
+    <None Update="ClientApp\app\Admin\Models\AnimeEpisode\animeEpisode.js">
+      <DependentUpon>animeEpisode.ts</DependentUpon>
+    </None>
     <None Update="ClientApp\app\Admin\Models\Anime\Anime.js">
       <DependentUpon>anime.ts</DependentUpon>
     </None>
     <None Update="ClientApp\app\Admin\Models\Book\bookFilter.js">
       <DependentUpon>bookFilter.ts</DependentUpon>
+    </None>
+    <None Update="ClientApp\app\Admin\Services\anime - Copy.service.js">
+      <DependentUpon>anime.service.ts</DependentUpon>
     </None>
     <None Update="ClientApp\app\Admin\Services\anime.service.js">
       <DependentUpon>anime.service.ts</DependentUpon>
@@ -118,16 +137,16 @@
     <None Update="ClientApp\app\Front\Services\frontData.service.js">
       <DependentUpon>frontData.service.ts</DependentUpon>
     </None>
-    <None Update="ClientApp\Core\file.service.js">
+    <None Update="ClientApp\Core\Services\file.service.js">
       <DependentUpon>file.service.ts</DependentUpon>
     </None>
-    <None Update="ClientApp\Core\file.service.js">
+    <None Update="ClientApp\Core\Services\file.service.js">
       <DependentUpon>file.service.ts</DependentUpon>
     </None>
     <None Update="ClientApp\Core\SelectListItem - Copy.js">
       <DependentUpon>SelectListItem.ts</DependentUpon>
     </None>
-    <None Update="ClientApp\Core\SelectListItem.js">
+    <None Update="ClientApp\Core\Models\SelectListItem.js">
       <DependentUpon>SelectListItem.ts</DependentUpon>
     </None>
   </ItemGroup>
