@@ -1,47 +1,15 @@
-﻿<h2>AnimeEpisodes</h2>
+﻿<h2>Anime</h2>
+<button class="btn btn-default" [routerLink]="['/admin/anime']">Back to list</button>
 <div *ngIf="_error" class="form-group">
     <span class="error">Error: {{_error}}</span>
 </div>
-<div class="grid">
-    <div class="pagination">
-        <button class="btn btn-default" (click)="prevPage()">Previous</button>
-        <span>Page {{_currentPage}} of {{_totalPages}}</span>
-        <button class="btn btn-default" (click)="nextPage()">Next</button>
-        <button class="btn btn-default" (click)="excelExport()">Export all pages to excel</button>
-    </div>
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Title</th>
-                <th></th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            <ng-template ngFor let-i [ngForOf]="_items" let-n="index">
-                <tr>
-                    <td>
-                        {{i.id}}
-                    </td>
-                    <td>
-                        {{i.title}}
-                    </td>
-                    <td>
-                        <button class="btn btn-default" (click)="toggleEdit(n, i.id)">Edit</button>
-                    </td>
-                    <td>
-                        <button class="btn btn-default" (click)="delete(i.id)">Delete</button>
-                    </td>
-                </tr>
-                <tr *ngIf="_isShowEdit[n]; then edit"></tr>
-            </ng-template>
-        </tbody>
-    </table>
-</div>
+
 <div class="create-new">
-    <button class="btn btn-default" (click)="toggleCreate()">Create new</button>
-    <div *ngIf="_isShowCreate; then create"></div>
+    <div *ngIf="_id; then edit"></div>
+    <div *ngIf="!_id; then create"></div>
+    <div *ngIf="_id" style="margin-top:30px;">
+        <anime-episodes [_parentId]="_id"></anime-episodes>
+    </div>
 </div>
 
 <ng-template #edit>
@@ -57,7 +25,20 @@
                                 Title required
                             </p>
                         </div>
-                    </div>                    
+                    </div>
+                    <div class="form-group col-sm-3">
+                        <label>Season count *</label>
+                        <input class="form-control" name="seasonCount" [(ngModel)]="_itemEdit.seasonCount" #seasonCount="ngModel" type="number" required />
+                        <div *ngIf="seasonCount.touched && seasonCount.invalid">
+                            <p *ngIf="seasonCount.errors.required" class="validation-text">
+                                Season count required
+                            </p>
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-3">
+                        <label>Image</label>
+                        <input type="file" (change)="uploadImageEdit($event.target.files[0])" />
+                    </div>
                     <div class="form-group col-sm-10">
                         <button class="btn btn-default" (click)="postEdit()" [disabled]="editForm.invalid">Submit</button>
                     </div>
@@ -79,7 +60,20 @@
                         Title required
                     </p>
                 </div>
-            </div>            
+            </div>
+            <div class="form-group col-sm-3">
+                <label>Season count *</label>
+                <input class="form-control" name="seasonCount" [(ngModel)]="_itemCreate.seasonCount" #seasonCount="ngModel" type="number" required />
+                <div *ngIf="seasonCount.touched && seasonCount.invalid">
+                    <p *ngIf="seasonCount.errors.required" class="validation-text">
+                        Season count required
+                    </p>
+                </div>
+            </div>
+            <div class="form-group col-sm-3">
+                <label>Image</label>
+                <input type="file" (change)="uploadImageCreate($event.target.files[0])" />
+            </div>
             <div class="form-group col-sm-10">
                 <button class="btn btn-default" (click)="postCreate()" [disabled]="createForm.invalid">Submit</button>
             </div>

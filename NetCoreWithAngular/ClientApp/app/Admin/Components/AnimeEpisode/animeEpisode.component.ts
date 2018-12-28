@@ -7,7 +7,7 @@ import { read } from 'fs';
 import { ActivatedRoute } from "@angular/router";
 
 @Component({
-    selector: 'anime-episode',
+    selector: 'anime-episodes',
     templateUrl: './animeEpisode.component.html',
     styleUrls: ['./animeEpisode.component.css'],
     providers: [AnimeEpisodeService]

@@ -9,6 +9,8 @@
     <None Remove="ClientApp\app\Admin\Components\Account\account.component.ts" />
     <None Remove="ClientApp\app\Admin\Components\AdminMain\admin.component.ts" />
     <None Remove="ClientApp\app\Admin\Components\AnimeEpisode\animeEpisode.component.ts" />
+    <None Remove="ClientApp\app\Admin\Components\Anime\animeEdit.component.ts" />
+    <None Remove="ClientApp\app\Admin\Components\Book\bookEdit.component.ts" />
     <None Remove="ClientApp\app\Admin\Models\AnimeEpisode\animeEpisode.ts" />
     <None Remove="ClientApp\app\Admin\Models\bookFilter.ts" />
     <None Remove="ClientApp\app\Admin\Models\bookGrid.ts" />
@@ -28,6 +30,7 @@
     <None Remove="ClientApp\Core\account.component.ts" />
     <None Remove="ClientApp\Core\account.service.ts" />
     <None Remove="ClientApp\Core\AccountGlobals.ts" />
+    <None Remove="ClientApp\Core\Components\edit.component.ts" />
     <None Remove="ClientApp\Core\core.component.ts" />
     <None Remove="ClientApp\Core\core.service.ts" />
     <None Remove="ClientApp\app\Admin\Models\Anime.ts" />
@@ -69,6 +72,8 @@
     <TypeScriptCompile Include="ClientApp\app\Admin\Components\AdminMain\admin.component.ts" />
     <TypeScriptCompile Include="ClientApp\app\Admin\Components\Account\account.component.ts" />
     <TypeScriptCompile Include="ClientApp\app\Admin\Components\AnimeEpisode\animeEpisode.component.ts" />
+    <TypeScriptCompile Include="ClientApp\app\Admin\Components\Anime\animeEdit.component.ts" />
+    <TypeScriptCompile Include="ClientApp\app\Admin\Components\Book\bookEdit.component.ts" />
     <TypeScriptCompile Include="ClientApp\app\Admin\Components\Menu\menu.component.ts" />
     <TypeScriptCompile Include="ClientApp\app\Admin\Components\Anime\anime.component.ts" />
     <TypeScriptCompile Include="ClientApp\app\Admin\Models\AnimeEpisode\animeEpisode.ts" />
@@ -87,6 +92,7 @@
     <TypeScriptCompile Include="ClientApp\Core\Account\account.service.ts" />
     <TypeScriptCompile Include="ClientApp\Core\Account\account.component.ts" />
     <TypeScriptCompile Include="ClientApp\Core\Account\AccountGlobals.ts" />
+    <TypeScriptCompile Include="ClientApp\Core\Components\edit.component.ts" />
     <TypeScriptCompile Include="ClientApp\Core\Components\dependent.component.ts" />
     <TypeScriptCompile Include="ClientApp\Core\Models\IDependentEntity.ts" />
     <TypeScriptCompile Include="ClientApp\Core\Models\IEntity.ts" />

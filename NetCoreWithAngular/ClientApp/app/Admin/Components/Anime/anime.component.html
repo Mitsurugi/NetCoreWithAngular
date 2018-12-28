@@ -40,7 +40,7 @@
                         <a href="/admin/AnimeEpisodes/{{i.id}}">View episodes</a>
                     </td>
                     <td>
-                        <button class="btn btn-default" (click)="toggleEdit(n, i.id)">Edit</button>
+                        <button class="btn btn-default" [routerLink]="['/admin/anime/edit', i.id]">Edit</button>
                     </td>
                     <td>
                         <button class="btn btn-default" (click)="delete(i.id)">Delete</button>
@@ -52,7 +52,7 @@
     </table>
 </div>
 <div class="create-new">
-    <button class="btn btn-default" (click)="toggleCreate()">Create new</button>
+    <button class="btn btn-default" [routerLink]="['/admin/anime/create']">Create new</button>
     <div *ngIf="_isShowCreate; then create"></div>
 </div>
 

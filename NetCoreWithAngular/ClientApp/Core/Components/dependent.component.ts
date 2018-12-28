@@ -1,4 +1,4 @@
-﻿import { Component, OnInit } from '@angular/core';
+﻿import { Input, Component, OnInit } from '@angular/core';
 import { DependentService } from '../Services/dependent.service';
 import { IDependentEntity } from '../Models/IDependentEntity';
 import { ActivatedRoute } from "@angular/router";
@@ -10,7 +10,8 @@ export class DependentComponent<TKey, TParentKey, TGrid extends IDependentEntity
 
     _service: DependentService<TKey, TParentKey, TGrid, TCreate, TEdit, TFilter>;
 
-    _parentId: any;
+    @Input() _parentId: TParentKey;
+
     _items: TGrid[];
     _itemEdit: TEdit;
     _itemCreate: TCreate;
@@ -42,7 +43,9 @@ export class DependentComponent<TKey, TParentKey, TGrid extends IDependentEntity
         this.typeEdit = typeEdit;
         this.typeFilter = typeFilter;
 
-        route.params.subscribe(params => this._parentId = params['parentId']);
+        if (!this._parentId) {
+            route.params.subscribe(params => this._parentId = params['parentId']);
+        }        
     }
 
     async ngOnInit() {

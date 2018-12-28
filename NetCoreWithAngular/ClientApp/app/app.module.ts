@@ -12,7 +12,9 @@ import { AdminComponent } from './Admin/Components/AdminMain/admin.component'
 import { AccountComponent } from './Admin/Components/Account/account.component'
 import { MenuComponent } from './Admin/Components/Menu/menu.component'
 import { BookComponent } from './Admin/Components/Book/book.component'
+import { BookEditComponent } from './Admin/Components/Book/bookEdit.component'
 import { AnimeComponent } from './Admin/Components/Anime/anime.component'
+import { AnimeEditComponent } from './Admin/Components/Anime/animeEdit.component'
 import { AnimeEpisodeComponent } from './Admin/Components/AnimeEpisode/animeEpisode.component'
 import { FrontComponent } from './Front/Components/Front/front.component'
 
@@ -20,7 +22,11 @@ const adminRoutes: Routes = [
     { path: '', component: AccountComponent },
     { path: 'account', component: AccountComponent },
     { path: 'anime', component: AnimeComponent },
+    { path: 'anime/create', component: AnimeEditComponent },
+    { path: 'anime/edit/:id', component: AnimeEditComponent },
     { path: 'book', component: BookComponent },
+    { path: 'book/create', component: BookEditComponent },
+    { path: 'book/edit/:id', component: BookEditComponent },
     { path: 'AnimeEpisodes/:parentId', component: AnimeEpisodeComponent }
 ];
 
@@ -36,7 +42,7 @@ const appRoutes: Routes = [
 
 @NgModule({
     imports: [BrowserModule, FormsModule, HttpClientModule, RouterModule.forRoot(appRoutes)],
-    declarations: [AppComponent, NotFoundComponent, AdminComponent, AccountComponent, MenuComponent, AnimeComponent, BookComponent, FrontComponent, AnimeEpisodeComponent],
+    declarations: [AppComponent, NotFoundComponent, AdminComponent, AccountComponent, MenuComponent, AnimeComponent, AnimeEditComponent, BookComponent, BookEditComponent, FrontComponent, AnimeEpisodeComponent],
     providers: [{ provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true }],
     bootstrap: [AppComponent]
 })

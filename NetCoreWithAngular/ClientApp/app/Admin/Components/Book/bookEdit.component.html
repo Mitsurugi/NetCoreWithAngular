@@ -1,119 +1,13 @@
-﻿<h2>Books</h2>
+﻿<h2>Book</h2>
+<button class="btn btn-default" [routerLink]="['/admin/book']">Back to list</button>
 <div *ngIf="_error" class="form-group">
     <span class="error">Error: {{_error}}</span>
 </div>
-<div class="filter">
-    <h3>Filter</h3>
-    <form #filterForm="ngForm">
-        <div class="form-group col-sm-3">
-            <label>Title</label>
-            <input class="form-control" name="title" [(ngModel)]="_filter.title" #title="ngModel" type="text" />
-        </div>
-        <div class="form-group col-sm-3">
-            <label>Author</label>
-            <input class="form-control" name="author" [(ngModel)]="_filter.author" #author="ngModel" type="text" pattern="^[a-zA-Z\s]*$" />
-            <div *ngIf="author.touched && author.invalid">
-                <p *ngIf="author.errors.pattern" class="validation-text">
-                    Only letters allowed
-                </p>
-            </div>
-        </div>
-        <div class="form-group col-sm-3">
-            <label>Genre</label>
-            <select class="form-control" name="genre" [(ngModel)]="_filter.genre" #genre="ngModel">
-                <ng-template ngFor let-i [ngForOf]="_filter.genreList" let-n="index">
-                    <option value="{{i.value}}" [disabled]="i.disabled">{{i.text}}</option>
-                </ng-template>
-            </select>
-        </div>
-        <div class="form-group col-sm-3">
-            <label>Page count</label>
-            <input class="form-control" name="pageCount" [(ngModel)]="_filter.pageCount" #pageCount="ngModel" type="number" />
-        </div>
-        <div class="form-group col-sm-5">
-            <button class="btn btn-default" (click)="refreshPage()" [disabled]="filterForm.invalid">Apply</button>
-        </div>
-        <div class="form-group col-sm-5">
-            <button class="btn btn-default" (click)="clearFilter()" [disabled]="filterForm.invalid">Clear</button>
-        </div>
-    </form>
-    <div style="clear:both"></div>
-</div>
-<div class="grid">
-    <div class="pagination">
-        <button class="btn btn-default" (click)="prevPage()">Previous</button>
-        <span>Page {{_currentPage}} of {{_totalPages}}</span>
-        <button class="btn btn-default" (click)="nextPage()">Next</button>
-        <button class="btn btn-default" (click)="excelExport()">Export all pages to excel</button>
-    </div>
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Title</th>
-                <th>Author</th>
-                <th>Genre</th>
-                <th>Page count</th>
-                <th></th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            <ng-template ngFor let-i [ngForOf]="_items" let-n="index">
-                <tr>
-                    <td>
-                        {{i.id}}
-                    </td>
-                    <td>
-                        {{i.title}}
-                    </td>
-                    <td>
-                        {{i.author}}
-                    </td>
-                    <td>
-                        {{i.genre}}
-                    </td>
-                    <td>
-                        {{i.pageCount}}
-                    </td>
-                    <td>
-                        <button class="btn btn-default" [routerLink]="['/admin/book/edit', i.id]">Edit</button>
-                    </td>
-                    <td>
-                        <button class="btn btn-default" (click)="delete(i.id)">Delete</button>
-                    </td>
-                </tr>
-                <tr *ngIf="_isShowEdit[n]; then edit"></tr>
-            </ng-template>
-        </tbody>
-    </table>
-</div>
 
 <div class="create-new">
-    <button class="btn btn-default" [routerLink]="['/admin/book/create']">Create new</button>
-    <button class="btn btn-default" (click)="toggleImport()">Import</button>
-    <div *ngIf="_isShowCreate; then create"></div>
-    <div *ngIf="_isShowImport; then import"></div>
+    <div *ngIf="_id; then edit"></div>
+    <div *ngIf="!_id; then create"></div>
 </div>
-
-<ng-template #import>
-    <div>
-        <div class="form-group col-sm-2">
-            <input type="file" (change)="setImportFile($event.target.files[0])" />
-        </div>
-        <div class="form-group col-sm-1">
-            <a (click)="importTemplate()">Import template</a>
-        </div>
-        <div style="clear:both"></div>
-        <div class="form-group col-sm-10">
-            <button class="btn btn-default" (click)="postImport()">Upload</button>
-        </div>
-        <div class="form-group col-sm-10">
-            {{_importResult}}
-        </div>
-        <div style="clear:both"></div>
-    </div>
-</ng-template>
 
 <ng-template #edit>
     <tr>

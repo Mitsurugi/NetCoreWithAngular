@@ -7,7 +7,7 @@ import { BookGrid } from '../../Models/book/bookGrid';
 import { BookFilter } from '../../Models/book/bookFilter';
 
 @Component({
-    selector: 'book',
+    selector: 'books',
     templateUrl: './book.component.html',
     styleUrls: ['./book.component.css'],
     providers: [BookService]

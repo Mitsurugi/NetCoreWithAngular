@@ -84,7 +84,7 @@ var BookComponent = /** @class */ (function (_super) {
     };
     BookComponent = __decorate([
         Component({
-            selector: 'book',
+            selector: 'books',
             templateUrl: './book.component.html',
             styleUrls: ['./book.component.css'],
             providers: [BookService]

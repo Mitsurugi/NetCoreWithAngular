@@ -21,25 +21,25 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 import { Component } from '@angular/core';
-import { DependentComponent } from '../../../../Core/Components/dependent.component';
-import { AnimeEpisodeService } from '../../Services/animeEpisode.service';
-import { AnimeEpisode } from '../../Models/AnimeEpisode/animeEpisode';
-import { ActivatedRoute } from "@angular/router";
-var AnimeEpisodeComponent = /** @class */ (function (_super) {
-    __extends(AnimeEpisodeComponent, _super);
-    function AnimeEpisodeComponent(service, route) {
-        return _super.call(this, service, AnimeEpisode, AnimeEpisode, AnimeEpisode, AnimeEpisode, route) || this;
+import { EditComponent } from '../../../../Core/Components/edit.component';
+import { BookService } from '../../Services/book.service';
+import { Book } from '../../Models/Book/book';
+import { ActivatedRoute, Router } from '@angular/router';
+var BookEditComponent = /** @class */ (function (_super) {
+    __extends(BookEditComponent, _super);
+    function BookEditComponent(service, route, router) {
+        return _super.call(this, service, Book, Book, route, router, 'admin/book') || this;
     }
-    AnimeEpisodeComponent = __decorate([
+    BookEditComponent = __decorate([
         Component({
-            selector: 'anime-episodes',
-            templateUrl: './animeEpisode.component.html',
-            styleUrls: ['./animeEpisode.component.css'],
-            providers: [AnimeEpisodeService]
+            selector: 'book-edit',
+            templateUrl: './bookEdit.component.html',
+            styleUrls: ['./bookEdit.component.css'],
+            providers: [BookService]
         }),
-        __metadata("design:paramtypes", [AnimeEpisodeService, ActivatedRoute])
-    ], AnimeEpisodeComponent);
-    return AnimeEpisodeComponent;
-}(DependentComponent));
-export { AnimeEpisodeComponent };
-//# sourceMappingURL=animeEpisode.component.js.map
+        __metadata("design:paramtypes", [BookService, ActivatedRoute, Router])
+    ], BookEditComponent);
+    return BookEditComponent;
+}(EditComponent));
+export { BookEditComponent };
+//# sourceMappingURL=bookEdit.component.js.map

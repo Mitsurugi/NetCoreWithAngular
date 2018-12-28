@@ -42,7 +42,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-import { Component } from '@angular/core';
+import { Input, Component } from '@angular/core';
 import { DependentService } from '../Services/dependent.service';
 import { ActivatedRoute } from "@angular/router";
 import { saveAs } from 'file-saver';
@@ -65,7 +65,9 @@ var DependentComponent = /** @class */ (function () {
         this.typeCreate = typeCreate;
         this.typeEdit = typeEdit;
         this.typeFilter = typeFilter;
-        route.params.subscribe(function (params) { return _this._parentId = params['parentId']; });
+        if (!this._parentId) {
+            route.params.subscribe(function (params) { return _this._parentId = params['parentId']; });
+        }
     }
     DependentComponent.prototype.ngOnInit = function () {
         return __awaiter(this, void 0, void 0, function () {
@@ -478,6 +480,10 @@ var DependentComponent = /** @class */ (function () {
     DependentComponent.prototype.setImportFile = function (file) {
         this._importFile = file;
     };
+    __decorate([
+        Input(),
+        __metadata("design:type", Object)
+    ], DependentComponent.prototype, "_parentId", void 0);
     DependentComponent = __decorate([
         Component({}),
         __metadata("design:paramtypes", [DependentService, Function, Function, Function, Function, ActivatedRoute])
