@@ -2,6 +2,7 @@
 import { CoreService } from '../Services/core.service';
 import { IEntity } from '../Models/IEntity'
 import { saveAs } from 'file-saver';
+import { forEach } from '@angular/router/src/utils/collection';
 
 @Component({
 })
@@ -138,6 +139,9 @@ export class CoreComponent<TKey, TGrid extends IEntity<TKey>, TCreate extends IE
         else {
             try {
                 await this.getEdit(id);
+                for (let i = 0; i < this._isShowEdit.length; i++) {
+                    this._isShowEdit[i] = false;
+                }
                 this._isShowEdit[index] = true;
             }
             catch (e) {

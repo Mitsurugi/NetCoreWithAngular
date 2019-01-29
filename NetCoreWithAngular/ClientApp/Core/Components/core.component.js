@@ -242,7 +242,7 @@ var CoreComponent = /** @class */ (function () {
     };
     CoreComponent.prototype.toggleEdit = function (index, id) {
         return __awaiter(this, void 0, void 0, function () {
-            var e_7;
+            var i, e_7;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -254,6 +254,9 @@ var CoreComponent = /** @class */ (function () {
                         return [4 /*yield*/, this.getEdit(id)];
                     case 2:
                         _a.sent();
+                        for (i = 0; i < this._isShowEdit.length; i++) {
+                            this._isShowEdit[i] = false;
+                        }
                         this._isShowEdit[index] = true;
                         return [3 /*break*/, 4];
                     case 3:

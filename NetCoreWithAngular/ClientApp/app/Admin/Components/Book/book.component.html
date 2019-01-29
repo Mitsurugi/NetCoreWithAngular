@@ -77,7 +77,7 @@
                         {{i.pageCount}}
                     </td>
                     <td>
-                        <button class="btn btn-default" [routerLink]="['/admin/book/edit', i.id]">Edit</button>
+                        <button class="btn btn-default" (click)="toggleEdit(n, i.id)">Edit</button>
                     </td>
                     <td>
                         <button class="btn btn-default" (click)="delete(i.id)">Delete</button>
@@ -90,7 +90,7 @@
 </div>
 
 <div class="create-new">
-    <button class="btn btn-default" [routerLink]="['/admin/book/create']">Create new</button>
+    <button class="btn btn-default" (click)="toggleCreate()">Create new</button>
     <button class="btn btn-default" (click)="toggleImport()">Import</button>
     <div *ngIf="_isShowCreate; then create"></div>
     <div *ngIf="_isShowImport; then import"></div>
