@@ -28,21 +28,12 @@ namespace NetCoreWithAngular.Services
             return base.GetGrid(pageSize, pageNumber, orderBy, filter);
         }
 
-        protected override IQueryable<Book> ApplyFilter(IQueryable<Book> query, BookFilterModel filter)
+        protected override IQueryable<Book> ApplySorting(IQueryable<Book> query, string orderBy)
         {
-            if (filter == null)
-                return query;
+            if (string.IsNullOrEmpty(orderBy))
+                return query.OrderByDescending(i => i.Id);
 
-            if (!string.IsNullOrEmpty(filter.Author))
-                query = query.Where(i => i.Author.Contains(filter.Author, StringComparison.InvariantCultureIgnoreCase));
-            if (!string.IsNullOrEmpty(filter.Title))
-                query = query.Where(i => i.Title.Contains(filter.Title, StringComparison.InvariantCultureIgnoreCase));
-            if (filter.PageCount.HasValue)
-                query = query.Where(i => i.PageCount == filter.PageCount);
-            if (filter.Genre.HasValue)
-                query = query.Where(i => i.Genre == filter.Genre);
-
-            return query;
+            return base.ApplySorting(query, orderBy);
         }
     }    
 }

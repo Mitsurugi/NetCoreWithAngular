@@ -323,28 +323,61 @@ namespace CoreLibrary
             }
         }
 
-        protected virtual IQueryable<TEntity> ApplyFilter(IQueryable<TEntity> query, TFilter filter)
+        protected virtual IQueryable<TEntity> ApplySorting(IQueryable<TEntity> query, string orderBy)
         {
+            if (string.IsNullOrEmpty(orderBy))
+                return query;
+
+            bool desc = false;
+            if (orderBy.EndsWith("_desc"))
+            {
+                desc = true;
+                orderBy = orderBy.Replace("_desc", "");
+            }
+
+            if (desc) query = query.OrderByDescending(i => EF.Property<object>(i, orderBy));
+            else query = query.OrderBy(i => EF.Property<object>(i, orderBy));
+
             return query;
         }
 
-        protected virtual IQueryable<TEntity> ApplySorting(IQueryable<TEntity> query, string orderBy)
+        protected virtual IQueryable<TEntity> ApplyFilter(IQueryable<TEntity> query, TFilter filter)
         {
-            if (!string.IsNullOrEmpty(orderBy))
+            if (filter == null)
             {
-                bool desc = false;
-                if (orderBy.EndsWith("_desc"))
+                return query;
+            }
+            
+            var filterProperties = typeof(TFilter).GetProperties();
+            var entityProperties = typeof(TEntity).GetProperties();
+            foreach (var prop in filterProperties)
+            {
+                var value = prop.GetValue(filter);
+                if (value == null || !entityProperties.Any(i => i.Name == prop.Name)) continue;
+
+                var t = prop.PropertyType;
+                if (t.IsGenericType && t.GetGenericTypeDefinition() == typeof(Nullable<>))
                 {
-                    desc = true;
-                    orderBy = orderBy.Replace("_desc", "");
+                    t = Nullable.GetUnderlyingType(prop.PropertyType);
                 }
-
-                if (desc) query = query.OrderByDescending(i => EF.Property<object>(i, orderBy));
-                else query = query.OrderBy(i => EF.Property<object>(i, orderBy));
-
+                
+                if (t.IsPrimitive || t == typeof(DateTime))
+                {
+                    query = query.Where(i => EF.Property<object>(i, prop.Name).Equals(value));
+                    continue;
+                }
+                if (t == typeof(string))
+                {
+                    query = query.Where(i => EF.Property<string>(i, prop.Name).Contains((string)value, StringComparison.InvariantCultureIgnoreCase));
+                }
+                if (t.IsEnum)
+                {
+                    query = query.Where(i => Enum.Equals(EF.Property<object>(i, prop.Name), value));
+                    continue;
+                }
             }
 
             return query;
-        }
+        }        
     }
 }

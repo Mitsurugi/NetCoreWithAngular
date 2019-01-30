@@ -23,7 +23,7 @@ export class CoreComponent<TKey, TGrid extends IEntity<TKey>, TCreate extends IE
     _importFile: File = null;
     _importResult: string;
     _isShowImport: boolean;
-    _orderBy: string = 'Id_desc';
+    _orderBy: string = '';
 
     typeGrid: (new () => TGrid);
     typeCreate: (new () => TCreate);

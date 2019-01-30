@@ -27,27 +27,49 @@ namespace CoreLibrary
         }
 
         [HttpGet]
-        public virtual async Task<int> GetPagesCount([FromQuery] TParentKey parentId, [FromQuery] int? pageSize = null, [FromQuery] TFilter filter = null)
+        public virtual async Task<ActionResult<int>> GetPagesCount([FromQuery] TParentKey parentId, [FromQuery] int? pageSize = null, [FromQuery] TFilter filter = null)
         {
-            if (!pageSize.HasValue) pageSize = _pageSize;
-            return await _service.GetPagesCount(pageSize.Value, parentId, filter);
+            try
+            {
+                if (!pageSize.HasValue) pageSize = _pageSize;
+                return await _service.GetPagesCount(pageSize.Value, parentId, filter);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }            
         }
 
         [HttpGet]
-        public virtual async Task<List<TGrid>> Grid([FromQuery] TParentKey parentId, [FromQuery] int pageNumber, [FromQuery] int? pageSize = null, [FromQuery] string orderBy = null, [FromQuery] TFilter filter = null)
+        public virtual async Task<ActionResult<List<TGrid>>> Grid([FromQuery] TParentKey parentId, [FromQuery] int pageNumber, [FromQuery] int? pageSize = null, [FromQuery] string orderBy = null, [FromQuery] TFilter filter = null)
         {
-            if (!pageSize.HasValue) pageSize = _pageSize;
-            return await _service.GetGrid(pageSize.Value, pageNumber, parentId, orderBy, filter);
+            try
+            {
+                return await _service.GetGrid(pageSize.Value, pageNumber, parentId, orderBy, filter);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
+
+            if (!pageSize.HasValue) pageSize = _pageSize;            
         }
 
         [HttpGet]
-        public virtual async Task<TCreate> Create([FromQuery] TParentKey parentId)
+        public virtual async Task<ActionResult<TCreate>> Create([FromQuery] TParentKey parentId)
         {
-            return await _service.Create(parentId);
+            try
+            {
+                return await _service.Create(parentId);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }            
         }
 
         [HttpPost]
-        public virtual async Task<IActionResult> Create([FromBody] TCreate create)
+        public virtual async Task<ActionResult<TCreate>> Create([FromBody] TCreate create)
         {
             if (!ModelState.IsValid)
             {
@@ -57,7 +79,7 @@ namespace CoreLibrary
             try
             {
                 create = await _service.Create(create);
-                return Ok(create);
+                return create;
             }
             catch (Exception ex)
             {
@@ -66,13 +88,20 @@ namespace CoreLibrary
         }
 
         [HttpGet]
-        public virtual async Task<TEdit> Edit([FromQuery] TKey id)
+        public virtual async Task<ActionResult<TEdit>> Edit([FromQuery] TKey id)
         {
-            return await _service.Edit(id);
+            try
+            {
+                return await _service.Edit(id);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }            
         }
 
         [HttpPost]
-        public virtual async Task<IActionResult> Edit([FromBody] TEdit edit)
+        public virtual async Task<ActionResult<TEdit>> Edit([FromBody] TEdit edit)
         {
 
             if (!ModelState.IsValid)
@@ -83,7 +112,7 @@ namespace CoreLibrary
             try
             {
                 edit = await _service.Edit(edit);
-                return Ok(edit);
+                return edit;
             }
             catch (Exception ex)
             {
@@ -120,23 +149,43 @@ namespace CoreLibrary
         }
 
         [HttpGet]
-        public virtual async Task<TFilter> GetFilter()
+        public virtual async Task<ActionResult<TFilter>> GetFilter()
         {
-            return await _service.GetFilter();
+            try
+            {
+                return await _service.GetFilter();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }            
         }
 
         [HttpGet]
         public virtual async Task<IActionResult> ExcelExport([FromQuery] TParentKey parentId, [FromQuery] string orderBy = null, [FromQuery] TFilter filter = null)
         {
-            byte[] reportData = await _service.ExcelExport(parentId, orderBy, filter);
-            return File(reportData, "application/vnd.openxmlformat");
+            try
+            {
+                byte[] reportData = await _service.ExcelExport(parentId, orderBy, filter);
+                return File(reportData, "application/vnd.openxmlformat");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }            
         }
 
         [HttpGet]
         public virtual async Task<IActionResult> ImportTemplate()
         {
-            byte[] reportData = await _service.ImportTemplate();
-            return File(reportData, "application/vnd.openxmlformat");
+            try
+            {
+                byte[] reportData = await _service.ImportTemplate();
+                return File(reportData, "application/vnd.openxmlformat");
+            } catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }            
         }
 
         [HttpPost]
