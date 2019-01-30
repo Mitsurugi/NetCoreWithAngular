@@ -5,6 +5,7 @@
 <div class="sorting">
     <label>Sort by</label>
     <select class="form-control" [(ngModel)]="_orderBy" (change)="reloadGrid()">
+        <option value="">Default</option>
         <option value="Id_desc">Id descending</option>
         <option value="Id">Id ascending</option>
         <option value="Title">Title ascending</option>

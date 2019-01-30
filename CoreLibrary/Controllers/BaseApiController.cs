@@ -27,12 +27,12 @@ namespace CoreLibrary
         }
 
         [HttpGet]
-        public virtual async Task<ActionResult<int>> GetPagesCount([FromQuery] int? pageSize = null, [FromQuery] TFilter filter = null)
+        public virtual async Task<ActionResult<int>> GetPagesCount([FromQuery] int? pageSize = null, [FromQuery] TFilter filter = null, [FromQuery] string searchString = null)
         {
             try
             {
                 if (!pageSize.HasValue) pageSize = _pageSize;
-                return await _service.GetPagesCount(pageSize.Value, filter);
+                return await _service.GetPagesCount(pageSize.Value, filter, searchString);
             }
             catch (Exception ex)
             {
@@ -41,12 +41,12 @@ namespace CoreLibrary
         }
 
         [HttpGet]
-        public virtual async Task<ActionResult<List<TGrid>>> Grid([FromQuery] int pageNumber, [FromQuery] int? pageSize = null, [FromQuery] string orderBy = null, [FromQuery] TFilter filter = null)
+        public virtual async Task<ActionResult<List<TGrid>>> Grid([FromQuery] int pageNumber, [FromQuery] int? pageSize = null, [FromQuery] string orderBy = null, [FromQuery] TFilter filter = null, [FromQuery] string searchString = null)
         {
             try
             {
                 if (!pageSize.HasValue) pageSize = _pageSize;
-                return await _service.GetGrid(pageSize.Value, pageNumber, orderBy, filter);
+                return await _service.GetGrid(pageSize.Value, pageNumber, orderBy, filter, searchString);
             }
             catch (Exception ex)
             {
@@ -161,11 +161,11 @@ namespace CoreLibrary
         }
 
         [HttpGet]
-        public virtual async Task<IActionResult> ExcelExport([FromQuery] string orderBy = null, [FromQuery] TFilter filter = null)
+        public virtual async Task<IActionResult> ExcelExport([FromQuery] string orderBy = null, [FromQuery] TFilter filter = null, [FromQuery] string searchString = null)
         {
             try
             {
-                byte[] reportData = await _service.ExcelExport(orderBy, filter);
+                byte[] reportData = await _service.ExcelExport(orderBy, filter, searchString);
                 return File(reportData, "application/vnd.openxmlformat");
             }
             catch (Exception ex)

@@ -20,10 +20,10 @@ namespace CoreLibrary
         Task<TEdit> Edit(TKey id);
         Task Delete(TKey id);
         Task Delete(TKey[] ids);
-        Task<int> GetPagesCount(int pageSize, TFilter filter);
-        Task<List<TGrid>> GetGrid(int pageSize, int pageNumber, string orderBy, TFilter filter);
+        Task<int> GetPagesCount(int pageSize, TFilter filter, string searchSting);
+        Task<List<TGrid>> GetGrid(int pageSize, int pageNumber, string orderBy, TFilter filter, string searchSting);
         Task<TFilter> GetFilter();
-        Task<byte[]> ExcelExport(string orderBy, TFilter filter);
+        Task<byte[]> ExcelExport(string orderBy, TFilter filter, string searchString);
         Task<byte[]> ImportTemplate();
         Task Import(Stream file);
     }
