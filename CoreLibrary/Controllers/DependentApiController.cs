@@ -26,18 +26,18 @@ namespace CoreLibrary
             _pageSize = 10;
         }
 
-        [HttpPost]
-        public virtual async Task<int> GetPagesCount([FromBody] TFilter filter, [FromQuery] TParentKey parentId, [FromQuery] int? pageSize = null)
+        [HttpGet]
+        public virtual async Task<int> GetPagesCount([FromQuery] TParentKey parentId, [FromQuery] int? pageSize = null, [FromQuery] TFilter filter = null)
         {
             if (!pageSize.HasValue) pageSize = _pageSize;
             return await _service.GetPagesCount(pageSize.Value, parentId, filter);
         }
 
-        [HttpPost]
-        public virtual async Task<List<TGrid>> Grid([FromBody] TFilter filter, [FromQuery] TParentKey parentId, [FromQuery] int pageNumber, [FromQuery] int? pageSize = null, [FromQuery] string orderBy = null)
+        [HttpGet]
+        public virtual async Task<List<TGrid>> Grid([FromQuery] TParentKey parentId, [FromQuery] int pageNumber, [FromQuery] int? pageSize = null, [FromQuery] string orderBy = null, [FromQuery] TFilter filter = null)
         {
             if (!pageSize.HasValue) pageSize = _pageSize;
-            return await _service.GetGrid(pageSize.Value, pageNumber, parentId, filter, orderBy);
+            return await _service.GetGrid(pageSize.Value, pageNumber, parentId, orderBy, filter);
         }
 
         [HttpGet]
@@ -47,7 +47,7 @@ namespace CoreLibrary
         }
 
         [HttpPost]
-        public virtual async Task<IActionResult> Create(TCreate create)
+        public virtual async Task<IActionResult> Create([FromBody] TCreate create)
         {
             if (!ModelState.IsValid)
             {
@@ -66,13 +66,13 @@ namespace CoreLibrary
         }
 
         [HttpGet]
-        public virtual async Task<TEdit> Edit(TKey id)
+        public virtual async Task<TEdit> Edit([FromQuery] TKey id)
         {
             return await _service.Edit(id);
         }
 
         [HttpPost]
-        public virtual async Task<IActionResult> Edit(TEdit edit)
+        public virtual async Task<IActionResult> Edit([FromBody] TEdit edit)
         {
 
             if (!ModelState.IsValid)
@@ -92,7 +92,7 @@ namespace CoreLibrary
         }
 
         [HttpDelete]
-        public virtual async Task<IActionResult> Delete(TKey id)
+        public virtual async Task<IActionResult> Delete([FromQuery] TKey id)
         {
             try
             {
@@ -106,7 +106,7 @@ namespace CoreLibrary
         }
 
         [HttpDelete]
-        public virtual async Task<IActionResult> DeleteMany(TKey[] ids)
+        public virtual async Task<IActionResult> DeleteMany([FromQuery] TKey[] ids)
         {
             try
             {
@@ -125,10 +125,10 @@ namespace CoreLibrary
             return await _service.GetFilter();
         }
 
-        [HttpPost]
-        public virtual async Task<IActionResult> ExcelExport([FromQuery] TParentKey parentId, [FromBody] TFilter filter, [FromQuery] string orderBy = null)
+        [HttpGet]
+        public virtual async Task<IActionResult> ExcelExport([FromQuery] TParentKey parentId, [FromQuery] string orderBy = null, [FromQuery] TFilter filter = null)
         {
-            byte[] reportData = await _service.ExcelExport(parentId, filter, orderBy);
+            byte[] reportData = await _service.ExcelExport(parentId, orderBy, filter);
             return File(reportData, "application/vnd.openxmlformat");
         }
 

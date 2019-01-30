@@ -31,7 +31,7 @@
             <input class="form-control" name="pageCount" [(ngModel)]="_filter.pageCount" #pageCount="ngModel" type="number" />
         </div>
         <div class="form-group col-sm-5">
-            <button class="btn btn-default" (click)="refreshPage()" [disabled]="filterForm.invalid">Apply</button>
+            <button class="btn btn-default" (click)="reloadGrid()" [disabled]="filterForm.invalid">Apply</button>
         </div>
         <div class="form-group col-sm-5">
             <button class="btn btn-default" (click)="clearFilter()" [disabled]="filterForm.invalid">Clear</button>

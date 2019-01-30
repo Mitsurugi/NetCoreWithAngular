@@ -82,7 +82,7 @@ namespace CoreLibrary
             await _repository.Delete(i => ids.Contains(i.Id));
         }
 
-        public virtual async Task<List<TGrid>> GetGrid(int pageSize, int pageNumber, TFilter filter, string orderBy)
+        public virtual async Task<List<TGrid>> GetGrid(int pageSize, int pageNumber, string orderBy, TFilter filter)
         {
             if (pageNumber < 1)
                 throw new Exception($"Wrong pageNumber = {pageNumber}. Must be 1 or greater");
@@ -113,7 +113,7 @@ namespace CoreLibrary
             return new TFilter();
         }        
 
-        public virtual async Task<byte[]> ExcelExport(TFilter filter, string orderBy)
+        public virtual async Task<byte[]> ExcelExport(string orderBy, TFilter filter)
         {
             var query = ApplyFilter(GetQuery(), filter);
             query = ApplySorting(query, orderBy);

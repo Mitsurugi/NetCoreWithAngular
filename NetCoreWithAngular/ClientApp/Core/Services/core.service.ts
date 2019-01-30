@@ -1,7 +1,8 @@
 ﻿import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { IEntity } from '../Models/IEntity'
+import { StaticMethods } from './staticMethods';
 
 @Injectable()
 export class CoreService<TKey, TGrid extends IEntity<TKey>, TCreate extends IEntity<TKey>, TEdit extends IEntity<TKey>, TFilter> {
@@ -14,11 +15,11 @@ export class CoreService<TKey, TGrid extends IEntity<TKey>, TCreate extends IEnt
     }
 
     public async getPagesCount(pageSize: number, filter: TFilter): Promise<number> {
-        return await this._http.post<number>('api/' + this._controller + '/getPagesCount?pageSize=' + pageSize, filter).toPromise();
+        return await this._http.get<number>('api/' + this._controller + '/getPagesCount?pageSize=' + pageSize, { params: StaticMethods.ObjectToHttpParams('filter', filter) }).toPromise();
     }
 
-    public async getGrid(pageNumber: number, pageSize: number, filter: TFilter, orderBy: string): Promise<TGrid[]> {
-        return await this._http.post<TGrid[]>('api/' + this._controller + '/grid?pageNumber=' + pageNumber + '&pageSize=' + pageSize + '&orderBy=' + orderBy, filter).toPromise();
+    public async getGrid(pageNumber: number, pageSize: number, orderBy: string, filter: TFilter): Promise<TGrid[]> {
+        return await this._http.get<TGrid[]>('api/' + this._controller + '/grid?pageNumber=' + pageNumber + '&pageSize=' + pageSize + '&orderBy=' + orderBy, { params: StaticMethods.ObjectToHttpParams('filter', filter) }).toPromise();
     }
 
     public async getCreate(): Promise<TCreate> {
@@ -45,8 +46,8 @@ export class CoreService<TKey, TGrid extends IEntity<TKey>, TCreate extends IEnt
         return await this._http.get<TFilter>('api/' + this._controller + '/getFilter').toPromise();
     }
 
-    public async getExcelExport(filter: TFilter, orderBy: string): Promise<Blob> {
-        return await this._http.post<Blob>('api/' + this._controller + '/ExcelExport?orderBy=' + orderBy, filter, { responseType: 'blob' as 'json' }).toPromise();        
+    public async getExcelExport(orderBy: string, filter: TFilter): Promise<Blob> {
+        return await this._http.get<Blob>('api/' + this._controller + '/ExcelExport?orderBy=' + orderBy, { responseType: 'blob' as 'json', params: StaticMethods.ObjectToHttpParams('filter', filter) }).toPromise();        
     }
 
     public async getImportTemplate(): Promise<Blob> {

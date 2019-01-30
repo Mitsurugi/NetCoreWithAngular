@@ -21,9 +21,9 @@ namespace CoreLibrary
         Task Delete(TKey id);
         Task Delete(TKey[] ids);
         Task<int> GetPagesCount(int pageSize, TFilter filter);
-        Task<List<TGrid>> GetGrid(int pageSize, int pageNumber, TFilter filter, string orderBy);
+        Task<List<TGrid>> GetGrid(int pageSize, int pageNumber, string orderBy, TFilter filter);
         Task<TFilter> GetFilter();
-        Task<byte[]> ExcelExport(TFilter filter, string orderBy);
+        Task<byte[]> ExcelExport(string orderBy, TFilter filter);
         Task<byte[]> ImportTemplate();
         Task Import(Stream file);
     }

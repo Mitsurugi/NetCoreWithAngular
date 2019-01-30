@@ -57,7 +57,7 @@ export class CoreComponent<TKey, TGrid extends IEntity<TKey>, TCreate extends IE
         this._error = null;
         try {
             this._totalPages = await this._service.getPagesCount(this._pageSize, this._filter);
-            this._items = await this._service.getGrid(this._currentPage, this._pageSize, this._filter, this._orderBy);
+            this._items = await this._service.getGrid(this._currentPage, this._pageSize, this._orderBy, this._filter);
             this._isShowEdit = new Array<boolean>();
             for (let i = 0; i < this._items.length; i++) {
                 this._isShowEdit.push(false);
@@ -118,6 +118,7 @@ export class CoreComponent<TKey, TGrid extends IEntity<TKey>, TCreate extends IE
             }
         }
     }
+
     public async toggleImport() {
         if (this._isShowImport) {
             this._isShowImport = false;
@@ -150,7 +151,7 @@ export class CoreComponent<TKey, TGrid extends IEntity<TKey>, TCreate extends IE
             }
         }
     }
-    ////////////////////////////////////////////////////////////////
+    
     private async getCreate() {
         this._error = null;
         try {
@@ -209,7 +210,7 @@ export class CoreComponent<TKey, TGrid extends IEntity<TKey>, TCreate extends IE
     public async excelExport() {
         this._error = null;
         try {
-            let b = await this._service.getExcelExport(this._filter, this._orderBy);
+            let b = await this._service.getExcelExport(this._orderBy, this._filter);
             saveAs(b, "ExcelExport.xlsx");
         }
         catch (e) {

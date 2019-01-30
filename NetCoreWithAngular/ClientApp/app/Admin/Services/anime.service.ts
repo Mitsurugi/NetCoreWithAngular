@@ -14,8 +14,8 @@ export class AnimeService extends CoreService<number, Anime, Anime, Anime, Anime
 
     constructor(http: HttpClient, fileService: FileService<number>, sanitaizer: DomSanitizer) { super(http); this._controller = 'anime'; this._fileService = fileService; this._sanitizer = sanitaizer; }
 
-    async getGrid(pageNumber: number, pageSize: number, filter: Anime, orderBy: string): Promise<Anime[]> {
-        return super.getGrid(pageNumber, pageSize, filter, orderBy).then(response => {
+    async getGrid(pageNumber: number, pageSize: number, orderBy: string, filter: Anime): Promise<Anime[]> {
+        return super.getGrid(pageNumber, pageSize, orderBy, filter).then(response => {
             response.forEach(async i => {
                 if (i.imageId) {
                     let blob = await this._fileService.download(i.imageId);

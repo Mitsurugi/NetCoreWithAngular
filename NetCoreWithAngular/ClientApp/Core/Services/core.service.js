@@ -44,6 +44,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { StaticMethods } from './staticMethods';
 var CoreService = /** @class */ (function () {
     function CoreService(http) {
         this._controller = "";
@@ -53,17 +54,17 @@ var CoreService = /** @class */ (function () {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, this._http.post('api/' + this._controller + '/getPagesCount?pageSize=' + pageSize, filter).toPromise()];
+                    case 0: return [4 /*yield*/, this._http.get('api/' + this._controller + '/getPagesCount?pageSize=' + pageSize, { params: StaticMethods.ObjectToHttpParams('filter', filter) }).toPromise()];
                     case 1: return [2 /*return*/, _a.sent()];
                 }
             });
         });
     };
-    CoreService.prototype.getGrid = function (pageNumber, pageSize, filter, orderBy) {
+    CoreService.prototype.getGrid = function (pageNumber, pageSize, orderBy, filter) {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, this._http.post('api/' + this._controller + '/grid?pageNumber=' + pageNumber + '&pageSize=' + pageSize + '&orderBy=' + orderBy, filter).toPromise()];
+                    case 0: return [4 /*yield*/, this._http.get('api/' + this._controller + '/grid?pageNumber=' + pageNumber + '&pageSize=' + pageSize + '&orderBy=' + orderBy, { params: StaticMethods.ObjectToHttpParams('filter', filter) }).toPromise()];
                     case 1: return [2 /*return*/, _a.sent()];
                 }
             });
@@ -131,11 +132,11 @@ var CoreService = /** @class */ (function () {
             });
         });
     };
-    CoreService.prototype.getExcelExport = function (filter, orderBy) {
+    CoreService.prototype.getExcelExport = function (orderBy, filter) {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, this._http.post('api/' + this._controller + '/ExcelExport?orderBy=' + orderBy, filter, { responseType: 'blob' }).toPromise()];
+                    case 0: return [4 /*yield*/, this._http.get('api/' + this._controller + '/ExcelExport?orderBy=' + orderBy, { responseType: 'blob', params: StaticMethods.ObjectToHttpParams('filter', filter) }).toPromise()];
                     case 1: return [2 /*return*/, _a.sent()];
                 }
             });

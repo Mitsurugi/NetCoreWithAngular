@@ -15,7 +15,7 @@ namespace NetCoreWithAngular.Services
         {
         }
 
-        public override Task<List<BookGridModel>> GetGrid(int pageSize, int pageNumber, BookFilterModel filter, string orderBy)
+        public override Task<List<BookGridModel>> GetGrid(int pageSize, int pageNumber, string orderBy, BookFilterModel filter)
         {
             if (!_repository.GetQuery().Any())
             {
@@ -25,7 +25,7 @@ namespace NetCoreWithAngular.Services
                 }
                 _repository.SaveChanges();
             }
-            return base.GetGrid(pageSize, pageNumber, filter, orderBy);
+            return base.GetGrid(pageSize, pageNumber, orderBy, filter);
         }
 
         protected override IQueryable<Book> ApplyFilter(IQueryable<Book> query, BookFilterModel filter)

@@ -44,6 +44,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { StaticMethods } from '../Services/staticMethods';
 var DependentService = /** @class */ (function () {
     function DependentService(http) {
         this._controller = "";
@@ -53,17 +54,17 @@ var DependentService = /** @class */ (function () {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, this._http.post('api/' + this._controller + '/getPagesCount?pageSize=' + pageSize + '&parentId=' + parentId, filter).toPromise()];
+                    case 0: return [4 /*yield*/, this._http.get('api/' + this._controller + '/getPagesCount?pageSize=' + pageSize + '&parentId=' + parentId, { params: StaticMethods.ObjectToHttpParams('filter', filter) }).toPromise()];
                     case 1: return [2 /*return*/, _a.sent()];
                 }
             });
         });
     };
-    DependentService.prototype.getGrid = function (pageNumber, pageSize, parentId, filter, orderBy) {
+    DependentService.prototype.getGrid = function (parentId, pageNumber, pageSize, orderBy, filter) {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, this._http.post('api/' + this._controller + '/grid?pageNumber=' + pageNumber + '&pageSize=' + pageSize + '&parentId=' + parentId + '&orderBy=' + orderBy, filter).toPromise()];
+                    case 0: return [4 /*yield*/, this._http.get('api/' + this._controller + '/grid?pageNumber=' + pageNumber + '&pageSize=' + pageSize + '&parentId=' + parentId + '&orderBy=' + orderBy, { params: StaticMethods.ObjectToHttpParams('filter', filter) }).toPromise()];
                     case 1: return [2 /*return*/, _a.sent()];
                 }
             });
@@ -131,11 +132,11 @@ var DependentService = /** @class */ (function () {
             });
         });
     };
-    DependentService.prototype.getExcelExport = function (filter, parentId, orderBy) {
+    DependentService.prototype.getExcelExport = function (parentId, orderBy, filter) {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, this._http.post('api/' + this._controller + '/ExcelExport?parentId=' + parentId + '&orderBy=' + orderBy, filter, { responseType: 'blob' }).toPromise()];
+                    case 0: return [4 /*yield*/, this._http.get('api/' + this._controller + '/ExcelExport?parentId=' + parentId + '&orderBy=' + orderBy, { responseType: 'blob', params: StaticMethods.ObjectToHttpParams('filter', filter) }).toPromise()];
                     case 1: return [2 /*return*/, _a.sent()];
                 }
             });

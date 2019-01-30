@@ -63,7 +63,7 @@ export class DependentComponent<TKey, TParentKey, TGrid extends IDependentEntity
         this._error = null;
         try {
             this._totalPages = await this._service.getPagesCount(this._pageSize, this._parentId, this._filter);
-            this._items = await this._service.getGrid(this._currentPage, this._pageSize, this._parentId, this._filter, this._orderBy);
+            this._items = await this._service.getGrid(this._parentId, this._currentPage, this._pageSize, this._orderBy, this._filter);
             this._isShowEdit = new Array<boolean>();
             for (let i = 0; i < this._items.length; i++) {
                 this._isShowEdit.push(false);
@@ -213,7 +213,7 @@ export class DependentComponent<TKey, TParentKey, TGrid extends IDependentEntity
     public async excelExport() {
         this._error = null;
         try {
-            let b = await this._service.getExcelExport(this._filter, this._parentId, this._orderBy);
+            let b = await this._service.getExcelExport(this._parentId, this._orderBy, this._filter);
             saveAs(b, "ExcelExport.xlsx");
         }
         catch (e) {

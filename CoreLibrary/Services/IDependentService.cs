@@ -24,8 +24,8 @@ namespace CoreLibrary
         IQueryable<TEntity> GetQuery(TParentKey parentId);
         Task<TCreate> Create(TParentKey parentId);
         Task<int> GetPagesCount(int pageSize, TParentKey parentId, TFilter filter);
-        Task<List<TGrid>> GetGrid(int pageSize, int pageNumber, TParentKey parentId, TFilter filter, string orderBy);
-        Task<byte[]> ExcelExport(TParentKey parentId, TFilter filter, string orderBy);
+        Task<List<TGrid>> GetGrid(int pageSize, int pageNumber, TParentKey parentId, string orderBy, TFilter filter);
+        Task<byte[]> ExcelExport(TParentKey parentId, string orderBy, TFilter filter);
         Task Import(TParentKey parentId, Stream file);
     }
 }

@@ -17,7 +17,7 @@ namespace NetCoreWithAngular.Services
             _fileService = fileService;
         }        
 
-        public override Task<List<AnimeViewModel>> GetGrid(int pageSize, int pageNumber, AnimeViewModel filter, string orderBy)
+        public override Task<List<AnimeViewModel>> GetGrid(int pageSize, int pageNumber, string orderBy, AnimeViewModel filter)
         {
             if (!_repository.GetQuery().Any())
             {
@@ -28,7 +28,7 @@ namespace NetCoreWithAngular.Services
                 _repository.SaveChanges();
             }
 
-            return base.GetGrid(pageSize, pageNumber, filter, orderBy);
+            return base.GetGrid(pageSize, pageNumber, orderBy, filter);
         }
 
         public override async Task Delete(int id)

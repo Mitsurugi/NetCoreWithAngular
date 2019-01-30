@@ -104,7 +104,7 @@ var CoreComponent = /** @class */ (function () {
                     case 2:
                         _a._totalPages = _c.sent();
                         _b = this;
-                        return [4 /*yield*/, this._service.getGrid(this._currentPage, this._pageSize, this._filter, this._orderBy)];
+                        return [4 /*yield*/, this._service.getGrid(this._currentPage, this._pageSize, this._orderBy, this._filter)];
                     case 3:
                         _b._items = _c.sent();
                         this._isShowEdit = new Array();
@@ -269,7 +269,6 @@ var CoreComponent = /** @class */ (function () {
             });
         });
     };
-    ////////////////////////////////////////////////////////////////
     CoreComponent.prototype.getCreate = function () {
         return __awaiter(this, void 0, void 0, function () {
             var _a, e_8;
@@ -411,7 +410,7 @@ var CoreComponent = /** @class */ (function () {
                         _a.label = 1;
                     case 1:
                         _a.trys.push([1, 3, , 4]);
-                        return [4 /*yield*/, this._service.getExcelExport(this._filter, this._orderBy)];
+                        return [4 /*yield*/, this._service.getExcelExport(this._orderBy, this._filter)];
                     case 2:
                         b = _a.sent();
                         saveAs(b, "ExcelExport.xlsx");

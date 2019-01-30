@@ -41,6 +41,7 @@
     <None Remove="ClientApp\Core\Models\IDependentEntity.ts" />
     <None Remove="ClientApp\Core\Models\IEntity.ts" />
     <None Remove="ClientApp\Core\SelectListItem.ts" />
+    <None Remove="ClientApp\Core\Services\staticMethods.ts" />
     <None Remove="ClientApp\Core\token.interceptor.ts" />
     <None Remove="ClientApp\polyfills.ts" />
     <None Remove="ClientApp\app\Admin\Services\anime.service.ts" />
@@ -97,6 +98,7 @@
     <TypeScriptCompile Include="ClientApp\Core\Models\IDependentEntity.ts" />
     <TypeScriptCompile Include="ClientApp\Core\Models\IEntity.ts" />
     <TypeScriptCompile Include="ClientApp\Core\Services\dependent.service.ts" />
+    <TypeScriptCompile Include="ClientApp\Core\Services\staticMethods.ts" />
     <TypeScriptCompile Include="ClientApp\Core\Services\file.service.ts" />
     <TypeScriptCompile Include="ClientApp\Core\Models\SelectListItem.ts" />
     <TypeScriptCompile Include="ClientApp\Core\Account\token.interceptor.ts" />
@@ -129,9 +131,6 @@
     <None Update="ClientApp\app\Admin\Models\Book\bookFilter.js">
       <DependentUpon>bookFilter.ts</DependentUpon>
     </None>
-    <None Update="ClientApp\app\Admin\Services\anime - Copy.service.js">
-      <DependentUpon>anime.service.ts</DependentUpon>
-    </None>
     <None Update="ClientApp\app\Admin\Services\anime.service.js">
       <DependentUpon>anime.service.ts</DependentUpon>
     </None>
@@ -146,6 +145,9 @@
     </None>
     <None Update="ClientApp\app\Front\Services\frontData.service.js">
       <DependentUpon>frontData.service.ts</DependentUpon>
+    </None>
+    <None Update="ClientApp\Core\Services\staticMethods.js">
+      <DependentUpon>staticMethods.ts</DependentUpon>
     </None>
     <None Update="ClientApp\Core\Services\file.service.js">
       <DependentUpon>file.service.ts</DependentUpon>
