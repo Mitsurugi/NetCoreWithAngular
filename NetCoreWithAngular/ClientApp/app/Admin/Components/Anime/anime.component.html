@@ -2,6 +2,16 @@
 <div *ngIf="_error" class="form-group">
     <span class="error">Error: {{_error}}</span>
 </div>
+<div class="sorting">
+    <label>Sort by</label>
+    <select class="form-control" [(ngModel)]="_orderBy" (change)="reloadGrid()">
+        <option value="Id_desc">Id descending</option>
+        <option value="Id">Id ascending</option>
+        <option value="Title">Title ascending</option>
+        <option value="Title_desc">Title descending</option>
+    </select>
+    <div style="clear:both"></div>
+</div>
 <div class="grid">
     <div class="pagination">
         <button class="btn btn-default" (click)="prevPage()">Previous</button>

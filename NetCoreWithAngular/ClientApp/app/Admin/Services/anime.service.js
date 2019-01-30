@@ -69,11 +69,11 @@ var AnimeService = /** @class */ (function (_super) {
         _this._sanitizer = sanitaizer;
         return _this;
     }
-    AnimeService.prototype.getGrid = function (pageNumber, pageSize, filter) {
+    AnimeService.prototype.getGrid = function (pageNumber, pageSize, filter, orderBy) {
         return __awaiter(this, void 0, void 0, function () {
             var _this = this;
             return __generator(this, function (_a) {
-                return [2 /*return*/, _super.prototype.getGrid.call(this, pageNumber, pageSize, filter).then(function (response) {
+                return [2 /*return*/, _super.prototype.getGrid.call(this, pageNumber, pageSize, filter, orderBy).then(function (response) {
                         response.forEach(function (i) { return __awaiter(_this, void 0, void 0, function () {
                             var blob, url;
                             return __generator(this, function (_a) {

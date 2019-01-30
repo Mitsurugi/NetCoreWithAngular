@@ -16,8 +16,8 @@ export class BookService extends CoreService<number, BookGrid, Book, Book, BookF
         return super.postCreate(item);
     }
 
-    async getGrid(pageNumber: number, pageSize: number, filter: BookFilter): Promise<BookGrid[]> {
-        return super.getGrid(pageNumber, pageSize, filter).then(response => {
+    async getGrid(pageNumber: number, pageSize: number, filter: BookFilter, orderBy: string): Promise<BookGrid[]> {
+        return super.getGrid(pageNumber, pageSize, filter, orderBy).then(response => {
             let b = new BookGrid();
             b.id = 999;
             b.title = "fromService";

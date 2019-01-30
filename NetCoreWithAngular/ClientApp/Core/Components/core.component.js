@@ -54,6 +54,7 @@ var CoreComponent = /** @class */ (function () {
         this._isShowCreate = false;
         this._isShowEdit = new Array();
         this._importFile = null;
+        this._orderBy = 'Id_desc';
         this._service = service;
         this._items = new Array();
         this._itemEdit = new typeEdit();
@@ -75,7 +76,7 @@ var CoreComponent = /** @class */ (function () {
                         return [4 /*yield*/, this._service.getFilter()];
                     case 1:
                         _a._filter = _b.sent();
-                        return [4 /*yield*/, this.refreshPage()];
+                        return [4 /*yield*/, this.reloadGrid()];
                     case 2:
                         _b.sent();
                         return [3 /*break*/, 4];
@@ -88,7 +89,7 @@ var CoreComponent = /** @class */ (function () {
             });
         });
     };
-    CoreComponent.prototype.refreshPage = function () {
+    CoreComponent.prototype.reloadGrid = function () {
         return __awaiter(this, void 0, void 0, function () {
             var _a, _b, i, e_2;
             return __generator(this, function (_c) {
@@ -103,7 +104,7 @@ var CoreComponent = /** @class */ (function () {
                     case 2:
                         _a._totalPages = _c.sent();
                         _b = this;
-                        return [4 /*yield*/, this._service.getGrid(this._currentPage, this._pageSize, this._filter)];
+                        return [4 /*yield*/, this._service.getGrid(this._currentPage, this._pageSize, this._filter, this._orderBy)];
                     case 3:
                         _b._items = _c.sent();
                         this._isShowEdit = new Array();
@@ -134,7 +135,7 @@ var CoreComponent = /** @class */ (function () {
                         return [4 /*yield*/, this._service.getFilter()];
                     case 2:
                         _a._filter = _b.sent();
-                        return [4 /*yield*/, this.refreshPage()];
+                        return [4 /*yield*/, this.reloadGrid()];
                     case 3:
                         _b.sent();
                         return [3 /*break*/, 5];
@@ -158,7 +159,7 @@ var CoreComponent = /** @class */ (function () {
                         _a.label = 1;
                     case 1:
                         _a.trys.push([1, 3, , 4]);
-                        return [4 /*yield*/, this.refreshPage()];
+                        return [4 /*yield*/, this.reloadGrid()];
                     case 2:
                         _a.sent();
                         return [3 /*break*/, 4];
@@ -182,7 +183,7 @@ var CoreComponent = /** @class */ (function () {
                         _a.label = 1;
                     case 1:
                         _a.trys.push([1, 3, , 4]);
-                        return [4 /*yield*/, this.refreshPage()];
+                        return [4 /*yield*/, this.reloadGrid()];
                     case 2:
                         _a.sent();
                         return [3 /*break*/, 4];
@@ -268,6 +269,7 @@ var CoreComponent = /** @class */ (function () {
             });
         });
     };
+    ////////////////////////////////////////////////////////////////
     CoreComponent.prototype.getCreate = function () {
         return __awaiter(this, void 0, void 0, function () {
             var _a, e_8;
@@ -329,7 +331,7 @@ var CoreComponent = /** @class */ (function () {
                         return [4 /*yield*/, this._service.delete(id)];
                     case 2:
                         _a.sent();
-                        return [4 /*yield*/, this.refreshPage()];
+                        return [4 /*yield*/, this.reloadGrid()];
                     case 3:
                         _a.sent();
                         return [3 /*break*/, 5];
@@ -359,7 +361,7 @@ var CoreComponent = /** @class */ (function () {
                         return [4 /*yield*/, this.getCreate()];
                     case 3:
                         _a.sent();
-                        return [4 /*yield*/, this.refreshPage()];
+                        return [4 /*yield*/, this.reloadGrid()];
                     case 4:
                         _a.sent();
                         return [3 /*break*/, 6];
@@ -386,7 +388,7 @@ var CoreComponent = /** @class */ (function () {
                         return [4 /*yield*/, this._service.postEdit(this._itemEdit)];
                     case 2:
                         _a._itemEdit = _b.sent();
-                        return [4 /*yield*/, this.refreshPage()];
+                        return [4 /*yield*/, this.reloadGrid()];
                     case 3:
                         _b.sent();
                         return [3 /*break*/, 5];
@@ -409,7 +411,7 @@ var CoreComponent = /** @class */ (function () {
                         _a.label = 1;
                     case 1:
                         _a.trys.push([1, 3, , 4]);
-                        return [4 /*yield*/, this._service.getExcelExport(this._filter)];
+                        return [4 /*yield*/, this._service.getExcelExport(this._filter, this._orderBy)];
                     case 2:
                         b = _a.sent();
                         saveAs(b, "ExcelExport.xlsx");
@@ -461,7 +463,7 @@ var CoreComponent = /** @class */ (function () {
                         return [4 /*yield*/, this._service.postImport(this._importFile)];
                     case 2:
                         _a.sent();
-                        return [4 /*yield*/, this.refreshPage()];
+                        return [4 /*yield*/, this.reloadGrid()];
                     case 3:
                         _a.sent();
                         this._importResult = "Import successful";

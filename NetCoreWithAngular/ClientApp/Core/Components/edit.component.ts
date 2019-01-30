@@ -6,12 +6,11 @@ import { ActivatedRoute, Router } from "@angular/router";
 
 @Component({
 })
-export class EditComponent<TKey, TGrid extends IEntity<TKey>, TCreate extends IEntity<TKey>, TEdit extends IEntity<TKey>, TFilter> implements OnInit {
-
-    _listUrl: string;
+export class EditComponent<TKey, TGrid extends IEntity<TKey>, TCreate extends IEntity<TKey>, TEdit extends IEntity<TKey>, TFilter> implements OnInit {    
 
     _service: CoreService<TKey, TGrid, TCreate, TEdit, TFilter>;
     _router: Router;
+    _listUrl: string;
 
     _id?: number;
     _itemEdit: TEdit;

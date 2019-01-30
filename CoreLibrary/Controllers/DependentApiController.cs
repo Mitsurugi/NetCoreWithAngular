@@ -34,10 +34,10 @@ namespace CoreLibrary
         }
 
         [HttpPost]
-        public virtual async Task<List<TGrid>> Grid([FromBody] TFilter filter, [FromQuery] TParentKey parentId, [FromQuery] int pageNumber, [FromQuery] int? pageSize = null)
+        public virtual async Task<List<TGrid>> Grid([FromBody] TFilter filter, [FromQuery] TParentKey parentId, [FromQuery] int pageNumber, [FromQuery] int? pageSize = null, [FromQuery] string orderBy = null)
         {
             if (!pageSize.HasValue) pageSize = _pageSize;
-            return await _service.GetGrid(pageSize.Value, pageNumber, parentId, filter);
+            return await _service.GetGrid(pageSize.Value, pageNumber, parentId, filter, orderBy);
         }
 
         [HttpGet]
@@ -126,9 +126,9 @@ namespace CoreLibrary
         }
 
         [HttpPost]
-        public virtual async Task<IActionResult> ExcelExport([FromQuery] TParentKey parentId, [FromBody] TFilter filter)
+        public virtual async Task<IActionResult> ExcelExport([FromQuery] TParentKey parentId, [FromBody] TFilter filter, [FromQuery] string orderBy = null)
         {
-            byte[] reportData = await _service.ExcelExport(parentId, filter);
+            byte[] reportData = await _service.ExcelExport(parentId, filter, orderBy);
             return File(reportData, "application/vnd.openxmlformat");
         }
 

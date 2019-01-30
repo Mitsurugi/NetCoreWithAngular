@@ -70,10 +70,10 @@ var BookService = /** @class */ (function (_super) {
         item.title = '!' + item.title + '!';
         return _super.prototype.postCreate.call(this, item);
     };
-    BookService.prototype.getGrid = function (pageNumber, pageSize, filter) {
+    BookService.prototype.getGrid = function (pageNumber, pageSize, filter, orderBy) {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
-                return [2 /*return*/, _super.prototype.getGrid.call(this, pageNumber, pageSize, filter).then(function (response) {
+                return [2 /*return*/, _super.prototype.getGrid.call(this, pageNumber, pageSize, filter, orderBy).then(function (response) {
                         var b = new BookGrid();
                         b.id = 999;
                         b.title = "fromService";

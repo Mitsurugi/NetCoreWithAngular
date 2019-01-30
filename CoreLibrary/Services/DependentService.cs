@@ -29,14 +29,14 @@ namespace CoreLibrary
             _mapper = mapper;
         }
 
-        public virtual IQueryable<TEntity> GetQuery()
+        private IQueryable<TEntity> GetQuery()
         {
             return _repository.GetQuery();
         }
 
         public virtual IQueryable<TEntity> GetQuery(TParentKey parentId)
         {
-            return _repository.GetQuery().Where(i => i.ParentId.Equals(parentId));
+            return GetQuery().Where(i => i.ParentId.Equals(parentId));
         }
 
         public virtual async Task<TEntity> Get(TKey id)
@@ -89,7 +89,7 @@ namespace CoreLibrary
             await _repository.Delete(i => ids.Contains(i.Id));
         }
 
-        public virtual async Task<List<TGrid>> GetGrid(int pageSize, int pageNumber, TParentKey parentId, TFilter filter)
+        public virtual async Task<List<TGrid>> GetGrid(int pageSize, int pageNumber, TParentKey parentId, TFilter filter, string orderBy)
         {
             if (pageNumber < 1)
                 throw new Exception($"Wrong pageNumber = {pageNumber}. Must be 1 or greater");
@@ -97,6 +97,7 @@ namespace CoreLibrary
                 throw new Exception($"Wrong pageSize = {pageSize}. Must be 1 or greater");
 
             var query = ApplyFilter(GetQuery(parentId), filter);
+            query = ApplySorting(query, orderBy);
 
             return await query.Skip(pageSize * (pageNumber - 1)).Take(pageSize).ProjectTo<TGrid>(_mapper.ConfigurationProvider).ToListAsync();
         }
@@ -119,14 +120,10 @@ namespace CoreLibrary
             return new TFilter();
         }
 
-        protected virtual IQueryable<TEntity> ApplyFilter(IQueryable<TEntity> query, TFilter filter)
-        {
-            return query;
-        }
-
-        public virtual async Task<byte[]> ExcelExport(TParentKey parentId, TFilter filter)
+        public virtual async Task<byte[]> ExcelExport(TParentKey parentId, TFilter filter, string orderBy)
         {
             var query = ApplyFilter(GetQuery(parentId), filter);
+            query = ApplySorting(query, orderBy);
             var grid = await query.ProjectTo<TGrid>(_mapper.ConfigurationProvider).ToListAsync();
 
             var wb = new XLWorkbook();
@@ -331,6 +328,30 @@ namespace CoreLibrary
             {
                 throw new Exception(errors);
             }
+        }
+
+        protected virtual IQueryable<TEntity> ApplyFilter(IQueryable<TEntity> query, TFilter filter)
+        {
+            return query;
+        }
+
+        protected virtual IQueryable<TEntity> ApplySorting(IQueryable<TEntity> query, string orderBy)
+        {
+            if (!string.IsNullOrEmpty(orderBy))
+            {
+                bool desc = false;
+                if (orderBy.EndsWith("_desc"))
+                {
+                    desc = true;
+                    orderBy = orderBy.Replace("_desc", "");
+                }
+
+                if (desc) query = query.OrderByDescending(i => EF.Property<object>(i, orderBy));
+                else query = query.OrderBy(i => EF.Property<object>(i, orderBy));
+
+            }
+
+            return query;
         }
     }
 }

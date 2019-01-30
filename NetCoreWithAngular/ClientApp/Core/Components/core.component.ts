@@ -23,6 +23,7 @@ export class CoreComponent<TKey, TGrid extends IEntity<TKey>, TCreate extends IE
     _importFile: File = null;
     _importResult: string;
     _isShowImport: boolean;
+    _orderBy: string = 'Id_desc';
 
     typeGrid: (new () => TGrid);
     typeCreate: (new () => TCreate);
@@ -42,21 +43,21 @@ export class CoreComponent<TKey, TGrid extends IEntity<TKey>, TCreate extends IE
         this.typeFilter = typeFilter;
     }
 
-    async ngOnInit() {
+    public async ngOnInit() {
         try {
             this._filter = await this._service.getFilter();
-            await this.refreshPage();
+            await this.reloadGrid();
         }
         catch (e) {
             this._error = JSON.stringify(e.error);
         }
     }
 
-    async refreshPage() {
+    public async reloadGrid() {
         this._error = null;
         try {
             this._totalPages = await this._service.getPagesCount(this._pageSize, this._filter);
-            this._items = await this._service.getGrid(this._currentPage, this._pageSize, this._filter);
+            this._items = await this._service.getGrid(this._currentPage, this._pageSize, this._filter, this._orderBy);
             this._isShowEdit = new Array<boolean>();
             for (let i = 0; i < this._items.length; i++) {
                 this._isShowEdit.push(false);
@@ -67,22 +68,22 @@ export class CoreComponent<TKey, TGrid extends IEntity<TKey>, TCreate extends IE
         }
     }
 
-    async clearFilter() {
+    public async clearFilter() {
         this._filter = new this.typeFilter();
         try {
             this._filter = await this._service.getFilter();
-            await this.refreshPage();
+            await this.reloadGrid();
         }
         catch (e) {
             this._error = JSON.stringify(e.error);
         }
     }
 
-    async nextPage() {
+    public async nextPage() {
         if (this._currentPage < this._totalPages) {
             this._currentPage++;
             try {
-                await this.refreshPage();
+                await this.reloadGrid();
             }
             catch (e) {
                 this._error = JSON.stringify(e.error);
@@ -90,11 +91,11 @@ export class CoreComponent<TKey, TGrid extends IEntity<TKey>, TCreate extends IE
         }
     }
 
-    async prevPage() {
+    public async prevPage() {
         if (this._currentPage > 1) {
             this._currentPage--;
             try {
-                await this.refreshPage();
+                await this.reloadGrid();
             }
             catch (e) {
                 this._error = JSON.stringify(e.error);
@@ -102,7 +103,7 @@ export class CoreComponent<TKey, TGrid extends IEntity<TKey>, TCreate extends IE
         }
     }
 
-    async toggleCreate() {
+    public async toggleCreate() {
         if (this._isShowCreate) {
             this._isShowCreate = false;
         }
@@ -117,7 +118,7 @@ export class CoreComponent<TKey, TGrid extends IEntity<TKey>, TCreate extends IE
             }
         }
     }
-    async toggleImport() {
+    public async toggleImport() {
         if (this._isShowImport) {
             this._isShowImport = false;
         }
@@ -132,7 +133,7 @@ export class CoreComponent<TKey, TGrid extends IEntity<TKey>, TCreate extends IE
         }
     }
 
-    async toggleEdit(index: number, id: number) {
+    public async toggleEdit(index: number, id: number) {
         if (this._isShowEdit[index]) {
             this._isShowEdit[index] = false;
         }
@@ -149,8 +150,8 @@ export class CoreComponent<TKey, TGrid extends IEntity<TKey>, TCreate extends IE
             }
         }
     }
-
-    async getCreate() {
+    ////////////////////////////////////////////////////////////////
+    private async getCreate() {
         this._error = null;
         try {
             this._itemCreate = await this._service.getCreate();
@@ -160,7 +161,7 @@ export class CoreComponent<TKey, TGrid extends IEntity<TKey>, TCreate extends IE
         }
     }
 
-    async getEdit(id: number) {
+    private async getEdit(id: number) {
         this._error = null;
         try {
             this._itemEdit = await this._service.getEdit(id);
@@ -170,45 +171,45 @@ export class CoreComponent<TKey, TGrid extends IEntity<TKey>, TCreate extends IE
         }
     }
 
-    async delete(id: number) {
+    public async delete(id: number) {
         this._error = null;
         try {
             await this._service.delete(id);
-            await this.refreshPage();
+            await this.reloadGrid();
         }
         catch (e) {
             this._error = JSON.stringify(e.error);
         }
     }
 
-    async postCreate() {
+    public async postCreate() {
         this._error = null;
         try {
             await this._service.postCreate(this._itemCreate);
             this._isShowCreate = false;
             await this.getCreate();
-            await this.refreshPage();
+            await this.reloadGrid();
         }
         catch (e) {
             this._error = JSON.stringify(e.error);
         }
     }
 
-    async postEdit() {
+    public async postEdit() {
         this._error = null;
         try {
             this._itemEdit = await this._service.postEdit(this._itemEdit);
-            await this.refreshPage();
+            await this.reloadGrid();
         }
         catch (e) {
             this._error = JSON.stringify(e.error);
         }
     }
 
-    async excelExport() {
+    public async excelExport() {
         this._error = null;
         try {
-            let b = await this._service.getExcelExport(this._filter);
+            let b = await this._service.getExcelExport(this._filter, this._orderBy);
             saveAs(b, "ExcelExport.xlsx");
         }
         catch (e) {
@@ -216,7 +217,7 @@ export class CoreComponent<TKey, TGrid extends IEntity<TKey>, TCreate extends IE
         }
     }
 
-    async importTemplate() {
+    public async importTemplate() {
         this._error = null;
         try {
             let b = await this._service.getImportTemplate();
@@ -227,14 +228,14 @@ export class CoreComponent<TKey, TGrid extends IEntity<TKey>, TCreate extends IE
         }
     }
 
-    async postImport() {
+    public async postImport() {
         if (this._importFile == null) {
             this._importResult = "Import file not selected";
         }
         else {
             try {
                 await this._service.postImport(this._importFile);
-                await this.refreshPage();
+                await this.reloadGrid();
                 this._importResult = "Import successful";
             }
             catch (e) {
@@ -243,7 +244,7 @@ export class CoreComponent<TKey, TGrid extends IEntity<TKey>, TCreate extends IE
         }        
     }
 
-    setImportFile(file: File) {
+    public setImportFile(file: File) {
         this._importFile = file;
     }
 }

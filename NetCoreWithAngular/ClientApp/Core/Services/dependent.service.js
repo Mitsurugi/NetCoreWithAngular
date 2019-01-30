@@ -59,11 +59,11 @@ var DependentService = /** @class */ (function () {
             });
         });
     };
-    DependentService.prototype.getGrid = function (pageNumber, pageSize, parentId, filter) {
+    DependentService.prototype.getGrid = function (pageNumber, pageSize, parentId, filter, orderBy) {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, this._http.post('api/' + this._controller + '/grid?pageNumber=' + pageNumber + '&pageSize=' + pageSize + '&parentId=' + parentId, filter).toPromise()];
+                    case 0: return [4 /*yield*/, this._http.post('api/' + this._controller + '/grid?pageNumber=' + pageNumber + '&pageSize=' + pageSize + '&parentId=' + parentId + '&orderBy=' + orderBy, filter).toPromise()];
                     case 1: return [2 /*return*/, _a.sent()];
                 }
             });
@@ -131,11 +131,11 @@ var DependentService = /** @class */ (function () {
             });
         });
     };
-    DependentService.prototype.getExcelExport = function (filter, parentId) {
+    DependentService.prototype.getExcelExport = function (filter, parentId, orderBy) {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, this._http.post('api/' + this._controller + '/ExcelExport?parentId=' + parentId, filter, { responseType: 'blob' }).toPromise()];
+                    case 0: return [4 /*yield*/, this._http.post('api/' + this._controller + '/ExcelExport?parentId=' + parentId + '&orderBy=' + orderBy, filter, { responseType: 'blob' }).toPromise()];
                     case 1: return [2 /*return*/, _a.sent()];
                 }
             });
