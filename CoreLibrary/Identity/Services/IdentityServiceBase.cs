@@ -33,6 +33,8 @@ namespace CoreLibrary.Identity
             _signInManager = signInManager;
         }
 
+        //Auth
+
         public virtual async Task<string> GetToken(string userName, string password)
         {
             var valid = await VerifyPassword(userName, password);
@@ -102,7 +104,7 @@ namespace CoreLibrary.Identity
                 }
 
                 throw new Exception(errorText);
-            }                
+            }
         }
 
         public virtual async Task<TIdentityUser> FindUserById(string userId)
@@ -167,6 +169,22 @@ namespace CoreLibrary.Identity
             var user = await FindUserById(userId);
 
             var identityResult = await _userManager.DeleteAsync(user);
+
+            if (!identityResult.Succeeded)
+            {
+                string errorText = "";
+                foreach (var error in identityResult.Errors)
+                {
+                    errorText = string.IsNullOrEmpty(errorText) ? error.Description : $"; {error.Description}";
+                }
+
+                throw new Exception(errorText);
+            }
+        }
+
+        public virtual async Task EditUser(TIdentityUser user)
+        {
+            var identityResult = await _userManager.UpdateAsync(user);
 
             if (!identityResult.Succeeded)
             {

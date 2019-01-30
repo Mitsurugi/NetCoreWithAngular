@@ -77,13 +77,13 @@
                         {{i.pageCount}}
                     </td>
                     <td>
-                        <button class="btn btn-default" (click)="toggleEdit(n, i.id)">Edit</button>
+                        <button class="btn btn-default" (click)="toggleEdit(i.id)">Edit</button>
                     </td>
                     <td>
                         <button class="btn btn-default" (click)="delete(i.id)">Delete</button>
                     </td>
                 </tr>
-                <tr *ngIf="_isShowEdit[n]; then edit"></tr>
+                <tr *ngIf="_showEditId==i.id; then edit"></tr>
             </ng-template>
         </tbody>
     </table>

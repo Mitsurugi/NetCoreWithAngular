@@ -52,7 +52,7 @@ var CoreComponent = /** @class */ (function () {
         this._totalPages = 1;
         this._error = null;
         this._isShowCreate = false;
-        this._isShowEdit = new Array();
+        this._showEditId = null;
         this._importFile = null;
         this._orderBy = '';
         this._service = service;
@@ -91,7 +91,7 @@ var CoreComponent = /** @class */ (function () {
     };
     CoreComponent.prototype.reloadGrid = function () {
         return __awaiter(this, void 0, void 0, function () {
-            var _a, _b, i, e_2;
+            var _a, _b, e_2;
             return __generator(this, function (_c) {
                 switch (_c.label) {
                     case 0:
@@ -107,10 +107,7 @@ var CoreComponent = /** @class */ (function () {
                         return [4 /*yield*/, this._service.getGrid(this._currentPage, this._pageSize, this._orderBy, this._filter)];
                     case 3:
                         _b._items = _c.sent();
-                        this._isShowEdit = new Array();
-                        for (i = 0; i < this._items.length; i++) {
-                            this._isShowEdit.push(false);
-                        }
+                        this._showEditId = null;
                         return [3 /*break*/, 5];
                     case 4:
                         e_2 = _c.sent();
@@ -241,24 +238,21 @@ var CoreComponent = /** @class */ (function () {
             });
         });
     };
-    CoreComponent.prototype.toggleEdit = function (index, id) {
+    CoreComponent.prototype.toggleEdit = function (id) {
         return __awaiter(this, void 0, void 0, function () {
-            var i, e_7;
+            var e_7;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        if (!this._isShowEdit[index]) return [3 /*break*/, 1];
-                        this._isShowEdit[index] = false;
+                        if (!(this._showEditId == id)) return [3 /*break*/, 1];
+                        this._showEditId = null;
                         return [3 /*break*/, 4];
                     case 1:
                         _a.trys.push([1, 3, , 4]);
                         return [4 /*yield*/, this.getEdit(id)];
                     case 2:
                         _a.sent();
-                        for (i = 0; i < this._isShowEdit.length; i++) {
-                            this._isShowEdit[i] = false;
-                        }
-                        this._isShowEdit[index] = true;
+                        this._showEditId = id;
                         return [3 /*break*/, 4];
                     case 3:
                         e_7 = _a.sent();

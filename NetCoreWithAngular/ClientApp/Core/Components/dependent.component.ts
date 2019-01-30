@@ -21,7 +21,7 @@ export class DependentComponent<TKey, TParentKey, TGrid extends IDependentEntity
     _totalPages: number = 1;
     _error: string = null;
     _isShowCreate = false;
-    _isShowEdit: boolean[] = new Array<boolean>();
+    _showEditId?: number = null;
     _importFile: File = null;
     _importResult: string;
     _isShowImport: boolean;
@@ -64,10 +64,7 @@ export class DependentComponent<TKey, TParentKey, TGrid extends IDependentEntity
         try {
             this._totalPages = await this._service.getPagesCount(this._pageSize, this._parentId, this._filter);
             this._items = await this._service.getGrid(this._parentId, this._currentPage, this._pageSize, this._orderBy, this._filter);
-            this._isShowEdit = new Array<boolean>();
-            for (let i = 0; i < this._items.length; i++) {
-                this._isShowEdit.push(false);
-            }
+            this._showEditId = null;            
         }
         catch (e) {
             this._error = JSON.stringify(e.error);
@@ -140,14 +137,14 @@ export class DependentComponent<TKey, TParentKey, TGrid extends IDependentEntity
         }
     }
 
-    public async toggleEdit(index: number, id: number) {
-        if (this._isShowEdit[index]) {
-            this._isShowEdit[index] = false;
+    public async toggleEdit(id: number) {
+        if (this._showEditId == id) {
+            this._showEditId = null;
         }
         else {
             try {
                 await this.getEdit(id);
-                this._isShowEdit[index] = true;
+                this._showEditId = id;
             }
             catch (e) {
                 this._error = JSON.stringify(e.error);

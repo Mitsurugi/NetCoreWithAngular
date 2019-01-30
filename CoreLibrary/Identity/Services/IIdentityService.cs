@@ -13,10 +13,14 @@ namespace CoreLibrary.Identity
         where TRoleManager : RoleManager<TIdentityRole>
         where TSignInManager : SignInManager<TIdentityUser>
     {        
+        //Auth
+
         Task SignOut();
         Task<SignInResult> SignIn(string userName, string password, bool isPersistent = false, bool lockOnFailure = false);
         Task<bool> VerifyPassword(string userName, string password);
         Task<string> GetToken(string userName, string password);
+
+        //Users
 
         IQueryable<TIdentityUser> GetUsersQuery();        
         Task CreateUser(TIdentityUser user, string password);        
@@ -27,6 +31,9 @@ namespace CoreLibrary.Identity
         Task ResetPasswordWithToken(string userId, string token, string newPassword);
         Task ResetPassword(string userId, string newPassword);        
         Task DeleteUser(string userId);
+        Task EditUser(TIdentityUser user);
+
+        //Roles
 
         IQueryable<TIdentityRole> GetRoles();
         Task CreateRole(TIdentityRole role);

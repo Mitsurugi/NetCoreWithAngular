@@ -42,6 +42,10 @@ export class CoreService<TKey, TGrid extends IEntity<TKey>, TCreate extends IEnt
         await this._http.delete('api/' + this._controller + '/delete?id=' + id).toPromise();
     }
 
+    public async deleteMany(ids: any[]) {
+        await this._http.delete('api/' + this._controller + '/delete', { params: StaticMethods.ObjectToHttpParams('ids', ids) }).toPromise();
+    }
+
     public async getFilter(): Promise<TFilter> {
         return await this._http.get<TFilter>('api/' + this._controller + '/getFilter').toPromise();
     }

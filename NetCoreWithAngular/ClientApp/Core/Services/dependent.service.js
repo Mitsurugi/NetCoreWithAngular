@@ -122,6 +122,18 @@ var DependentService = /** @class */ (function () {
             });
         });
     };
+    DependentService.prototype.deleteMany = function (ids) {
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, this._http.delete('api/' + this._controller + '/delete', { params: StaticMethods.ObjectToHttpParams('ids', ids) }).toPromise()];
+                    case 1:
+                        _a.sent();
+                        return [2 /*return*/];
+                }
+            });
+        });
+    };
     DependentService.prototype.getFilter = function () {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
