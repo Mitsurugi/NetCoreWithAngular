@@ -59,7 +59,6 @@ export class CoreComponent<TKey, TGrid extends IEntity<TKey>, TCreate extends IE
         try {
             this._totalPages = await this._service.getPagesCount(this._pageSize, this._filter);
             this._items = await this._service.getGrid(this._currentPage, this._pageSize, this._orderBy, this._filter);
-            this._showEditId = null;
         }
         catch (e) {
             this._error = JSON.stringify(e.error);
@@ -260,6 +259,26 @@ export class CoreComponent<TKey, TGrid extends IEntity<TKey>, TCreate extends IE
         if (index < 0) { this._checkedItems.push(id); }
         else {
             this._checkedItems = this._checkedItems.slice(0, index).concat(this._checkedItems.slice(index + 1, this._checkedItems.length));
+        }
+    }
+
+    public toggleCheckAll() {
+        let checked = true;
+        this._items.forEach(i => {
+            var index = this._checkedItems.indexOf(i.id);
+            if (index < 0) checked = false;
+        });
+
+        if (checked) {
+            this._items.forEach(i => {
+                var index = this._checkedItems.indexOf(i.id);
+                this._checkedItems = this._checkedItems.slice(0, index).concat(this._checkedItems.slice(index + 1, this._checkedItems.length));
+            });
+        } else {
+            this._items.forEach(i => {
+                var index = this._checkedItems.indexOf(i.id);
+                if (index < 0) { this._checkedItems.push(i.id); }
+            });
         }
     }
 }

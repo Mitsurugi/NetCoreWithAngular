@@ -21,7 +21,6 @@ namespace NetCoreWithAngular.Controllers
             if (!anyRoles)
             {
                 await _service.CreateRole(new IdentityRole { Name = "Admin" });
-                await _service.CreateRole(new IdentityRole { Name = "AnimeOnly" });
             }
             var anyUsers = _service.GetUsersQuery().Any();
             if (!anyUsers)

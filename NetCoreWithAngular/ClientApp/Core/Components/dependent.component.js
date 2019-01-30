@@ -56,6 +56,7 @@ var DependentComponent = /** @class */ (function () {
         this._isShowCreate = false;
         this._showEditId = null;
         this._checkedItems = [];
+        this._checkAllChecked = [];
         this._importFile = null;
         this._orderBy = 'Id_desc';
         this._service = service;
@@ -512,6 +513,29 @@ var DependentComponent = /** @class */ (function () {
         }
         else {
             this._checkedItems = this._checkedItems.slice(0, index).concat(this._checkedItems.slice(index + 1, this._checkedItems.length));
+        }
+    };
+    DependentComponent.prototype.toggleCheckAll = function () {
+        var _this = this;
+        var checked = true;
+        this._items.forEach(function (i) {
+            var index = _this._checkedItems.indexOf(i.id);
+            if (index < 0)
+                checked = false;
+        });
+        if (checked) {
+            this._items.forEach(function (i) {
+                var index = _this._checkedItems.indexOf(i.id);
+                _this._checkedItems = _this._checkedItems.slice(0, index).concat(_this._checkedItems.slice(index + 1, _this._checkedItems.length));
+            });
+        }
+        else {
+            this._items.forEach(function (i) {
+                var index = _this._checkedItems.indexOf(i.id);
+                if (index < 0) {
+                    _this._checkedItems.push(i.id);
+                }
+            });
         }
     };
     __decorate([

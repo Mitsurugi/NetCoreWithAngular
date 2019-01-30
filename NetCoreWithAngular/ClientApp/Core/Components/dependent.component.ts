@@ -23,6 +23,7 @@ export class DependentComponent<TKey, TParentKey, TGrid extends IDependentEntity
     _isShowCreate = false;
     _showEditId?: TKey = null;
     _checkedItems: TKey[] = [];
+    _checkAllChecked: boolean[] = [];
     _importFile: File = null;
     _importResult: string;
     _isShowImport: boolean;
@@ -266,6 +267,26 @@ export class DependentComponent<TKey, TParentKey, TGrid extends IDependentEntity
         if (index < 0) { this._checkedItems.push(id); }
         else {
             this._checkedItems = this._checkedItems.slice(0, index).concat(this._checkedItems.slice(index + 1, this._checkedItems.length));
+        }
+    }
+
+    public toggleCheckAll() {
+        let checked = true;
+        this._items.forEach(i => {
+            var index = this._checkedItems.indexOf(i.id);
+            if (index < 0) checked = false;
+        });
+
+        if (checked) {
+            this._items.forEach(i => {
+                var index = this._checkedItems.indexOf(i.id);
+                this._checkedItems = this._checkedItems.slice(0, index).concat(this._checkedItems.slice(index + 1, this._checkedItems.length));
+            });
+        } else {
+            this._items.forEach(i => {
+                var index = this._checkedItems.indexOf(i.id);
+                if (index < 0) { this._checkedItems.push(i.id); }
+            });
         }
     }
 }

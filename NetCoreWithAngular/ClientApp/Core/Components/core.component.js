@@ -108,7 +108,6 @@ var CoreComponent = /** @class */ (function () {
                         return [4 /*yield*/, this._service.getGrid(this._currentPage, this._pageSize, this._orderBy, this._filter)];
                     case 3:
                         _b._items = _c.sent();
-                        this._showEditId = null;
                         return [3 /*break*/, 5];
                     case 4:
                         e_2 = _c.sent();
@@ -507,6 +506,29 @@ var CoreComponent = /** @class */ (function () {
         }
         else {
             this._checkedItems = this._checkedItems.slice(0, index).concat(this._checkedItems.slice(index + 1, this._checkedItems.length));
+        }
+    };
+    CoreComponent.prototype.toggleCheckAll = function () {
+        var _this = this;
+        var checked = true;
+        this._items.forEach(function (i) {
+            var index = _this._checkedItems.indexOf(i.id);
+            if (index < 0)
+                checked = false;
+        });
+        if (checked) {
+            this._items.forEach(function (i) {
+                var index = _this._checkedItems.indexOf(i.id);
+                _this._checkedItems = _this._checkedItems.slice(0, index).concat(_this._checkedItems.slice(index + 1, _this._checkedItems.length));
+            });
+        }
+        else {
+            this._items.forEach(function (i) {
+                var index = _this._checkedItems.indexOf(i.id);
+                if (index < 0) {
+                    _this._checkedItems.push(i.id);
+                }
+            });
         }
     };
     CoreComponent = __decorate([

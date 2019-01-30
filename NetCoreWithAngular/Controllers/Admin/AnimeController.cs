@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace NetCoreWithAngular.Controllers
 {
-    [Authorize(Roles = "Admin, AnimeOnly")]
+    [Authorize(Roles = "Admin")]
     public class AnimeController : BaseApiController<Anime, int, AnimeViewModel, AnimeViewModel, AnimeViewModel, AnimeViewModel>
     {        
         public AnimeController(IBaseService<Anime, int, AnimeViewModel, AnimeViewModel, AnimeViewModel, AnimeViewModel> service) : base(service)
