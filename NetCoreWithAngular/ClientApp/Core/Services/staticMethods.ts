@@ -23,4 +23,15 @@ export class StaticMethods {
 
         return result;
     }
+
+    static ArrayToHttpParams(parameterName: string, object: any): HttpParams {
+        let result: HttpParams = new HttpParams();
+
+        Object.keys(object).forEach(i => {
+            let value = object[i];
+            if (value) result = result.append(parameterName + '[' + i + ']', value);
+        });
+
+        return result;
+    }
 }

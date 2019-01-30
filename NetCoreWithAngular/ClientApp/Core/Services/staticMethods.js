@@ -20,6 +20,15 @@ var StaticMethods = /** @class */ (function () {
         });
         return result;
     };
+    StaticMethods.ArrayToHttpParams = function (parameterName, object) {
+        var result = new HttpParams();
+        Object.keys(object).forEach(function (i) {
+            var value = object[i];
+            if (value)
+                result = result.append(parameterName + '[' + i + ']', value);
+        });
+        return result;
+    };
     return StaticMethods;
 }());
 export { StaticMethods };

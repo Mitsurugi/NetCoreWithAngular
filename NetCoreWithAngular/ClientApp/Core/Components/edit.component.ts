@@ -12,7 +12,7 @@ export class EditComponent<TKey, TGrid extends IEntity<TKey>, TCreate extends IE
     _router: Router;
     _listUrl: string;
 
-    _id?: number;
+    _id?: TKey;
     _itemEdit: TEdit;
     _itemCreate: TCreate;
     _error: string = null;

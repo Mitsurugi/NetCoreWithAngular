@@ -21,7 +21,8 @@ export class DependentComponent<TKey, TParentKey, TGrid extends IDependentEntity
     _totalPages: number = 1;
     _error: string = null;
     _isShowCreate = false;
-    _showEditId?: number = null;
+    _showEditId?: TKey = null;
+    _checkedItems: TKey[] = [];
     _importFile: File = null;
     _importResult: string;
     _isShowImport: boolean;
@@ -137,7 +138,7 @@ export class DependentComponent<TKey, TParentKey, TGrid extends IDependentEntity
         }
     }
 
-    public async toggleEdit(id: number) {
+    public async toggleEdit(id: TKey) {
         if (this._showEditId == id) {
             this._showEditId = null;
         }
@@ -162,7 +163,7 @@ export class DependentComponent<TKey, TParentKey, TGrid extends IDependentEntity
         }
     }
 
-    private async getEdit(id: number) {
+    private async getEdit(id: TKey) {
         this._error = null;
         try {
             this._itemEdit = await this._service.getEdit(id);
@@ -172,10 +173,21 @@ export class DependentComponent<TKey, TParentKey, TGrid extends IDependentEntity
         }
     }
 
-    public async delete(id: number) {
+    public async delete(id: TKey) {
         this._error = null;
         try {
             await this._service.delete(id);
+            await this.reloadGrid();
+        }
+        catch (e) {
+            this._error = JSON.stringify(e.error);
+        }
+    }
+
+    public async deleteChecked() {
+        this._error = null;
+        try {
+            await this._service.deleteMany(this._checkedItems);
             await this.reloadGrid();
         }
         catch (e) {
@@ -247,5 +259,13 @@ export class DependentComponent<TKey, TParentKey, TGrid extends IDependentEntity
 
     public setImportFile(file: File) {
         this._importFile = file;
+    }
+
+    public toggleChecked(id: TKey) {
+        var index = this._checkedItems.indexOf(id);
+        if (index < 0) { this._checkedItems.push(id); }
+        else {
+            this._checkedItems = this._checkedItems.slice(0, index).concat(this._checkedItems.slice(index + 1, this._checkedItems.length));
+        }
     }
 }

@@ -13,16 +13,19 @@
     </select>
     <div style="clear:both"></div>
 </div>
+
 <div class="grid">
     <div class="pagination">
         <button class="btn btn-default" (click)="prevPage()">Previous</button>
         <span>Page {{_currentPage}} of {{_totalPages}}</span>
         <button class="btn btn-default" (click)="nextPage()">Next</button>
         <button class="btn btn-default" (click)="excelExport()">Export all pages to excel</button>
+        <button class="btn btn-default" (click)="deleteChecked()">Delete selected items</button>
     </div>
     <table class="table">
         <thead>
             <tr>
+                <th></th>
                 <th>Id</th>
                 <th>Title</th>
                 <th>Image</th>
@@ -35,6 +38,9 @@
         <tbody>
             <ng-template ngFor let-i [ngForOf]="_items" let-n="index">
                 <tr>
+                    <th>
+                        <input type="checkbox" [checked]="_checkedItems.indexOf(i.id) >= 0" (change)="toggleChecked(i.id)"/>
+                    </th>
                     <td>
                         {{i.id}}
                     </td>

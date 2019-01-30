@@ -30,7 +30,7 @@ export class CoreService<TKey, TGrid extends IEntity<TKey>, TCreate extends IEnt
         return await this._http.post<TCreate>('/api/' + this._controller + '/create', item).toPromise();
     }
 
-    public async getEdit(id: any): Promise<TEdit> {
+    public async getEdit(id: TKey): Promise<TEdit> {
         return await this._http.get<TEdit>('api/' + this._controller + '/edit?id=' + id).toPromise();
     }
 
@@ -38,12 +38,12 @@ export class CoreService<TKey, TGrid extends IEntity<TKey>, TCreate extends IEnt
         return await this._http.post<TEdit>('/api/' + this._controller + '/edit', item).toPromise();
     }
 
-    public async delete(id: any) {
+    public async delete(id: TKey) {
         await this._http.delete('api/' + this._controller + '/delete?id=' + id).toPromise();
     }
 
-    public async deleteMany(ids: any[]) {
-        await this._http.delete('api/' + this._controller + '/delete', { params: StaticMethods.ObjectToHttpParams('ids', ids) }).toPromise();
+    public async deleteMany(ids: TKey[]) {
+        await this._http.delete('api/' + this._controller + '/deleteMany', { params: StaticMethods.ArrayToHttpParams('ids', ids) }).toPromise();
     }
 
     public async getFilter(): Promise<TFilter> {

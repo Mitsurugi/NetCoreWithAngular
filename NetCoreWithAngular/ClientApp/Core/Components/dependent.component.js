@@ -55,6 +55,7 @@ var DependentComponent = /** @class */ (function () {
         this._error = null;
         this._isShowCreate = false;
         this._showEditId = null;
+        this._checkedItems = [];
         this._importFile = null;
         this._orderBy = 'Id_desc';
         this._service = service;
@@ -342,9 +343,35 @@ var DependentComponent = /** @class */ (function () {
             });
         });
     };
-    DependentComponent.prototype.postCreate = function () {
+    DependentComponent.prototype.deleteChecked = function () {
         return __awaiter(this, void 0, void 0, function () {
             var e_11;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        this._error = null;
+                        _a.label = 1;
+                    case 1:
+                        _a.trys.push([1, 4, , 5]);
+                        return [4 /*yield*/, this._service.deleteMany(this._checkedItems)];
+                    case 2:
+                        _a.sent();
+                        return [4 /*yield*/, this.reloadGrid()];
+                    case 3:
+                        _a.sent();
+                        return [3 /*break*/, 5];
+                    case 4:
+                        e_11 = _a.sent();
+                        this._error = JSON.stringify(e_11.error);
+                        return [3 /*break*/, 5];
+                    case 5: return [2 /*return*/];
+                }
+            });
+        });
+    };
+    DependentComponent.prototype.postCreate = function () {
+        return __awaiter(this, void 0, void 0, function () {
+            var e_12;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -364,8 +391,8 @@ var DependentComponent = /** @class */ (function () {
                         _a.sent();
                         return [3 /*break*/, 6];
                     case 5:
-                        e_11 = _a.sent();
-                        this._error = JSON.stringify(e_11.error);
+                        e_12 = _a.sent();
+                        this._error = JSON.stringify(e_12.error);
                         return [3 /*break*/, 6];
                     case 6: return [2 /*return*/];
                 }
@@ -374,7 +401,7 @@ var DependentComponent = /** @class */ (function () {
     };
     DependentComponent.prototype.postEdit = function () {
         return __awaiter(this, void 0, void 0, function () {
-            var _a, e_12;
+            var _a, e_13;
             return __generator(this, function (_b) {
                 switch (_b.label) {
                     case 0:
@@ -391,8 +418,8 @@ var DependentComponent = /** @class */ (function () {
                         _b.sent();
                         return [3 /*break*/, 5];
                     case 4:
-                        e_12 = _b.sent();
-                        this._error = JSON.stringify(e_12.error);
+                        e_13 = _b.sent();
+                        this._error = JSON.stringify(e_13.error);
                         return [3 /*break*/, 5];
                     case 5: return [2 /*return*/];
                 }
@@ -401,7 +428,7 @@ var DependentComponent = /** @class */ (function () {
     };
     DependentComponent.prototype.excelExport = function () {
         return __awaiter(this, void 0, void 0, function () {
-            var b, e_13;
+            var b, e_14;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -415,8 +442,8 @@ var DependentComponent = /** @class */ (function () {
                         saveAs(b, "ExcelExport.xlsx");
                         return [3 /*break*/, 4];
                     case 3:
-                        e_13 = _a.sent();
-                        this._error = JSON.stringify(e_13.error);
+                        e_14 = _a.sent();
+                        this._error = JSON.stringify(e_14.error);
                         return [3 /*break*/, 4];
                     case 4: return [2 /*return*/];
                 }
@@ -425,7 +452,7 @@ var DependentComponent = /** @class */ (function () {
     };
     DependentComponent.prototype.importTemplate = function () {
         return __awaiter(this, void 0, void 0, function () {
-            var b, e_14;
+            var b, e_15;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -439,8 +466,8 @@ var DependentComponent = /** @class */ (function () {
                         saveAs(b, "ImportTemplate.xlsx");
                         return [3 /*break*/, 4];
                     case 3:
-                        e_14 = _a.sent();
-                        this._error = JSON.stringify(e_14.error);
+                        e_15 = _a.sent();
+                        this._error = JSON.stringify(e_15.error);
                         return [3 /*break*/, 4];
                     case 4: return [2 /*return*/];
                 }
@@ -449,7 +476,7 @@ var DependentComponent = /** @class */ (function () {
     };
     DependentComponent.prototype.postImport = function () {
         return __awaiter(this, void 0, void 0, function () {
-            var e_15;
+            var e_16;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -467,8 +494,8 @@ var DependentComponent = /** @class */ (function () {
                         this._importResult = "Import successful";
                         return [3 /*break*/, 5];
                     case 4:
-                        e_15 = _a.sent();
-                        this._importResult = JSON.stringify(e_15.error.Message);
+                        e_16 = _a.sent();
+                        this._importResult = JSON.stringify(e_16.error.Message);
                         return [3 /*break*/, 5];
                     case 5: return [2 /*return*/];
                 }
@@ -477,6 +504,15 @@ var DependentComponent = /** @class */ (function () {
     };
     DependentComponent.prototype.setImportFile = function (file) {
         this._importFile = file;
+    };
+    DependentComponent.prototype.toggleChecked = function (id) {
+        var index = this._checkedItems.indexOf(id);
+        if (index < 0) {
+            this._checkedItems.push(id);
+        }
+        else {
+            this._checkedItems = this._checkedItems.slice(0, index).concat(this._checkedItems.slice(index + 1, this._checkedItems.length));
+        }
     };
     __decorate([
         Input(),
