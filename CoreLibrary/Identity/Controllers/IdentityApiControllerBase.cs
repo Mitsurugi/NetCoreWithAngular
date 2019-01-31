@@ -10,12 +10,13 @@ namespace CoreLibrary.Identity
 {
     [ApiController]
     [Route("api/[controller]/[action]")]
-    public class IdentityApiControllerBase<TIdentityUser> : Controller
-        where TIdentityUser : IdentityUser        
+    public class IdentityApiControllerBase<TIdentityUser, TKey> : Controller
+        where TKey : System.IEquatable<TKey>
+        where TIdentityUser : IdentityUser<TKey>, IUser<TKey>
     {
-        protected readonly IIdentityService<TIdentityUser> _service;
+        protected readonly IIdentityService<TIdentityUser, TKey> _service;
 
-        public IdentityApiControllerBase(IIdentityService<TIdentityUser> service)
+        public IdentityApiControllerBase(IIdentityService<TIdentityUser, TKey> service)
         {
             _service = service;
         }        
@@ -32,9 +33,7 @@ namespace CoreLibrary.Identity
             {
                 string t = await _service.GetToken(model.Login, model.Password);
                 var user = await _service.FindUserByName(model.Login);
-                var roles = await _service.GetRolesForUser(user.Id);
-                var r = roles.FirstOrDefault();
-                return Ok(new { token = t, login = model.Login, role = r });
+                return Ok(new { token = t, login = model.Login, role = user.Role });
             }
             catch (Exception ex)
             {
@@ -61,30 +60,6 @@ namespace CoreLibrary.Identity
             {
                 return BadRequest(ex);
             }
-        }
-
-        [HttpPost]
-        public virtual async Task<IActionResult> ResetPassword(ResetPasswordModel model)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-            try
-            {
-                await _service.ResetPasswordWithToken(model.UserId, model.Token, model.NewPassword);
-                return Ok();
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex);
-            }
-        }
-
-        [HttpPost]
-        public virtual async Task<IActionResult> ResetPasswordRequest(string email)
-        {
-            throw new NotImplementedException();
-        }        
+        }       
     }
 }

@@ -37,7 +37,7 @@ namespace NetCoreWithAngular
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
             });
 
-            services.AddIdentity<IdentityUser, IdentityRole>().AddEntityFrameworkStores<ExampleContext>();
+            services.AddIdentity<User, IdentityRole<System.Guid>>().AddEntityFrameworkStores<ExampleContext>().AddDefaultTokenProviders();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             services.AddAutoMapper();
@@ -78,8 +78,9 @@ namespace NetCoreWithAngular
             services.AddScoped(typeof(IFileService<,>), typeof(FileService<,>));
             services.AddScoped(typeof(IDependentService<,,,,,,>), typeof(DependentService<,,,,,,>));
 
-            services.AddScoped<IIdentityService<IdentityUser>, IdentityService>();            
+            services.AddScoped<IIdentityService<User, System.Guid>, IdentityService>();
 
+            services.AddScoped<IUsersService<User, System.Guid, UserViewModel, UserViewModel, UserViewModel, UserViewModel>, UsersService<User, System.Guid, UserViewModel, UserViewModel, UserViewModel, UserViewModel>>();
             services.AddScoped<IBaseService<Book, int, BookGridModel, BookViewModel, BookViewModel, BookFilterModel>, BookService>();
             services.AddScoped<IBaseService<Anime, int, AnimeViewModel, AnimeViewModel, AnimeViewModel, AnimeViewModel>, AnimeService>();
             services.AddScoped<IDependentService<AnimeEpisode, int, int, AnimeEpisodeViewModel, AnimeEpisodeViewModel, AnimeEpisodeViewModel, AnimeEpisodeViewModel>, AnimeEpisodeService>();

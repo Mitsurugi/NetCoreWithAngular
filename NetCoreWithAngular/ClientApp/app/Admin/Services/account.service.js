@@ -27,9 +27,7 @@ import { AccountGlobals } from '../../../Core/Account/AccountGlobals';
 var AccountService = /** @class */ (function (_super) {
     __extends(AccountService, _super);
     function AccountService(http, accGlobals) {
-        var _this = _super.call(this, http, accGlobals) || this;
-        _this._loginPath = '/api/identity/gettoken';
-        return _this;
+        return _super.call(this, http, accGlobals) || this;
     }
     AccountService = __decorate([
         Injectable(),

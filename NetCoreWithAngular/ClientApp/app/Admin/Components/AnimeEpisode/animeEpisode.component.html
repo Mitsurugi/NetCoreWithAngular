@@ -28,7 +28,7 @@
                         {{i.title}}
                     </td>
                     <td>
-                        <button class="btn btn-default" (click)="toggleEdit(n, i.id)">Edit</button>
+                        <button class="btn btn-default" (click)="toggleEdit(i.id)">Edit</button>
                     </td>
                     <td>
                         <button class="btn btn-default" (click)="delete(i.id)">Delete</button>
@@ -52,7 +52,7 @@
                     <div class="form-group col-sm-3">
                         <label>Title *</label>
                         <input class="form-control" name="title" [(ngModel)]="_itemEdit.title" #title="ngModel" type="text" required />
-                        <div *ngIf="title.touched && title.invalid">
+                        <div *ngIf="title.invalid">
                             <p *ngIf="title.errors.required" class="validation-text">
                                 Title required
                             </p>

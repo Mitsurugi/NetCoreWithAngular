@@ -13,6 +13,7 @@ namespace NetCoreWithAngular
             CreateMap<Anime, AnimeViewModel>().ReverseMap();
             CreateMap<Book, BookGridModel>().ForMember(m => m.Genre, m => m.MapFrom(i => i.Genre.HasValue ? i.Genre.Value.GetDisplayName() : ""));
             CreateMap<AnimeEpisode, AnimeEpisodeViewModel>().ReverseMap();
+            CreateMap<User, UserViewModel>().ReverseMap();            
         }
     }
 }

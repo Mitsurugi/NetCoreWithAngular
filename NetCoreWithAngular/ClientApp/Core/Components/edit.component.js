@@ -71,7 +71,7 @@ var EditComponent = /** @class */ (function () {
                     }
                 }
                 catch (e) {
-                    this._error = JSON.stringify(e.error);
+                    this._error = e.error.Message;
                 }
                 return [2 /*return*/];
             });
@@ -94,7 +94,7 @@ var EditComponent = /** @class */ (function () {
                         return [3 /*break*/, 4];
                     case 3:
                         e_1 = _b.sent();
-                        this._error = JSON.stringify(e_1.error);
+                        this._error = e_1.error.Message;
                         return [3 /*break*/, 4];
                     case 4: return [2 /*return*/];
                 }
@@ -118,7 +118,7 @@ var EditComponent = /** @class */ (function () {
                         return [3 /*break*/, 4];
                     case 3:
                         e_2 = _b.sent();
-                        this._error = JSON.stringify(e_2.error);
+                        this._error = e_2.error.Message;
                         return [3 /*break*/, 4];
                     case 4: return [2 /*return*/];
                 }
@@ -145,7 +145,7 @@ var EditComponent = /** @class */ (function () {
                         return [3 /*break*/, 5];
                     case 4:
                         e_3 = _a.sent();
-                        this._error = JSON.stringify(e_3.error);
+                        this._error = e_3.error.Message;
                         return [3 /*break*/, 5];
                     case 5: return [2 /*return*/];
                 }
@@ -170,7 +170,7 @@ var EditComponent = /** @class */ (function () {
                         return [3 /*break*/, 4];
                     case 3:
                         e_4 = _b.sent();
-                        this._error = JSON.stringify(e_4.error);
+                        this._error = e_4.error.Message;
                         return [3 /*break*/, 4];
                     case 4: return [2 /*return*/];
                 }

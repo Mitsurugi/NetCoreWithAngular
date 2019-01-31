@@ -20,7 +20,7 @@
                     <div class="form-group col-sm-3">
                         <label>Title *</label>
                         <input class="form-control" name="title" [(ngModel)]="_itemEdit.title" #title="ngModel" type="text" required />
-                        <div *ngIf="title.touched && title.invalid">
+                        <div *ngIf="title.invalid">
                             <p *ngIf="title.errors.required" class="validation-text">
                                 Title required
                             </p>
@@ -29,7 +29,7 @@
                     <div class="form-group col-sm-3">
                         <label>Season count *</label>
                         <input class="form-control" name="seasonCount" [(ngModel)]="_itemEdit.seasonCount" #seasonCount="ngModel" type="number" required />
-                        <div *ngIf="seasonCount.touched && seasonCount.invalid">
+                        <div *ngIf="seasonCount.invalid">
                             <p *ngIf="seasonCount.errors.required" class="validation-text">
                                 Season count required
                             </p>

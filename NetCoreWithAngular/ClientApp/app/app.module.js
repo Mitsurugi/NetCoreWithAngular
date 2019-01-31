@@ -22,9 +22,11 @@ import { AnimeComponent } from './Admin/Components/Anime/anime.component';
 import { AnimeEditComponent } from './Admin/Components/Anime/animeEdit.component';
 import { AnimeEpisodeComponent } from './Admin/Components/AnimeEpisode/animeEpisode.component';
 import { FrontComponent } from './Front/Components/Front/front.component';
+import { UsersComponent } from './Admin/Components/User/users.component';
 var adminRoutes = [
     { path: '', component: AccountComponent },
     { path: 'account', component: AccountComponent },
+    { path: 'users', component: UsersComponent },
     { path: 'anime', component: AnimeComponent },
     { path: 'anime/create', component: AnimeEditComponent },
     { path: 'anime/edit/:id', component: AnimeEditComponent },
@@ -47,7 +49,7 @@ var AppModule = /** @class */ (function () {
     AppModule = __decorate([
         NgModule({
             imports: [BrowserModule, FormsModule, HttpClientModule, RouterModule.forRoot(appRoutes)],
-            declarations: [AppComponent, NotFoundComponent, AdminComponent, AccountComponent, MenuComponent, AnimeComponent, AnimeEditComponent, BookComponent, BookEditComponent, FrontComponent, AnimeEpisodeComponent],
+            declarations: [AppComponent, NotFoundComponent, AdminComponent, AccountComponent, MenuComponent, AnimeComponent, AnimeEditComponent, BookComponent, BookEditComponent, FrontComponent, AnimeEpisodeComponent, UsersComponent],
             providers: [{ provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true }],
             bootstrap: [AppComponent]
         })

@@ -45,13 +45,15 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 import { Component } from '@angular/core';
 import { CoreAccountService } from './account.service';
 import { AccountGlobals } from './AccountGlobals';
+import { LoginModel } from './loginModel';
+import { ChangePasswordModel } from './changePasswordModel';
 var CoreAccountComponent = /** @class */ (function () {
-    function CoreAccountComponent(service, accGlobals, typeLogin) {
+    function CoreAccountComponent(service, accGlobals) {
         this._error = null;
         this._service = service;
         this._accGlobals = accGlobals;
-        this._loginModel = new typeLogin();
-        this.typeLogin = typeLogin;
+        this._loginModel = new LoginModel();
+        this._changePasswordModel = new ChangePasswordModel();
     }
     CoreAccountComponent.prototype.ngOnInit = function () {
         this._accGlobals.refresh();
@@ -72,7 +74,7 @@ var CoreAccountComponent = /** @class */ (function () {
                         return [3 /*break*/, 4];
                     case 3:
                         e_1 = _a.sent();
-                        this._error = "Invalid login or password";
+                        this._error = e_1.error.Message;
                         return [3 /*break*/, 4];
                     case 4: return [2 /*return*/];
                 }
@@ -84,12 +86,21 @@ var CoreAccountComponent = /** @class */ (function () {
             this._service.deleteToken();
         }
         catch (e) {
-            this._error = JSON.stringify(e);
+            this._error = e.error.Message;
+        }
+    };
+    CoreAccountComponent.prototype.changePassword = function () {
+        try {
+            this._service.changePassword(this._changePasswordModel);
+            this._error = "Password successfully changed.";
+        }
+        catch (e) {
+            this._error = e.error.Message;
         }
     };
     CoreAccountComponent = __decorate([
         Component({}),
-        __metadata("design:paramtypes", [CoreAccountService, AccountGlobals, Function])
+        __metadata("design:paramtypes", [CoreAccountService, AccountGlobals])
     ], CoreAccountComponent);
     return CoreAccountComponent;
 }());

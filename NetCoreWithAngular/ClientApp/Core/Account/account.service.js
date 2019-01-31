@@ -52,7 +52,7 @@ var TokenResponse = /** @class */ (function () {
 }());
 var CoreAccountService = /** @class */ (function () {
     function CoreAccountService(http, accGlobals) {
-        this._loginPath = "/api/identity/gettoken";
+        this._controllerName = "identity";
         this._http = http;
         this._accGlobals = accGlobals;
     }
@@ -61,7 +61,7 @@ var CoreAccountService = /** @class */ (function () {
             var data;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, this._http.post(this._loginPath, model).toPromise()];
+                    case 0: return [4 /*yield*/, this._http.post('/api/' + this._controllerName + '/gettoken', model).toPromise()];
                     case 1:
                         data = _a.sent();
                         localStorage.setItem('token', data.token);
@@ -78,6 +78,19 @@ var CoreAccountService = /** @class */ (function () {
         localStorage.removeItem("login");
         localStorage.removeItem("role");
         this._accGlobals.refresh();
+    };
+    CoreAccountService.prototype.changePassword = function (model) {
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, this._http.post('/api/' + this._controllerName + '/ChangePassword', model).toPromise()];
+                    case 1:
+                        _a.sent();
+                        this.deleteToken();
+                        return [2 /*return*/];
+                }
+            });
+        });
     };
     CoreAccountService = __decorate([
         Injectable(),

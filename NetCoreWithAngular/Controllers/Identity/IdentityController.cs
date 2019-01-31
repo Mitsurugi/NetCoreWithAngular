@@ -9,9 +9,9 @@ using System.Threading.Tasks;
 
 namespace NetCoreWithAngular.Controllers
 {
-    public class IdentityController : IdentityApiControllerBase<IdentityUser>
+    public class IdentityController : IdentityApiControllerBase<Models.User, System.Guid>
     {
-        public IdentityController(IIdentityService<IdentityUser> service) : base(service)
+        public IdentityController(IIdentityService<Models.User, System.Guid> service) : base(service)
         {
         }
 
@@ -20,12 +20,14 @@ namespace NetCoreWithAngular.Controllers
             var anyRoles = _service.GetRoles().Any();
             if (!anyRoles)
             {
-                await _service.CreateRole(new IdentityRole { Name = "Admin" });
+                await _service.CreateRole(new IdentityRole<System.Guid> { Name = "Admin" });
             }
             var anyUsers = _service.GetUsersQuery().Any();
             if (!anyUsers)
             {
-                await _service.CreateUser(new IdentityUser { UserName = "admin" }, "11!!qqQQqq");
+                await _service.CreateUser(new Models.User { UserName = "admin", Role = "Admin" }, "11!!qqQQqq");
+                var user = await _service.FindUserByName("admin");
+                await _service.AddUserToRole(user.Id, "Admin");
             }
             return await base.GetToken(model);
         }

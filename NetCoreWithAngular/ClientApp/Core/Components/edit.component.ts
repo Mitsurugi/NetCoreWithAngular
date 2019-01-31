@@ -43,7 +43,7 @@ export class EditComponent<TKey, TGrid extends IEntity<TKey>, TCreate extends IE
             }
         }
         catch (e) {
-            this._error = JSON.stringify(e.error);
+            this._error = e.error.Message;
         }
     }
 
@@ -53,7 +53,7 @@ export class EditComponent<TKey, TGrid extends IEntity<TKey>, TCreate extends IE
             this._itemCreate = await this._service.getCreate();
         }
         catch (e) {
-            this._error = JSON.stringify(e.error);
+            this._error = e.error.Message;
         }
     }
 
@@ -63,7 +63,7 @@ export class EditComponent<TKey, TGrid extends IEntity<TKey>, TCreate extends IE
             this._itemEdit = await this._service.getEdit(this._id);
         }
         catch (e) {
-            this._error = JSON.stringify(e.error);
+            this._error = e.error.Message;
         }
     }
 
@@ -75,7 +75,7 @@ export class EditComponent<TKey, TGrid extends IEntity<TKey>, TCreate extends IE
             this._router.navigate([this._listUrl]);
         }
         catch (e) {
-            this._error = JSON.stringify(e.error);
+            this._error = e.error.Message;
         }
     }
 
@@ -86,7 +86,7 @@ export class EditComponent<TKey, TGrid extends IEntity<TKey>, TCreate extends IE
             this._router.navigate([this._listUrl]);
         }
         catch (e) {
-            this._error = JSON.stringify(e.error);
+            this._error = e.error.Message;
         }
     }
 }

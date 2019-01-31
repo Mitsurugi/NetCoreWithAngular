@@ -2,6 +2,7 @@
 using System.Text;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Mail;
 using System.Threading.Tasks;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Identity;
@@ -10,11 +11,12 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace CoreLibrary.Identity
 {
-    public class IdentityServiceBase<TIdentityUser> : IIdentityService<TIdentityUser>
-        where TIdentityUser : IdentityUser        
+    public class IdentityServiceBase<TIdentityUser, TKey> : IIdentityService<TIdentityUser, TKey>
+        where TKey: System.IEquatable<TKey>
+        where TIdentityUser : IdentityUser<TKey>, IUser<TKey>
     {
         protected readonly UserManager<TIdentityUser> _userManager;
-        protected readonly RoleManager<IdentityRole> _roleManager;
+        protected readonly RoleManager<IdentityRole<TKey>> _roleManager;
         protected readonly SignInManager<TIdentityUser> _signInManager;
 
         protected string _privateKey = "";
@@ -22,7 +24,7 @@ namespace CoreLibrary.Identity
         protected string _audience = "";
         protected TimeSpan _tokenLifeTime = new TimeSpan(24, 0, 0);
 
-        public IdentityServiceBase(UserManager<TIdentityUser> userManager, RoleManager<IdentityRole> roleManager, SignInManager<TIdentityUser> signInManager)
+        public IdentityServiceBase(UserManager<TIdentityUser> userManager, RoleManager<IdentityRole<TKey>> roleManager, SignInManager<TIdentityUser> signInManager)
         {
             _userManager = userManager;
             _roleManager = roleManager;
@@ -103,9 +105,9 @@ namespace CoreLibrary.Identity
             }
         }
 
-        public virtual async Task<TIdentityUser> FindUserById(string userId)
+        public virtual async Task<TIdentityUser> FindUserById(TKey userId)
         {
-            return await _userManager.FindByIdAsync(userId);            
+            return await _userManager.FindByIdAsync(userId.ToString());            
         }
 
         public virtual async Task<TIdentityUser> FindUserByName(string userName)
@@ -113,7 +115,7 @@ namespace CoreLibrary.Identity
             return await _userManager.FindByNameAsync(userName);
         }        
 
-        public virtual async Task ChangePassword(string userId, string currentPassword, string newPassword)
+        public virtual async Task ChangePassword(TKey userId, string currentPassword, string newPassword)
         {
             var user = await FindUserById(userId);
             var identityResult = await _userManager.ChangePasswordAsync(user, currentPassword, newPassword);
@@ -130,13 +132,13 @@ namespace CoreLibrary.Identity
             }
         }
 
-        public virtual async Task<string> GeneratePasswordResetToken(string userId)
+        public virtual async Task<string> GeneratePasswordResetToken(TKey userId)
         {
             var user = await FindUserById(userId);
             return await _userManager.GeneratePasswordResetTokenAsync(user);
         }
 
-        public virtual async Task ResetPasswordWithToken(string userId, string token, string newPassword)
+        public virtual async Task ResetPasswordWithToken(TKey userId, string token, string newPassword)
         {
             var user = await FindUserById(userId);
             var identityResult = await _userManager.ResetPasswordAsync(user, token, newPassword);
@@ -153,14 +155,14 @@ namespace CoreLibrary.Identity
             }
         }
 
-        public virtual async Task ResetPassword(string userId, string newPassword)
+        public virtual async Task ResetPassword(TKey userId, string newPassword)
         {
             var token = await GeneratePasswordResetToken(userId);
 
             await ResetPasswordWithToken(userId, token, newPassword);
         }
 
-        public virtual async Task DeleteUser(string userId)
+        public virtual async Task DeleteUser(TKey userId)
         {
             var user = await FindUserById(userId);
 
@@ -196,12 +198,12 @@ namespace CoreLibrary.Identity
 
         //Roles
 
-        public IQueryable<IdentityRole> GetRoles()
+        public virtual IQueryable<IdentityRole<TKey>> GetRoles()
         {
             return _roleManager.Roles;
         }
 
-        public virtual async Task CreateRole(IdentityRole role)
+        public virtual async Task CreateRole(IdentityRole<TKey> role)
         {
             var identityResult = await _roleManager.CreateAsync(role);
 
@@ -222,7 +224,7 @@ namespace CoreLibrary.Identity
             return await _roleManager.RoleExistsAsync(roleName);
         }
 
-        public virtual async Task AddUserToRole(string userId, string roleName)
+        public virtual async Task AddUserToRole(TKey userId, string roleName)
         {
             var user = await FindUserById(userId);
 
@@ -240,7 +242,7 @@ namespace CoreLibrary.Identity
             }
         }
 
-        public virtual async Task RemoveUserFromRole(string userId, string roleName)
+        public virtual async Task RemoveUserFromRole(TKey userId, string roleName)
         {
             var user = await FindUserById(userId);
 
@@ -258,14 +260,14 @@ namespace CoreLibrary.Identity
             }
         }
 
-        public virtual async Task<IList<string>> GetRolesForUser(string userId)
+        public virtual async Task<IList<string>> GetRolesForUser(TKey userId)
         {
             var user = await FindUserById(userId);
 
             return await _userManager.GetRolesAsync(user);
         }        
 
-        public virtual async Task<bool> IsUserInRole(string userId, string roleName)
+        public virtual async Task<bool> IsUserInRole(TKey userId, string roleName)
         {
             var user = await FindUserById(userId);
 

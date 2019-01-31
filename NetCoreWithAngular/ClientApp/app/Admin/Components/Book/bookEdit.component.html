@@ -17,7 +17,7 @@
                     <div class="form-group col-sm-3">
                         <label>Title *</label>
                         <input class="form-control" name="title" [(ngModel)]="_itemEdit.title" #title="ngModel" type="text" required />
-                        <div *ngIf="title.touched && title.invalid">
+                        <div *ngIf="title.invalid">
                             <p *ngIf="title.errors.required" class="validation-text">
                                 Title required
                             </p>
@@ -26,7 +26,7 @@
                     <div class="form-group col-sm-3">
                         <label>Author *</label>
                         <input class="form-control" name="author" [(ngModel)]="_itemEdit.author" #author="ngModel" type="text" required pattern="^[a-zA-Z\s]*$" />
-                        <div *ngIf="author.touched && author.invalid">
+                        <div *ngIf="author.invalid">
                             <p *ngIf="author.errors.required" class="validation-text">
                                 Author required
                             </p>
@@ -46,7 +46,7 @@
                     <div class="form-group col-sm-3">
                         <label>Page count *</label>
                         <input class="form-control" name="pageCount" [(ngModel)]="_itemEdit.pageCount" #pageCount="ngModel" type="text" required />
-                        <div *ngIf="pageCount.touched && pageCount.invalid">
+                        <div *ngIf="pageCount.invalid">
                             <p *ngIf="pageCount.errors.required" class="validation-text">
                                 Page count required
                             </p>

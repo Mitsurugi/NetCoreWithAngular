@@ -83,7 +83,7 @@ var CoreComponent = /** @class */ (function () {
                         return [3 /*break*/, 4];
                     case 3:
                         e_1 = _b.sent();
-                        this._error = JSON.stringify(e_1.error);
+                        this._error = e_1.error.Message;
                         return [3 /*break*/, 4];
                     case 4: return [2 /*return*/];
                 }
@@ -100,6 +100,7 @@ var CoreComponent = /** @class */ (function () {
                         _c.label = 1;
                     case 1:
                         _c.trys.push([1, 4, , 5]);
+                        this._showEditId = null;
                         _a = this;
                         return [4 /*yield*/, this._service.getPagesCount(this._pageSize, this._filter)];
                     case 2:
@@ -111,7 +112,7 @@ var CoreComponent = /** @class */ (function () {
                         return [3 /*break*/, 5];
                     case 4:
                         e_2 = _c.sent();
-                        this._error = JSON.stringify(e_2.error);
+                        this._error = e_2.error.Message;
                         return [3 /*break*/, 5];
                     case 5: return [2 /*return*/];
                 }
@@ -138,7 +139,7 @@ var CoreComponent = /** @class */ (function () {
                         return [3 /*break*/, 5];
                     case 4:
                         e_3 = _b.sent();
-                        this._error = JSON.stringify(e_3.error);
+                        this._error = e_3.error.Message;
                         return [3 /*break*/, 5];
                     case 5: return [2 /*return*/];
                 }
@@ -162,7 +163,7 @@ var CoreComponent = /** @class */ (function () {
                         return [3 /*break*/, 4];
                     case 3:
                         e_4 = _a.sent();
-                        this._error = JSON.stringify(e_4.error);
+                        this._error = e_4.error.Message;
                         return [3 /*break*/, 4];
                     case 4: return [2 /*return*/];
                 }
@@ -186,7 +187,7 @@ var CoreComponent = /** @class */ (function () {
                         return [3 /*break*/, 4];
                     case 3:
                         e_5 = _a.sent();
-                        this._error = JSON.stringify(e_5.error);
+                        this._error = e_5.error.Message;
                         return [3 /*break*/, 4];
                     case 4: return [2 /*return*/];
                 }
@@ -212,7 +213,7 @@ var CoreComponent = /** @class */ (function () {
                         return [3 /*break*/, 4];
                     case 3:
                         e_6 = _a.sent();
-                        this._error = JSON.stringify(e_6.error);
+                        this._error = e_6.error.Message;
                         return [3 /*break*/, 4];
                     case 4: return [2 /*return*/];
                 }
@@ -231,7 +232,7 @@ var CoreComponent = /** @class */ (function () {
                         this._isShowCreate = false;
                     }
                     catch (e) {
-                        this._error = JSON.stringify(e.error);
+                        this._error = e.error.Message;
                     }
                 }
                 return [2 /*return*/];
@@ -256,7 +257,7 @@ var CoreComponent = /** @class */ (function () {
                         return [3 /*break*/, 4];
                     case 3:
                         e_7 = _a.sent();
-                        this._error = JSON.stringify(e_7.error);
+                        this._error = e_7.error.Message;
                         return [3 /*break*/, 4];
                     case 4: return [2 /*return*/];
                 }
@@ -280,7 +281,7 @@ var CoreComponent = /** @class */ (function () {
                         return [3 /*break*/, 4];
                     case 3:
                         e_8 = _b.sent();
-                        this._error = JSON.stringify(e_8.error);
+                        this._error = e_8.error.Message;
                         return [3 /*break*/, 4];
                     case 4: return [2 /*return*/];
                 }
@@ -304,7 +305,7 @@ var CoreComponent = /** @class */ (function () {
                         return [3 /*break*/, 4];
                     case 3:
                         e_9 = _b.sent();
-                        this._error = JSON.stringify(e_9.error);
+                        this._error = e_9.error.Message;
                         return [3 /*break*/, 4];
                     case 4: return [2 /*return*/];
                 }
@@ -330,7 +331,7 @@ var CoreComponent = /** @class */ (function () {
                         return [3 /*break*/, 5];
                     case 4:
                         e_10 = _a.sent();
-                        this._error = JSON.stringify(e_10.error);
+                        this._error = e_10.error.Message;
                         return [3 /*break*/, 5];
                     case 5: return [2 /*return*/];
                 }
@@ -356,7 +357,7 @@ var CoreComponent = /** @class */ (function () {
                         return [3 /*break*/, 5];
                     case 4:
                         e_11 = _a.sent();
-                        this._error = JSON.stringify(e_11.error);
+                        this._error = e_11.error.Message;
                         return [3 /*break*/, 5];
                     case 5: return [2 /*return*/];
                 }
@@ -386,7 +387,7 @@ var CoreComponent = /** @class */ (function () {
                         return [3 /*break*/, 6];
                     case 5:
                         e_12 = _a.sent();
-                        this._error = JSON.stringify(e_12.error);
+                        this._error = e_12.error.Message;
                         return [3 /*break*/, 6];
                     case 6: return [2 /*return*/];
                 }
@@ -413,7 +414,7 @@ var CoreComponent = /** @class */ (function () {
                         return [3 /*break*/, 5];
                     case 4:
                         e_13 = _b.sent();
-                        this._error = JSON.stringify(e_13.error);
+                        this._error = e_13.error.Message;
                         return [3 /*break*/, 5];
                     case 5: return [2 /*return*/];
                 }
@@ -437,7 +438,7 @@ var CoreComponent = /** @class */ (function () {
                         return [3 /*break*/, 4];
                     case 3:
                         e_14 = _a.sent();
-                        this._error = JSON.stringify(e_14.error);
+                        this._error = e_14.error.Message;
                         return [3 /*break*/, 4];
                     case 4: return [2 /*return*/];
                 }
@@ -461,7 +462,7 @@ var CoreComponent = /** @class */ (function () {
                         return [3 /*break*/, 4];
                     case 3:
                         e_15 = _a.sent();
-                        this._error = JSON.stringify(e_15.error);
+                        this._error = e_15.error.Message;
                         return [3 /*break*/, 4];
                     case 4: return [2 /*return*/];
                 }

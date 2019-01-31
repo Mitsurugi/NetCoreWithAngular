@@ -43,6 +43,8 @@ namespace CoreLibrary
         [HttpGet]
         public virtual async Task<ActionResult<List<TGrid>>> Grid([FromQuery] TParentKey parentId, [FromQuery] int pageNumber, [FromQuery] int? pageSize = null, [FromQuery] string orderBy = null, [FromQuery] TFilter filter = null, [FromQuery] string searchString = null)
         {
+            if (!pageSize.HasValue) pageSize = _pageSize;
+
             try
             {
                 return await _service.GetGrid(pageSize.Value, pageNumber, parentId, orderBy, filter, searchString);
@@ -50,9 +52,7 @@ namespace CoreLibrary
             catch (Exception ex)
             {
                 return BadRequest(ex);
-            }
-
-            if (!pageSize.HasValue) pageSize = _pageSize;            
+            }                      
         }
 
         [HttpGet]
@@ -189,7 +189,7 @@ namespace CoreLibrary
         }
 
         [HttpPost]
-        public virtual async Task<IActionResult> Import(TParentKey parentId, IFormFile file)
+        public virtual async Task<IActionResult> Import([FromQuery] TParentKey parentId, [FromForm] IFormFile file)
         {
             if (file == null)
                 return BadRequest("File is null");

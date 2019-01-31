@@ -23,12 +23,11 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 import { Component } from '@angular/core';
 import { CoreAccountComponent } from '../../../../Core/Account/account.component';
 import { AccountService } from '../../Services/account.service';
-import { LoginModel } from '../../Models/login';
 import { AccountGlobals } from '../../../../Core/Account/AccountGlobals';
 var AccountComponent = /** @class */ (function (_super) {
     __extends(AccountComponent, _super);
     function AccountComponent(service, accGlobals) {
-        return _super.call(this, service, accGlobals, LoginModel) || this;
+        return _super.call(this, service, accGlobals) || this;
     }
     AccountComponent = __decorate([
         Component({

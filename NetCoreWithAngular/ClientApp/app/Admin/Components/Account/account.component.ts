@@ -2,7 +2,6 @@
 import { NgForm } from '@angular/forms';
 import { CoreAccountComponent } from '../../../../Core/Account/account.component';
 import { AccountService } from '../../Services/account.service';
-import { LoginModel } from '../../Models/login';
 import { AccountGlobals } from '../../../../Core/Account/AccountGlobals';
 
 @Component({
@@ -11,9 +10,9 @@ import { AccountGlobals } from '../../../../Core/Account/AccountGlobals';
     styleUrls: ['./account.component.css'],
     providers: [AccountService]
 })
-export class AccountComponent extends CoreAccountComponent<LoginModel> {
+export class AccountComponent extends CoreAccountComponent {
 
     constructor(service: AccountService, accGlobals: AccountGlobals) {
-        super(service, accGlobals, LoginModel);
+        super(service, accGlobals);
     }
 }

@@ -22,9 +22,16 @@ namespace CoreLibrary
         [HttpGet]
         public virtual async Task<IActionResult> Download(TKey id)
         {
-            var file = await _service.Get(id);
-            if (file == null) BadRequest("File not found");
-            return File(file.Data, file.MimeType, file.FileName);
+            try
+            {
+                var file = await _service.Get(id);
+                if (file == null) BadRequest("File not found");
+                return File(file.Data, file.MimeType, file.FileName);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
         }
 
         [HttpDelete]

@@ -6,8 +6,9 @@ using Microsoft.AspNetCore.Identity;
 
 namespace CoreLibrary.Identity
 {
-    public interface IIdentityService<TIdentityUser>
-        where TIdentityUser : IdentityUser        
+    public interface IIdentityService<TIdentityUser, TKey>
+        where TKey: System.IEquatable<TKey>
+        where TIdentityUser : IdentityUser<TKey>, IUser<TKey>
     {        
         //Auth
 
@@ -20,23 +21,23 @@ namespace CoreLibrary.Identity
 
         IQueryable<TIdentityUser> GetUsersQuery();        
         Task CreateUser(TIdentityUser user, string password);        
-        Task<TIdentityUser> FindUserById(string userId);
+        Task<TIdentityUser> FindUserById(TKey userId);
         Task<TIdentityUser> FindUserByName(string userName);        
-        Task ChangePassword(string userId, string currentPassword, string newPassword);
-        Task<string> GeneratePasswordResetToken(string userId);
-        Task ResetPasswordWithToken(string userId, string token, string newPassword);
-        Task ResetPassword(string userId, string newPassword);        
-        Task DeleteUser(string userId);
+        Task ChangePassword(TKey userId, string currentPassword, string newPassword);
+        Task<string> GeneratePasswordResetToken(TKey userId);
+        Task ResetPasswordWithToken(TKey userId, string token, string newPassword);
+        Task ResetPassword(TKey userId, string newPassword);        
+        Task DeleteUser(TKey userId);
         Task EditUser(TIdentityUser user);
 
         //Roles
 
-        IQueryable<IdentityRole> GetRoles();
-        Task CreateRole(IdentityRole role);
+        IQueryable<IdentityRole<TKey>> GetRoles();
+        Task CreateRole(IdentityRole<TKey> role);
         Task<bool> RoleExists(string roleName);
-        Task AddUserToRole(string userId, string roleName);
-        Task RemoveUserFromRole(string userId, string roleName);
-        Task<IList<string>> GetRolesForUser(string userId);
-        Task<bool> IsUserInRole(string userId, string roleName);
+        Task AddUserToRole(TKey userId, string roleName);
+        Task RemoveUserFromRole(TKey userId, string roleName);
+        Task<IList<string>> GetRolesForUser(TKey userId);
+        Task<bool> IsUserInRole(TKey userId, string roleName);
     }
 }

@@ -63,9 +63,11 @@ namespace CoreLibrary
 
         public virtual async Task<TEdit> Edit(TEdit editView)
         {
-            var edit = await _repository.Update(_mapper.Map<TEdit, TEntity>(editView));
+            var old = await Get(editView.Id);
+            var entity = _mapper.Map<TEdit, TEntity>(editView, old);
+            entity = await _repository.Update(entity);
             await _repository.SaveChanges();
-            return _mapper.Map<TEntity, TEdit>(edit);
+            return _mapper.Map<TEntity, TEdit>(entity);
         }
 
         public virtual async Task<TEdit> Edit(TKey id)
@@ -316,7 +318,7 @@ namespace CoreLibrary
                         {
                             name = field.Name;
                         }
-                        errors += $"Row {rowNumber} column '{name}' - {ex.Message}; ";
+                        errors += $"Row {rowNumber} column '{name}' - {ex}; ";
                     }                    
                 }
 

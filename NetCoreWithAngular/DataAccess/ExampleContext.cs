@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Identity;
 
 namespace NetCoreWithAngular.DataAccess
 {
-    public class ExampleContext : IdentityDbContext<IdentityUser>
+    public class ExampleContext : IdentityDbContext<User, IdentityRole<System.Guid>, System.Guid>
     {
         public ExampleContext(DbContextOptions<ExampleContext> options)
             : base(options)

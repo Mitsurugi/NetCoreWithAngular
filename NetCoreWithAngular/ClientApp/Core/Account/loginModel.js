@@ -4,4 +4,4 @@ var LoginModel = /** @class */ (function () {
     return LoginModel;
 }());
 export { LoginModel };
-//# sourceMappingURL=login.js.map
+//# sourceMappingURL=loginModel.js.map

@@ -189,7 +189,7 @@ namespace CoreLibrary
         }
 
         [HttpPost]
-        public virtual async Task<IActionResult> Import([FromBody] IFormFile file)
+        public virtual async Task<IActionResult> Import([FromForm] IFormFile file)
         {
             if (file == null)
                 return BadRequest("File is null");

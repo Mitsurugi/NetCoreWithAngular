@@ -18,6 +18,11 @@
                     </a>
                 </li>
                 <li *ngIf="_accGlobals.isLogged == true" [routerLinkActive]='["link-active"]' [routerLinkActiveOptions]='{ exact: true }'>
+                    <a [routerLink]='["/admin/users"]' (click)='collapse()'>
+                        Users
+                    </a>
+                </li>
+                <li *ngIf="_accGlobals.isLogged == true" [routerLinkActive]='["link-active"]' [routerLinkActiveOptions]='{ exact: true }'>
                     <a [routerLink]='["/admin/anime"]' (click)='collapse()'>
                         Anime
                     </a>

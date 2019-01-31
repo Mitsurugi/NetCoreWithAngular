@@ -2,6 +2,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { AccountGlobals } from './AccountGlobals';
+import { LoginModel } from './loginModel';
+import { ChangePasswordModel } from './changePasswordModel';
 
 class TokenResponse {
     token: string;
@@ -10,10 +12,10 @@ class TokenResponse {
 }
 
 @Injectable()
-export class CoreAccountService<TLoginModel> {
+export class CoreAccountService {
 
     _accGlobals: AccountGlobals;
-    _loginPath = "/api/identity/gettoken";
+    _controllerName = "identity";
     _http: HttpClient;
 
     constructor(http: HttpClient, accGlobals: AccountGlobals) {
@@ -21,8 +23,8 @@ export class CoreAccountService<TLoginModel> {
         this._accGlobals = accGlobals;
     }
 
-    async getToken(model: TLoginModel) {
-        let data = await this._http.post<TokenResponse>(this._loginPath, model).toPromise();
+    async getToken(model: LoginModel) {
+        let data = await this._http.post<TokenResponse>('/api/' + this._controllerName + '/gettoken', model).toPromise();
         localStorage.setItem('token', data.token);
         localStorage.setItem('login', data.login);
         localStorage.setItem('role', data.role);
@@ -34,5 +36,10 @@ export class CoreAccountService<TLoginModel> {
         localStorage.removeItem("login");
         localStorage.removeItem("role");
         this._accGlobals.refresh();        
+    }
+
+    async changePassword(model: ChangePasswordModel) {
+        await this._http.post('/api/' + this._controllerName + '/ChangePassword', model).toPromise();
+        this.deleteToken();
     }
 }

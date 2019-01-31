@@ -11,10 +11,12 @@
     <None Remove="ClientApp\app\Admin\Components\AnimeEpisode\animeEpisode.component.ts" />
     <None Remove="ClientApp\app\Admin\Components\Anime\animeEdit.component.ts" />
     <None Remove="ClientApp\app\Admin\Components\Book\bookEdit.component.ts" />
+    <None Remove="ClientApp\app\Admin\Components\User\users.component.ts" />
     <None Remove="ClientApp\app\Admin\Models\AnimeEpisode\animeEpisode.ts" />
     <None Remove="ClientApp\app\Admin\Models\bookFilter.ts" />
     <None Remove="ClientApp\app\Admin\Models\bookGrid.ts" />
     <None Remove="ClientApp\app\Admin\Models\login.ts" />
+    <None Remove="ClientApp\app\Admin\Models\User\user.ts" />
     <None Remove="ClientApp\app\Admin\Services\account.service.ts" />
     <None Remove="ClientApp\app\Admin\Services\animeEpisode.service.ts" />
     <None Remove="ClientApp\app\anime.component.ts" />
@@ -30,6 +32,7 @@
     <None Remove="ClientApp\Core\account.component.ts" />
     <None Remove="ClientApp\Core\account.service.ts" />
     <None Remove="ClientApp\Core\AccountGlobals.ts" />
+    <None Remove="ClientApp\Core\Account\changePasswordModel.ts" />
     <None Remove="ClientApp\Core\Components\edit.component.ts" />
     <None Remove="ClientApp\Core\core.component.ts" />
     <None Remove="ClientApp\Core\core.service.ts" />
@@ -43,6 +46,9 @@
     <None Remove="ClientApp\Core\SelectListItem.ts" />
     <None Remove="ClientApp\Core\Services\staticMethods.ts" />
     <None Remove="ClientApp\Core\token.interceptor.ts" />
+    <None Remove="ClientApp\Core\Users\IUser.ts" />
+    <None Remove="ClientApp\Core\Users\users.service.ts" />
+    <None Remove="ClientApp\Core\Users\usersBase.component.ts" />
     <None Remove="ClientApp\polyfills.ts" />
     <None Remove="ClientApp\app\Admin\Services\anime.service.ts" />
     <None Remove="ClientApp\app\Admin\Services\book.service.ts" />
@@ -72,15 +78,18 @@
   <ItemGroup>
     <TypeScriptCompile Include="ClientApp\app\Admin\Components\AdminMain\admin.component.ts" />
     <TypeScriptCompile Include="ClientApp\app\Admin\Components\Account\account.component.ts" />
+    <TypeScriptCompile Include="ClientApp\app\Admin\Components\User\users.component.ts" />
     <TypeScriptCompile Include="ClientApp\app\Admin\Components\AnimeEpisode\animeEpisode.component.ts" />
     <TypeScriptCompile Include="ClientApp\app\Admin\Components\Anime\animeEdit.component.ts" />
     <TypeScriptCompile Include="ClientApp\app\Admin\Components\Book\bookEdit.component.ts" />
     <TypeScriptCompile Include="ClientApp\app\Admin\Components\Menu\menu.component.ts" />
     <TypeScriptCompile Include="ClientApp\app\Admin\Components\Anime\anime.component.ts" />
     <TypeScriptCompile Include="ClientApp\app\Admin\Models\AnimeEpisode\animeEpisode.ts" />
+    <TypeScriptCompile Include="ClientApp\app\Admin\Models\User\user.ts" />
     <TypeScriptCompile Include="ClientApp\app\Admin\Models\Book\bookFilter.ts" />
     <TypeScriptCompile Include="ClientApp\app\Admin\Models\Book\bookGrid.ts" />
-    <TypeScriptCompile Include="ClientApp\app\Admin\Models\login.ts" />
+    <TypeScriptCompile Include="ClientApp\Core\Account\changePasswordModel.ts" />
+    <TypeScriptCompile Include="ClientApp\Core\Account\loginModel.ts" />
     <TypeScriptCompile Include="ClientApp\app\Admin\Services\account.service.ts" />
     <TypeScriptCompile Include="ClientApp\app\Admin\Services\animeEpisode.service.ts" />
     <TypeScriptCompile Include="ClientApp\app\app.component.ts" />
@@ -104,6 +113,9 @@
     <TypeScriptCompile Include="ClientApp\Core\Account\token.interceptor.ts" />
     <TypeScriptCompile Include="ClientApp\Core\Components\core.component.ts" />
     <TypeScriptCompile Include="ClientApp\Core\Services\core.service.ts" />
+    <TypeScriptCompile Include="ClientApp\Core\Users\usersBase.component.ts" />
+    <TypeScriptCompile Include="ClientApp\Core\Users\users.service.ts" />
+    <TypeScriptCompile Include="ClientApp\Core\Users\IUser.ts" />
     <TypeScriptCompile Include="ClientApp\main.ts" />
     <TypeScriptCompile Include="ClientApp\app\Admin\Models\Anime\anime.ts" />
     <TypeScriptCompile Include="ClientApp\app\Admin\Models\Book\book.ts" />
@@ -113,6 +125,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="ClientApp\app\Admin\Components\User\users.component.js">
+      <DependentUpon>users.component.ts</DependentUpon>
+    </None>
     <None Update="ClientApp\app\Admin\Components\AnimeEpisode\animeEpisode.component.js">
       <DependentUpon>animeEpisode.component.ts</DependentUpon>
     </None>

@@ -57,19 +57,19 @@ export class DependentComponent<TKey, TParentKey, TGrid extends IDependentEntity
             await this.reloadGrid();
         }
         catch (e) {
-            this._error = JSON.stringify(e.error);
+            this._error = e.error.Message;
         }
     }
 
     public async reloadGrid() {
         this._error = null;
         try {
+            this._showEditId = null;
             this._totalPages = await this._service.getPagesCount(this._pageSize, this._parentId, this._filter);
-            this._items = await this._service.getGrid(this._parentId, this._currentPage, this._pageSize, this._orderBy, this._filter);
-            this._showEditId = null;            
+            this._items = await this._service.getGrid(this._parentId, this._currentPage, this._pageSize, this._orderBy, this._filter);            
         }
         catch (e) {
-            this._error = JSON.stringify(e.error);
+            this._error = e.error.Message;
         }
     }
 
@@ -80,7 +80,7 @@ export class DependentComponent<TKey, TParentKey, TGrid extends IDependentEntity
             await this.reloadGrid();
         }
         catch (e) {
-            this._error = JSON.stringify(e.error);
+            this._error = e.error.Message;
         }
     }
 
@@ -91,7 +91,7 @@ export class DependentComponent<TKey, TParentKey, TGrid extends IDependentEntity
                 await this.reloadGrid();
             }
             catch (e) {
-                this._error = JSON.stringify(e.error);
+                this._error = e.error.Message;
             }
         }
     }
@@ -103,7 +103,7 @@ export class DependentComponent<TKey, TParentKey, TGrid extends IDependentEntity
                 await this.reloadGrid();
             }
             catch (e) {
-                this._error = JSON.stringify(e.error);
+                this._error = e.error.Message;
             }
         }
     }
@@ -119,7 +119,7 @@ export class DependentComponent<TKey, TParentKey, TGrid extends IDependentEntity
                 this._isShowImport = false;
             }
             catch (e) {
-                this._error = JSON.stringify(e.error);
+                this._error = e.error.Message;
             }
         }
     }
@@ -134,7 +134,7 @@ export class DependentComponent<TKey, TParentKey, TGrid extends IDependentEntity
                 this._isShowCreate = false;
             }
             catch (e) {
-                this._error = JSON.stringify(e.error);
+                this._error = e.error.Message;
             }
         }
     }
@@ -149,7 +149,7 @@ export class DependentComponent<TKey, TParentKey, TGrid extends IDependentEntity
                 this._showEditId = id;
             }
             catch (e) {
-                this._error = JSON.stringify(e.error);
+                this._error = e.error.Message;
             }
         }
     }
@@ -160,7 +160,7 @@ export class DependentComponent<TKey, TParentKey, TGrid extends IDependentEntity
             this._itemCreate = await this._service.getCreate(this._parentId);
         }
         catch (e) {
-            this._error = JSON.stringify(e.error);
+            this._error = e.error.Message;
         }
     }
 
@@ -170,7 +170,7 @@ export class DependentComponent<TKey, TParentKey, TGrid extends IDependentEntity
             this._itemEdit = await this._service.getEdit(id);
         }
         catch (e) {
-            this._error = JSON.stringify(e.error);
+            this._error = e.error.Message;
         }
     }
 
@@ -181,7 +181,7 @@ export class DependentComponent<TKey, TParentKey, TGrid extends IDependentEntity
             await this.reloadGrid();
         }
         catch (e) {
-            this._error = JSON.stringify(e.error);
+            this._error = e.error.Message;
         }
     }
 
@@ -192,7 +192,7 @@ export class DependentComponent<TKey, TParentKey, TGrid extends IDependentEntity
             await this.reloadGrid();
         }
         catch (e) {
-            this._error = JSON.stringify(e.error);
+            this._error = e.error.Message;
         }
     }
 
@@ -205,7 +205,7 @@ export class DependentComponent<TKey, TParentKey, TGrid extends IDependentEntity
             await this.reloadGrid();
         }
         catch (e) {
-            this._error = JSON.stringify(e.error);
+            this._error = e.error.Message;
         }
     }
 
@@ -216,7 +216,7 @@ export class DependentComponent<TKey, TParentKey, TGrid extends IDependentEntity
             await this.reloadGrid();
         }
         catch (e) {
-            this._error = JSON.stringify(e.error);
+            this._error = e.error.Message;
         }
     }
 
@@ -227,7 +227,7 @@ export class DependentComponent<TKey, TParentKey, TGrid extends IDependentEntity
             saveAs(b, "ExcelExport.xlsx");
         }
         catch (e) {
-            this._error = JSON.stringify(e.error);
+            this._error = e.error.Message;
         }
     }
 
@@ -238,7 +238,7 @@ export class DependentComponent<TKey, TParentKey, TGrid extends IDependentEntity
             saveAs(b, "ImportTemplate.xlsx");
         }
         catch (e) {
-            this._error = JSON.stringify(e.error);
+            this._error = e.error.Message;
         }
     }
 

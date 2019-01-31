@@ -50,18 +50,19 @@ export class CoreComponent<TKey, TGrid extends IEntity<TKey>, TCreate extends IE
             await this.reloadGrid();
         }
         catch (e) {
-            this._error = JSON.stringify(e.error);
+            this._error = e.error.Message;
         }
     }
 
     public async reloadGrid() {
         this._error = null;
         try {
+            this._showEditId = null;
             this._totalPages = await this._service.getPagesCount(this._pageSize, this._filter);
             this._items = await this._service.getGrid(this._currentPage, this._pageSize, this._orderBy, this._filter);
         }
         catch (e) {
-            this._error = JSON.stringify(e.error);
+            this._error = e.error.Message;
         }
     }
 
@@ -72,7 +73,7 @@ export class CoreComponent<TKey, TGrid extends IEntity<TKey>, TCreate extends IE
             await this.reloadGrid();
         }
         catch (e) {
-            this._error = JSON.stringify(e.error);
+            this._error = e.error.Message;
         }
     }
 
@@ -83,7 +84,7 @@ export class CoreComponent<TKey, TGrid extends IEntity<TKey>, TCreate extends IE
                 await this.reloadGrid();
             }
             catch (e) {
-                this._error = JSON.stringify(e.error);
+                this._error = e.error.Message;
             }
         }
     }
@@ -95,7 +96,7 @@ export class CoreComponent<TKey, TGrid extends IEntity<TKey>, TCreate extends IE
                 await this.reloadGrid();
             }
             catch (e) {
-                this._error = JSON.stringify(e.error);
+                this._error = e.error.Message;
             }
         }
     }
@@ -111,7 +112,7 @@ export class CoreComponent<TKey, TGrid extends IEntity<TKey>, TCreate extends IE
                 this._isShowImport = false;
             }
             catch (e) {
-                this._error = JSON.stringify(e.error);
+                this._error = e.error.Message;
             }
         }
     }
@@ -126,7 +127,7 @@ export class CoreComponent<TKey, TGrid extends IEntity<TKey>, TCreate extends IE
                 this._isShowCreate = false;
             }
             catch (e) {
-                this._error = JSON.stringify(e.error);
+                this._error = e.error.Message;
             }
         }
     }
@@ -141,7 +142,7 @@ export class CoreComponent<TKey, TGrid extends IEntity<TKey>, TCreate extends IE
                 this._showEditId = id;
             }
             catch (e) {
-                this._error = JSON.stringify(e.error);
+                this._error = e.error.Message;
             }
         }
     }
@@ -152,7 +153,7 @@ export class CoreComponent<TKey, TGrid extends IEntity<TKey>, TCreate extends IE
             this._itemCreate = await this._service.getCreate();
         }
         catch (e) {
-            this._error = JSON.stringify(e.error);
+            this._error = e.error.Message;
         }
     }
 
@@ -162,7 +163,7 @@ export class CoreComponent<TKey, TGrid extends IEntity<TKey>, TCreate extends IE
             this._itemEdit = await this._service.getEdit(id);
         }
         catch (e) {
-            this._error = JSON.stringify(e.error);
+            this._error = e.error.Message;
         }
     }
 
@@ -173,7 +174,7 @@ export class CoreComponent<TKey, TGrid extends IEntity<TKey>, TCreate extends IE
             await this.reloadGrid();
         }
         catch (e) {
-            this._error = JSON.stringify(e.error);
+            this._error = e.error.Message;
         }
     }
 
@@ -184,7 +185,7 @@ export class CoreComponent<TKey, TGrid extends IEntity<TKey>, TCreate extends IE
             await this.reloadGrid();
         }
         catch (e) {
-            this._error = JSON.stringify(e.error);
+            this._error = e.error.Message;
         }
     }
 
@@ -197,7 +198,7 @@ export class CoreComponent<TKey, TGrid extends IEntity<TKey>, TCreate extends IE
             await this.reloadGrid();
         }
         catch (e) {
-            this._error = JSON.stringify(e.error);
+            this._error = e.error.Message;
         }
     }
 
@@ -208,7 +209,7 @@ export class CoreComponent<TKey, TGrid extends IEntity<TKey>, TCreate extends IE
             await this.reloadGrid();
         }
         catch (e) {
-            this._error = JSON.stringify(e.error);
+            this._error = e.error.Message;
         }
     }
 
@@ -219,7 +220,7 @@ export class CoreComponent<TKey, TGrid extends IEntity<TKey>, TCreate extends IE
             saveAs(b, "ExcelExport.xlsx");
         }
         catch (e) {
-            this._error = JSON.stringify(e.error);
+            this._error = e.error.Message;
         }
     }
 
@@ -230,7 +231,7 @@ export class CoreComponent<TKey, TGrid extends IEntity<TKey>, TCreate extends IE
             saveAs(b, "ImportTemplate.xlsx");
         }
         catch (e) {
-            this._error = JSON.stringify(e.error);
+            this._error = e.error.Message;
         }
     }
 
