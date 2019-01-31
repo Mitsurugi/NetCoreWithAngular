@@ -10,23 +10,19 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace CoreLibrary.Identity
 {
-    public class IdentityServiceBase<TIdentityUser, TIdentityRole, TUserManager, TRoleManager, TSignInManager> : IIdentityService<TIdentityUser, TIdentityRole, TUserManager, TRoleManager, TSignInManager>
-        where TIdentityUser : IdentityUser
-        where TIdentityRole : IdentityRole
-        where TUserManager : UserManager<TIdentityUser>
-        where TRoleManager : RoleManager<TIdentityRole>
-        where TSignInManager : SignInManager<TIdentityUser>
+    public class IdentityServiceBase<TIdentityUser> : IIdentityService<TIdentityUser>
+        where TIdentityUser : IdentityUser        
     {
-        protected readonly TUserManager _userManager;
-        protected readonly TRoleManager _roleManager;
-        protected readonly TSignInManager _signInManager;
+        protected readonly UserManager<TIdentityUser> _userManager;
+        protected readonly RoleManager<IdentityRole> _roleManager;
+        protected readonly SignInManager<TIdentityUser> _signInManager;
 
         protected string _privateKey = "";
         protected string _issuer = "";
         protected string _audience = "";
         protected TimeSpan _tokenLifeTime = new TimeSpan(24, 0, 0);
 
-        public IdentityServiceBase(TUserManager userManager, TRoleManager roleManager, TSignInManager signInManager)
+        public IdentityServiceBase(UserManager<TIdentityUser> userManager, RoleManager<IdentityRole> roleManager, SignInManager<TIdentityUser> signInManager)
         {
             _userManager = userManager;
             _roleManager = roleManager;
@@ -200,12 +196,12 @@ namespace CoreLibrary.Identity
 
         //Roles
 
-        public IQueryable<TIdentityRole> GetRoles()
+        public IQueryable<IdentityRole> GetRoles()
         {
             return _roleManager.Roles;
         }
 
-        public virtual async Task CreateRole(TIdentityRole role)
+        public virtual async Task CreateRole(IdentityRole role)
         {
             var identityResult = await _roleManager.CreateAsync(role);
 

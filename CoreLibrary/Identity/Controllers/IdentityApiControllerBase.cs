@@ -10,16 +10,12 @@ namespace CoreLibrary.Identity
 {
     [ApiController]
     [Route("api/[controller]/[action]")]
-    public class IdentityApiControllerBase<TIdentityUser, TIdentityRole, TUserManager, TRoleManager, TSignInManager> : Controller
-        where TIdentityUser : IdentityUser
-        where TIdentityRole : IdentityRole
-        where TUserManager : UserManager<TIdentityUser>
-        where TRoleManager : RoleManager<TIdentityRole>
-        where TSignInManager : SignInManager<TIdentityUser>
+    public class IdentityApiControllerBase<TIdentityUser> : Controller
+        where TIdentityUser : IdentityUser        
     {
-        protected readonly IIdentityService<TIdentityUser, TIdentityRole, TUserManager, TRoleManager, TSignInManager> _service;
+        protected readonly IIdentityService<TIdentityUser> _service;
 
-        public IdentityApiControllerBase(IIdentityService<TIdentityUser, TIdentityRole, TUserManager, TRoleManager, TSignInManager> service)
+        public IdentityApiControllerBase(IIdentityService<TIdentityUser> service)
         {
             _service = service;
         }        

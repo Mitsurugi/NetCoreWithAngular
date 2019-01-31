@@ -9,9 +9,9 @@ using System.Threading.Tasks;
 
 namespace NetCoreWithAngular.Controllers
 {
-    public class IdentityController : IdentityApiControllerBase<IdentityUser, IdentityRole, UserManager<IdentityUser>, RoleManager<IdentityRole>, SignInManager<IdentityUser>>
+    public class IdentityController : IdentityApiControllerBase<IdentityUser>
     {
-        public IdentityController(IIdentityService<IdentityUser, IdentityRole, UserManager<IdentityUser>, RoleManager<IdentityRole>, SignInManager<IdentityUser>> service) : base(service)
+        public IdentityController(IIdentityService<IdentityUser> service) : base(service)
         {
         }
 

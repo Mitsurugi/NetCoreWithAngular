@@ -6,12 +6,8 @@ using Microsoft.AspNetCore.Identity;
 
 namespace CoreLibrary.Identity
 {
-    public interface IIdentityService<TIdentityUser, TIdentityRole, TUserManager, TRoleManager, TSignInManager>
-        where TIdentityUser : IdentityUser
-        where TIdentityRole : IdentityRole
-        where TUserManager : UserManager<TIdentityUser>
-        where TRoleManager : RoleManager<TIdentityRole>
-        where TSignInManager : SignInManager<TIdentityUser>
+    public interface IIdentityService<TIdentityUser>
+        where TIdentityUser : IdentityUser        
     {        
         //Auth
 
@@ -35,8 +31,8 @@ namespace CoreLibrary.Identity
 
         //Roles
 
-        IQueryable<TIdentityRole> GetRoles();
-        Task CreateRole(TIdentityRole role);
+        IQueryable<IdentityRole> GetRoles();
+        Task CreateRole(IdentityRole role);
         Task<bool> RoleExists(string roleName);
         Task AddUserToRole(string userId, string roleName);
         Task RemoveUserFromRole(string userId, string roleName);
