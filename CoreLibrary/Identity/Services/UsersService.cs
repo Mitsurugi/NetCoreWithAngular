@@ -10,6 +10,7 @@ using AutoMapper.QueryableExtensions;
 using ClosedXML.Excel;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Localization;
 
 namespace CoreLibrary.Identity
 {
@@ -25,10 +26,13 @@ namespace CoreLibrary.Identity
 
         protected readonly IMapper _mapper;
 
-        public UsersService(IIdentityService<TEntity, TKey> identityService, IMapper mapper)
+        protected readonly IStringLocalizer _localizer;
+
+        public UsersService(IIdentityService<TEntity, TKey> identityService, IMapper mapper, IStringLocalizer localizer)
         {
             _identityService = identityService;
             _mapper = mapper;
+            _localizer = localizer;
         }
 
         public virtual IQueryable<TEntity> GetQuery()
@@ -48,7 +52,7 @@ namespace CoreLibrary.Identity
             {
                 var exists = await _identityService.RoleExists(role);
                 if (!exists)
-                    throw new ArgumentException($"Role {role} does not exists.");
+                    throw new Exception(_localizer["RoleNotFound", role]);
             }
 
             var create = _mapper.Map<TCreate, TEntity>(createView);
@@ -89,7 +93,7 @@ namespace CoreLibrary.Identity
             {
                 var exists = await _identityService.RoleExists(newRole);
                 if (!exists)
-                    throw new ArgumentException($"Role {newRole} does not exists.");
+                    throw new Exception(_localizer["RoleNotFound", newRole]);
             }
 
             var old = await _identityService.FindUserById(editView.Id);
@@ -297,7 +301,7 @@ namespace CoreLibrary.Identity
                         {
                             if (req != null)
                             {
-                                throw new Exception("Value required");
+                                throw new Exception(_localizer["FieldRequired"]);
                             }
                             continue;
                         }
@@ -314,7 +318,7 @@ namespace CoreLibrary.Identity
 
                             var listItem = list.FirstOrDefault(i => i.Text.Equals(strVal, StringComparison.InvariantCultureIgnoreCase));
                             if (listItem == null)
-                                throw new Exception($"Not found");
+                                throw new Exception(_localizer["ValueNotFound"]);
                             strVal = listItem.Value;
                         }
 
@@ -325,7 +329,7 @@ namespace CoreLibrary.Identity
                             item.Role = strVal;
                             var exists = await _identityService.RoleExists(item.Role);
                             if (!exists)
-                                throw new Exception($"Role {item.Role} does not exists.");
+                                throw new Exception(_localizer["RoleNotFound", item.Role]);
                         }
 
                         var t = field.PropertyType;
@@ -348,7 +352,7 @@ namespace CoreLibrary.Identity
                             }
                             catch
                             {
-                                throw new Exception($"Invalid value, must be {t.Name}");
+                                throw new Exception(_localizer["InvalidValue"]);
                             }
                             continue;
                         }
@@ -361,7 +365,7 @@ namespace CoreLibrary.Identity
                             }
                             catch
                             {
-                                throw new Exception($"Invalid value, must be {t.Name}");
+                                throw new Exception(_localizer["InvalidValue"]);
                             }
 
                             continue;
@@ -382,7 +386,7 @@ namespace CoreLibrary.Identity
                         {
                             name = field.Name;
                         }
-                        errors += $"Row {rowNumber} column '{name}' - {ex}; ";
+                        errors += _localizer["ImportRowError", rowNumber, name, ex.Message] + "; ";
                     }
                 }
 

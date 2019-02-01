@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Localization;
 
 namespace CoreLibrary.Identity
 {
@@ -17,15 +18,17 @@ namespace CoreLibrary.Identity
         where TEdit : class, IUserViewModel<TKey>, new()
         where TGrid : class, IUserViewModel<TKey>, new()
         where TFilter : class, new()
-    {        
-        protected IUsersService<TEntity, TKey, TGrid, TCreate, TEdit, TFilter> _service { get; set; }
+    {
+        protected IUsersService<TEntity, TKey, TGrid, TCreate, TEdit, TFilter> _service;
+        protected readonly IStringLocalizer _localizer;
 
         protected int _pageSize { get; set; }
 
-        public UsersBaseController(IUsersService<TEntity, TKey, TGrid, TCreate, TEdit, TFilter> service)
+        public UsersBaseController(IUsersService<TEntity, TKey, TGrid, TCreate, TEdit, TFilter> service, IStringLocalizer localizer)
         {
             _service = service;
-            _pageSize = 10;
+            _localizer = localizer;
+            _pageSize = 10;            
         }
 
         [HttpGet]
@@ -73,7 +76,7 @@ namespace CoreLibrary.Identity
         public virtual async Task<ActionResult<TCreate>> Create([FromBody] TCreate create)
         {
             if (string.IsNullOrEmpty(create.Password))
-                ModelState.AddModelError("Password", "Password required");
+                ModelState.AddModelError("Password", _localizer["FieldRequired"]);
 
             if (!ModelState.IsValid)
             {
@@ -197,7 +200,7 @@ namespace CoreLibrary.Identity
         public virtual async Task<IActionResult> Import([FromForm] IFormFile file)
         {
             if (file == null)
-                return BadRequest("File is null");
+                return BadRequest(_localizer["FileNull"]);
             try
             {                
                 await _service.Import(file.OpenReadStream());

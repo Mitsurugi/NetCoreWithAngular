@@ -8,6 +8,7 @@ using System.Security.Claims;
 using Microsoft.AspNetCore.Identity;
 using System.IdentityModel.Tokens.Jwt;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.Extensions.Localization;
 
 namespace CoreLibrary.Identity
 {
@@ -18,17 +19,19 @@ namespace CoreLibrary.Identity
         protected readonly UserManager<TIdentityUser> _userManager;
         protected readonly RoleManager<IdentityRole<TKey>> _roleManager;
         protected readonly SignInManager<TIdentityUser> _signInManager;
+        protected readonly IStringLocalizer _localizer;
 
         protected string _privateKey = "";
         protected string _issuer = "";
         protected string _audience = "";
         protected TimeSpan _tokenLifeTime = new TimeSpan(24, 0, 0);
 
-        public IdentityServiceBase(UserManager<TIdentityUser> userManager, RoleManager<IdentityRole<TKey>> roleManager, SignInManager<TIdentityUser> signInManager)
+        public IdentityServiceBase(UserManager<TIdentityUser> userManager, RoleManager<IdentityRole<TKey>> roleManager, SignInManager<TIdentityUser> signInManager, IStringLocalizer localizer)
         {
             _userManager = userManager;
             _roleManager = roleManager;
             _signInManager = signInManager;
+            _localizer = localizer;
         }
 
         //Auth
@@ -37,7 +40,7 @@ namespace CoreLibrary.Identity
         {
             var valid = await VerifyPassword(userName, password);
             if (!valid)
-                throw new Exception("Invalid login or password");
+                throw new Exception(_localizer["InvalidLoginPass"]);
             var user = await FindUserByName(userName);
 
             var claims = new List<Claim>();

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Localization;
 
 namespace CoreLibrary
 {
@@ -15,14 +16,16 @@ namespace CoreLibrary
         where TEdit : class, IEntity<TKey>, new()
         where TGrid : class, IEntity<TKey>, new()
         where TFilter : class, new()
-    {        
-        protected IBaseService<TEntity, TKey, TGrid, TCreate, TEdit, TFilter> _service { get; set; }
+    {
+        protected readonly IBaseService<TEntity, TKey, TGrid, TCreate, TEdit, TFilter> _service;
+        protected readonly IStringLocalizer _localizer;
 
         protected int _pageSize { get; set; }
 
-        public BaseApiController(IBaseService<TEntity, TKey, TGrid, TCreate, TEdit, TFilter> service)
+        public BaseApiController(IBaseService<TEntity, TKey, TGrid, TCreate, TEdit, TFilter> service, IStringLocalizer localizer)
         {
             _service = service;
+            _localizer = localizer;
             _pageSize = 10;
         }
 
@@ -192,7 +195,7 @@ namespace CoreLibrary
         public virtual async Task<IActionResult> Import([FromForm] IFormFile file)
         {
             if (file == null)
-                return BadRequest("File is null");
+                return BadRequest(_localizer["FileNull"]);
             try
             {                
                 await _service.Import(file.OpenReadStream());

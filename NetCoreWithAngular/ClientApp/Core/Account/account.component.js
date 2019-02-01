@@ -56,7 +56,12 @@ var CoreAccountComponent = /** @class */ (function () {
         this._changePasswordModel = new ChangePasswordModel();
     }
     CoreAccountComponent.prototype.ngOnInit = function () {
-        this._accGlobals.refresh();
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                this._accGlobals.refresh();
+                return [2 /*return*/];
+            });
+        });
     };
     CoreAccountComponent.prototype.getToken = function () {
         return __awaiter(this, void 0, void 0, function () {
@@ -82,21 +87,41 @@ var CoreAccountComponent = /** @class */ (function () {
         });
     };
     CoreAccountComponent.prototype.deleteToken = function () {
-        try {
-            this._service.deleteToken();
-        }
-        catch (e) {
-            this._error = e.error.Message;
-        }
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                try {
+                    this._service.deleteToken();
+                }
+                catch (e) {
+                    this._error = e.error.Message;
+                }
+                return [2 /*return*/];
+            });
+        });
     };
     CoreAccountComponent.prototype.changePassword = function () {
-        try {
-            this._service.changePassword(this._changePasswordModel);
-            this._error = "Password successfully changed.";
-        }
-        catch (e) {
-            this._error = e.error.Message;
-        }
+        return __awaiter(this, void 0, void 0, function () {
+            var e_2;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        this._error = null;
+                        _a.label = 1;
+                    case 1:
+                        _a.trys.push([1, 3, , 4]);
+                        return [4 /*yield*/, this._service.changePassword(this._changePasswordModel)];
+                    case 2:
+                        _a.sent();
+                        this._error = "Password successfully changed.";
+                        return [3 /*break*/, 4];
+                    case 3:
+                        e_2 = _a.sent();
+                        this._error = e_2.error.Message;
+                        return [3 /*break*/, 4];
+                    case 4: return [2 /*return*/];
+                }
+            });
+        });
     };
     CoreAccountComponent = __decorate([
         Component({}),

@@ -14,7 +14,8 @@ export class TokenInterceptor implements HttpInterceptor {
         const token = localStorage.getItem("token");
 
         if (token) {
-            const cloned = req.clone({ headers: req.headers.set("Authorization", "Bearer " + token) });
+            const cloned = req.clone({ headers: req.headers.append("Authorization", "Bearer " + token) });
+
             return next.handle(cloned).pipe(map(response => { return response; }), catchError((e, c) => { if (e.status === 401 || e.status === 403) { localStorage.removeItem("token"); this.router.navigate(['/admin/account']); } throw e; }));
         }
         else {

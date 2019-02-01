@@ -74,10 +74,15 @@ var CoreAccountService = /** @class */ (function () {
         });
     };
     CoreAccountService.prototype.deleteToken = function () {
-        localStorage.removeItem("token");
-        localStorage.removeItem("login");
-        localStorage.removeItem("role");
-        this._accGlobals.refresh();
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                localStorage.removeItem("token");
+                localStorage.removeItem("login");
+                localStorage.removeItem("role");
+                this._accGlobals.refresh();
+                return [2 /*return*/];
+            });
+        });
     };
     CoreAccountService.prototype.changePassword = function (model) {
         return __awaiter(this, void 0, void 0, function () {

@@ -499,39 +499,56 @@ var UsersBaseComponent = /** @class */ (function () {
         });
     };
     UsersBaseComponent.prototype.setImportFile = function (file) {
-        this._importFile = file;
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                this._importFile = file;
+                return [2 /*return*/];
+            });
+        });
     };
     UsersBaseComponent.prototype.toggleChecked = function (id) {
-        var index = this._checkedItems.indexOf(id);
-        if (index < 0) {
-            this._checkedItems.push(id);
-        }
-        else {
-            this._checkedItems = this._checkedItems.slice(0, index).concat(this._checkedItems.slice(index + 1, this._checkedItems.length));
-        }
+        return __awaiter(this, void 0, void 0, function () {
+            var index;
+            return __generator(this, function (_a) {
+                index = this._checkedItems.indexOf(id);
+                if (index < 0) {
+                    this._checkedItems.push(id);
+                }
+                else {
+                    this._checkedItems = this._checkedItems.slice(0, index).concat(this._checkedItems.slice(index + 1, this._checkedItems.length));
+                }
+                return [2 /*return*/];
+            });
+        });
     };
     UsersBaseComponent.prototype.toggleCheckAll = function () {
-        var _this = this;
-        var checked = true;
-        this._items.forEach(function (i) {
-            var index = _this._checkedItems.indexOf(i.id);
-            if (index < 0)
-                checked = false;
-        });
-        if (checked) {
-            this._items.forEach(function (i) {
-                var index = _this._checkedItems.indexOf(i.id);
-                _this._checkedItems = _this._checkedItems.slice(0, index).concat(_this._checkedItems.slice(index + 1, _this._checkedItems.length));
-            });
-        }
-        else {
-            this._items.forEach(function (i) {
-                var index = _this._checkedItems.indexOf(i.id);
-                if (index < 0) {
-                    _this._checkedItems.push(i.id);
+        return __awaiter(this, void 0, void 0, function () {
+            var checked;
+            var _this = this;
+            return __generator(this, function (_a) {
+                checked = true;
+                this._items.forEach(function (i) {
+                    var index = _this._checkedItems.indexOf(i.id);
+                    if (index < 0)
+                        checked = false;
+                });
+                if (checked) {
+                    this._items.forEach(function (i) {
+                        var index = _this._checkedItems.indexOf(i.id);
+                        _this._checkedItems = _this._checkedItems.slice(0, index).concat(_this._checkedItems.slice(index + 1, _this._checkedItems.length));
+                    });
                 }
+                else {
+                    this._items.forEach(function (i) {
+                        var index = _this._checkedItems.indexOf(i.id);
+                        if (index < 0) {
+                            _this._checkedItems.push(i.id);
+                        }
+                    });
+                }
+                return [2 /*return*/];
             });
-        }
+        });
     };
     UsersBaseComponent.prototype.postResetPassword = function (newPassword) {
         return __awaiter(this, void 0, void 0, function () {

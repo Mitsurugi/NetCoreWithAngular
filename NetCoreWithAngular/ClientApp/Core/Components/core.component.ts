@@ -251,11 +251,11 @@ export class CoreComponent<TKey, TGrid extends IEntity<TKey>, TCreate extends IE
         }
     }
 
-    public setImportFile(file: File) {
+    public async setImportFile(file: File) {
         this._importFile = file;
     }
 
-    public toggleChecked(id: TKey) {
+    public async toggleChecked(id: TKey) {
         var index = this._checkedItems.indexOf(id);
         if (index < 0) { this._checkedItems.push(id); }
         else {
@@ -263,7 +263,7 @@ export class CoreComponent<TKey, TGrid extends IEntity<TKey>, TCreate extends IE
         }
     }
 
-    public toggleCheckAll() {
+    public async toggleCheckAll() {
         let checked = true;
         this._items.forEach(i => {
             var index = this._checkedItems.indexOf(i.id);

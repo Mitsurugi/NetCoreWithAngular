@@ -9,6 +9,7 @@ using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using ClosedXML.Excel;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.Extensions.Localization;
 
 namespace CoreLibrary
 {
@@ -23,10 +24,13 @@ namespace CoreLibrary
 
         protected readonly IMapper _mapper;
 
-        public BaseService(IRepository<TEntity, TKey> repository, IMapper mapper)
+        protected readonly IStringLocalizer _localizer;
+
+        public BaseService(IRepository<TEntity, TKey> repository, IMapper mapper, IStringLocalizer localizer)
         {
             _repository = repository;
             _mapper = mapper;
+            _localizer = localizer;
         }
 
         public virtual IQueryable<TEntity> GetQuery()
@@ -236,7 +240,7 @@ namespace CoreLibrary
                         {
                             if (req != null)
                             {
-                                throw new Exception("Value required");
+                                throw new Exception(_localizer["FieldRequired"]);
                             }
                             continue;
                         }
@@ -253,7 +257,7 @@ namespace CoreLibrary
 
                             var listItem = list.FirstOrDefault(i => i.Text.Equals(strVal, StringComparison.InvariantCultureIgnoreCase));
                             if (listItem == null)
-                                throw new Exception($"Not found");
+                                throw new Exception(_localizer["ValueNotFound"]);
                             strVal = listItem.Value;
                         }
 
@@ -277,7 +281,7 @@ namespace CoreLibrary
                             }
                             catch
                             {
-                                throw new Exception($"Invalid value, must be {t.Name}");
+                                throw new Exception(_localizer["InvalidValue"]);
                             }
                             continue;
                         }
@@ -290,7 +294,7 @@ namespace CoreLibrary
                             }
                             catch
                             {
-                                throw new Exception($"Invalid value, must be {t.Name}");
+                                throw new Exception(_localizer["InvalidValue"]);
                             }
 
                             continue;
@@ -311,7 +315,7 @@ namespace CoreLibrary
                         {
                             name = field.Name;
                         }
-                        errors += $"Row {rowNumber} column '{name}' - {ex}; ";
+                        errors += _localizer["ImportRowError", rowNumber, name, ex.Message] + "; ";
                     }
                 }
 

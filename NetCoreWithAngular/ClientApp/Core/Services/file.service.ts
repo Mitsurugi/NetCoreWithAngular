@@ -12,17 +12,17 @@ export class FileService<TKey> {
         this._http = http;
     }
 
-    async delete(id: TKey) {
+    public async delete(id: TKey) {
         await this._http.delete('api/' + this._controller + '/delete?id=' + id).toPromise();
     }
 
-    async upload(file: File): Promise<TKey> {
+    public async upload(file: File): Promise<TKey> {
         let formData = new FormData();
         formData.append("file", file);
         return await this._http.post<any>('/api/' + this._controller + '/upload', formData).toPromise();
     }
 
-    async download(id: TKey): Promise<Blob> {
+    public async download(id: TKey): Promise<Blob> {
         return await this._http.get<Blob>('api/' + this._controller + '/download?id=' + id, { responseType: 'blob' as 'json' }).toPromise();
     }
 }

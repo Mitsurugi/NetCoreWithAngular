@@ -6,12 +6,13 @@ using AutoMapper;
 using System.Collections.Generic;
 using System.Linq;
 using System;
+using Microsoft.Extensions.Localization;
 
 namespace NetCoreWithAngular.Services
 {
     public class BookService : BaseService<Book, int, BookGridModel, BookViewModel, BookViewModel, BookFilterModel>
     {
-        public BookService(IRepository<Book, int> repository, IMapper mapper) : base(repository, mapper)
+        public BookService(IRepository<Book, int> repository, IMapper mapper, IStringLocalizer localizer) : base(repository, mapper, localizer)
         {
         }
 

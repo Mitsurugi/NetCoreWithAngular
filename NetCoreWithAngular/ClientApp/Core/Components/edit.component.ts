@@ -33,7 +33,7 @@ export class EditComponent<TKey, TGrid extends IEntity<TKey>, TCreate extends IE
         route.params.subscribe(params => this._id = params['id']);
     }
 
-    async ngOnInit() {
+    public async ngOnInit() {
         this._error = null;
         try {
             if (this._id) {
@@ -47,7 +47,7 @@ export class EditComponent<TKey, TGrid extends IEntity<TKey>, TCreate extends IE
         }
     }
 
-    async getCreate() {
+    private async getCreate() {
         this._error = null;
         try {
             this._itemCreate = await this._service.getCreate();
@@ -57,7 +57,7 @@ export class EditComponent<TKey, TGrid extends IEntity<TKey>, TCreate extends IE
         }
     }
 
-    async getEdit() {
+    private async getEdit() {
         this._error = null;
         try {
             this._itemEdit = await this._service.getEdit(this._id);
@@ -67,7 +67,7 @@ export class EditComponent<TKey, TGrid extends IEntity<TKey>, TCreate extends IE
         }
     }
 
-    async postCreate() {
+    public async postCreate() {
         this._error = null;
         try {
             await this._service.postCreate(this._itemCreate);
@@ -79,7 +79,7 @@ export class EditComponent<TKey, TGrid extends IEntity<TKey>, TCreate extends IE
         }
     }
 
-    async postEdit() {
+    public async postEdit() {
         this._error = null;
         try {
             this._itemEdit = await this._service.postEdit(this._itemEdit);

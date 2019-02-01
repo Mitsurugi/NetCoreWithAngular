@@ -16,7 +16,12 @@ using NetCoreWithAngular.Services;
 using Microsoft.AspNetCore.SpaServices.Webpack;
 using CoreLibrary;
 using CoreLibrary.Identity;
+using CoreLibrary.Localization;
 using AutoMapper;
+using Microsoft.AspNetCore.Localization;
+using System.Globalization;
+using System.Collections.Generic;
+using Microsoft.Extensions.Localization;
 
 namespace NetCoreWithAngular
 {
@@ -32,6 +37,7 @@ namespace NetCoreWithAngular
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddTransient<IStringLocalizer, CoreLibraryStringLocalizer>();
             services.AddDbContext<ExampleContext>(options =>
             {
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
@@ -108,6 +114,12 @@ namespace NetCoreWithAngular
             app.UseDefaultFiles();
             app.UseStaticFiles();
             app.UseAuthentication();
+            app.UseRequestLocalization(new RequestLocalizationOptions
+            {
+                DefaultRequestCulture = new RequestCulture("en-US"),
+                SupportedCultures = new List<CultureInfo> { new CultureInfo("en-US"), new CultureInfo("ru-RU") },
+                SupportedUICultures = new List<CultureInfo> { new CultureInfo("en-US"), new CultureInfo("ru-RU") }
+            });
             app.UseMvc(routes => routes.MapSpaFallbackRoute("angular-fallback", new { controller = "Home", action = "Index" }));
         }
     }

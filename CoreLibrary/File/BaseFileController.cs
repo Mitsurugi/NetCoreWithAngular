@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Localization;
 
 namespace CoreLibrary
 {
@@ -11,12 +12,14 @@ namespace CoreLibrary
     [Route("api/[controller]/[action]")]
     public class BaseFileController<TFile, TKey> : Controller
         where TFile: FileModel<TKey>, new()
-    {        
-        protected IFileService<TFile, TKey> _service { get; set; }
+    {
+        protected readonly IFileService<TFile, TKey> _service;
+        protected readonly IStringLocalizer _localizer;
 
-        public BaseFileController(IFileService<TFile, TKey> service)
+        public BaseFileController(IFileService<TFile, TKey> service, IStringLocalizer localizer)
         {
             _service = service;
+            _localizer = localizer;
         }
 
         [HttpGet]
@@ -25,7 +28,7 @@ namespace CoreLibrary
             try
             {
                 var file = await _service.Get(id);
-                if (file == null) BadRequest("File not found");
+                if (file == null) BadRequest(_localizer["FileNotFound"]);
                 return File(file.Data, file.MimeType, file.FileName);
             }
             catch (Exception ex)
@@ -52,7 +55,7 @@ namespace CoreLibrary
         public virtual async Task<IActionResult> Upload(IFormFile file)
         {
             if (file == null)
-                return BadRequest("File is null");
+                return BadRequest(_localizer["FileNull"]);
             try
             {                
                 var entity = await _service.Upload(file);

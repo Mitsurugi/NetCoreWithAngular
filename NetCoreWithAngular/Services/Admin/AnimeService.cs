@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.Extensions.Localization;
 
 namespace NetCoreWithAngular.Services
 {
@@ -12,7 +13,7 @@ namespace NetCoreWithAngular.Services
     {
         private readonly IFileService<File, int> _fileService;
 
-        public AnimeService(IRepository<Anime, int> repository, IMapper mapper, IFileService<File, int> fileService) : base(repository, mapper)
+        public AnimeService(IRepository<Anime, int> repository, IMapper mapper, IFileService<File, int> fileService, IStringLocalizer localizer) : base(repository, mapper, localizer)
         {
             _fileService = fileService;
         }        

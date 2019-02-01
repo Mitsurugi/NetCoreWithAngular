@@ -19,8 +19,6 @@ namespace CoreLibrary
             DbSet = DbContext.Set<TEntity>();
         }
 
-        private string PrimaryKey { get { return "Id"; } }
-
         public virtual IQueryable<TEntity> GetQuery()
         {
             return DbSet.AsQueryable();

@@ -22,11 +22,11 @@ export class CoreAccountComponent implements OnInit {
         this._changePasswordModel = new ChangePasswordModel();
     }
 
-    ngOnInit() {
+    public async ngOnInit() {
         this._accGlobals.refresh();        
     }
 
-    async getToken() {
+    public async getToken() {
         this._error = null;
         try {
             await this._service.getToken(this._loginModel);
@@ -36,7 +36,7 @@ export class CoreAccountComponent implements OnInit {
         }
     }
 
-    deleteToken() {
+    public async deleteToken() {
         try {
             this._service.deleteToken();
         }
@@ -45,9 +45,10 @@ export class CoreAccountComponent implements OnInit {
         }
     }
 
-    changePassword() {
+    public async changePassword() {
+        this._error = null;
         try {
-            this._service.changePassword(this._changePasswordModel);
+            await this._service.changePassword(this._changePasswordModel);
             this._error = "Password successfully changed."
         }
         catch (e) {
