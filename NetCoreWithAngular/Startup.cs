@@ -37,7 +37,7 @@ namespace NetCoreWithAngular
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddTransient<IStringLocalizer, CoreLibraryStringLocalizer>();
+            services.AddTransient<IStringLocalizer, Localization.CustomStringLocalizer>();
             services.AddDbContext<ExampleContext>(options =>
             {
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
@@ -45,7 +45,7 @@ namespace NetCoreWithAngular
 
             services.AddIdentity<User, IdentityRole<System.Guid>>().AddEntityFrameworkStores<ExampleContext>().AddDefaultTokenProviders();
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddMvc();
             services.AddAutoMapper();
 
             services.AddAuthentication(options => {

@@ -26,11 +26,11 @@ namespace CoreLibrary.Localization
             {
                 if (!_strings.ContainsKey(_currentCulture.Name))
                 {
-                    return new LocalizedString(name, "Unsopported language");
+                    return new LocalizedString(name, name);
                 }
                 if (!_strings[_currentCulture.Name].ContainsKey(name))
                 {
-                    return new LocalizedString(name, $"Resource '{name}' for culture '{_currentCulture.Name}' not found");
+                    return new LocalizedString(name, name);
                 }
 
                 return new LocalizedString(name, _strings[_currentCulture.Name][name]);
@@ -59,6 +59,9 @@ namespace CoreLibrary.Localization
             var enUSDict = new Dictionary<string, string>();
             var ruRUDict = new Dictionary<string, string>();
 
+            _strings.Add("en-US", enUSDict);
+            _strings.Add("ru-RU", ruRUDict);
+
             enUSDict.Add("FieldRequired", "Field required");
             ruRUDict.Add("FieldRequired", "Поле обязательно");
 
@@ -81,10 +84,7 @@ namespace CoreLibrary.Localization
             ruRUDict.Add("FileNull", "Файл не выбран");
 
             enUSDict.Add("FileNotFound", "File not found");
-            ruRUDict.Add("FileNotFound", "Файл не найден");
-
-            _strings.Add("en-US", enUSDict);
-            _strings.Add("ru-RU", ruRUDict);
+            ruRUDict.Add("FileNotFound", "Файл не найден");            
         }
     }
 }

@@ -149,7 +149,7 @@ namespace CoreLibrary
                 var attr = field.GetCustomAttributes(typeof(DisplayAttribute), false).FirstOrDefault() as DisplayAttribute;
                 if (attr != null && !string.IsNullOrEmpty(attr.Name))
                 {
-                    ws.Row(i).Cell(c).Value = attr.Name;
+                    ws.Row(i).Cell(c).Value = _localizer[attr.Name];
                 }
                 else
                 {
@@ -192,14 +192,16 @@ namespace CoreLibrary
                 if (ignore != null)
                     continue;
 
+                var req = field.GetCustomAttributes(typeof(RequiredAttribute), false).FirstOrDefault() as RequiredAttribute;
+
                 var display = field.GetCustomAttributes(typeof(DisplayAttribute), false).FirstOrDefault() as DisplayAttribute;
                 if (display != null && !string.IsNullOrEmpty(display.Name))
                 {
-                    ws.Row(i).Cell(c).Value = display.Name;
+                    ws.Row(i).Cell(c).Value = _localizer[display.Name] + (req == null ? "" : "*");
                 }
                 else
                 {
-                    ws.Row(i).Cell(c).Value = field.Name;
+                    ws.Row(i).Cell(c).Value = field.Name + (req == null ? "" : "*");
                 }
                 c++;
             }
@@ -316,7 +318,7 @@ namespace CoreLibrary
                         var display = field.GetCustomAttributes(typeof(DisplayAttribute), false).FirstOrDefault() as DisplayAttribute;
                         if (display != null && !string.IsNullOrEmpty(display.Name))
                         {
-                            name = display.Name;
+                            name = _localizer[display.Name];
                         }
                         else
                         {
