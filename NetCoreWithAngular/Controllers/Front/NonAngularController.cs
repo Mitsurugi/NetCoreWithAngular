@@ -6,8 +6,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace NetCoreWithAngular.Controllers
 {
-    
-    public class HomeController : Controller
+    [Route("NonAngular/[action]")]
+    public class NonAngularController : Controller
     {
         public IActionResult Index()
         {
