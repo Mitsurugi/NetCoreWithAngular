@@ -41,9 +41,10 @@ namespace NetCoreWithAngular
             services.AddDbContext<ExampleContext>(options =>
             {
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
+                options.UseLazyLoadingProxies();
             });
 
-            services.AddIdentity<User, IdentityRole<System.Guid>>().AddEntityFrameworkStores<ExampleContext>().AddDefaultTokenProviders();
+            services.AddIdentity<User, Role<System.Guid>>().AddEntityFrameworkStores<ExampleContext>().AddDefaultTokenProviders();
 
             services.AddMvc();
             services.AddAutoMapper();
@@ -82,14 +83,14 @@ namespace NetCoreWithAngular
             services.AddScoped(typeof(IRepository<,>), typeof(ExampleRepository<,>));
             services.AddScoped(typeof(IBaseService<,,,,,>), typeof(BaseService<,,,,,>));
             services.AddScoped(typeof(IFileService<,>), typeof(FileService<,>));
-            services.AddScoped(typeof(IDependentService<,,,,,,>), typeof(DependentService<,,,,,,>));
+            services.AddScoped(typeof(IDependentService<,,,,,,,,>), typeof(DependentService<,,,,,,,,>));
 
             services.AddScoped<IIdentityService<User, System.Guid>, IdentityService>();
 
             services.AddScoped<IUsersService<User, System.Guid, UserViewModel, UserViewModel, UserViewModel, UserViewModel>, UsersService<User, System.Guid, UserViewModel, UserViewModel, UserViewModel, UserViewModel>>();
             services.AddScoped<IBaseService<Book, int, BookGridModel, BookViewModel, BookViewModel, BookFilterModel>, BookService>();
             services.AddScoped<IBaseService<Anime, int, AnimeViewModel, AnimeViewModel, AnimeViewModel, AnimeViewModel>, AnimeService>();
-            services.AddScoped<IDependentService<AnimeEpisode, int, int, AnimeEpisodeViewModel, AnimeEpisodeViewModel, AnimeEpisodeViewModel, AnimeEpisodeViewModel>, AnimeEpisodeService>();
+            services.AddScoped<IDependentService<AnimeEpisode, int, AnimeEpisodeViewModel, AnimeEpisodeViewModel, AnimeEpisodeViewModel, AnimeEpisodeViewModel, int, Anime, AnimeViewModel>, AnimeEpisodeService>();
 
             services.AddScoped<IFrontDataService, FrontDataService>();
         }

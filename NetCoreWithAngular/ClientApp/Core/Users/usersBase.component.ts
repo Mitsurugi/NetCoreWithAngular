@@ -237,13 +237,13 @@ export class UsersBaseComponent<TKey, TGrid extends IUser<TKey>, TCreate extends
 
     public async postImport() {
         if (this._importFile == null) {
-            this._importResult = "Import file not selected";
+            this._importResult = "Файл импорта не выбран";
         }
         else {
             try {
                 await this._service.postImport(this._importFile);
                 await this.reloadGrid();
-                this._importResult = "Import successful";
+                this._importResult = "Импорт прошел успешно";
             }
             catch (e) {
                 this._importResult = JSON.stringify(e.error.Message);
@@ -288,7 +288,7 @@ export class UsersBaseComponent<TKey, TGrid extends IUser<TKey>, TCreate extends
         try {
             await this._service.postResetPassword(this._resetPasswordId, newPassword);
             await this.reloadGrid();
-            this._error = "Password reset success.";
+            this._error = "Пароль успешно сброшен";
         }
         catch (e) {
             this._error = e.error.Message;

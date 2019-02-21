@@ -5,5 +5,6 @@ export interface IUser<TKey> {
     userName: string;
     password: string;
     role: string;
+    roleDisplayName: string;
     roleList: SelectListItem[]
 }

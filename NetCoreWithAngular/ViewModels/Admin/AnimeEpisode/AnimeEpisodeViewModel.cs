@@ -1,7 +1,7 @@
 ﻿using CoreLibrary;
 using System.ComponentModel.DataAnnotations;
 
-namespace NetCoreWithAngular.Models
+namespace NetCoreWithAngular.ViewModels
 {
     public class AnimeEpisodeViewModel : IDependentEntity<int, int>
     {
@@ -13,6 +13,5 @@ namespace NetCoreWithAngular.Models
 
         public string Title { get; set; }
         
-        public virtual Anime Anime { get; set; }
     }
 }

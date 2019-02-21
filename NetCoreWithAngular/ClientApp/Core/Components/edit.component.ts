@@ -47,7 +47,7 @@ export class EditComponent<TKey, TGrid extends IEntity<TKey>, TCreate extends IE
         }
     }
 
-    private async getCreate() {
+    protected async getCreate() {
         this._error = null;
         try {
             this._itemCreate = await this._service.getCreate();
@@ -57,7 +57,7 @@ export class EditComponent<TKey, TGrid extends IEntity<TKey>, TCreate extends IE
         }
     }
 
-    private async getEdit() {
+    protected async getEdit() {
         this._error = null;
         try {
             this._itemEdit = await this._service.getEdit(this._id);

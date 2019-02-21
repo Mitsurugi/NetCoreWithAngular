@@ -112,7 +112,7 @@ var CoreAccountComponent = /** @class */ (function () {
                         return [4 /*yield*/, this._service.changePassword(this._changePasswordModel)];
                     case 2:
                         _a.sent();
-                        this._error = "Password successfully changed.";
+                        this._error = "Пароль успешно изменен.";
                         return [3 /*break*/, 4];
                     case 3:
                         e_2 = _a.sent();

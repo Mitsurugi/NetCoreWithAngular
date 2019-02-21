@@ -5,6 +5,7 @@ import { AnimeEpisodeService } from '../../Services/animeEpisode.service';
 import { AnimeEpisode } from '../../Models/AnimeEpisode/animeEpisode';
 import { read } from 'fs';
 import { ActivatedRoute } from "@angular/router";
+import { Anime } from '../../Models/Anime/anime';
 
 @Component({
     selector: 'anime-episodes',
@@ -12,7 +13,7 @@ import { ActivatedRoute } from "@angular/router";
     styleUrls: ['./animeEpisode.component.css'],
     providers: [AnimeEpisodeService]
 })
-export class AnimeEpisodeComponent extends DependentComponent<number, number, AnimeEpisode, AnimeEpisode, AnimeEpisode, AnimeEpisode> {
+export class AnimeEpisodeComponent extends DependentComponent<number, AnimeEpisode, AnimeEpisode, AnimeEpisode, AnimeEpisode, number, Anime> {
 
     constructor(service: AnimeEpisodeService, route: ActivatedRoute) {
         super(service, AnimeEpisode, AnimeEpisode, AnimeEpisode, AnimeEpisode, route);

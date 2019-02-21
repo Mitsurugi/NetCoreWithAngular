@@ -69,8 +69,11 @@ namespace CoreLibrary.Identity
             createView = _mapper.Map<TEntity, TCreate>(create);
 
             var list = new List<SelectListItem> { new SelectListItem { Value = "", Text = "" } };
-            list.AddRange(_identityService.GetRoles().Select(i => new SelectListItem { Text = i.Name, Value = i.Name }));
+            list.AddRange(_identityService.GetRoles().Select(i => new SelectListItem { Text = i.DisplayName, Value = i.Name, Selected = i.Name == createView.Role }));
             createView.RoleList = list;
+
+            var roleEntity = _identityService.GetRoles().FirstOrDefault(i => i.Name == createView.Role);
+            if (roleEntity != null) createView.RoleDisplayName = roleEntity.DisplayName;
 
             return createView;
         }
@@ -80,7 +83,7 @@ namespace CoreLibrary.Identity
             var model = new TCreate();
 
             var list = new List<SelectListItem> { new SelectListItem { Value = "", Text = "" } };
-            list.AddRange(_identityService.GetRoles().Select(i => new SelectListItem { Text = i.Name, Value = i.Name }));
+            list.AddRange(_identityService.GetRoles().Select(i => new SelectListItem { Text = i.DisplayName, Value = i.Name }));
             model.RoleList = list;
 
             return model;
@@ -113,8 +116,11 @@ namespace CoreLibrary.Identity
             editView = _mapper.Map<TEntity, TEdit>(entity);
 
             var list = new List<SelectListItem> { new SelectListItem { Value = "", Text = "" } };
-            list.AddRange(_identityService.GetRoles().Select(i => new SelectListItem { Text = i.Name, Value = i.Name }));
+            list.AddRange(_identityService.GetRoles().Select(i => new SelectListItem { Text = i.DisplayName, Value = i.Name, Selected = i.Name == editView.Role }));
             editView.RoleList = list;
+
+            var roleEntity = _identityService.GetRoles().FirstOrDefault(i => i.Name == editView.Role);
+            if (roleEntity != null) editView.RoleDisplayName = roleEntity.DisplayName;
 
             return editView;
         }
@@ -128,6 +134,9 @@ namespace CoreLibrary.Identity
             var list = new List<SelectListItem> { new SelectListItem { Value = "", Text = "" } };
             list.AddRange(_identityService.GetRoles().Select(i => new SelectListItem { Text = i.Name, Value = i.Name }));
             edit.RoleList = list;
+
+            var roleEntity = _identityService.GetRoles().FirstOrDefault(i => i.Name == edit.Role);
+            if (roleEntity != null) edit.RoleDisplayName = roleEntity.DisplayName;
 
             return edit;
         }
@@ -159,6 +168,12 @@ namespace CoreLibrary.Identity
 
             var grid = await query.Skip(pageSize * (pageNumber - 1)).Take(pageSize).ProjectTo<TGrid>(_mapper.ConfigurationProvider).ToListAsync();
 
+            var roles = await _identityService.GetRoles().ToListAsync();
+            grid.AsParallel().ForAll(x => {
+                var roleEntity = roles.FirstOrDefault(i => i.Name == x.Role);
+                if (roleEntity != null) x.RoleDisplayName = roleEntity.DisplayName;
+            });
+
             return grid;
         }
 
@@ -188,6 +203,12 @@ namespace CoreLibrary.Identity
             query = ApplySearch(query, searchString);
 
             var grid = await query.ProjectTo<TGrid>(_mapper.ConfigurationProvider).ToListAsync();
+
+            var roles = await _identityService.GetRoles().ToListAsync();
+            grid.AsParallel().ForAll(x => {
+                var roleEntity = roles.FirstOrDefault(r => r.Name == x.Role);
+                if (roleEntity != null) x.RoleDisplayName = roleEntity.DisplayName;
+            });
 
             var wb = new XLWorkbook();
             var ws = wb.Worksheets.Add("Export");

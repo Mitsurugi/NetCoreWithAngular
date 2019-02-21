@@ -7,9 +7,9 @@ using Microsoft.Extensions.Localization;
 namespace NetCoreWithAngular.Controllers
 {
     [Authorize(Roles = "Admin")]
-    public class AnimeEpisodeController : DependentApiController<AnimeEpisode, int, int, AnimeEpisodeViewModel, AnimeEpisodeViewModel, AnimeEpisodeViewModel, AnimeEpisodeViewModel>
+    public class AnimeEpisodeController : DependentApiController<AnimeEpisode, int,AnimeEpisodeViewModel, AnimeEpisodeViewModel, AnimeEpisodeViewModel, AnimeEpisodeViewModel, int, Anime, AnimeViewModel>
     {        
-        public AnimeEpisodeController(IDependentService<AnimeEpisode, int, int, AnimeEpisodeViewModel, AnimeEpisodeViewModel, AnimeEpisodeViewModel, AnimeEpisodeViewModel> service, IStringLocalizer localizer) : base(service, localizer)
+        public AnimeEpisodeController(IDependentService<AnimeEpisode, int, AnimeEpisodeViewModel, AnimeEpisodeViewModel, AnimeEpisodeViewModel, AnimeEpisodeViewModel, int, Anime, AnimeViewModel> service, IStringLocalizer localizer) : base(service, localizer)
         {
         }
     }

@@ -13,24 +13,29 @@ using Microsoft.Extensions.Localization;
 
 namespace CoreLibrary
 {
-    public class DependentService<TEntity, TKey, TParentKey, TGrid, TCreate, TEdit, TFilter> : IDependentService<TEntity, TKey, TParentKey, TGrid, TCreate, TEdit, TFilter>
+    public class DependentService<TEntity, TKey, TGrid, TCreate, TEdit, TFilter, TParentKey, TParentEntity, TParentView> : IDependentService<TEntity, TKey, TGrid, TCreate, TEdit, TFilter, TParentKey, TParentEntity, TParentView>
         where TEntity : class, IDependentEntity<TKey, TParentKey>, new()
         where TCreate : class, IDependentEntity<TKey, TParentKey>, new()
         where TEdit : class, IDependentEntity<TKey, TParentKey>, new()
         where TGrid : class, IDependentEntity<TKey, TParentKey>, new()
         where TFilter : class, new()
+        where TParentEntity : class, IEntity<TParentKey>, new()
+        where TParentView : class, IEntity<TParentKey>, new()
     {
         protected readonly IRepository<TEntity, TKey> _repository;
+
+        protected readonly IRepository<TParentEntity, TParentKey> _parentRepository;
 
         protected readonly IMapper _mapper;
 
         protected readonly IStringLocalizer _localizer;
 
-        public DependentService(IRepository<TEntity, TKey> repository, IMapper mapper, IStringLocalizer localizer)
+        public DependentService(IRepository<TEntity, TKey> repository, IRepository<TParentEntity, TParentKey> parentRepository, IMapper mapper, IStringLocalizer localizer)
         {
             _repository = repository;
             _mapper = mapper;
             _localizer = localizer;
+            _parentRepository = parentRepository;
         }
 
         private IQueryable<TEntity> GetQuery()
@@ -85,9 +90,7 @@ namespace CoreLibrary
 
         public virtual async Task Delete(TKey id)
         {
-            var delete = await Get(id);
-            await _repository.Delete(delete);
-            await _repository.SaveChanges();
+            await Delete(new TKey[] { id });
         }
 
         public virtual async Task Delete(TKey[] ids)
@@ -463,6 +466,20 @@ namespace CoreLibrary
             }
 
             return query;
+        }
+
+        public virtual async Task<TParentEntity> GetParent(TParentKey parentId)
+        {
+            var parent = await _parentRepository.GetQuery().SingleOrDefaultAsync(i => i.Id.Equals(parentId));
+
+            return parent;
+        }
+
+        public virtual async Task<TParentView> GetParentView(TParentKey parentId)
+        {
+            var parent = await _parentRepository.GetQuery().SingleOrDefaultAsync(i => i.Id.Equals(parentId));
+
+            return _mapper.Map<TParentEntity, TParentView>(parent);
         }
     }
 }

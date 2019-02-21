@@ -2,6 +2,7 @@
 import { IUser } from '../../../../Core/Users/IUser';
 
 export class User implements IUser<string> {
+    roleDisplayName: string;
     password: string;
     userName: string;
     role: string;

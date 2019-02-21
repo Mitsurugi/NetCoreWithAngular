@@ -29,26 +29,8 @@
     <None Remove="ClientApp\app\main.ts" />
     <None Remove="ClientApp\app\Admin\Components\Book\book.component.ts" />
     <None Remove="ClientApp\app\Admin\Components\Menu\menu.component.ts" />
-    <None Remove="ClientApp\Core\account.component.ts" />
-    <None Remove="ClientApp\Core\account.service.ts" />
-    <None Remove="ClientApp\Core\AccountGlobals.ts" />
-    <None Remove="ClientApp\Core\Account\changePasswordModel.ts" />
-    <None Remove="ClientApp\Core\Components\edit.component.ts" />
-    <None Remove="ClientApp\Core\core.component.ts" />
-    <None Remove="ClientApp\Core\core.service.ts" />
     <None Remove="ClientApp\app\Admin\Models\Anime.ts" />
     <None Remove="ClientApp\app\Admin\Models\Book.ts" />
-    <None Remove="ClientApp\Core\dependent.component.ts" />
-    <None Remove="ClientApp\Core\dependent.service.ts" />
-    <None Remove="ClientApp\Core\file.service.ts" />
-    <None Remove="ClientApp\Core\Models\IDependentEntity.ts" />
-    <None Remove="ClientApp\Core\Models\IEntity.ts" />
-    <None Remove="ClientApp\Core\SelectListItem.ts" />
-    <None Remove="ClientApp\Core\Services\staticMethods.ts" />
-    <None Remove="ClientApp\Core\token.interceptor.ts" />
-    <None Remove="ClientApp\Core\Users\IUser.ts" />
-    <None Remove="ClientApp\Core\Users\users.service.ts" />
-    <None Remove="ClientApp\Core\Users\usersBase.component.ts" />
     <None Remove="ClientApp\polyfills.ts" />
     <None Remove="ClientApp\app\Admin\Services\anime.service.ts" />
     <None Remove="ClientApp\app\Admin\Services\book.service.ts" />
@@ -63,12 +45,13 @@
     <PackageReference Include="Microsoft.AspNetCore.Authorization" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Identity" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="2.2.0" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.2.1" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.2.1">
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="2.2.2" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.2.2" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.2.2">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.1" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.2" />
   </ItemGroup>
 
   <ItemGroup>

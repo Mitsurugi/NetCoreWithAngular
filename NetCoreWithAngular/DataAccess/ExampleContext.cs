@@ -1,11 +1,11 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using NetCoreWithAngular.Models;
-using Microsoft.AspNetCore.Identity;
+using CoreLibrary.Identity;
 
 namespace NetCoreWithAngular.DataAccess
 {
-    public class ExampleContext : IdentityDbContext<User, IdentityRole<System.Guid>, System.Guid>
+    public class ExampleContext : IdentityDbContext<User, Role<System.Guid>, System.Guid>
     {
         public ExampleContext(DbContextOptions<ExampleContext> options)
             : base(options)

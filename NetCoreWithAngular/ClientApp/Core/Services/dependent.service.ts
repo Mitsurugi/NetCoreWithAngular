@@ -5,7 +5,7 @@ import { IDependentEntity } from '../Models/IDependentEntity';
 import { StaticMethods } from '../Services/staticMethods';
 
 @Injectable()
-export class DependentService<TKey, TParentKey, TGrid extends IDependentEntity<TKey, TParentKey>, TCreate extends IDependentEntity<TKey, TParentKey>, TEdit extends IDependentEntity<TKey, TParentKey>, TFilter> {
+export class DependentService<TKey, TGrid extends IDependentEntity<TKey, TParentKey>, TCreate extends IDependentEntity<TKey, TParentKey>, TEdit extends IDependentEntity<TKey, TParentKey>, TFilter, TParentKey, TParentView> {
 
     _controller = "";
     protected _http: HttpClient;
@@ -62,5 +62,9 @@ export class DependentService<TKey, TParentKey, TGrid extends IDependentEntity<T
         let formData = new FormData();
         formData.append("file", file);
         return await this._http.post('/api/' + this._controller + '/import?parentId=' + pareintId, formData).toPromise();
+    }
+
+    public async getParent(parentId: TParentKey): Promise<TParentView> {
+        return await this._http.get<TParentView>('api/' + this._controller + '/GetParent?parentId=' + parentId).toPromise();
     }
 }

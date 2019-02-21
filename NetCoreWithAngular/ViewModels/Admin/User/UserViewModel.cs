@@ -12,5 +12,6 @@ namespace NetCoreWithAngular.ViewModels
         public System.Guid Id { get; set; }
         public IEnumerable<SelectListItem> RoleList { get; set; }
         public string Password { get; set; }
+        public string RoleDisplayName { get; set; }
     }
 }

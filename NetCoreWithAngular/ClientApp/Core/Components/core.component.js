@@ -99,7 +99,7 @@ var CoreComponent = /** @class */ (function () {
                         this._error = null;
                         _c.label = 1;
                     case 1:
-                        _c.trys.push([1, 4, , 5]);
+                        _c.trys.push([1, 5, , 6]);
                         this._showEditId = null;
                         _a = this;
                         return [4 /*yield*/, this._service.getPagesCount(this._pageSize, this._filter)];
@@ -109,12 +109,15 @@ var CoreComponent = /** @class */ (function () {
                         return [4 /*yield*/, this._service.getGrid(this._currentPage, this._pageSize, this._orderBy, this._filter)];
                     case 3:
                         _b._items = _c.sent();
-                        return [3 /*break*/, 5];
+                        return [4 /*yield*/, this.getCreate()];
                     case 4:
+                        _c.sent();
+                        return [3 /*break*/, 6];
+                    case 5:
                         e_2 = _c.sent();
                         this._error = e_2.error.Message;
-                        return [3 /*break*/, 5];
-                    case 5: return [2 /*return*/];
+                        return [3 /*break*/, 6];
+                    case 6: return [2 /*return*/];
                 }
             });
         });
@@ -476,7 +479,7 @@ var CoreComponent = /** @class */ (function () {
                 switch (_a.label) {
                     case 0:
                         if (!(this._importFile == null)) return [3 /*break*/, 1];
-                        this._importResult = "Import file not selected";
+                        this._importResult = "Файл импорта не выбран";
                         return [3 /*break*/, 5];
                     case 1:
                         _a.trys.push([1, 4, , 5]);
@@ -486,7 +489,7 @@ var CoreComponent = /** @class */ (function () {
                         return [4 /*yield*/, this.reloadGrid()];
                     case 3:
                         _a.sent();
-                        this._importResult = "Import successful";
+                        this._importResult = "Импорт прошел успешно";
                         return [3 /*break*/, 5];
                     case 4:
                         e_16 = _a.sent();

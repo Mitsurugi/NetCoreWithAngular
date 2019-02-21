@@ -49,7 +49,7 @@ export class CoreAccountComponent implements OnInit {
         this._error = null;
         try {
             await this._service.changePassword(this._changePasswordModel);
-            this._error = "Password successfully changed."
+            this._error = "Пароль успешно изменен."
         }
         catch (e) {
             this._error = e.error.Message;

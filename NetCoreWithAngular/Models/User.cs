@@ -11,5 +11,6 @@ namespace NetCoreWithAngular.Models
     {
         public string Phone { get; set; }
         public string Role { get; set; }
+        public string RoleDisplayName { get; set; }
     }
 }

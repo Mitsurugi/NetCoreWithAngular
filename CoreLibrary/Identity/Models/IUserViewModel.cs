@@ -6,7 +6,7 @@ namespace CoreLibrary.Identity
     public interface IUserViewModel<TKey> : IUser<TKey>
         where TKey: System.IEquatable<TKey>
     {
-        string Password { get; set; }
+        string Password { get; set; }        
 
         IEnumerable<SelectListItem> RoleList { get; set; }
     }    

@@ -74,24 +74,28 @@ var DependentComponent = /** @class */ (function () {
     }
     DependentComponent.prototype.ngOnInit = function () {
         return __awaiter(this, void 0, void 0, function () {
-            var _a, e_1;
-            return __generator(this, function (_b) {
-                switch (_b.label) {
+            var _a, _b, e_1;
+            return __generator(this, function (_c) {
+                switch (_c.label) {
                     case 0:
-                        _b.trys.push([0, 3, , 4]);
+                        _c.trys.push([0, 4, , 5]);
                         _a = this;
                         return [4 /*yield*/, this._service.getFilter()];
                     case 1:
-                        _a._filter = _b.sent();
-                        return [4 /*yield*/, this.reloadGrid()];
+                        _a._filter = _c.sent();
+                        _b = this;
+                        return [4 /*yield*/, this._service.getParent(this._parentId)];
                     case 2:
-                        _b.sent();
-                        return [3 /*break*/, 4];
+                        _b._parent = _c.sent();
+                        return [4 /*yield*/, this.reloadGrid()];
                     case 3:
-                        e_1 = _b.sent();
+                        _c.sent();
+                        return [3 /*break*/, 5];
+                    case 4:
+                        e_1 = _c.sent();
                         this._error = e_1.error.Message;
-                        return [3 /*break*/, 4];
-                    case 4: return [2 /*return*/];
+                        return [3 /*break*/, 5];
+                    case 5: return [2 /*return*/];
                 }
             });
         });
@@ -105,7 +109,7 @@ var DependentComponent = /** @class */ (function () {
                         this._error = null;
                         _c.label = 1;
                     case 1:
-                        _c.trys.push([1, 4, , 5]);
+                        _c.trys.push([1, 5, , 6]);
                         this._showEditId = null;
                         _a = this;
                         return [4 /*yield*/, this._service.getPagesCount(this._pageSize, this._parentId, this._filter)];
@@ -115,12 +119,15 @@ var DependentComponent = /** @class */ (function () {
                         return [4 /*yield*/, this._service.getGrid(this._parentId, this._currentPage, this._pageSize, this._orderBy, this._filter)];
                     case 3:
                         _b._items = _c.sent();
-                        return [3 /*break*/, 5];
+                        return [4 /*yield*/, this.getCreate()];
                     case 4:
+                        _c.sent();
+                        return [3 /*break*/, 6];
+                    case 5:
                         e_2 = _c.sent();
                         this._error = e_2.error.Message;
-                        return [3 /*break*/, 5];
-                    case 5: return [2 /*return*/];
+                        return [3 /*break*/, 6];
+                    case 6: return [2 /*return*/];
                 }
             });
         });
@@ -482,7 +489,7 @@ var DependentComponent = /** @class */ (function () {
                 switch (_a.label) {
                     case 0:
                         if (!(this._importFile == null)) return [3 /*break*/, 1];
-                        this._importResult = "Import file not selected";
+                        this._importResult = "Файл импорта не выбран";
                         return [3 /*break*/, 5];
                     case 1:
                         _a.trys.push([1, 4, , 5]);
@@ -492,7 +499,7 @@ var DependentComponent = /** @class */ (function () {
                         return [4 /*yield*/, this.reloadGrid()];
                     case 3:
                         _a.sent();
-                        this._importResult = "Import successful";
+                        this._importResult = "Импорт прошел успешно";
                         return [3 /*break*/, 5];
                     case 4:
                         e_16 = _a.sent();

@@ -10,18 +10,20 @@ namespace CoreLibrary
 {
     [ApiController]
     [Route("api/[controller]/[action]")]
-    public class DependentApiController<TEntity, TKey, TParentKey, TGrid, TCreate, TEdit, TFilter> : Controller
+    public class DependentApiController<TEntity, TKey, TGrid, TCreate, TEdit, TFilter, TParentKey, TParentEntity, TParentView> : Controller
         where TEntity : class, IDependentEntity<TKey, TParentKey>, new()
         where TCreate : class, IDependentEntity<TKey, TParentKey>, new()
         where TEdit : class, IDependentEntity<TKey, TParentKey>, new()
         where TGrid : class, IDependentEntity<TKey, TParentKey>, new()
         where TFilter : class, new()
+        where TParentEntity : class, IEntity<TParentKey>, new()
+        where TParentView : class, IEntity<TParentKey>, new()
     {
-        protected readonly IDependentService<TEntity, TKey, TParentKey, TGrid, TCreate, TEdit, TFilter> _service;
+        protected readonly IDependentService<TEntity, TKey, TGrid, TCreate, TEdit, TFilter, TParentKey, TParentEntity, TParentView> _service;
         protected readonly IStringLocalizer _localizer;
         protected int _pageSize { get; set; }
 
-        public DependentApiController(IDependentService<TEntity, TKey, TParentKey, TGrid, TCreate, TEdit, TFilter> service, IStringLocalizer localizer)
+        public DependentApiController(IDependentService<TEntity, TKey, TGrid, TCreate, TEdit, TFilter, TParentKey, TParentEntity, TParentView> service, IStringLocalizer localizer)
         {
             _service = service;
             _localizer = localizer;
@@ -204,6 +206,19 @@ namespace CoreLibrary
                 return BadRequest(ex);
             }
             return Ok();
+        }
+
+        [HttpGet]
+        public virtual async Task<ActionResult<TParentView>> GetParent([FromQuery] TParentKey parentId)
+        {
+            try
+            {
+                return await _service.GetParentView(parentId);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
         }
     }
 }

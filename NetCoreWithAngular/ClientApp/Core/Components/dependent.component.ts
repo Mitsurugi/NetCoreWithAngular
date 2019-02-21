@@ -6,12 +6,13 @@ import { saveAs } from 'file-saver';
 
 @Component({
 })
-export class DependentComponent<TKey, TParentKey, TGrid extends IDependentEntity<TKey, TParentKey>, TCreate extends IDependentEntity<TKey, TParentKey>, TEdit extends IDependentEntity<TKey, TParentKey>, TFilter> implements OnInit {
+export class DependentComponent<TKey, TGrid extends IDependentEntity<TKey, TParentKey>, TCreate extends IDependentEntity<TKey, TParentKey>, TEdit extends IDependentEntity<TKey, TParentKey>, TFilter, TParentKey, TParentView> implements OnInit {
 
-    _service: DependentService<TKey, TParentKey, TGrid, TCreate, TEdit, TFilter>;
+    _service: DependentService<TKey, TGrid, TCreate, TEdit, TFilter, TParentKey, TParentView>;
 
     @Input() _parentId: TParentKey;
 
+    _parent: TParentView;
     _items: TGrid[];
     _itemEdit: TEdit;
     _itemCreate: TCreate;
@@ -34,7 +35,7 @@ export class DependentComponent<TKey, TParentKey, TGrid extends IDependentEntity
     typeEdit: (new () => TEdit);
     typeFilter: (new () => TFilter);
 
-    constructor(service: DependentService<TKey, TParentKey, TGrid, TCreate, TEdit, TFilter>, typeGrid: (new () => TGrid), typeCreate: (new () => TCreate), typeEdit: (new () => TEdit), typeFilter: (new () => TFilter), route: ActivatedRoute) {
+    constructor(service: DependentService<TKey, TGrid, TCreate, TEdit, TFilter, TParentKey, TParentView>, typeGrid: (new () => TGrid), typeCreate: (new () => TCreate), typeEdit: (new () => TEdit), typeFilter: (new () => TFilter), route: ActivatedRoute) {
         this._service = service;
         this._items = new Array<TGrid>();
         this._itemEdit = new typeEdit();
@@ -54,6 +55,7 @@ export class DependentComponent<TKey, TParentKey, TGrid extends IDependentEntity
     public async ngOnInit() {
         try {
             this._filter = await this._service.getFilter();
+            this._parent = await this._service.getParent(this._parentId);
             await this.reloadGrid();
         }
         catch (e) {
@@ -66,7 +68,8 @@ export class DependentComponent<TKey, TParentKey, TGrid extends IDependentEntity
         try {
             this._showEditId = null;
             this._totalPages = await this._service.getPagesCount(this._pageSize, this._parentId, this._filter);
-            this._items = await this._service.getGrid(this._parentId, this._currentPage, this._pageSize, this._orderBy, this._filter);            
+            this._items = await this._service.getGrid(this._parentId, this._currentPage, this._pageSize, this._orderBy, this._filter);    
+            await this.getCreate();
         }
         catch (e) {
             this._error = e.error.Message;
@@ -154,7 +157,7 @@ export class DependentComponent<TKey, TParentKey, TGrid extends IDependentEntity
         }
     }
 
-    private async getCreate() {
+    protected async getCreate() {
         this._error = null;
         try {
             this._itemCreate = await this._service.getCreate(this._parentId);
@@ -164,7 +167,7 @@ export class DependentComponent<TKey, TParentKey, TGrid extends IDependentEntity
         }
     }
 
-    private async getEdit(id: TKey) {
+    protected async getEdit(id: TKey) {
         this._error = null;
         try {
             this._itemEdit = await this._service.getEdit(id);
@@ -244,13 +247,13 @@ export class DependentComponent<TKey, TParentKey, TGrid extends IDependentEntity
 
     public async postImport() {
         if (this._importFile == null) {
-            this._importResult = "Import file not selected";
+            this._importResult = "Файл импорта не выбран";
         }
         else {
             try {
                 await this._service.postImport(this._parentId, this._importFile);
                 await this.reloadGrid();
-                this._importResult = "Import successful";
+                this._importResult = "Импорт прошел успешно";
             }
             catch (e) {
                 this._importResult = JSON.stringify(e.error.Message);

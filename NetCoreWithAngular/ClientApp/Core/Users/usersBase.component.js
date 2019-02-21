@@ -477,7 +477,7 @@ var UsersBaseComponent = /** @class */ (function () {
                 switch (_a.label) {
                     case 0:
                         if (!(this._importFile == null)) return [3 /*break*/, 1];
-                        this._importResult = "Import file not selected";
+                        this._importResult = "Файл импорта не выбран";
                         return [3 /*break*/, 5];
                     case 1:
                         _a.trys.push([1, 4, , 5]);
@@ -487,7 +487,7 @@ var UsersBaseComponent = /** @class */ (function () {
                         return [4 /*yield*/, this.reloadGrid()];
                     case 3:
                         _a.sent();
-                        this._importResult = "Import successful";
+                        this._importResult = "Импорт прошел успешно";
                         return [3 /*break*/, 5];
                     case 4:
                         e_16 = _a.sent();
@@ -566,7 +566,7 @@ var UsersBaseComponent = /** @class */ (function () {
                         return [4 /*yield*/, this.reloadGrid()];
                     case 3:
                         _a.sent();
-                        this._error = "Password reset success.";
+                        this._error = "Пароль успешно сброшен";
                         return [3 /*break*/, 5];
                     case 4:
                         e_17 = _a.sent();

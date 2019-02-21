@@ -78,9 +78,7 @@ namespace CoreLibrary
 
         public virtual async Task Delete(TKey id)
         {
-            var delete = await Get(id);
-            await _repository.Delete(delete);
-            await _repository.SaveChanges();
+            await Delete(new TKey[] { id });
         }
 
         public virtual async Task Delete(TKey[] ids)

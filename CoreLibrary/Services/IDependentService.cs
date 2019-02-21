@@ -5,12 +5,14 @@ using System.IO;
 
 namespace CoreLibrary
 {
-    public interface IDependentService<TEntity, TKey, TParentKey, TGrid, TCreate, TEdit, TFilter>
+    public interface IDependentService<TEntity, TKey, TGrid, TCreate, TEdit, TFilter, TParentKey, TParentEntity, TParentView>
         where TEntity : class, IDependentEntity<TKey, TParentKey>, new()
         where TCreate : class, IDependentEntity<TKey, TParentKey>, new()
         where TEdit : class, IDependentEntity<TKey, TParentKey>, new()
         where TGrid : class, IDependentEntity<TKey, TParentKey>, new()
         where TFilter: class, new()
+        where TParentEntity: class, IEntity<TParentKey>, new()
+        where TParentView : class, IEntity<TParentKey>, new()
     {
         Task<TEntity> Get(TKey id);
         Task<TCreate> Create(TCreate create);
@@ -27,5 +29,8 @@ namespace CoreLibrary
         Task<List<TGrid>> GetGrid(int pageSize, int pageNumber, TParentKey parentId, string orderBy, TFilter filter, string searchString);
         Task<byte[]> ExcelExport(TParentKey parentId, string orderBy, TFilter filter, string searchString);
         Task Import(TParentKey parentId, Stream file);
+
+        Task<TParentEntity> GetParent(TParentKey parentId);
+        Task<TParentView> GetParentView(TParentKey parentId);
     }
 }

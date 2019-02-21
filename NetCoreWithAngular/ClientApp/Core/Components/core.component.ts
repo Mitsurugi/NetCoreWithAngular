@@ -60,6 +60,7 @@ export class CoreComponent<TKey, TGrid extends IEntity<TKey>, TCreate extends IE
             this._showEditId = null;
             this._totalPages = await this._service.getPagesCount(this._pageSize, this._filter);
             this._items = await this._service.getGrid(this._currentPage, this._pageSize, this._orderBy, this._filter);
+            await this.getCreate();
         }
         catch (e) {
             this._error = e.error.Message;
@@ -147,7 +148,7 @@ export class CoreComponent<TKey, TGrid extends IEntity<TKey>, TCreate extends IE
         }
     }
 
-    private async getCreate() {
+    protected async getCreate() {
         this._error = null;
         try {
             this._itemCreate = await this._service.getCreate();
@@ -157,7 +158,7 @@ export class CoreComponent<TKey, TGrid extends IEntity<TKey>, TCreate extends IE
         }
     }
 
-    private async getEdit(id: TKey) {
+    protected async getEdit(id: TKey) {
         this._error = null;
         try {
             this._itemEdit = await this._service.getEdit(id);
@@ -237,13 +238,13 @@ export class CoreComponent<TKey, TGrid extends IEntity<TKey>, TCreate extends IE
 
     public async postImport() {
         if (this._importFile == null) {
-            this._importResult = "Import file not selected";
+            this._importResult = "Файл импорта не выбран";
         }
         else {
             try {
                 await this._service.postImport(this._importFile);
                 await this.reloadGrid();
-                this._importResult = "Import successful";
+                this._importResult = "Импорт прошел успешно";
             }
             catch (e) {
                 this._importResult = JSON.stringify(e.error.Message);
