@@ -364,7 +364,7 @@ namespace CoreLibrary
             {
                 var value = prop.GetValue(filter);
                 if (value == null || !entityProperties.Any(i => i.Name == prop.Name)) continue;
-                if (prop.Name == "Id" && value.Equals(default(TKey))) continue;
+                if (value.Equals(default(TKey))) continue;
 
                 var t = prop.PropertyType;
                 if (t.IsGenericType && t.GetGenericTypeDefinition() == typeof(Nullable<>))

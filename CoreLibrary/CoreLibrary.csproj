@@ -27,10 +27,4 @@
     </PackageReference>
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Base\Controllers\" />
-    <Folder Include="Base\Data\" />
-    <Folder Include="Base\Services\" />
-  </ItemGroup>
-
 </Project>
