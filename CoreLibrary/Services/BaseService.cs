@@ -363,8 +363,8 @@ namespace CoreLibrary
             foreach (var prop in filterProperties)
             {
                 var value = prop.GetValue(filter);
-                if (value == null || !entityProperties.Any(i => i.Name == prop.Name)) continue;
-                if (value.Equals(default(TKey))) continue;
+                if (value == null || !entityProperties.Any(i => i.Name == prop.Name) || !prop.GetType().IsValueType) continue;
+                if (value.Equals(Activator.CreateInstance(prop.GetType()))) continue;
 
                 var t = prop.PropertyType;
                 if (t.IsGenericType && t.GetGenericTypeDefinition() == typeof(Nullable<>))
