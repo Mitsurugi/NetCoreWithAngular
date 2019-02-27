@@ -79,7 +79,7 @@ var CoreAccountComponent = /** @class */ (function () {
                         return [3 /*break*/, 4];
                     case 3:
                         e_1 = _a.sent();
-                        this._error = e_1.error.Message;
+                        this._error = e_1.error;
                         return [3 /*break*/, 4];
                     case 4: return [2 /*return*/];
                 }
@@ -93,7 +93,7 @@ var CoreAccountComponent = /** @class */ (function () {
                     this._service.deleteToken();
                 }
                 catch (e) {
-                    this._error = e.error.Message;
+                    this._error = e.error;
                 }
                 return [2 /*return*/];
             });
@@ -116,7 +116,7 @@ var CoreAccountComponent = /** @class */ (function () {
                         return [3 /*break*/, 4];
                     case 3:
                         e_2 = _a.sent();
-                        this._error = e_2.error.Message;
+                        this._error = e_2.error;
                         return [3 /*break*/, 4];
                     case 4: return [2 /*return*/];
                 }

@@ -93,7 +93,7 @@ var DependentComponent = /** @class */ (function () {
                         return [3 /*break*/, 5];
                     case 4:
                         e_1 = _c.sent();
-                        this._error = e_1.error.Message;
+                        this._error = e_1.error;
                         return [3 /*break*/, 5];
                     case 5: return [2 /*return*/];
                 }
@@ -125,7 +125,7 @@ var DependentComponent = /** @class */ (function () {
                         return [3 /*break*/, 6];
                     case 5:
                         e_2 = _c.sent();
-                        this._error = e_2.error.Message;
+                        this._error = e_2.error;
                         return [3 /*break*/, 6];
                     case 6: return [2 /*return*/];
                 }
@@ -152,7 +152,7 @@ var DependentComponent = /** @class */ (function () {
                         return [3 /*break*/, 5];
                     case 4:
                         e_3 = _b.sent();
-                        this._error = e_3.error.Message;
+                        this._error = e_3.error;
                         return [3 /*break*/, 5];
                     case 5: return [2 /*return*/];
                 }
@@ -176,7 +176,7 @@ var DependentComponent = /** @class */ (function () {
                         return [3 /*break*/, 4];
                     case 3:
                         e_4 = _a.sent();
-                        this._error = e_4.error.Message;
+                        this._error = e_4.error;
                         return [3 /*break*/, 4];
                     case 4: return [2 /*return*/];
                 }
@@ -200,7 +200,7 @@ var DependentComponent = /** @class */ (function () {
                         return [3 /*break*/, 4];
                     case 3:
                         e_5 = _a.sent();
-                        this._error = e_5.error.Message;
+                        this._error = e_5.error;
                         return [3 /*break*/, 4];
                     case 4: return [2 /*return*/];
                 }
@@ -226,7 +226,7 @@ var DependentComponent = /** @class */ (function () {
                         return [3 /*break*/, 4];
                     case 3:
                         e_6 = _a.sent();
-                        this._error = e_6.error.Message;
+                        this._error = e_6.error;
                         return [3 /*break*/, 4];
                     case 4: return [2 /*return*/];
                 }
@@ -245,7 +245,7 @@ var DependentComponent = /** @class */ (function () {
                         this._isShowCreate = false;
                     }
                     catch (e) {
-                        this._error = e.error.Message;
+                        this._error = e.error;
                     }
                 }
                 return [2 /*return*/];
@@ -270,7 +270,7 @@ var DependentComponent = /** @class */ (function () {
                         return [3 /*break*/, 4];
                     case 3:
                         e_7 = _a.sent();
-                        this._error = e_7.error.Message;
+                        this._error = e_7.error;
                         return [3 /*break*/, 4];
                     case 4: return [2 /*return*/];
                 }
@@ -294,7 +294,7 @@ var DependentComponent = /** @class */ (function () {
                         return [3 /*break*/, 4];
                     case 3:
                         e_8 = _b.sent();
-                        this._error = e_8.error.Message;
+                        this._error = e_8.error;
                         return [3 /*break*/, 4];
                     case 4: return [2 /*return*/];
                 }
@@ -318,7 +318,7 @@ var DependentComponent = /** @class */ (function () {
                         return [3 /*break*/, 4];
                     case 3:
                         e_9 = _b.sent();
-                        this._error = e_9.error.Message;
+                        this._error = e_9.error;
                         return [3 /*break*/, 4];
                     case 4: return [2 /*return*/];
                 }
@@ -344,7 +344,7 @@ var DependentComponent = /** @class */ (function () {
                         return [3 /*break*/, 5];
                     case 4:
                         e_10 = _a.sent();
-                        this._error = e_10.error.Message;
+                        this._error = e_10.error;
                         return [3 /*break*/, 5];
                     case 5: return [2 /*return*/];
                 }
@@ -370,7 +370,7 @@ var DependentComponent = /** @class */ (function () {
                         return [3 /*break*/, 5];
                     case 4:
                         e_11 = _a.sent();
-                        this._error = e_11.error.Message;
+                        this._error = e_11.error;
                         return [3 /*break*/, 5];
                     case 5: return [2 /*return*/];
                 }
@@ -400,7 +400,7 @@ var DependentComponent = /** @class */ (function () {
                         return [3 /*break*/, 6];
                     case 5:
                         e_12 = _a.sent();
-                        this._error = e_12.error.Message;
+                        this._error = e_12.error;
                         return [3 /*break*/, 6];
                     case 6: return [2 /*return*/];
                 }
@@ -427,7 +427,7 @@ var DependentComponent = /** @class */ (function () {
                         return [3 /*break*/, 5];
                     case 4:
                         e_13 = _b.sent();
-                        this._error = e_13.error.Message;
+                        this._error = e_13.error;
                         return [3 /*break*/, 5];
                     case 5: return [2 /*return*/];
                 }
@@ -451,7 +451,7 @@ var DependentComponent = /** @class */ (function () {
                         return [3 /*break*/, 4];
                     case 3:
                         e_14 = _a.sent();
-                        this._error = e_14.error.Message;
+                        this._error = e_14.error;
                         return [3 /*break*/, 4];
                     case 4: return [2 /*return*/];
                 }
@@ -475,7 +475,7 @@ var DependentComponent = /** @class */ (function () {
                         return [3 /*break*/, 4];
                     case 3:
                         e_15 = _a.sent();
-                        this._error = e_15.error.Message;
+                        this._error = e_15.error;
                         return [3 /*break*/, 4];
                     case 4: return [2 /*return*/];
                 }
@@ -503,7 +503,7 @@ var DependentComponent = /** @class */ (function () {
                         return [3 /*break*/, 5];
                     case 4:
                         e_16 = _a.sent();
-                        this._importResult = JSON.stringify(e_16.error.Message);
+                        this._importResult = JSON.stringify(e_16.error);
                         return [3 /*break*/, 5];
                     case 5: return [2 /*return*/];
                 }

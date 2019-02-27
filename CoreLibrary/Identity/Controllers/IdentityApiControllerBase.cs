@@ -37,7 +37,7 @@ namespace CoreLibrary.Identity
             }
             catch (Exception ex)
             {
-                return BadRequest(ex);
+                return BadRequest(ex.GetFullMessage());
             }
         }
 
@@ -58,7 +58,7 @@ namespace CoreLibrary.Identity
             }
             catch (Exception ex)
             {
-                return BadRequest(ex);
+                return BadRequest(ex.GetFullMessage());
             }
         }       
     }

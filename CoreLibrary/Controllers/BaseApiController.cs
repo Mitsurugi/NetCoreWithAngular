@@ -39,7 +39,7 @@ namespace CoreLibrary
             }
             catch (Exception ex)
             {
-                return BadRequest(ex);
+                return BadRequest(ex.GetFullMessage());
             }            
         }
 
@@ -53,7 +53,7 @@ namespace CoreLibrary
             }
             catch (Exception ex)
             {
-                return BadRequest(ex);
+                return BadRequest(ex.GetFullMessage());
             }
         }
 
@@ -66,7 +66,7 @@ namespace CoreLibrary
             }
             catch (Exception ex)
             {
-                return BadRequest(ex);
+                return BadRequest(ex.GetFullMessage());
             }            
         }
 
@@ -85,7 +85,7 @@ namespace CoreLibrary
             }
             catch (Exception ex)
             {
-                return BadRequest(ex);
+                return BadRequest(ex.GetFullMessage());
             }
         }
 
@@ -98,7 +98,7 @@ namespace CoreLibrary
             }
             catch (Exception ex)
             {
-                return BadRequest(ex);
+                return BadRequest(ex.GetFullMessage());
             }            
         }
 
@@ -118,7 +118,7 @@ namespace CoreLibrary
             }
             catch (Exception ex)
             {
-                return BadRequest(ex);
+                return BadRequest(ex.GetFullMessage());
             }
         }
 
@@ -132,7 +132,7 @@ namespace CoreLibrary
             }
             catch (Exception ex)
             {
-                return BadRequest(ex);
+                return BadRequest(ex.GetFullMessage());
             }
         }
 
@@ -146,7 +146,7 @@ namespace CoreLibrary
             }
             catch (Exception ex)
             {
-                return BadRequest(ex);
+                return BadRequest(ex.GetFullMessage());
             }
         }
 
@@ -159,7 +159,7 @@ namespace CoreLibrary
             }
             catch (Exception ex)
             {
-                return BadRequest(ex);
+                return BadRequest(ex.GetFullMessage());
             }            
         }
 
@@ -173,7 +173,7 @@ namespace CoreLibrary
             }
             catch (Exception ex)
             {
-                return BadRequest(ex);
+                return BadRequest(ex.GetFullMessage());
             }            
         }
 
@@ -187,7 +187,7 @@ namespace CoreLibrary
             }
             catch (Exception ex)
             {
-                return BadRequest(ex);
+                return BadRequest(ex.GetFullMessage());
             }
         }
 
@@ -202,7 +202,7 @@ namespace CoreLibrary
             }
             catch (Exception ex)
             {
-                return BadRequest(ex);
+                return BadRequest(ex.GetFullMessage());
             }
             return Ok();
         }

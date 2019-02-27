@@ -49,7 +49,7 @@ export class UsersBaseComponent<TKey, TGrid extends IUser<TKey>, TCreate extends
             await this.reloadGrid();
         }
         catch (e) {
-            this._error = e.error.Message;
+            this._error = e.error;
         }
     }
 
@@ -62,7 +62,7 @@ export class UsersBaseComponent<TKey, TGrid extends IUser<TKey>, TCreate extends
             this._items = await this._service.getGrid(this._currentPage, this._pageSize, this._orderBy, this._filter);
         }
         catch (e) {
-            this._error = e.error.Message;
+            this._error = e.error;
         }
     }
 
@@ -73,7 +73,7 @@ export class UsersBaseComponent<TKey, TGrid extends IUser<TKey>, TCreate extends
             await this.reloadGrid();
         }
         catch (e) {
-            this._error = e.error.Message;
+            this._error = e.error;
         }
     }
 
@@ -84,7 +84,7 @@ export class UsersBaseComponent<TKey, TGrid extends IUser<TKey>, TCreate extends
                 await this.reloadGrid();
             }
             catch (e) {
-                this._error = e.error.Message;
+                this._error = e.error;
             }
         }
     }
@@ -96,7 +96,7 @@ export class UsersBaseComponent<TKey, TGrid extends IUser<TKey>, TCreate extends
                 await this.reloadGrid();
             }
             catch (e) {
-                this._error = e.error.Message;
+                this._error = e.error;
             }
         }
     }
@@ -112,7 +112,7 @@ export class UsersBaseComponent<TKey, TGrid extends IUser<TKey>, TCreate extends
                 this._isShowImport = false;
             }
             catch (e) {
-                this._error = e.error.Message;
+                this._error = e.error;
             }
         }
     }
@@ -127,7 +127,7 @@ export class UsersBaseComponent<TKey, TGrid extends IUser<TKey>, TCreate extends
                 this._isShowCreate = false;
             }
             catch (e) {
-                this._error = e.error.Message;
+                this._error = e.error;
             }
         }
     }
@@ -142,7 +142,7 @@ export class UsersBaseComponent<TKey, TGrid extends IUser<TKey>, TCreate extends
                 this._showEditId = id;
             }
             catch (e) {
-                this._error = e.error.Message;
+                this._error = e.error;
             }
         }
     }
@@ -153,7 +153,7 @@ export class UsersBaseComponent<TKey, TGrid extends IUser<TKey>, TCreate extends
             this._itemCreate = await this._service.getCreate();
         }
         catch (e) {
-            this._error = e.error.Message;
+            this._error = e.error;
         }
     }
 
@@ -163,7 +163,7 @@ export class UsersBaseComponent<TKey, TGrid extends IUser<TKey>, TCreate extends
             this._itemEdit = await this._service.getEdit(id);
         }
         catch (e) {
-            this._error = e.error.Message;
+            this._error = e.error;
         }
     }
 
@@ -174,7 +174,7 @@ export class UsersBaseComponent<TKey, TGrid extends IUser<TKey>, TCreate extends
             await this.reloadGrid();
         }
         catch (e) {
-            this._error = e.error.Message;
+            this._error = e.error;
         }
     }
 
@@ -185,7 +185,7 @@ export class UsersBaseComponent<TKey, TGrid extends IUser<TKey>, TCreate extends
             await this.reloadGrid();
         }
         catch (e) {
-            this._error = e.error.Message;
+            this._error = e.error;
         }
     }
 
@@ -198,7 +198,7 @@ export class UsersBaseComponent<TKey, TGrid extends IUser<TKey>, TCreate extends
             await this.reloadGrid();
         }
         catch (e) {
-            this._error = e.error.Message;
+            this._error = e.error;
         }
     }
 
@@ -209,7 +209,7 @@ export class UsersBaseComponent<TKey, TGrid extends IUser<TKey>, TCreate extends
             await this.reloadGrid();
         }
         catch (e) {
-            this._error = e.error.Message;
+            this._error = e.error;
         }
     }
 
@@ -220,7 +220,7 @@ export class UsersBaseComponent<TKey, TGrid extends IUser<TKey>, TCreate extends
             saveAs(b, "ExcelExport.xlsx");
         }
         catch (e) {
-            this._error = e.error.Message;
+            this._error = e.error;
         }
     }
 
@@ -231,7 +231,7 @@ export class UsersBaseComponent<TKey, TGrid extends IUser<TKey>, TCreate extends
             saveAs(b, "ImportTemplate.xlsx");
         }
         catch (e) {
-            this._error = e.error.Message;
+            this._error = e.error;
         }
     }
 
@@ -246,7 +246,7 @@ export class UsersBaseComponent<TKey, TGrid extends IUser<TKey>, TCreate extends
                 this._importResult = "Импорт прошел успешно";
             }
             catch (e) {
-                this._importResult = JSON.stringify(e.error.Message);
+                this._importResult = JSON.stringify(e.error);
             }
         }
     }
@@ -291,7 +291,7 @@ export class UsersBaseComponent<TKey, TGrid extends IUser<TKey>, TCreate extends
             this._error = "Пароль успешно сброшен";
         }
         catch (e) {
-            this._error = e.error.Message;
+            this._error = e.error;
         }
     }
 

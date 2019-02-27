@@ -31,7 +31,7 @@ export class AnimeEditComponent extends EditComponent<number, Anime, Anime, Anim
             }
         }
         catch (e) {
-            this._error = e.error.Message;
+            this._error = e.error;
         }
     }
 
@@ -44,7 +44,7 @@ export class AnimeEditComponent extends EditComponent<number, Anime, Anime, Anim
             }
         }
         catch (e) {
-            this._error = e.error.Message;
+            this._error = e.error;
         }
     }
 
@@ -54,7 +54,7 @@ export class AnimeEditComponent extends EditComponent<number, Anime, Anime, Anim
             this._itemEdit.imageId = id;
         }
         catch (e) {
-            this._error = e.error.Message;
+            this._error = e.error;
         }
     }
 
@@ -65,7 +65,7 @@ export class AnimeEditComponent extends EditComponent<number, Anime, Anime, Anim
             this._itemCreate.imageId = id;
         }
         catch (e) {
-            this._error = e.error.Message;
+            this._error = e.error;
         }
     }
 }

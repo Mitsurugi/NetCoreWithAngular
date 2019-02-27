@@ -32,7 +32,7 @@ export class CoreAccountComponent implements OnInit {
             await this._service.getToken(this._loginModel);
         }
         catch (e) {
-            this._error = e.error.Message;
+            this._error = e.error;
         }
     }
 
@@ -41,7 +41,7 @@ export class CoreAccountComponent implements OnInit {
             this._service.deleteToken();
         }
         catch (e) {
-            this._error = e.error.Message;
+            this._error = e.error;
         }
     }
 
@@ -52,7 +52,7 @@ export class CoreAccountComponent implements OnInit {
             this._error = "Пароль успешно изменен."
         }
         catch (e) {
-            this._error = e.error.Message;
+            this._error = e.error;
         }
     }
 }

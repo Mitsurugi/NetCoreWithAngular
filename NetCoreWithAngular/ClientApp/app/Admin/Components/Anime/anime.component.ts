@@ -30,7 +30,7 @@ export class AnimeComponent extends CoreComponent<number, Anime, Anime, Anime, A
             }
         }
         catch (e) {
-            this._error = e.error.Message;
+            this._error = e.error;
         }
     }
 
@@ -43,7 +43,7 @@ export class AnimeComponent extends CoreComponent<number, Anime, Anime, Anime, A
             }
         }
         catch (e) {
-            this._error = e.error.Message;
+            this._error = e.error;
         }
     }
 
@@ -53,7 +53,7 @@ export class AnimeComponent extends CoreComponent<number, Anime, Anime, Anime, A
             this._itemEdit.imageId = id;
         }
         catch (e) {
-            this._error = e.error.Message;
+            this._error = e.error;
         }
     }
 
@@ -64,7 +64,7 @@ export class AnimeComponent extends CoreComponent<number, Anime, Anime, Anime, A
             this._itemCreate.imageId = id;
         }
         catch (e) {
-            this._error = e.error.Message;
+            this._error = e.error;
         }
     }
 }
