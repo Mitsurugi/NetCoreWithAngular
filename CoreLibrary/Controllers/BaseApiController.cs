@@ -10,6 +10,17 @@ namespace CoreLibrary
 {
     [ApiController]
     [Route("api/[controller]/[action]")]
+    public class BaseApiController<TEntity, TKey, TViewModel> : BaseApiController<TEntity, TKey, TViewModel, TViewModel, TViewModel, TViewModel>
+        where TEntity : class, IEntity<TKey>, new()
+        where TViewModel : class, IEntity<TKey>, new()
+    {
+        public BaseApiController(IBaseService<TEntity, TKey, TViewModel> service, IStringLocalizer localizer) : base(service, localizer)
+        {
+        }
+    }
+
+    [ApiController]
+    [Route("api/[controller]/[action]")]
     public class BaseApiController<TEntity, TKey, TGrid, TCreate, TEdit, TFilter> : Controller
         where TEntity : class, IEntity<TKey>, new()
         where TCreate : class, IEntity<TKey>, new()

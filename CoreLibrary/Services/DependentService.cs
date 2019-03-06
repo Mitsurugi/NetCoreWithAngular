@@ -13,6 +13,17 @@ using Microsoft.Extensions.Localization;
 
 namespace CoreLibrary
 {
+    public class DependentService<TEntity, TKey, TViewModel, TParentKey, TParentEntity, TParentView> : DependentService<TEntity, TKey, TViewModel, TViewModel, TViewModel, TViewModel, TParentKey, TParentEntity, TParentView>, IDependentService<TEntity, TKey, TViewModel, TParentKey, TParentEntity, TParentView>
+        where TEntity : class, IDependentEntity<TKey, TParentKey>, new()
+        where TViewModel : class, IDependentEntity<TKey, TParentKey>, new()
+        where TParentEntity : class, IEntity<TParentKey>, new()
+        where TParentView : class, IEntity<TParentKey>, new()
+    {
+        public DependentService(IRepository<TEntity, TKey> repository, IRepository<TParentEntity, TParentKey> parentRepository, IMapper mapper, IStringLocalizer localizer) : base(repository, parentRepository, mapper, localizer)
+        {
+        }
+    }
+
     public class DependentService<TEntity, TKey, TGrid, TCreate, TEdit, TFilter, TParentKey, TParentEntity, TParentView> : IDependentService<TEntity, TKey, TGrid, TCreate, TEdit, TFilter, TParentKey, TParentEntity, TParentView>
         where TEntity : class, IDependentEntity<TKey, TParentKey>, new()
         where TCreate : class, IDependentEntity<TKey, TParentKey>, new()

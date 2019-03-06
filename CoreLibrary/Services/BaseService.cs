@@ -13,6 +13,15 @@ using Microsoft.Extensions.Localization;
 
 namespace CoreLibrary
 {
+    public class BaseService<TEntity, TKey, TViewModel> : BaseService<TEntity, TKey, TViewModel, TViewModel, TViewModel, TViewModel>, IBaseService<TEntity, TKey, TViewModel>
+        where TEntity : class, IEntity<TKey>, new()
+        where TViewModel : class, IEntity<TKey>, new()
+    {
+        public BaseService(IRepository<TEntity, TKey> repository, IMapper mapper, IStringLocalizer localizer) : base(repository, mapper, localizer)
+        {
+        }
+    }
+
     public class BaseService<TEntity, TKey, TGrid, TCreate, TEdit, TFilter> : IBaseService<TEntity, TKey, TGrid, TCreate, TEdit, TFilter>
         where TEntity : class, IEntity<TKey>, new()
         where TCreate : class, IEntity<TKey>, new()

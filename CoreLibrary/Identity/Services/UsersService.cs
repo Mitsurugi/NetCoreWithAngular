@@ -14,6 +14,16 @@ using Microsoft.Extensions.Localization;
 
 namespace CoreLibrary.Identity
 {
+    public class UsersService<TEntity, TKey, TViewModel> : UsersService<TEntity, TKey, TViewModel, TViewModel, TViewModel, TViewModel>, IUsersService<TEntity, TKey, TViewModel>
+        where TKey : IEquatable<TKey>
+        where TEntity : IdentityUser<TKey>, IUser<TKey>
+        where TViewModel : class, IUserViewModel<TKey>, new()
+    {
+        public UsersService(IIdentityService<TEntity, TKey> identityService, IMapper mapper, IStringLocalizer localizer) : base(identityService, mapper, localizer)
+        {
+        }
+    }
+
     public class UsersService<TEntity, TKey, TGrid, TCreate, TEdit, TFilter> : IUsersService<TEntity, TKey, TGrid, TCreate, TEdit, TFilter>
         where TKey: IEquatable<TKey>
         where TEntity : IdentityUser<TKey>, IUser<TKey>

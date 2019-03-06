@@ -9,7 +9,7 @@ using Microsoft.Extensions.Localization;
 
 namespace NetCoreWithAngular.Services
 {
-    public class AnimeService : BaseService<Anime, int, AnimeViewModel, AnimeViewModel, AnimeViewModel, AnimeViewModel>
+    public class AnimeService : BaseService<Anime, int, AnimeViewModel>
     {
         private readonly IFileService<File, int> _fileService;
 

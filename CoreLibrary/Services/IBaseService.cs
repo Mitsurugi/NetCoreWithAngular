@@ -5,6 +5,13 @@ using System.IO;
 
 namespace CoreLibrary
 {
+    public interface IBaseService<TEntity, TKey, TViewModel> : IBaseService<TEntity, TKey, TViewModel, TViewModel, TViewModel, TViewModel>
+        where TEntity : class, IEntity<TKey>, new()
+        where TViewModel : class, IEntity<TKey>, new()
+    {
+
+    }
+
     public interface IBaseService<TEntity, TKey, TGrid, TCreate, TEdit, TFilter>
         where TEntity : class, IEntity<TKey>, new()
         where TCreate : class, IEntity<TKey>, new()

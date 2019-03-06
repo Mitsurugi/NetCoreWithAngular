@@ -82,15 +82,17 @@ namespace NetCoreWithAngular
             //Custom Services
             services.AddScoped(typeof(IRepository<,>), typeof(ExampleRepository<,>));
             services.AddScoped(typeof(IBaseService<,,,,,>), typeof(BaseService<,,,,,>));
+            services.AddScoped(typeof(IBaseService<,,>), typeof(BaseService<,,>));
             services.AddScoped(typeof(IFileService<,>), typeof(FileService<,>));
             services.AddScoped(typeof(IDependentService<,,,,,,,,>), typeof(DependentService<,,,,,,,,>));
+            services.AddScoped(typeof(IDependentService<,,,,,>), typeof(DependentService<,,,,,>));
 
             services.AddScoped<IIdentityService<User, System.Guid>, IdentityService>();
 
-            services.AddScoped<IUsersService<User, System.Guid, UserViewModel, UserViewModel, UserViewModel, UserViewModel>, UsersService<User, System.Guid, UserViewModel, UserViewModel, UserViewModel, UserViewModel>>();
+            services.AddScoped<IUsersService<User, System.Guid, UserViewModel>, UsersService<User, System.Guid, UserViewModel>>();
             services.AddScoped<IBaseService<Book, int, BookGridModel, BookViewModel, BookViewModel, BookFilterModel>, BookService>();
-            services.AddScoped<IBaseService<Anime, int, AnimeViewModel, AnimeViewModel, AnimeViewModel, AnimeViewModel>, AnimeService>();
-            services.AddScoped<IDependentService<AnimeEpisode, int, AnimeEpisodeViewModel, AnimeEpisodeViewModel, AnimeEpisodeViewModel, AnimeEpisodeViewModel, int, Anime, AnimeViewModel>, AnimeEpisodeService>();
+            services.AddScoped<IBaseService<Anime, int, AnimeViewModel>, AnimeService>();
+            services.AddScoped<IDependentService<AnimeEpisode, int, AnimeEpisodeViewModel, int, Anime, AnimeViewModel>, AnimeEpisodeService>();
 
             services.AddScoped<IFrontDataService, FrontDataService>();
         }

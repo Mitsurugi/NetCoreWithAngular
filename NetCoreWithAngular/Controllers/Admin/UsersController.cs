@@ -7,9 +7,9 @@ using Microsoft.Extensions.Localization;
 namespace NetCoreWithAngular.Controllers
 {
     [Authorize(Roles = "Admin")]
-    public class UsersController : UsersBaseController<User, System.Guid, UserViewModel, UserViewModel, UserViewModel, UserViewModel>
+    public class UsersController : UsersBaseController<User, System.Guid, UserViewModel>
     {        
-        public UsersController(IUsersService<User, System.Guid, UserViewModel, UserViewModel, UserViewModel, UserViewModel> service, IStringLocalizer localizer) : base(service, localizer)
+        public UsersController(IUsersService<User, System.Guid, UserViewModel> service, IStringLocalizer localizer) : base(service, localizer)
         {
         }
     }

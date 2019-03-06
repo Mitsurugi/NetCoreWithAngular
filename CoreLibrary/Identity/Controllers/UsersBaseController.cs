@@ -11,6 +11,18 @@ namespace CoreLibrary.Identity
 {
     [ApiController]
     [Route("api/[controller]/[action]")]
+    public class UsersBaseController<TEntity, TKey, TViewModel> : UsersBaseController<TEntity, TKey, TViewModel, TViewModel, TViewModel, TViewModel>
+        where TKey : System.IEquatable<TKey>
+        where TEntity : IdentityUser<TKey>, IUser<TKey>
+        where TViewModel : class, IUserViewModel<TKey>, new()
+    {
+        public UsersBaseController(IUsersService<TEntity, TKey, TViewModel> service, IStringLocalizer localizer) : base(service, localizer)
+        {
+        }
+    }
+
+    [ApiController]
+    [Route("api/[controller]/[action]")]
     public class UsersBaseController<TEntity, TKey, TGrid, TCreate, TEdit, TFilter> : Controller
         where TKey: System.IEquatable<TKey>
         where TEntity : IdentityUser<TKey>, IUser<TKey>

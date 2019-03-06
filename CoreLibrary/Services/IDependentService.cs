@@ -5,6 +5,15 @@ using System.IO;
 
 namespace CoreLibrary
 {
+    public interface IDependentService<TEntity, TKey, TViewModel, TParentKey, TParentEntity, TParentView> : IDependentService<TEntity, TKey, TViewModel, TViewModel, TViewModel, TViewModel, TParentKey, TParentEntity, TParentView>
+        where TEntity : class, IDependentEntity<TKey, TParentKey>, new()
+        where TViewModel : class, IDependentEntity<TKey, TParentKey>, new()
+        where TParentEntity : class, IEntity<TParentKey>, new()
+        where TParentView : class, IEntity<TParentKey>, new()
+    {
+
+    }
+
     public interface IDependentService<TEntity, TKey, TGrid, TCreate, TEdit, TFilter, TParentKey, TParentEntity, TParentView>
         where TEntity : class, IDependentEntity<TKey, TParentKey>, new()
         where TCreate : class, IDependentEntity<TKey, TParentKey>, new()

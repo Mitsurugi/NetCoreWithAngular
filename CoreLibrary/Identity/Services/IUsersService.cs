@@ -6,6 +6,14 @@ using Microsoft.AspNetCore.Identity;
 
 namespace CoreLibrary.Identity
 {
+    public interface IUsersService<TEntity, TKey, TViewModel> : IUsersService<TEntity, TKey, TViewModel, TViewModel, TViewModel, TViewModel>
+        where TKey : System.IEquatable<TKey>
+        where TEntity : IdentityUser<TKey>, IUser<TKey>
+        where TViewModel : class, IUserViewModel<TKey>, new()
+    {
+
+    }
+
     public interface IUsersService<TEntity, TKey, TGrid, TCreate, TEdit, TFilter>
         where TKey : System.IEquatable<TKey>
         where TEntity : IdentityUser<TKey>, IUser<TKey>
