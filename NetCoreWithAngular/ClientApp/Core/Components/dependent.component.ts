@@ -6,9 +6,9 @@ import { saveAs } from 'file-saver';
 
 @Component({
 })
-export class DependentComponent<TKey, TGrid extends IDependentEntity<TKey, TParentKey>, TCreate extends IDependentEntity<TKey, TParentKey>, TEdit extends IDependentEntity<TKey, TParentKey>, TFilter, TParentKey, TParentView> implements OnInit {
+export class DependentComponent<TKey, TParentKey, TParentView, TGrid extends IDependentEntity<TKey, TParentKey>, TCreate extends IDependentEntity<TKey, TParentKey> = TGrid, TEdit extends IDependentEntity<TKey, TParentKey> = TGrid, TFilter = TGrid> implements OnInit {
 
-    _service: DependentService<TKey, TGrid, TCreate, TEdit, TFilter, TParentKey, TParentView>;
+    _service: DependentService<TKey, TParentKey, TParentView, TGrid, TCreate, TEdit, TFilter>;
 
     @Input() _parentId: TParentKey;
 
@@ -18,7 +18,7 @@ export class DependentComponent<TKey, TGrid extends IDependentEntity<TKey, TPare
     _itemCreate: TCreate;
     _filter: TFilter;
     _currentPage: number = 1;
-    _pageSize: number = 5;
+    _pageSize: number = 20;
     _totalPages: number = 1;
     _error: string = null;
     _isShowCreate = false;
@@ -35,7 +35,7 @@ export class DependentComponent<TKey, TGrid extends IDependentEntity<TKey, TPare
     typeEdit: (new () => TEdit);
     typeFilter: (new () => TFilter);
 
-    constructor(service: DependentService<TKey, TGrid, TCreate, TEdit, TFilter, TParentKey, TParentView>, typeGrid: (new () => TGrid), typeCreate: (new () => TCreate), typeEdit: (new () => TEdit), typeFilter: (new () => TFilter), route: ActivatedRoute) {
+    constructor(service: DependentService<TKey, TParentKey, TParentView, TGrid, TCreate, TEdit, TFilter>, typeGrid: (new () => TGrid), typeCreate: (new () => TCreate), typeEdit: (new () => TEdit), typeFilter: (new () => TFilter), route: ActivatedRoute) {
         this._service = service;
         this._items = new Array<TGrid>();
         this._itemEdit = new typeEdit();

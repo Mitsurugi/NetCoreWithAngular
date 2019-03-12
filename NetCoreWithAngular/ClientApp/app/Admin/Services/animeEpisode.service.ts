@@ -6,7 +6,7 @@ import { AnimeEpisode } from '../Models/AnimeEpisode/animeEpisode';
 import { Anime } from '../Models/Anime/anime';
 
 @Injectable()
-export class AnimeEpisodeService extends DependentService<number, AnimeEpisode, AnimeEpisode, AnimeEpisode, AnimeEpisode, number, Anime> {
+export class AnimeEpisodeService extends DependentService<number, number, Anime, AnimeEpisode> {
 
     constructor(http: HttpClient) { super(http); this._controller = 'animeEpisode'; }
 }

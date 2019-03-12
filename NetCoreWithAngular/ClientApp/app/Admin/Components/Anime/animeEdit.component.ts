@@ -13,7 +13,7 @@ import { ActivatedRoute, Router } from '@angular/router';
     styleUrls: ['./animeEdit.component.css'],
     providers: [AnimeService, FileService]
 })
-export class AnimeEditComponent extends EditComponent<number, Anime, Anime, Anime, Anime> {
+export class AnimeEditComponent extends EditComponent<number, Anime> {
 
     _fileService: FileService<number>;
 

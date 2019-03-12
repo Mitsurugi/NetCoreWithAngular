@@ -13,7 +13,7 @@ import { Anime } from '../../Models/Anime/anime';
     styleUrls: ['./animeEpisode.component.css'],
     providers: [AnimeEpisodeService]
 })
-export class AnimeEpisodeComponent extends DependentComponent<number, AnimeEpisode, AnimeEpisode, AnimeEpisode, AnimeEpisode, number, Anime> {
+export class AnimeEpisodeComponent extends DependentComponent<number, number, Anime, AnimeEpisode> {
 
     constructor(service: AnimeEpisodeService, route: ActivatedRoute) {
         super(service, AnimeEpisode, AnimeEpisode, AnimeEpisode, AnimeEpisode, route);

@@ -50,7 +50,7 @@ var DependentComponent = /** @class */ (function () {
     function DependentComponent(service, typeGrid, typeCreate, typeEdit, typeFilter, route) {
         var _this = this;
         this._currentPage = 1;
-        this._pageSize = 5;
+        this._pageSize = 20;
         this._totalPages = 1;
         this._error = null;
         this._isShowCreate = false;

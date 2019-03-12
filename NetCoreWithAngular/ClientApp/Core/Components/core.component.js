@@ -48,7 +48,7 @@ import { saveAs } from 'file-saver';
 var CoreComponent = /** @class */ (function () {
     function CoreComponent(service, typeGrid, typeCreate, typeEdit, typeFilter) {
         this._currentPage = 1;
-        this._pageSize = 5;
+        this._pageSize = 20;
         this._totalPages = 1;
         this._error = null;
         this._isShowCreate = false;

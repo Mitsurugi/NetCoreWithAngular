@@ -6,7 +6,7 @@ import { forEach } from '@angular/router/src/utils/collection';
 
 @Component({
 })
-export class CoreComponent<TKey, TGrid extends IEntity<TKey>, TCreate extends IEntity<TKey>, TEdit extends IEntity<TKey>, TFilter> implements OnInit {
+export class CoreComponent<TKey, TGrid extends IEntity<TKey>, TCreate extends IEntity<TKey> = TGrid, TEdit extends IEntity<TKey> = TGrid, TFilter = TGrid> implements OnInit {
 
     _service: CoreService<TKey, TGrid, TCreate, TEdit, TFilter>;
 
@@ -15,7 +15,7 @@ export class CoreComponent<TKey, TGrid extends IEntity<TKey>, TCreate extends IE
     _itemCreate: TCreate;
     _filter: TFilter;
     _currentPage: number = 1;
-    _pageSize: number = 5;
+    _pageSize: number = 20;
     _totalPages: number = 1;
     _error: string = null;
     _isShowCreate = false;

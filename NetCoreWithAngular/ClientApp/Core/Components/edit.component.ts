@@ -6,7 +6,7 @@ import { ActivatedRoute, Router } from "@angular/router";
 
 @Component({
 })
-export class EditComponent<TKey, TGrid extends IEntity<TKey>, TCreate extends IEntity<TKey>, TEdit extends IEntity<TKey>, TFilter> implements OnInit {    
+export class EditComponent<TKey, TGrid extends IEntity<TKey>, TCreate extends IEntity<TKey> = TGrid, TEdit extends IEntity<TKey> = TGrid, TFilter = TGrid> implements OnInit {    
 
     _service: CoreService<TKey, TGrid, TCreate, TEdit, TFilter>;
     _router: Router;

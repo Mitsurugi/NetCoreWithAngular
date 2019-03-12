@@ -4,7 +4,7 @@ import { IUser } from './IUser';
 
 @Component({
 })
-export class UsersBaseComponent<TKey, TGrid extends IUser<TKey>, TCreate extends IUser<TKey>, TEdit extends IUser<TKey>, TFilter> implements OnInit {
+export class UsersBaseComponent<TKey, TGrid extends IUser<TKey>, TCreate extends IUser<TKey> = TGrid, TEdit extends IUser<TKey> = TGrid, TFilter = TGrid> implements OnInit {
 
     _service: UsersService<TKey, TGrid, TCreate, TEdit, TFilter>;
 

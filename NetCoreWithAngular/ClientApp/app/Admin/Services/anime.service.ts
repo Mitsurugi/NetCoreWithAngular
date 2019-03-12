@@ -7,7 +7,7 @@ import { Anime } from '../Models/Anime/anime';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
 @Injectable()
-export class AnimeService extends CoreService<number, Anime, Anime, Anime, Anime> {
+export class AnimeService extends CoreService<number, Anime> {
 
     _fileService: FileService<number>;
     _sanitizer: DomSanitizer;

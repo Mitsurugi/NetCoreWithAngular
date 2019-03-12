@@ -12,7 +12,7 @@ import { read } from 'fs';
     styleUrls: ['./anime.component.css'],
     providers: [AnimeService, FileService]
 })
-export class AnimeComponent extends CoreComponent<number, Anime, Anime, Anime, Anime> {
+export class AnimeComponent extends CoreComponent<number, Anime> {
 
     _fileService: FileService<number>;
 

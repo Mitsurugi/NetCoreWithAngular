@@ -5,7 +5,7 @@ import { IEntity } from '../Models/IEntity'
 import { StaticMethods } from './staticMethods';
 
 @Injectable()
-export class CoreService<TKey, TGrid extends IEntity<TKey>, TCreate extends IEntity<TKey>, TEdit extends IEntity<TKey>, TFilter> {
+export class CoreService<TKey, TGrid extends IEntity<TKey>, TCreate extends IEntity<TKey> = TGrid, TEdit extends IEntity<TKey> = TGrid, TFilter = TGrid> {
 
     _controller = "";
     protected _http: HttpClient;

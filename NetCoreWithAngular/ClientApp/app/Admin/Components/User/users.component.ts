@@ -11,9 +11,9 @@ import { User } from '../../Models/User/user';
     styleUrls: ['./users.component.css'],
     providers: [UsersService]
 })
-export class UsersComponent extends UsersBaseComponent<string, User, User, User, User> {
+export class UsersComponent extends UsersBaseComponent<string, User> {
 
-    constructor(service: UsersService<string, User, User, User, User>) {
+    constructor(service: UsersService<string, User>) {
         super(service, User, User, User, User);
     }
 }
