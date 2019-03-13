@@ -20,7 +20,7 @@ export class DependentComponent<TKey, TParentKey, TParentView, TGrid extends IDe
     _currentPage: number = 1;
     _pageSize: number = 20;
     _totalPages: number = 1;
-    _error: string = null;
+    _message: string = null;
     _isShowCreate = false;
     _showEditId?: TKey = null;
     _checkedItems: TKey[] = [];
@@ -59,12 +59,12 @@ export class DependentComponent<TKey, TParentKey, TParentView, TGrid extends IDe
             await this.reloadGrid();
         }
         catch (e) {
-            this._error = e.error;
+            this._message = "Ошибка: " + e.error;
         }
     }
 
     public async reloadGrid() {
-        this._error = null;
+        this._message = null;
         try {
             this._showEditId = null;
             this._totalPages = await this._service.getPagesCount(this._pageSize, this._parentId, this._filter);
@@ -72,7 +72,7 @@ export class DependentComponent<TKey, TParentKey, TParentView, TGrid extends IDe
             await this.getCreate();
         }
         catch (e) {
-            this._error = e.error;
+            this._message = "Ошибка: " + e.error;
         }
     }
 
@@ -83,7 +83,7 @@ export class DependentComponent<TKey, TParentKey, TParentView, TGrid extends IDe
             await this.reloadGrid();
         }
         catch (e) {
-            this._error = e.error;
+            this._message = "Ошибка: " + e.error;
         }
     }
 
@@ -94,7 +94,7 @@ export class DependentComponent<TKey, TParentKey, TParentView, TGrid extends IDe
                 await this.reloadGrid();
             }
             catch (e) {
-                this._error = e.error;
+                this._message = "Ошибка: " + e.error;
             }
         }
     }
@@ -106,7 +106,7 @@ export class DependentComponent<TKey, TParentKey, TParentView, TGrid extends IDe
                 await this.reloadGrid();
             }
             catch (e) {
-                this._error = e.error;
+                this._message = "Ошибка: " + e.error;
             }
         }
     }
@@ -122,7 +122,7 @@ export class DependentComponent<TKey, TParentKey, TParentView, TGrid extends IDe
                 this._isShowImport = false;
             }
             catch (e) {
-                this._error = e.error;
+                this._message = "Ошибка: " + e.error;
             }
         }
     }
@@ -137,7 +137,7 @@ export class DependentComponent<TKey, TParentKey, TParentView, TGrid extends IDe
                 this._isShowCreate = false;
             }
             catch (e) {
-                this._error = e.error;
+                this._message = "Ошибка: " + e.error;
             }
         }
     }
@@ -152,55 +152,55 @@ export class DependentComponent<TKey, TParentKey, TParentView, TGrid extends IDe
                 this._showEditId = id;
             }
             catch (e) {
-                this._error = e.error;
+                this._message = "Ошибка: " + e.error;
             }
         }
     }
 
     protected async getCreate() {
-        this._error = null;
+        this._message = null;
         try {
             this._itemCreate = await this._service.getCreate(this._parentId);
         }
         catch (e) {
-            this._error = e.error;
+            this._message = "Ошибка: " + e.error;
         }
     }
 
     protected async getEdit(id: TKey) {
-        this._error = null;
+        this._message = null;
         try {
             this._itemEdit = await this._service.getEdit(id);
         }
         catch (e) {
-            this._error = e.error;
+            this._message = "Ошибка: " + e.error;
         }
     }
 
     public async delete(id: TKey) {
-        this._error = null;
+        this._message = null;
         try {
             await this._service.delete(id);
             await this.reloadGrid();
         }
         catch (e) {
-            this._error = e.error;
+            this._message = "Ошибка: " + e.error;
         }
     }
 
     public async deleteChecked() {
-        this._error = null;
+        this._message = null;
         try {
             await this._service.deleteMany(this._checkedItems);
             await this.reloadGrid();
         }
         catch (e) {
-            this._error = e.error;
+            this._message = "Ошибка: " + e.error;
         }
     }
 
     public async postCreate() {
-        this._error = null;
+        this._message = null;
         try {
             await this._service.postCreate(this._itemCreate);
             this._isShowCreate = false;
@@ -208,40 +208,40 @@ export class DependentComponent<TKey, TParentKey, TParentView, TGrid extends IDe
             await this.reloadGrid();
         }
         catch (e) {
-            this._error = e.error;
+            this._message = "Ошибка: " + e.error;
         }
     }
 
     public async postEdit() {
-        this._error = null;
+        this._message = null;
         try {
             this._itemEdit = await this._service.postEdit(this._itemEdit);
             await this.reloadGrid();
         }
         catch (e) {
-            this._error = e.error;
+            this._message = "Ошибка: " + e.error;
         }
     }
 
     public async excelExport() {
-        this._error = null;
+        this._message = null;
         try {
             let b = await this._service.getExcelExport(this._parentId, this._orderBy, this._filter);
             saveAs(b, "ExcelExport.xlsx");
         }
         catch (e) {
-            this._error = e.error;
+            this._message = "Ошибка: " + e.error;
         }
     }
 
     public async importTemplate() {
-        this._error = null;
+        this._message = null;
         try {
             let b = await this._service.getImportTemplate();
             saveAs(b, "ImportTemplate.xlsx");
         }
         catch (e) {
-            this._error = e.error;
+            this._message = "Ошибка: " + e.error;
         }
     }
 
@@ -256,7 +256,7 @@ export class DependentComponent<TKey, TParentKey, TParentView, TGrid extends IDe
                 this._importResult = "Импорт прошел успешно";
             }
             catch (e) {
-                this._importResult = JSON.stringify(e.error);
+                this._importResult = JSON.stringify("Ошибка: " + e.error);
             }
         }        
     }

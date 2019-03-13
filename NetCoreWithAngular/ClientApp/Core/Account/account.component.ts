@@ -12,7 +12,7 @@ export class CoreAccountComponent implements OnInit {
     _accGlobals: AccountGlobals;
     _loginModel: LoginModel;
     _changePasswordModel: ChangePasswordModel;
-    _error: string = null;
+    _message: string = null;
 
     constructor(service: CoreAccountService, accGlobals: AccountGlobals)
     {
@@ -27,12 +27,12 @@ export class CoreAccountComponent implements OnInit {
     }
 
     public async getToken() {
-        this._error = null;
+        this._message = null;
         try {
             await this._service.getToken(this._loginModel);
         }
         catch (e) {
-            this._error = e.error;
+            this._message = e.error;
         }
     }
 
@@ -41,18 +41,18 @@ export class CoreAccountComponent implements OnInit {
             this._service.deleteToken();
         }
         catch (e) {
-            this._error = e.error;
+            this._message = e.error;
         }
     }
 
     public async changePassword() {
-        this._error = null;
+        this._message = null;
         try {
             await this._service.changePassword(this._changePasswordModel);
-            this._error = "Пароль успешно изменен."
+            this._message = "Пароль успешно изменен."
         }
         catch (e) {
-            this._error = e.error;
+            this._message = e.error;
         }
     }
 }

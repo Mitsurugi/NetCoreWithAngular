@@ -1,7 +1,7 @@
 ﻿<h2>Book</h2>
 <button class="btn btn-default" [routerLink]="['/admin/book']">Back to list</button>
-<div *ngIf="_error" class="form-group">
-    <span class="error">Error: {{_error}}</span>
+<div *ngIf="_message" class="message">
+    <p>{{_message}}</p>
 </div>
 
 <div class="create-new">

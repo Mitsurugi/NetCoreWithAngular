@@ -78,7 +78,7 @@ namespace CoreLibrary.Identity
 
             createView = _mapper.Map<TEntity, TCreate>(create);
 
-            var list = new List<SelectListItem> { new SelectListItem { Value = "", Text = "" } };
+            var list = new List<SelectListItem>();
             list.AddRange(_identityService.GetRoles().Select(i => new SelectListItem { Text = i.DisplayName, Value = i.Name, Selected = i.Name == createView.Role }));
             createView.RoleList = list;
 
@@ -92,7 +92,7 @@ namespace CoreLibrary.Identity
         {
             var model = new TCreate();
 
-            var list = new List<SelectListItem> { new SelectListItem { Value = "", Text = "" } };
+            var list = new List<SelectListItem>();
             list.AddRange(_identityService.GetRoles().Select(i => new SelectListItem { Text = i.DisplayName, Value = i.Name }));
             model.RoleList = list;
 
@@ -125,7 +125,7 @@ namespace CoreLibrary.Identity
 
             editView = _mapper.Map<TEntity, TEdit>(entity);
 
-            var list = new List<SelectListItem> { new SelectListItem { Value = "", Text = "" } };
+            var list = new List<SelectListItem>();
             list.AddRange(_identityService.GetRoles().Select(i => new SelectListItem { Text = i.DisplayName, Value = i.Name, Selected = i.Name == editView.Role }));
             editView.RoleList = list;
 
@@ -141,7 +141,7 @@ namespace CoreLibrary.Identity
 
             var edit = _mapper.Map<TEntity, TEdit>(entity);
 
-            var list = new List<SelectListItem> { new SelectListItem { Value = "", Text = "" } };
+            var list = new List<SelectListItem>();
             list.AddRange(_identityService.GetRoles().Select(i => new SelectListItem { Text = i.Name, Value = i.Name }));
             edit.RoleList = list;
 

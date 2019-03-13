@@ -73,7 +73,7 @@ var AnimeComponent = /** @class */ (function (_super) {
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        this._error = null;
+                        this._message = null;
                         _a.label = 1;
                     case 1:
                         _a.trys.push([1, 4, , 5]);
@@ -86,7 +86,7 @@ var AnimeComponent = /** @class */ (function (_super) {
                     case 3: return [3 /*break*/, 5];
                     case 4:
                         e_1 = _a.sent();
-                        this._error = e_1.error;
+                        this._message = e_1.error;
                         return [3 /*break*/, 5];
                     case 5: return [2 /*return*/];
                 }
@@ -99,7 +99,7 @@ var AnimeComponent = /** @class */ (function (_super) {
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        this._error = null;
+                        this._message = null;
                         _a.label = 1;
                     case 1:
                         _a.trys.push([1, 4, , 5]);
@@ -112,7 +112,7 @@ var AnimeComponent = /** @class */ (function (_super) {
                     case 3: return [3 /*break*/, 5];
                     case 4:
                         e_2 = _a.sent();
-                        this._error = e_2.error;
+                        this._message = e_2.error;
                         return [3 /*break*/, 5];
                     case 5: return [2 /*return*/];
                 }
@@ -133,7 +133,7 @@ var AnimeComponent = /** @class */ (function (_super) {
                         return [3 /*break*/, 3];
                     case 2:
                         e_3 = _a.sent();
-                        this._error = e_3.error;
+                        this._message = e_3.error;
                         return [3 /*break*/, 3];
                     case 3: return [2 /*return*/];
                 }
@@ -157,7 +157,7 @@ var AnimeComponent = /** @class */ (function (_super) {
                         return [3 /*break*/, 4];
                     case 3:
                         e_4 = _a.sent();
-                        this._error = e_4.error;
+                        this._message = e_4.error;
                         return [3 /*break*/, 4];
                     case 4: return [2 /*return*/];
                 }

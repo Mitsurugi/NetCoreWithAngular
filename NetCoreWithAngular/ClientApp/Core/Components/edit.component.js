@@ -48,7 +48,7 @@ import { ActivatedRoute, Router } from "@angular/router";
 var EditComponent = /** @class */ (function () {
     function EditComponent(service, typeCreate, typeEdit, route, router, listUrl) {
         var _this = this;
-        this._error = null;
+        this._message = null;
         this._listUrl = listUrl;
         this._service = service;
         this._router = router;
@@ -61,7 +61,7 @@ var EditComponent = /** @class */ (function () {
     EditComponent.prototype.ngOnInit = function () {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
-                this._error = null;
+                this._message = null;
                 try {
                     if (this._id) {
                         this.getEdit();
@@ -71,7 +71,7 @@ var EditComponent = /** @class */ (function () {
                     }
                 }
                 catch (e) {
-                    this._error = e.error;
+                    this._message = "Ошибка: " + e.error;
                 }
                 return [2 /*return*/];
             });
@@ -83,7 +83,7 @@ var EditComponent = /** @class */ (function () {
             return __generator(this, function (_b) {
                 switch (_b.label) {
                     case 0:
-                        this._error = null;
+                        this._message = null;
                         _b.label = 1;
                     case 1:
                         _b.trys.push([1, 3, , 4]);
@@ -94,7 +94,7 @@ var EditComponent = /** @class */ (function () {
                         return [3 /*break*/, 4];
                     case 3:
                         e_1 = _b.sent();
-                        this._error = e_1.error;
+                        this._message = "Ошибка: " + e_1.error;
                         return [3 /*break*/, 4];
                     case 4: return [2 /*return*/];
                 }
@@ -107,7 +107,7 @@ var EditComponent = /** @class */ (function () {
             return __generator(this, function (_b) {
                 switch (_b.label) {
                     case 0:
-                        this._error = null;
+                        this._message = null;
                         _b.label = 1;
                     case 1:
                         _b.trys.push([1, 3, , 4]);
@@ -118,7 +118,7 @@ var EditComponent = /** @class */ (function () {
                         return [3 /*break*/, 4];
                     case 3:
                         e_2 = _b.sent();
-                        this._error = e_2.error;
+                        this._message = "Ошибка: " + e_2.error;
                         return [3 /*break*/, 4];
                     case 4: return [2 /*return*/];
                 }
@@ -127,25 +127,25 @@ var EditComponent = /** @class */ (function () {
     };
     EditComponent.prototype.postCreate = function () {
         return __awaiter(this, void 0, void 0, function () {
-            var e_3;
+            var result, e_3;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        this._error = null;
+                        this._message = null;
                         _a.label = 1;
                     case 1:
                         _a.trys.push([1, 4, , 5]);
                         return [4 /*yield*/, this._service.postCreate(this._itemCreate)];
                     case 2:
-                        _a.sent();
+                        result = _a.sent();
                         return [4 /*yield*/, this.getCreate()];
                     case 3:
                         _a.sent();
-                        this._router.navigate([this._listUrl]);
+                        this._router.navigate([this._listUrl + 'edit/' + result.id]);
                         return [3 /*break*/, 5];
                     case 4:
                         e_3 = _a.sent();
-                        this._error = e_3.error;
+                        this._message = "Ошибка: " + e_3.error;
                         return [3 /*break*/, 5];
                     case 5: return [2 /*return*/];
                 }
@@ -158,7 +158,7 @@ var EditComponent = /** @class */ (function () {
             return __generator(this, function (_b) {
                 switch (_b.label) {
                     case 0:
-                        this._error = null;
+                        this._message = null;
                         _b.label = 1;
                     case 1:
                         _b.trys.push([1, 3, , 4]);
@@ -166,11 +166,11 @@ var EditComponent = /** @class */ (function () {
                         return [4 /*yield*/, this._service.postEdit(this._itemEdit)];
                     case 2:
                         _a._itemEdit = _b.sent();
-                        this._router.navigate([this._listUrl]);
+                        this._message = "Изменения успешно сохранены";
                         return [3 /*break*/, 4];
                     case 3:
                         e_4 = _b.sent();
-                        this._error = e_4.error;
+                        this._message = "Ошибка: " + e_4.error;
                         return [3 /*break*/, 4];
                     case 4: return [2 /*return*/];
                 }

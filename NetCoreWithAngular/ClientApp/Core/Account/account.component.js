@@ -49,7 +49,7 @@ import { LoginModel } from './loginModel';
 import { ChangePasswordModel } from './changePasswordModel';
 var CoreAccountComponent = /** @class */ (function () {
     function CoreAccountComponent(service, accGlobals) {
-        this._error = null;
+        this._message = null;
         this._service = service;
         this._accGlobals = accGlobals;
         this._loginModel = new LoginModel();
@@ -69,7 +69,7 @@ var CoreAccountComponent = /** @class */ (function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        this._error = null;
+                        this._message = null;
                         _a.label = 1;
                     case 1:
                         _a.trys.push([1, 3, , 4]);
@@ -79,7 +79,7 @@ var CoreAccountComponent = /** @class */ (function () {
                         return [3 /*break*/, 4];
                     case 3:
                         e_1 = _a.sent();
-                        this._error = e_1.error;
+                        this._message = e_1.error;
                         return [3 /*break*/, 4];
                     case 4: return [2 /*return*/];
                 }
@@ -93,7 +93,7 @@ var CoreAccountComponent = /** @class */ (function () {
                     this._service.deleteToken();
                 }
                 catch (e) {
-                    this._error = e.error;
+                    this._message = e.error;
                 }
                 return [2 /*return*/];
             });
@@ -105,18 +105,18 @@ var CoreAccountComponent = /** @class */ (function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        this._error = null;
+                        this._message = null;
                         _a.label = 1;
                     case 1:
                         _a.trys.push([1, 3, , 4]);
                         return [4 /*yield*/, this._service.changePassword(this._changePasswordModel)];
                     case 2:
                         _a.sent();
-                        this._error = "Пароль успешно изменен.";
+                        this._message = "Пароль успешно изменен.";
                         return [3 /*break*/, 4];
                     case 3:
                         e_2 = _a.sent();
-                        this._error = e_2.error;
+                        this._message = e_2.error;
                         return [3 /*break*/, 4];
                     case 4: return [2 /*return*/];
                 }

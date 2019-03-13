@@ -15,7 +15,7 @@ export class UsersBaseComponent<TKey, TGrid extends IUser<TKey>, TCreate extends
     _currentPage: number = 1;
     _pageSize: number = 5;
     _totalPages: number = 1;
-    _error: string = null;
+    _message: string = null;
     _isShowCreate = false;
     _showEditId?: TKey = null;
     _checkedItems: TKey[] = [];
@@ -49,12 +49,12 @@ export class UsersBaseComponent<TKey, TGrid extends IUser<TKey>, TCreate extends
             await this.reloadGrid();
         }
         catch (e) {
-            this._error = e.error;
+            this._message = "Ошибка: " + e.error;
         }
     }
 
     public async reloadGrid() {
-        this._error = null;
+        this._message = null;
         try {
             this._showEditId = null;
             this._resetPasswordId = null;
@@ -62,7 +62,7 @@ export class UsersBaseComponent<TKey, TGrid extends IUser<TKey>, TCreate extends
             this._items = await this._service.getGrid(this._currentPage, this._pageSize, this._orderBy, this._filter);
         }
         catch (e) {
-            this._error = e.error;
+            this._message = "Ошибка: " + e.error;
         }
     }
 
@@ -73,7 +73,7 @@ export class UsersBaseComponent<TKey, TGrid extends IUser<TKey>, TCreate extends
             await this.reloadGrid();
         }
         catch (e) {
-            this._error = e.error;
+            this._message = "Ошибка: " + e.error;
         }
     }
 
@@ -84,7 +84,7 @@ export class UsersBaseComponent<TKey, TGrid extends IUser<TKey>, TCreate extends
                 await this.reloadGrid();
             }
             catch (e) {
-                this._error = e.error;
+                this._message = "Ошибка: " + e.error;
             }
         }
     }
@@ -96,7 +96,7 @@ export class UsersBaseComponent<TKey, TGrid extends IUser<TKey>, TCreate extends
                 await this.reloadGrid();
             }
             catch (e) {
-                this._error = e.error;
+                this._message = "Ошибка: " + e.error;
             }
         }
     }
@@ -112,7 +112,7 @@ export class UsersBaseComponent<TKey, TGrid extends IUser<TKey>, TCreate extends
                 this._isShowImport = false;
             }
             catch (e) {
-                this._error = e.error;
+                this._message = "Ошибка: " + e.error;
             }
         }
     }
@@ -127,7 +127,7 @@ export class UsersBaseComponent<TKey, TGrid extends IUser<TKey>, TCreate extends
                 this._isShowCreate = false;
             }
             catch (e) {
-                this._error = e.error;
+                this._message = "Ошибка: " + e.error;
             }
         }
     }
@@ -142,55 +142,55 @@ export class UsersBaseComponent<TKey, TGrid extends IUser<TKey>, TCreate extends
                 this._showEditId = id;
             }
             catch (e) {
-                this._error = e.error;
+                this._message = "Ошибка: " + e.error;
             }
         }
     }
 
     private async getCreate() {
-        this._error = null;
+        this._message = null;
         try {
             this._itemCreate = await this._service.getCreate();
         }
         catch (e) {
-            this._error = e.error;
+            this._message = "Ошибка: " + e.error;
         }
     }
 
     private async getEdit(id: TKey) {
-        this._error = null;
+        this._message = null;
         try {
             this._itemEdit = await this._service.getEdit(id);
         }
         catch (e) {
-            this._error = e.error;
+            this._message = "Ошибка: " + e.error;
         }
     }
 
     public async delete(id: TKey) {
-        this._error = null;
+        this._message = null;
         try {
             await this._service.delete(id);
             await this.reloadGrid();
         }
         catch (e) {
-            this._error = e.error;
+            this._message = "Ошибка: " + e.error;
         }
     }
 
     public async deleteChecked() {
-        this._error = null;
+        this._message = null;
         try {
             await this._service.deleteMany(this._checkedItems);
             await this.reloadGrid();
         }
         catch (e) {
-            this._error = e.error;
+            this._message = "Ошибка: " + e.error;
         }
     }
 
     public async postCreate() {
-        this._error = null;
+        this._message = null;
         try {
             await this._service.postCreate(this._itemCreate);
             this._isShowCreate = false;
@@ -198,40 +198,40 @@ export class UsersBaseComponent<TKey, TGrid extends IUser<TKey>, TCreate extends
             await this.reloadGrid();
         }
         catch (e) {
-            this._error = e.error;
+            this._message = "Ошибка: " + e.error;
         }
     }
 
     public async postEdit() {
-        this._error = null;
+        this._message = null;
         try {
             this._itemEdit = await this._service.postEdit(this._itemEdit);
             await this.reloadGrid();
         }
         catch (e) {
-            this._error = e.error;
+            this._message = "Ошибка: " + e.error;
         }
     }
 
     public async excelExport() {
-        this._error = null;
+        this._message = null;
         try {
             let b = await this._service.getExcelExport(this._orderBy, this._filter);
             saveAs(b, "ExcelExport.xlsx");
         }
         catch (e) {
-            this._error = e.error;
+            this._message = "Ошибка: " + e.error;
         }
     }
 
     public async importTemplate() {
-        this._error = null;
+        this._message = null;
         try {
             let b = await this._service.getImportTemplate();
             saveAs(b, "ImportTemplate.xlsx");
         }
         catch (e) {
-            this._error = e.error;
+            this._message = "Ошибка: " + e.error;
         }
     }
 
@@ -246,7 +246,7 @@ export class UsersBaseComponent<TKey, TGrid extends IUser<TKey>, TCreate extends
                 this._importResult = "Импорт прошел успешно";
             }
             catch (e) {
-                this._importResult = JSON.stringify(e.error);
+                this._importResult = JSON.stringify("Ошибка: " + e.error);
             }
         }
     }
@@ -284,14 +284,14 @@ export class UsersBaseComponent<TKey, TGrid extends IUser<TKey>, TCreate extends
     }
 
     public async postResetPassword(newPassword: string) {
-        this._error = null;
+        this._message = null;
         try {
             await this._service.postResetPassword(this._resetPasswordId, newPassword);
             await this.reloadGrid();
-            this._error = "Пароль успешно сброшен";
+            this._message = "Пароль успешно сброшен";
         }
         catch (e) {
-            this._error = e.error;
+            this._message = "Ошибка: " + e.error;
         }
     }
 

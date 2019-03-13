@@ -15,7 +15,7 @@ export class EditComponent<TKey, TGrid extends IEntity<TKey>, TCreate extends IE
     _id?: TKey;
     _itemEdit: TEdit;
     _itemCreate: TCreate;
-    _error: string = null;
+    _message: string = null;
     typeCreate: (new () => TCreate);
     typeEdit: (new () => TEdit);
 
@@ -34,7 +34,7 @@ export class EditComponent<TKey, TGrid extends IEntity<TKey>, TCreate extends IE
     }
 
     public async ngOnInit() {
-        this._error = null;
+        this._message = null;
         try {
             if (this._id) {
                 this.getEdit();
@@ -43,50 +43,50 @@ export class EditComponent<TKey, TGrid extends IEntity<TKey>, TCreate extends IE
             }
         }
         catch (e) {
-            this._error = e.error;
+            this._message = "Ошибка: " + e.error;
         }
     }
 
     protected async getCreate() {
-        this._error = null;
+        this._message = null;
         try {
             this._itemCreate = await this._service.getCreate();
         }
         catch (e) {
-            this._error = e.error;
+            this._message = "Ошибка: " + e.error;
         }
     }
 
     protected async getEdit() {
-        this._error = null;
+        this._message = null;
         try {
             this._itemEdit = await this._service.getEdit(this._id);
         }
         catch (e) {
-            this._error = e.error;
+            this._message = "Ошибка: " + e.error;
         }
     }
 
     public async postCreate() {
-        this._error = null;
+        this._message = null;
         try {
-            await this._service.postCreate(this._itemCreate);
+            var result = await this._service.postCreate(this._itemCreate);
             await this.getCreate();
-            this._router.navigate([this._listUrl]);
+            this._router.navigate([this._listUrl + 'edit/' + result.id]);
         }
         catch (e) {
-            this._error = e.error;
+            this._message = "Ошибка: " + e.error;
         }
     }
 
     public async postEdit() {
-        this._error = null;
+        this._message = null;
         try {
             this._itemEdit = await this._service.postEdit(this._itemEdit);
-            this._router.navigate([this._listUrl]);
+            this._message = "Изменения успешно сохранены";
         }
         catch (e) {
-            this._error = e.error;
+            this._message = "Ошибка: " + e.error;
         }
     }
 }

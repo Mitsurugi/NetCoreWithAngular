@@ -23,7 +23,7 @@ export class AnimeEditComponent extends EditComponent<number, Anime> {
     }
 
     async deleteImageEdit() {
-        this._error = null;
+        this._message = null;
         try {
             if (this._itemEdit.imageId != null) {
                 await this._fileService.delete(this._itemEdit.imageId);
@@ -31,12 +31,12 @@ export class AnimeEditComponent extends EditComponent<number, Anime> {
             }
         }
         catch (e) {
-            this._error = e.error;
+            this._message = e.error;
         }
     }
 
     async deleteImageCreate() {
-        this._error = null;
+        this._message = null;
         try {
             if (this._itemCreate.imageId != null) {
                 await this._fileService.delete(this._itemCreate.imageId);
@@ -44,7 +44,7 @@ export class AnimeEditComponent extends EditComponent<number, Anime> {
             }
         }
         catch (e) {
-            this._error = e.error;
+            this._message = e.error;
         }
     }
 
@@ -54,7 +54,7 @@ export class AnimeEditComponent extends EditComponent<number, Anime> {
             this._itemEdit.imageId = id;
         }
         catch (e) {
-            this._error = e.error;
+            this._message = e.error;
         }
     }
 
@@ -65,7 +65,7 @@ export class AnimeEditComponent extends EditComponent<number, Anime> {
             this._itemCreate.imageId = id;
         }
         catch (e) {
-            this._error = e.error;
+            this._message = e.error;
         }
     }
 }
