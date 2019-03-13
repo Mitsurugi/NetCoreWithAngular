@@ -1,33 +1,54 @@
 ﻿a {
     cursor: pointer;
 }
+
 .btn {
     margin: 0px 5px;
 }
+
 .pagination span {
     padding: 5px;
 }
+
 .error {
-    color:red;
+    color: red;
 }
+
 .validation-text {
     color: red;
 }
+
 .edit-div {
     border: 1px solid grey;
     padding: 10px;
 }
+
 .filter {
     border: 1px solid grey;
     padding: 10px;
 }
+
 .grid {
-    padding:10px;
-}
-.create-new {
-    padding:10px;
-}
-.create-new > div {
-    border: 1px solid grey;
     padding: 10px;
 }
+
+    .grid tr {
+        background-color: white;
+    }
+
+        .grid tr.edit-row {
+            background-color: white !important;
+        }
+
+        .grid tr:hover {
+            background-color: deepskyblue;
+        }
+
+.create-new {
+    padding: 10px;
+}
+
+    .create-new > div {
+        border: 1px solid grey;
+        padding: 10px;
+    }
