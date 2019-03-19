@@ -6,8 +6,8 @@ namespace CoreLibrary
     public interface IFileService<TFile, TKey>
         where TFile: FileModel<TKey>
     {
-        Task<TFile> Get(TKey id);
-        Task Delete(TKey id);        
-        Task<TFile> Upload(IFormFile file);
+        Task<TFile> GetAsync(TKey id);
+        Task DeleteAsync(TKey id);        
+        Task<TFile> UploadAsync(IFormFile file);
     }
 }

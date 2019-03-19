@@ -24,7 +24,7 @@ namespace CoreLibrary
             return DbSet.AsQueryable();
         }
 
-        public virtual async Task<TEntity> Add(TEntity entity)
+        public virtual async Task<TEntity> AddAsync(TEntity entity)
         {
             if (entity == null)
                 throw new ArgumentNullException("entity");
@@ -34,14 +34,14 @@ namespace CoreLibrary
             return entityResult.Entity;
         }
 
-        public virtual async Task AddRange(params TEntity[] entities)
+        public virtual async Task AddRangeAsync(params TEntity[] entities)
         {
             if (entities == null || !entities.Any())
                 throw new ArgumentNullException("entities");
             await DbSet.AddRangeAsync(entities);
         }        
 
-        public virtual async Task<TEntity> Update(TEntity entity)
+        public virtual async Task<TEntity> UpdateAsync(TEntity entity)
         {
             if (entity == null)
                 throw new ArgumentNullException("entity");
@@ -53,19 +53,19 @@ namespace CoreLibrary
             return updateEntity;
         }
 
-        public virtual async Task ReferenceLoad(TEntity entity, params string[] references)
+        public virtual async Task ReferenceLoadAsync(TEntity entity, params string[] references)
         {
             foreach (var reference in references)
                 await DbContext.Entry(entity).Reference(reference).LoadAsync();
         }
 
-        public virtual async Task CollectionLoad(TEntity entity, params string[] collections)
+        public virtual async Task CollectionLoadAsync(TEntity entity, params string[] collections)
         {
             foreach (var collection in collections)
                 await DbContext.Entry(entity).Collection(collection).LoadAsync();
         }
 
-        public virtual async Task Delete(TEntity entity)
+        public virtual void Delete(TEntity entity)
         {
             if (entity == null)
                 throw new ArgumentNullException("entity");
@@ -73,12 +73,12 @@ namespace CoreLibrary
             DbSet.Remove(entity);
         }
 
-        public virtual async Task Delete(Expression<Func<TEntity, bool>> predicate)
+        public virtual void Delete(Expression<Func<TEntity, bool>> predicate)
         {
-            await GetQuery().Where(predicate).ForEachAsync(async x => await Delete(x));
+            GetQuery().Where(predicate).ForEachAsync(x => Delete(x));
         }
 
-        public virtual async Task SaveChanges()
+        public virtual async Task SaveChangesAsync()
         {
             await DbContext.SaveChangesAsync();
         }

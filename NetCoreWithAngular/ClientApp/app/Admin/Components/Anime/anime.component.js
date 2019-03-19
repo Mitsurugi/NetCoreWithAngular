@@ -67,7 +67,7 @@ var AnimeComponent = /** @class */ (function (_super) {
         _this._fileService = fileService;
         return _this;
     }
-    AnimeComponent.prototype.deleteImageEdit = function () {
+    AnimeComponent.prototype.deleteImageEditAsync = function () {
         return __awaiter(this, void 0, void 0, function () {
             var e_1;
             return __generator(this, function (_a) {
@@ -78,7 +78,7 @@ var AnimeComponent = /** @class */ (function (_super) {
                     case 1:
                         _a.trys.push([1, 4, , 5]);
                         if (!(this._itemEdit.imageId != null)) return [3 /*break*/, 3];
-                        return [4 /*yield*/, this._fileService.delete(this._itemEdit.imageId)];
+                        return [4 /*yield*/, this._fileService.deleteAsync(this._itemEdit.imageId)];
                     case 2:
                         _a.sent();
                         this._itemEdit.imageId = null;
@@ -93,7 +93,7 @@ var AnimeComponent = /** @class */ (function (_super) {
             });
         });
     };
-    AnimeComponent.prototype.deleteImageCreate = function () {
+    AnimeComponent.prototype.deleteImageCreateAsync = function () {
         return __awaiter(this, void 0, void 0, function () {
             var e_2;
             return __generator(this, function (_a) {
@@ -104,7 +104,7 @@ var AnimeComponent = /** @class */ (function (_super) {
                     case 1:
                         _a.trys.push([1, 4, , 5]);
                         if (!(this._itemCreate.imageId != null)) return [3 /*break*/, 3];
-                        return [4 /*yield*/, this._fileService.delete(this._itemCreate.imageId)];
+                        return [4 /*yield*/, this._fileService.deleteAsync(this._itemCreate.imageId)];
                     case 2:
                         _a.sent();
                         this._itemCreate.imageId = null;
@@ -119,14 +119,14 @@ var AnimeComponent = /** @class */ (function (_super) {
             });
         });
     };
-    AnimeComponent.prototype.uploadImageEdit = function (file) {
+    AnimeComponent.prototype.uploadImageEditAsync = function (file) {
         return __awaiter(this, void 0, void 0, function () {
             var id, e_3;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         _a.trys.push([0, 2, , 3]);
-                        return [4 /*yield*/, this._fileService.upload(file)];
+                        return [4 /*yield*/, this._fileService.uploadAsync(file)];
                     case 1:
                         id = _a.sent();
                         this._itemEdit.imageId = id;
@@ -140,17 +140,17 @@ var AnimeComponent = /** @class */ (function (_super) {
             });
         });
     };
-    AnimeComponent.prototype.uploadImageCreate = function (file) {
+    AnimeComponent.prototype.uploadImageCreateAsync = function (file) {
         return __awaiter(this, void 0, void 0, function () {
             var id, e_4;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         _a.trys.push([0, 3, , 4]);
-                        return [4 /*yield*/, this.deleteImageCreate()];
+                        return [4 /*yield*/, this.deleteImageCreateAsync()];
                     case 1:
                         _a.sent();
-                        return [4 /*yield*/, this._fileService.upload(file)];
+                        return [4 /*yield*/, this._fileService.uploadAsync(file)];
                     case 2:
                         id = _a.sent();
                         this._itemCreate.imageId = id;

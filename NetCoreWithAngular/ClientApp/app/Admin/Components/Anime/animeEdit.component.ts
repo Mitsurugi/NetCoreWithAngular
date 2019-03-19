@@ -22,11 +22,11 @@ export class AnimeEditComponent extends EditComponent<number, Anime> {
         this._fileService = fileService;
     }
 
-    async deleteImageEdit() {
+    async deleteImageEditAsync() {
         this._message = null;
         try {
             if (this._itemEdit.imageId != null) {
-                await this._fileService.delete(this._itemEdit.imageId);
+                await this._fileService.deleteAsync(this._itemEdit.imageId);
                 this._itemEdit.imageId = null;
             }
         }
@@ -35,11 +35,11 @@ export class AnimeEditComponent extends EditComponent<number, Anime> {
         }
     }
 
-    async deleteImageCreate() {
+    async deleteImageCreateAsync() {
         this._message = null;
         try {
             if (this._itemCreate.imageId != null) {
-                await this._fileService.delete(this._itemCreate.imageId);
+                await this._fileService.deleteAsync(this._itemCreate.imageId);
                 this._itemCreate.imageId = null;
             }
         }
@@ -48,9 +48,9 @@ export class AnimeEditComponent extends EditComponent<number, Anime> {
         }
     }
 
-    async uploadImageEdit(file: File) {
+    async uploadImageEditAsync(file: File) {
         try {
-            let id = await this._fileService.upload(file);
+            let id = await this._fileService.uploadAsync(file);
             this._itemEdit.imageId = id;
         }
         catch (e) {
@@ -58,10 +58,10 @@ export class AnimeEditComponent extends EditComponent<number, Anime> {
         }
     }
 
-    async uploadImageCreate(file: File) {
+    async uploadImageCreateAsync(file: File) {
         try {
-            await this.deleteImageCreate();
-            let id = await this._fileService.upload(file);
+            await this.deleteImageCreateAsync();
+            let id = await this._fileService.uploadAsync(file);
             this._itemCreate.imageId = id;
         }
         catch (e) {

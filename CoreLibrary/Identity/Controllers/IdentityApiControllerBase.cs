@@ -31,8 +31,8 @@ namespace CoreLibrary.Identity
 
             try
             {
-                string t = await _service.GetToken(model.Login, model.Password);
-                var user = await _service.FindUserByName(model.Login);
+                string t = await _service.GetTokenAsync(model.Login, model.Password);
+                var user = await _service.FindUserByNameAsync(model.Login);
                 return Ok(new { token = t, login = model.Login, role = user.Role });
             }
             catch (Exception ex)
@@ -52,8 +52,8 @@ namespace CoreLibrary.Identity
 
             try
             {
-                var user = await _service.FindUserByName(User.Identity.Name);
-                await _service.ChangePassword(user.Id, model.CurrentPassword, model.NewPassword);
+                var user = await _service.FindUserByNameAsync(User.Identity.Name);
+                await _service.ChangePasswordAsync(user.Id, model.CurrentPassword, model.NewPassword);
                 return Ok();
             }
             catch (Exception ex)

@@ -11,13 +11,13 @@ export class BookService extends CoreService<number, BookGrid, Book, Book, BookF
 
     constructor(http: HttpClient) { super(http); this._controller = 'book'; }
 
-    postCreate(item: Book) {
+    async postCreateAsync(item: Book) {
         item.title = '!' + item.title + '!';
-        return super.postCreate(item);
+        return super.postCreateAsync(item);
     }
 
-    async getGrid(pageNumber: number, pageSize: number, orderBy: string, filter: BookFilter): Promise<BookGrid[]> {
-        return super.getGrid(pageNumber, pageSize, orderBy, filter).then(response => {
+    async getGridAsync(pageNumber: number, pageSize: number, orderBy: string, filter: BookFilter): Promise<BookGrid[]> {
+        return super.getGridAsync(pageNumber, pageSize, orderBy, filter).then(response => {
             let b = new BookGrid();
             b.id = 999;
             b.title = "fromService";

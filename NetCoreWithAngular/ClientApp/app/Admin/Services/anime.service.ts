@@ -14,11 +14,11 @@ export class AnimeService extends CoreService<number, Anime> {
 
     constructor(http: HttpClient, fileService: FileService<number>, sanitaizer: DomSanitizer) { super(http); this._controller = 'anime'; this._fileService = fileService; this._sanitizer = sanitaizer; }
 
-    async getGrid(pageNumber: number, pageSize: number, orderBy: string, filter: Anime): Promise<Anime[]> {
-        return super.getGrid(pageNumber, pageSize, orderBy, filter).then(response => {
+    async getGridAsync(pageNumber: number, pageSize: number, orderBy: string, filter: Anime): Promise<Anime[]> {
+        return super.getGridAsync(pageNumber, pageSize, orderBy, filter).then(response => {
             response.forEach(async i => {
                 if (i.imageId) {
-                    let blob = await this._fileService.download(i.imageId);
+                    let blob = await this._fileService.downloadAsync(i.imageId);
                     let url = window.URL.createObjectURL(blob);
                     i.imageUrl = this._sanitizer.bypassSecurityTrustResourceUrl(url);
                 } else {

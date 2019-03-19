@@ -66,20 +66,20 @@ var CoreComponent = /** @class */ (function () {
         this.typeEdit = typeEdit;
         this.typeFilter = typeFilter;
     }
-    CoreComponent.prototype.ngOnInit = function () {
+    CoreComponent.prototype.getCreateAsync = function () {
         return __awaiter(this, void 0, void 0, function () {
             var _a, e_1;
             return __generator(this, function (_b) {
                 switch (_b.label) {
                     case 0:
-                        _b.trys.push([0, 3, , 4]);
-                        _a = this;
-                        return [4 /*yield*/, this._service.getFilter()];
+                        this._message = null;
+                        _b.label = 1;
                     case 1:
-                        _a._filter = _b.sent();
-                        return [4 /*yield*/, this.reloadGrid()];
+                        _b.trys.push([1, 3, , 4]);
+                        _a = this;
+                        return [4 /*yield*/, this._service.getCreateAsync()];
                     case 2:
-                        _b.sent();
+                        _a._itemCreate = _b.sent();
                         return [3 /*break*/, 4];
                     case 3:
                         e_1 = _b.sent();
@@ -90,9 +90,57 @@ var CoreComponent = /** @class */ (function () {
             });
         });
     };
-    CoreComponent.prototype.reloadGrid = function () {
+    CoreComponent.prototype.getEditAsync = function (id) {
         return __awaiter(this, void 0, void 0, function () {
-            var _a, _b, e_2;
+            var _a, e_2;
+            return __generator(this, function (_b) {
+                switch (_b.label) {
+                    case 0:
+                        this._message = null;
+                        _b.label = 1;
+                    case 1:
+                        _b.trys.push([1, 3, , 4]);
+                        _a = this;
+                        return [4 /*yield*/, this._service.getEditAsync(id)];
+                    case 2:
+                        _a._itemEdit = _b.sent();
+                        return [3 /*break*/, 4];
+                    case 3:
+                        e_2 = _b.sent();
+                        this._message = "Ошибка: " + e_2.error;
+                        return [3 /*break*/, 4];
+                    case 4: return [2 /*return*/];
+                }
+            });
+        });
+    };
+    CoreComponent.prototype.ngOnInit = function () {
+        return __awaiter(this, void 0, void 0, function () {
+            var _a, e_3;
+            return __generator(this, function (_b) {
+                switch (_b.label) {
+                    case 0:
+                        _b.trys.push([0, 3, , 4]);
+                        _a = this;
+                        return [4 /*yield*/, this._service.getFilterAsync()];
+                    case 1:
+                        _a._filter = _b.sent();
+                        return [4 /*yield*/, this.reloadGridAsync()];
+                    case 2:
+                        _b.sent();
+                        return [3 /*break*/, 4];
+                    case 3:
+                        e_3 = _b.sent();
+                        this._message = "Ошибка: " + e_3.error;
+                        return [3 /*break*/, 4];
+                    case 4: return [2 /*return*/];
+                }
+            });
+        });
+    };
+    CoreComponent.prototype.reloadGridAsync = function () {
+        return __awaiter(this, void 0, void 0, function () {
+            var _a, _b, e_4;
             return __generator(this, function (_c) {
                 switch (_c.label) {
                     case 0:
@@ -102,29 +150,29 @@ var CoreComponent = /** @class */ (function () {
                         _c.trys.push([1, 5, , 6]);
                         this._showEditId = null;
                         _a = this;
-                        return [4 /*yield*/, this._service.getPagesCount(this._pageSize, this._filter)];
+                        return [4 /*yield*/, this._service.getPagesCountAsync(this._pageSize, this._filter)];
                     case 2:
                         _a._totalPages = _c.sent();
                         _b = this;
-                        return [4 /*yield*/, this._service.getGrid(this._currentPage, this._pageSize, this._orderBy, this._filter)];
+                        return [4 /*yield*/, this._service.getGridAsync(this._currentPage, this._pageSize, this._orderBy, this._filter)];
                     case 3:
                         _b._items = _c.sent();
-                        return [4 /*yield*/, this.getCreate()];
+                        return [4 /*yield*/, this.getCreateAsync()];
                     case 4:
                         _c.sent();
                         return [3 /*break*/, 6];
                     case 5:
-                        e_2 = _c.sent();
-                        this._message = "Ошибка: " + e_2.error;
+                        e_4 = _c.sent();
+                        this._message = "Ошибка: " + e_4.error;
                         return [3 /*break*/, 6];
                     case 6: return [2 /*return*/];
                 }
             });
         });
     };
-    CoreComponent.prototype.clearFilter = function () {
+    CoreComponent.prototype.clearFilterAsync = function () {
         return __awaiter(this, void 0, void 0, function () {
-            var _a, e_3;
+            var _a, e_5;
             return __generator(this, function (_b) {
                 switch (_b.label) {
                     case 0:
@@ -133,25 +181,25 @@ var CoreComponent = /** @class */ (function () {
                     case 1:
                         _b.trys.push([1, 4, , 5]);
                         _a = this;
-                        return [4 /*yield*/, this._service.getFilter()];
+                        return [4 /*yield*/, this._service.getFilterAsync()];
                     case 2:
                         _a._filter = _b.sent();
-                        return [4 /*yield*/, this.reloadGrid()];
+                        return [4 /*yield*/, this.reloadGridAsync()];
                     case 3:
                         _b.sent();
                         return [3 /*break*/, 5];
                     case 4:
-                        e_3 = _b.sent();
-                        this._message = "Ошибка: " + e_3.error;
+                        e_5 = _b.sent();
+                        this._message = "Ошибка: " + e_5.error;
                         return [3 /*break*/, 5];
                     case 5: return [2 /*return*/];
                 }
             });
         });
     };
-    CoreComponent.prototype.nextPage = function () {
+    CoreComponent.prototype.nextPageAsync = function () {
         return __awaiter(this, void 0, void 0, function () {
-            var e_4;
+            var e_6;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -160,59 +208,9 @@ var CoreComponent = /** @class */ (function () {
                         _a.label = 1;
                     case 1:
                         _a.trys.push([1, 3, , 4]);
-                        return [4 /*yield*/, this.reloadGrid()];
+                        return [4 /*yield*/, this.reloadGridAsync()];
                     case 2:
                         _a.sent();
-                        return [3 /*break*/, 4];
-                    case 3:
-                        e_4 = _a.sent();
-                        this._message = "Ошибка: " + e_4.error;
-                        return [3 /*break*/, 4];
-                    case 4: return [2 /*return*/];
-                }
-            });
-        });
-    };
-    CoreComponent.prototype.prevPage = function () {
-        return __awaiter(this, void 0, void 0, function () {
-            var e_5;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        if (!(this._currentPage > 1)) return [3 /*break*/, 4];
-                        this._currentPage--;
-                        _a.label = 1;
-                    case 1:
-                        _a.trys.push([1, 3, , 4]);
-                        return [4 /*yield*/, this.reloadGrid()];
-                    case 2:
-                        _a.sent();
-                        return [3 /*break*/, 4];
-                    case 3:
-                        e_5 = _a.sent();
-                        this._message = "Ошибка: " + e_5.error;
-                        return [3 /*break*/, 4];
-                    case 4: return [2 /*return*/];
-                }
-            });
-        });
-    };
-    CoreComponent.prototype.toggleCreate = function () {
-        return __awaiter(this, void 0, void 0, function () {
-            var e_6;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        if (!this._isShowCreate) return [3 /*break*/, 1];
-                        this._isShowCreate = false;
-                        return [3 /*break*/, 4];
-                    case 1:
-                        _a.trys.push([1, 3, , 4]);
-                        return [4 /*yield*/, this.getCreate()];
-                    case 2:
-                        _a.sent();
-                        this._isShowCreate = true;
-                        this._isShowImport = false;
                         return [3 /*break*/, 4];
                     case 3:
                         e_6 = _a.sent();
@@ -223,40 +221,20 @@ var CoreComponent = /** @class */ (function () {
             });
         });
     };
-    CoreComponent.prototype.toggleImport = function () {
-        return __awaiter(this, void 0, void 0, function () {
-            return __generator(this, function (_a) {
-                if (this._isShowImport) {
-                    this._isShowImport = false;
-                }
-                else {
-                    try {
-                        this._isShowImport = true;
-                        this._isShowCreate = false;
-                    }
-                    catch (e) {
-                        this._message = "Ошибка: " + e.error;
-                    }
-                }
-                return [2 /*return*/];
-            });
-        });
-    };
-    CoreComponent.prototype.toggleEdit = function (id) {
+    CoreComponent.prototype.prevPageAsync = function () {
         return __awaiter(this, void 0, void 0, function () {
             var e_7;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        if (!(this._showEditId == id)) return [3 /*break*/, 1];
-                        this._showEditId = null;
-                        return [3 /*break*/, 4];
+                        if (!(this._currentPage > 1)) return [3 /*break*/, 4];
+                        this._currentPage--;
+                        _a.label = 1;
                     case 1:
                         _a.trys.push([1, 3, , 4]);
-                        return [4 /*yield*/, this.getEdit(id)];
+                        return [4 /*yield*/, this.reloadGridAsync()];
                     case 2:
                         _a.sent();
-                        this._showEditId = id;
                         return [3 /*break*/, 4];
                     case 3:
                         e_7 = _a.sent();
@@ -267,23 +245,25 @@ var CoreComponent = /** @class */ (function () {
             });
         });
     };
-    CoreComponent.prototype.getCreate = function () {
+    CoreComponent.prototype.toggleCreateAsync = function () {
         return __awaiter(this, void 0, void 0, function () {
-            var _a, e_8;
-            return __generator(this, function (_b) {
-                switch (_b.label) {
+            var e_8;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
                     case 0:
-                        this._message = null;
-                        _b.label = 1;
+                        if (!this._isShowCreate) return [3 /*break*/, 1];
+                        this._isShowCreate = false;
+                        return [3 /*break*/, 4];
                     case 1:
-                        _b.trys.push([1, 3, , 4]);
-                        _a = this;
-                        return [4 /*yield*/, this._service.getCreate()];
+                        _a.trys.push([1, 3, , 4]);
+                        return [4 /*yield*/, this.getCreateAsync()];
                     case 2:
-                        _a._itemCreate = _b.sent();
+                        _a.sent();
+                        this._isShowCreate = true;
+                        this._isShowImport = false;
                         return [3 /*break*/, 4];
                     case 3:
-                        e_8 = _b.sent();
+                        e_8 = _a.sent();
                         this._message = "Ошибка: " + e_8.error;
                         return [3 /*break*/, 4];
                     case 4: return [2 /*return*/];
@@ -291,23 +271,38 @@ var CoreComponent = /** @class */ (function () {
             });
         });
     };
-    CoreComponent.prototype.getEdit = function (id) {
+    CoreComponent.prototype.toggleImport = function () {
+        if (this._isShowImport) {
+            this._isShowImport = false;
+        }
+        else {
+            try {
+                this._isShowImport = true;
+                this._isShowCreate = false;
+            }
+            catch (e) {
+                this._message = "Ошибка: " + e.error;
+            }
+        }
+    };
+    CoreComponent.prototype.toggleEditAsync = function (id) {
         return __awaiter(this, void 0, void 0, function () {
-            var _a, e_9;
-            return __generator(this, function (_b) {
-                switch (_b.label) {
+            var e_9;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
                     case 0:
-                        this._message = null;
-                        _b.label = 1;
+                        if (!(this._showEditId == id)) return [3 /*break*/, 1];
+                        this._showEditId = null;
+                        return [3 /*break*/, 4];
                     case 1:
-                        _b.trys.push([1, 3, , 4]);
-                        _a = this;
-                        return [4 /*yield*/, this._service.getEdit(id)];
+                        _a.trys.push([1, 3, , 4]);
+                        return [4 /*yield*/, this.getEditAsync(id)];
                     case 2:
-                        _a._itemEdit = _b.sent();
+                        _a.sent();
+                        this._showEditId = id;
                         return [3 /*break*/, 4];
                     case 3:
-                        e_9 = _b.sent();
+                        e_9 = _a.sent();
                         this._message = "Ошибка: " + e_9.error;
                         return [3 /*break*/, 4];
                     case 4: return [2 /*return*/];
@@ -315,7 +310,7 @@ var CoreComponent = /** @class */ (function () {
             });
         });
     };
-    CoreComponent.prototype.delete = function (id) {
+    CoreComponent.prototype.deleteAsync = function (id) {
         return __awaiter(this, void 0, void 0, function () {
             var e_10;
             return __generator(this, function (_a) {
@@ -325,10 +320,10 @@ var CoreComponent = /** @class */ (function () {
                         _a.label = 1;
                     case 1:
                         _a.trys.push([1, 4, , 5]);
-                        return [4 /*yield*/, this._service.delete(id)];
+                        return [4 /*yield*/, this._service.deleteAsync(id)];
                     case 2:
                         _a.sent();
-                        return [4 /*yield*/, this.reloadGrid()];
+                        return [4 /*yield*/, this.reloadGridAsync()];
                     case 3:
                         _a.sent();
                         return [3 /*break*/, 5];
@@ -351,10 +346,10 @@ var CoreComponent = /** @class */ (function () {
                         _a.label = 1;
                     case 1:
                         _a.trys.push([1, 4, , 5]);
-                        return [4 /*yield*/, this._service.deleteMany(this._checkedItems)];
+                        return [4 /*yield*/, this._service.deleteManyAsync(this._checkedItems)];
                     case 2:
                         _a.sent();
-                        return [4 /*yield*/, this.reloadGrid()];
+                        return [4 /*yield*/, this.reloadGridAsync()];
                     case 3:
                         _a.sent();
                         return [3 /*break*/, 5];
@@ -367,7 +362,7 @@ var CoreComponent = /** @class */ (function () {
             });
         });
     };
-    CoreComponent.prototype.postCreate = function () {
+    CoreComponent.prototype.postCreateAsync = function () {
         return __awaiter(this, void 0, void 0, function () {
             var e_12;
             return __generator(this, function (_a) {
@@ -377,14 +372,14 @@ var CoreComponent = /** @class */ (function () {
                         _a.label = 1;
                     case 1:
                         _a.trys.push([1, 5, , 6]);
-                        return [4 /*yield*/, this._service.postCreate(this._itemCreate)];
+                        return [4 /*yield*/, this._service.postCreateAsync(this._itemCreate)];
                     case 2:
                         _a.sent();
                         this._isShowCreate = false;
-                        return [4 /*yield*/, this.getCreate()];
+                        return [4 /*yield*/, this.getCreateAsync()];
                     case 3:
                         _a.sent();
-                        return [4 /*yield*/, this.reloadGrid()];
+                        return [4 /*yield*/, this.reloadGridAsync()];
                     case 4:
                         _a.sent();
                         return [3 /*break*/, 6];
@@ -397,7 +392,7 @@ var CoreComponent = /** @class */ (function () {
             });
         });
     };
-    CoreComponent.prototype.postEdit = function () {
+    CoreComponent.prototype.postEditAsync = function () {
         return __awaiter(this, void 0, void 0, function () {
             var _a, e_13;
             return __generator(this, function (_b) {
@@ -408,10 +403,10 @@ var CoreComponent = /** @class */ (function () {
                     case 1:
                         _b.trys.push([1, 4, , 5]);
                         _a = this;
-                        return [4 /*yield*/, this._service.postEdit(this._itemEdit)];
+                        return [4 /*yield*/, this._service.postEditAsync(this._itemEdit)];
                     case 2:
                         _a._itemEdit = _b.sent();
-                        return [4 /*yield*/, this.reloadGrid()];
+                        return [4 /*yield*/, this.reloadGridAsync()];
                     case 3:
                         _b.sent();
                         return [3 /*break*/, 5];
@@ -424,7 +419,7 @@ var CoreComponent = /** @class */ (function () {
             });
         });
     };
-    CoreComponent.prototype.excelExport = function () {
+    CoreComponent.prototype.getExcelExportAsync = function () {
         return __awaiter(this, void 0, void 0, function () {
             var b, e_14;
             return __generator(this, function (_a) {
@@ -434,7 +429,7 @@ var CoreComponent = /** @class */ (function () {
                         _a.label = 1;
                     case 1:
                         _a.trys.push([1, 3, , 4]);
-                        return [4 /*yield*/, this._service.getExcelExport(this._orderBy, this._filter)];
+                        return [4 /*yield*/, this._service.getExcelExportAsync(this._orderBy, this._filter)];
                     case 2:
                         b = _a.sent();
                         saveAs(b, "ExcelExport.xlsx");
@@ -448,7 +443,7 @@ var CoreComponent = /** @class */ (function () {
             });
         });
     };
-    CoreComponent.prototype.importTemplate = function () {
+    CoreComponent.prototype.getImportTemplateAsync = function () {
         return __awaiter(this, void 0, void 0, function () {
             var b, e_15;
             return __generator(this, function (_a) {
@@ -458,7 +453,7 @@ var CoreComponent = /** @class */ (function () {
                         _a.label = 1;
                     case 1:
                         _a.trys.push([1, 3, , 4]);
-                        return [4 /*yield*/, this._service.getImportTemplate()];
+                        return [4 /*yield*/, this._service.getImportTemplateAsync()];
                     case 2:
                         b = _a.sent();
                         saveAs(b, "ImportTemplate.xlsx");
@@ -472,7 +467,7 @@ var CoreComponent = /** @class */ (function () {
             });
         });
     };
-    CoreComponent.prototype.postImport = function () {
+    CoreComponent.prototype.postImportAsync = function () {
         return __awaiter(this, void 0, void 0, function () {
             var e_16;
             return __generator(this, function (_a) {
@@ -483,10 +478,10 @@ var CoreComponent = /** @class */ (function () {
                         return [3 /*break*/, 5];
                     case 1:
                         _a.trys.push([1, 4, , 5]);
-                        return [4 /*yield*/, this._service.postImport(this._importFile)];
+                        return [4 /*yield*/, this._service.postImportAsync(this._importFile)];
                     case 2:
                         _a.sent();
-                        return [4 /*yield*/, this.reloadGrid()];
+                        return [4 /*yield*/, this.reloadGridAsync()];
                     case 3:
                         _a.sent();
                         this._importResult = "Импорт прошел успешно";
@@ -501,56 +496,39 @@ var CoreComponent = /** @class */ (function () {
         });
     };
     CoreComponent.prototype.setImportFile = function (file) {
-        return __awaiter(this, void 0, void 0, function () {
-            return __generator(this, function (_a) {
-                this._importFile = file;
-                return [2 /*return*/];
-            });
-        });
+        this._importFile = file;
     };
     CoreComponent.prototype.toggleChecked = function (id) {
-        return __awaiter(this, void 0, void 0, function () {
-            var index;
-            return __generator(this, function (_a) {
-                index = this._checkedItems.indexOf(id);
-                if (index < 0) {
-                    this._checkedItems.push(id);
-                }
-                else {
-                    this._checkedItems = this._checkedItems.slice(0, index).concat(this._checkedItems.slice(index + 1, this._checkedItems.length));
-                }
-                return [2 /*return*/];
-            });
-        });
+        var index = this._checkedItems.indexOf(id);
+        if (index < 0) {
+            this._checkedItems.push(id);
+        }
+        else {
+            this._checkedItems = this._checkedItems.slice(0, index).concat(this._checkedItems.slice(index + 1, this._checkedItems.length));
+        }
     };
     CoreComponent.prototype.toggleCheckAll = function () {
-        return __awaiter(this, void 0, void 0, function () {
-            var checked;
-            var _this = this;
-            return __generator(this, function (_a) {
-                checked = true;
-                this._items.forEach(function (i) {
-                    var index = _this._checkedItems.indexOf(i.id);
-                    if (index < 0)
-                        checked = false;
-                });
-                if (checked) {
-                    this._items.forEach(function (i) {
-                        var index = _this._checkedItems.indexOf(i.id);
-                        _this._checkedItems = _this._checkedItems.slice(0, index).concat(_this._checkedItems.slice(index + 1, _this._checkedItems.length));
-                    });
-                }
-                else {
-                    this._items.forEach(function (i) {
-                        var index = _this._checkedItems.indexOf(i.id);
-                        if (index < 0) {
-                            _this._checkedItems.push(i.id);
-                        }
-                    });
-                }
-                return [2 /*return*/];
-            });
+        var _this = this;
+        var checked = true;
+        this._items.forEach(function (i) {
+            var index = _this._checkedItems.indexOf(i.id);
+            if (index < 0)
+                checked = false;
         });
+        if (checked) {
+            this._items.forEach(function (i) {
+                var index = _this._checkedItems.indexOf(i.id);
+                _this._checkedItems = _this._checkedItems.slice(0, index).concat(_this._checkedItems.slice(index + 1, _this._checkedItems.length));
+            });
+        }
+        else {
+            this._items.forEach(function (i) {
+                var index = _this._checkedItems.indexOf(i.id);
+                if (index < 0) {
+                    _this._checkedItems.push(i.id);
+                }
+            });
+        }
     };
     CoreComponent = __decorate([
         Component({}),

@@ -18,29 +18,29 @@ namespace NetCoreWithAngular.Services
             _fileService = fileService;
         }        
 
-        public override Task<List<AnimeViewModel>> GetGrid(int pageSize, int pageNumber, string orderBy, AnimeViewModel filter, string searchString)
+        public override Task<List<AnimeViewModel>> GetGridAsync(int pageSize, int pageNumber, string orderBy, AnimeViewModel filter, string searchString)
         {
             if (!_repository.GetQuery().Any())
             {
                 for (int i = 1; i <= 10; i++)
                 {
-                    _repository.Add( new Anime { Title = $"Anime{i}", SeasonCount = (i % 2) + 1 });
+                    _repository.AddAsync( new Anime { Title = $"Anime{i}", SeasonCount = (i % 2) + 1 });
                 }
-                _repository.SaveChanges();
+                _repository.SaveChangesAsync();
             }
 
-            return base.GetGrid(pageSize, pageNumber, orderBy, filter, searchString);
+            return base.GetGridAsync(pageSize, pageNumber, orderBy, filter, searchString);
         }
 
-        public override async Task Delete(int id)
+        public override async Task DeleteAsync(int id)
         {
-            var delete = await Get(id);
+            var delete = await GetAsync(id);
 
             if (delete.ImageId.HasValue)
-                await _fileService.Delete(delete.ImageId.Value);
+                await _fileService.DeleteAsync(delete.ImageId.Value);
 
-            await _repository.Delete(delete);
-            await _repository.SaveChanges();
+            _repository.Delete(delete);
+            await _repository.SaveChangesAsync();
         }
     }
 }

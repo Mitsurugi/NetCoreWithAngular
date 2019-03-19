@@ -52,46 +52,66 @@ export class DependentComponent<TKey, TParentKey, TParentView, TGrid extends IDe
         }        
     }
 
-    public async ngOnInit() {
+    protected async getCreateAsync() {
+        this._message = null;
         try {
-            this._filter = await this._service.getFilter();
-            this._parent = await this._service.getParent(this._parentId);
-            await this.reloadGrid();
+            this._itemCreate = await this._service.getCreateAsync(this._parentId);
         }
         catch (e) {
             this._message = "Ошибка: " + e.error;
         }
     }
 
-    public async reloadGrid() {
+    protected async getEditAsync(id: TKey) {
+        this._message = null;
+        try {
+            this._itemEdit = await this._service.getEditAsync(id);
+        }
+        catch (e) {
+            this._message = "Ошибка: " + e.error;
+        }
+    }
+
+    public async ngOnInit() {
+        try {
+            this._filter = await this._service.getFilterAsync();
+            this._parent = await this._service.getParentAsync(this._parentId);
+            await this.reloadGridAsync();
+        }
+        catch (e) {
+            this._message = "Ошибка: " + e.error;
+        }
+    }
+
+    public async reloadGridAsync() {
         this._message = null;
         try {
             this._showEditId = null;
-            this._totalPages = await this._service.getPagesCount(this._pageSize, this._parentId, this._filter);
-            this._items = await this._service.getGrid(this._parentId, this._currentPage, this._pageSize, this._orderBy, this._filter);    
-            await this.getCreate();
+            this._totalPages = await this._service.getPagesCountAsync(this._pageSize, this._parentId, this._filter);
+            this._items = await this._service.getGridAsync(this._parentId, this._currentPage, this._pageSize, this._orderBy, this._filter);    
+            await this.getCreateAsync();
         }
         catch (e) {
             this._message = "Ошибка: " + e.error;
         }
     }
 
-    public async clearFilter() {
+    public async clearFilterAsync() {
         this._filter = new this.typeFilter();
         try {
-            this._filter = await this._service.getFilter();
-            await this.reloadGrid();
+            this._filter = await this._service.getFilterAsync();
+            await this.reloadGridAsync();
         }
         catch (e) {
             this._message = "Ошибка: " + e.error;
         }
     }
 
-    public async nextPage() {
+    public async nextPageAsync() {
         if (this._currentPage < this._totalPages) {
             this._currentPage++;
             try {
-                await this.reloadGrid();
+                await this.reloadGridAsync();
             }
             catch (e) {
                 this._message = "Ошибка: " + e.error;
@@ -99,11 +119,11 @@ export class DependentComponent<TKey, TParentKey, TParentView, TGrid extends IDe
         }
     }
 
-    public async prevPage() {
+    public async prevPageAsync() {
         if (this._currentPage > 1) {
             this._currentPage--;
             try {
-                await this.reloadGrid();
+                await this.reloadGridAsync();
             }
             catch (e) {
                 this._message = "Ошибка: " + e.error;
@@ -111,13 +131,13 @@ export class DependentComponent<TKey, TParentKey, TParentView, TGrid extends IDe
         }
     }
 
-    public async toggleCreate() {
+    public async toggleCreateAsync() {
         if (this._isShowCreate) {
             this._isShowCreate = false;
         }
         else {
             try {
-                await this.getCreate();
+                await this.getCreateAsync();
                 this._isShowCreate = true;
                 this._isShowImport = false;
             }
@@ -127,7 +147,7 @@ export class DependentComponent<TKey, TParentKey, TParentView, TGrid extends IDe
         }
     }
 
-    public async toggleImport() {
+    public toggleImport() {
         if (this._isShowImport) {
             this._isShowImport = false;
         }
@@ -142,13 +162,13 @@ export class DependentComponent<TKey, TParentKey, TParentView, TGrid extends IDe
         }
     }
 
-    public async toggleEdit(id: TKey) {
+    public async toggleEditAsync(id: TKey) {
         if (this._showEditId == id) {
             this._showEditId = null;
         }
         else {
             try {
-                await this.getEdit(id);
+                await this.getEditAsync(id);
                 this._showEditId = id;
             }
             catch (e) {
@@ -157,76 +177,58 @@ export class DependentComponent<TKey, TParentKey, TParentView, TGrid extends IDe
         }
     }
 
-    protected async getCreate() {
+    
+
+    public async deleteAsync(id: TKey) {
         this._message = null;
         try {
-            this._itemCreate = await this._service.getCreate(this._parentId);
+            await this._service.deleteAsync(id);
+            await this.reloadGridAsync();
         }
         catch (e) {
             this._message = "Ошибка: " + e.error;
         }
     }
 
-    protected async getEdit(id: TKey) {
+    public async deleteCheckedAsync() {
         this._message = null;
         try {
-            this._itemEdit = await this._service.getEdit(id);
+            await this._service.deleteManyAsync(this._checkedItems);
+            await this.reloadGridAsync();
         }
         catch (e) {
             this._message = "Ошибка: " + e.error;
         }
     }
 
-    public async delete(id: TKey) {
+    public async postCreateAsync() {
         this._message = null;
         try {
-            await this._service.delete(id);
-            await this.reloadGrid();
-        }
-        catch (e) {
-            this._message = "Ошибка: " + e.error;
-        }
-    }
-
-    public async deleteChecked() {
-        this._message = null;
-        try {
-            await this._service.deleteMany(this._checkedItems);
-            await this.reloadGrid();
-        }
-        catch (e) {
-            this._message = "Ошибка: " + e.error;
-        }
-    }
-
-    public async postCreate() {
-        this._message = null;
-        try {
-            await this._service.postCreate(this._itemCreate);
+            await this._service.postCreateAsync(this._itemCreate);
             this._isShowCreate = false;
-            await this.getCreate();
-            await this.reloadGrid();
+            await this.getCreateAsync();
+            await this.reloadGridAsync();
         }
         catch (e) {
             this._message = "Ошибка: " + e.error;
         }
     }
 
-    public async postEdit() {
+    public async postEditAsync() {
         this._message = null;
         try {
-            this._itemEdit = await this._service.postEdit(this._itemEdit);
-            await this.reloadGrid();
+            this._itemEdit = await this._service.postEditAsync(this._itemEdit);
+            await this.reloadGridAsync();
         }
         catch (e) {
             this._message = "Ошибка: " + e.error;
         }
     }
 
-    public async excelExport() {
+    public async getExcelExportAsync() {
         this._message = null;
         try {
-            let b = await this._service.getExcelExport(this._parentId, this._orderBy, this._filter);
+            let b = await this._service.getExcelExportAsync(this._parentId, this._orderBy, this._filter);
             saveAs(b, "ExcelExport.xlsx");
         }
         catch (e) {
@@ -234,10 +236,10 @@ export class DependentComponent<TKey, TParentKey, TParentView, TGrid extends IDe
         }
     }
 
-    public async importTemplate() {
+    public async getImportTemplateAsync() {
         this._message = null;
         try {
-            let b = await this._service.getImportTemplate();
+            let b = await this._service.getImportTemplateAsync();
             saveAs(b, "ImportTemplate.xlsx");
         }
         catch (e) {
@@ -245,14 +247,14 @@ export class DependentComponent<TKey, TParentKey, TParentView, TGrid extends IDe
         }
     }
 
-    public async postImport() {
+    public async postImportAsync() {
         if (this._importFile == null) {
             this._importResult = "Файл импорта не выбран";
         }
         else {
             try {
-                await this._service.postImport(this._parentId, this._importFile);
-                await this.reloadGrid();
+                await this._service.postImportAsync(this._parentId, this._importFile);
+                await this.reloadGridAsync();
                 this._importResult = "Импорт прошел успешно";
             }
             catch (e) {
@@ -261,11 +263,11 @@ export class DependentComponent<TKey, TParentKey, TParentView, TGrid extends IDe
         }        
     }
 
-    public async setImportFile(file: File) {
+    public setImportFile(file: File) {
         this._importFile = file;
     }
 
-    public async toggleChecked(id: TKey) {
+    public toggleChecked(id: TKey) {
         var index = this._checkedItems.indexOf(id);
         if (index < 0) { this._checkedItems.push(id); }
         else {
@@ -273,7 +275,7 @@ export class DependentComponent<TKey, TParentKey, TParentView, TGrid extends IDe
         }
     }
 
-    public async toggleCheckAll() {
+    public toggleCheckAll() {
         let checked = true;
         this._items.forEach(i => {
             var index = this._checkedItems.indexOf(i.id);

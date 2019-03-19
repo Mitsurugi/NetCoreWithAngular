@@ -27,7 +27,7 @@ namespace CoreLibrary
         {
             try
             {
-                var file = await _service.Get(id);
+                var file = await _service.GetAsync(id);
                 if (file == null) BadRequest(_localizer["FileNotFound"]);
                 return File(file.Data, file.MimeType, file.FileName);
             }
@@ -42,7 +42,7 @@ namespace CoreLibrary
         {
             try
             {
-                await _service.Delete(id);
+                await _service.DeleteAsync(id);
                 return Ok();
             }
             catch (Exception ex)
@@ -58,7 +58,7 @@ namespace CoreLibrary
                 return BadRequest(_localizer["FileNull"]);
             try
             {                
-                var entity = await _service.Upload(file);
+                var entity = await _service.UploadAsync(file);
                 return Ok(entity.Id);
             }
             catch (Exception ex)

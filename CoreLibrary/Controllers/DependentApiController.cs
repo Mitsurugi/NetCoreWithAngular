@@ -49,7 +49,7 @@ namespace CoreLibrary
             try
             {
                 if (!pageSize.HasValue) pageSize = _pageSize;
-                return await _service.GetPagesCount(pageSize.Value, parentId, filter, searchString);
+                return await _service.GetPagesCountAsync(pageSize.Value, parentId, filter, searchString);
             }
             catch (Exception ex)
             {
@@ -64,7 +64,7 @@ namespace CoreLibrary
 
             try
             {
-                return await _service.GetGrid(pageSize.Value, pageNumber, parentId, orderBy, filter, searchString);
+                return await _service.GetGridAsync(pageSize.Value, pageNumber, parentId, orderBy, filter, searchString);
             }
             catch (Exception ex)
             {
@@ -77,7 +77,7 @@ namespace CoreLibrary
         {
             try
             {
-                return await _service.Create(parentId);
+                return await _service.CreateAsync(parentId);
             }
             catch (Exception ex)
             {
@@ -95,7 +95,7 @@ namespace CoreLibrary
             
             try
             {
-                create = await _service.Create(create);
+                create = await _service.CreateAsync(create);
                 return create;
             }
             catch (Exception ex)
@@ -109,7 +109,7 @@ namespace CoreLibrary
         {
             try
             {
-                return await _service.Edit(id);
+                return await _service.EditAsync(id);
             }
             catch (Exception ex)
             {
@@ -128,7 +128,7 @@ namespace CoreLibrary
 
             try
             {
-                edit = await _service.Edit(edit);
+                edit = await _service.EditAsync(edit);
                 return edit;
             }
             catch (Exception ex)
@@ -142,7 +142,7 @@ namespace CoreLibrary
         {
             try
             {
-                await _service.Delete(id);
+                await _service.DeleteAsync(id);
                 return Ok();
             }
             catch (Exception ex)
@@ -156,7 +156,7 @@ namespace CoreLibrary
         {
             try
             {
-                await _service.Delete(ids);
+                await _service.DeleteAsync(ids);
                 return Ok();
             }
             catch (Exception ex)
@@ -170,7 +170,7 @@ namespace CoreLibrary
         {
             try
             {
-                return await _service.GetFilter();
+                return await _service.GetFilterAsync();
             }
             catch (Exception ex)
             {
@@ -183,7 +183,7 @@ namespace CoreLibrary
         {
             try
             {
-                byte[] reportData = await _service.ExcelExport(parentId, orderBy, filter, searchString);
+                byte[] reportData = await _service.ExcelExportAsync(parentId, orderBy, filter, searchString);
                 return File(reportData, "application/vnd.openxmlformat");
             }
             catch (Exception ex)
@@ -197,7 +197,7 @@ namespace CoreLibrary
         {
             try
             {
-                byte[] reportData = await _service.ImportTemplate();
+                byte[] reportData = await _service.ImportTemplateAsync();
                 return File(reportData, "application/vnd.openxmlformat");
             } catch (Exception ex)
             {
@@ -212,7 +212,7 @@ namespace CoreLibrary
                 return BadRequest(_localizer["FileNull"]);
             try
             {                
-                await _service.Import(parentId, file.OpenReadStream());
+                await _service.ImportAsync(parentId, file.OpenReadStream());
             }
             catch (Exception ex)
             {
@@ -226,7 +226,7 @@ namespace CoreLibrary
         {
             try
             {
-                return await _service.GetParentView(parentId);
+                return await _service.GetParentViewAsync(parentId);
             }
             catch (Exception ex)
             {

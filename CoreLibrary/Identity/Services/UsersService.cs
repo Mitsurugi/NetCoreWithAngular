@@ -50,36 +50,36 @@ namespace CoreLibrary.Identity
             return _identityService.GetUsersQuery();
         }
 
-        public virtual async Task<TEntity> Get(TKey id)
+        public virtual async Task<TEntity> GetAsync(TKey id)
         {
-            return await _identityService.FindUserById(id);
+            return await _identityService.FindUserByIdAsync(id);
         }
 
-        public virtual async Task<TCreate> Create(TCreate createView)
+        public virtual async Task<TCreate> CreateAsync(TCreate createView)
         {
             string role = createView.Role.Trim();
             if (!string.IsNullOrEmpty(role))
             {
-                var exists = await _identityService.RoleExists(role);
+                var exists = await _identityService.RoleExistsAsync(role);
                 if (!exists)
                     throw new Exception(_localizer["RoleNotFound", role]);
             }
 
             var create = _mapper.Map<TCreate, TEntity>(createView);
 
-            await _identityService.CreateUser(create, createView.Password);
+            await _identityService.CreateUserAsync(create, createView.Password);
 
-            create = await _identityService.FindUserByName(create.UserName);
+            create = await _identityService.FindUserByNameAsync(create.UserName);
 
             if (!string.IsNullOrEmpty(role))
             {
-                await _identityService.AddUserToRole(create.Id, role);
+                await _identityService.AddUserToRoleAsync(create.Id, role);
             }
 
             createView = _mapper.Map<TEntity, TCreate>(create);
 
             var list = new List<SelectListItem>();
-            list.AddRange(_identityService.GetRoles().Select(i => new SelectListItem { Text = i.DisplayName, Value = i.Name, Selected = i.Name == createView.Role }));
+            list.AddRange( await _identityService.GetRoles().Select(i => new SelectListItem { Text = i.DisplayName, Value = i.Name, Selected = i.Name == createView.Role }).ToListAsync() );
             createView.RoleList = list;
 
             var roleEntity = _identityService.GetRoles().FirstOrDefault(i => i.Name == createView.Role);
@@ -88,84 +88,84 @@ namespace CoreLibrary.Identity
             return createView;
         }
 
-        public virtual async Task<TCreate> Create()
+        public virtual async Task<TCreate> CreateAsync()
         {
             var model = new TCreate();
 
             var list = new List<SelectListItem>();
-            list.AddRange(_identityService.GetRoles().Select(i => new SelectListItem { Text = i.DisplayName, Value = i.Name }));
+            list.AddRange( await _identityService.GetRoles().Select(i => new SelectListItem { Text = i.DisplayName, Value = i.Name }).ToListAsync() );
             model.RoleList = list;
 
             return model;
         }
 
-        public virtual async Task<TEdit> Edit(TEdit editView)
+        public virtual async Task<TEdit> EditAsync(TEdit editView)
         {
             string newRole = editView.Role.Trim();
             if (!string.IsNullOrEmpty(newRole))
             {
-                var exists = await _identityService.RoleExists(newRole);
+                var exists = await _identityService.RoleExistsAsync(newRole);
                 if (!exists)
                     throw new Exception(_localizer["RoleNotFound", newRole]);
             }
 
-            var old = await _identityService.FindUserById(editView.Id);
+            var old = await _identityService.FindUserByIdAsync(editView.Id);
             var entity = _mapper.Map<TEdit, TEntity>(editView, old);
-            await _identityService.EditUser(entity);
-            entity = await _identityService.FindUserById(entity.Id);
+            await _identityService.EditUserAsync(entity);
+            entity = await _identityService.FindUserByIdAsync(entity.Id);
 
             if (old.Role != newRole)
             {
-                await _identityService.RemoveUserFromRole(entity.Id, old.Role);
+                await _identityService.RemoveUserFromRoleAsync(entity.Id, old.Role);
                 if (!string.IsNullOrEmpty(newRole))
                 {
-                    await _identityService.AddUserToRole(entity.Id, newRole);
+                    await _identityService.AddUserToRoleAsync(entity.Id, newRole);
                 }
             }
 
             editView = _mapper.Map<TEntity, TEdit>(entity);
 
             var list = new List<SelectListItem>();
-            list.AddRange(_identityService.GetRoles().Select(i => new SelectListItem { Text = i.DisplayName, Value = i.Name, Selected = i.Name == editView.Role }));
+            list.AddRange( await _identityService.GetRoles().Select(i => new SelectListItem { Text = i.DisplayName, Value = i.Name, Selected = i.Name == editView.Role }).ToListAsync() );
             editView.RoleList = list;
 
-            var roleEntity = _identityService.GetRoles().FirstOrDefault(i => i.Name == editView.Role);
+            var roleEntity = await _identityService.GetRoles().FirstOrDefaultAsync(i => i.Name == editView.Role);
             if (roleEntity != null) editView.RoleDisplayName = roleEntity.DisplayName;
 
             return editView;
         }
 
-        public virtual async Task<TEdit> Edit(TKey id)
+        public virtual async Task<TEdit> EditAsync(TKey id)
         {
-            var entity = await Get(id);
+            var entity = await GetAsync(id);
 
             var edit = _mapper.Map<TEntity, TEdit>(entity);
 
             var list = new List<SelectListItem>();
-            list.AddRange(_identityService.GetRoles().Select(i => new SelectListItem { Text = i.Name, Value = i.Name }));
+            list.AddRange( await _identityService.GetRoles().Select(i => new SelectListItem { Text = i.Name, Value = i.Name }).ToListAsync() );
             edit.RoleList = list;
 
-            var roleEntity = _identityService.GetRoles().FirstOrDefault(i => i.Name == edit.Role);
+            var roleEntity = await _identityService.GetRoles().FirstOrDefaultAsync(i => i.Name == edit.Role);
             if (roleEntity != null) edit.RoleDisplayName = roleEntity.DisplayName;
 
             return edit;
         }
 
-        public virtual async Task Delete(TKey id)
+        public virtual async Task DeleteAsync(TKey id)
         {
-            var delete = await Get(id);
-            await _identityService.DeleteUser(delete.Id);
+            var delete = await GetAsync(id);
+            await _identityService.DeleteUserAsync(delete.Id);
         }
 
-        public virtual async Task Delete(TKey[] ids)
+        public virtual async Task DeleteAsync(TKey[] ids)
         {
             foreach (var id in ids)
             {
-                await Delete(id);
+                await DeleteAsync(id);
             }            
         }
 
-        public virtual async Task<List<TGrid>> GetGrid(int pageSize, int pageNumber, string orderBy, TFilter filter, string searchString)
+        public virtual async Task<List<TGrid>> GetGridAsync(int pageSize, int pageNumber, string orderBy, TFilter filter, string searchString)
         {
             if (pageNumber < 1)
                 throw new Exception($"Wrong pageNumber = {pageNumber}. Must be 1 or greater");
@@ -187,7 +187,7 @@ namespace CoreLibrary.Identity
             return grid;
         }
 
-        public virtual async Task<int> GetPagesCount(int pageSize, TFilter filter, string searchString)
+        public virtual async Task<int> GetPagesCountAsync(int pageSize, TFilter filter, string searchString)
         {
             var query = ApplyFilter(GetQuery(), filter);
             query = ApplySearch(query, searchString);
@@ -201,12 +201,12 @@ namespace CoreLibrary.Identity
             return pages;
         }
 
-        public virtual async Task<TFilter> GetFilter()
+        public virtual async Task<TFilter> GetFilterAsync()
         {
             return new TFilter();
         }
 
-        public virtual async Task<byte[]> ExcelExport(string orderBy, TFilter filter, string searchString)
+        public virtual async Task<byte[]> ExcelExportAsync(string orderBy, TFilter filter, string searchString)
         {
             var query = ApplyFilter(GetQuery(), filter);
             query = ApplySorting(query, orderBy);
@@ -260,7 +260,7 @@ namespace CoreLibrary.Identity
             return ms.ToArray();
         }
 
-        public virtual async Task<byte[]> ImportTemplate()
+        public virtual async Task<byte[]> ImportTemplateAsync()
         {
             var wb = new XLWorkbook();
             var ws = wb.Worksheets.Add("Import");
@@ -296,7 +296,7 @@ namespace CoreLibrary.Identity
             return ms.ToArray();
         }
 
-        public virtual async Task Import(Stream file)
+        public virtual async Task ImportAsync(Stream file)
         {
             var workbook = new XLWorkbook(file);
             var rows = workbook.Worksheet(1).RowsUsed().Skip(1);
@@ -358,7 +358,7 @@ namespace CoreLibrary.Identity
                         if (field.Name == "Role" && !string.IsNullOrEmpty(strVal))
                         {
                             item.Role = strVal;
-                            var exists = await _identityService.RoleExists(item.Role);
+                            var exists = await _identityService.RoleExistsAsync(item.Role);
                             if (!exists)
                                 throw new Exception(_localizer["RoleNotFound", item.Role]);
                         }
@@ -428,11 +428,11 @@ namespace CoreLibrary.Identity
             {                
                 items.ForEach(async i => {
                     var entity = _mapper.Map<TCreate, TEntity>(i);
-                    await _identityService.CreateUser(entity, i.Password);
+                    await _identityService.CreateUserAsync(entity, i.Password);
                     if (!string.IsNullOrEmpty(i.Role))
                     {
-                        var user = await _identityService.FindUserByName(entity.UserName);
-                        await _identityService.AddUserToRole(user.Id, i.Role);
+                        var user = await _identityService.FindUserByNameAsync(entity.UserName);
+                        await _identityService.AddUserToRoleAsync(user.Id, i.Role);
                     }                    
                 });
             }
@@ -442,9 +442,9 @@ namespace CoreLibrary.Identity
             }
         }
 
-        public virtual async Task ResetPassword(TKey userId, string newPassword)
+        public virtual async Task ResetPasswordAsync(TKey userId, string newPassword)
         {
-            await _identityService.ResetPassword(userId, newPassword);
+            await _identityService.ResetPasswordAsync(userId, newPassword);
         }
 
         protected virtual IQueryable<TEntity> ApplySorting(IQueryable<TEntity> query, string orderBy)

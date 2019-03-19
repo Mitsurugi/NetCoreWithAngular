@@ -47,56 +47,56 @@ namespace CoreLibrary
             return _repository.GetQuery();
         }
 
-        public virtual async Task<TEntity> Get(TKey id)
+        public virtual async Task<TEntity> GetAsync(TKey id)
         {
             return await GetQuery().SingleAsync(i => i.Id.Equals(id));
         }
 
-        public virtual async Task<TCreate> Create(TCreate createView)
+        public virtual async Task<TCreate> CreateAsync(TCreate createView)
         {
             var create = _mapper.Map<TCreate, TEntity>(createView);
 
-            create = await _repository.Add(create);
-            await _repository.SaveChanges();
+            create = await _repository.AddAsync(create);
+            await _repository.SaveChangesAsync();
 
             return _mapper.Map<TEntity, TCreate>(create);
         }
 
-        public virtual async Task<TCreate> Create()
+        public virtual async Task<TCreate> CreateAsync()
         {
             return new TCreate();
         }
 
-        public virtual async Task<TEdit> Edit(TEdit editView)
+        public virtual async Task<TEdit> EditAsync(TEdit editView)
         {
-            var old = await Get(editView.Id);
+            var old = await GetAsync(editView.Id);
             var entity = _mapper.Map<TEdit, TEntity>(editView, old);
-            entity = await _repository.Update(entity);
-            await _repository.SaveChanges();
+            entity = await _repository.UpdateAsync(entity);
+            await _repository.SaveChangesAsync();
             return _mapper.Map<TEntity, TEdit>(entity);
         }
 
-        public virtual async Task<TEdit> Edit(TKey id)
+        public virtual async Task<TEdit> EditAsync(TKey id)
         {
-            var entity = await Get(id);
+            var entity = await GetAsync(id);
 
             var edit = _mapper.Map<TEntity, TEdit>(entity);
 
             return edit;
         }
 
-        public virtual async Task Delete(TKey id)
+        public virtual async Task DeleteAsync(TKey id)
         {
-            await Delete(new TKey[] { id });
+            await DeleteAsync(new TKey[] { id });
         }
 
-        public virtual async Task Delete(TKey[] ids)
+        public virtual async Task DeleteAsync(TKey[] ids)
         {
-            await _repository.Delete(i => ids.Contains(i.Id));
-            await _repository.SaveChanges();
+            _repository.Delete(i => ids.Contains(i.Id));
+            await _repository.SaveChangesAsync();
         }
 
-        public virtual async Task<List<TGrid>> GetGrid(int pageSize, int pageNumber, string orderBy, TFilter filter, string searchString)
+        public virtual async Task<List<TGrid>> GetGridAsync(int pageSize, int pageNumber, string orderBy, TFilter filter, string searchString)
         {
             if (pageNumber < 1)
                 throw new Exception($"Wrong pageNumber = {pageNumber}. Must be 1 or greater");
@@ -110,7 +110,7 @@ namespace CoreLibrary
             return await query.Skip(pageSize * (pageNumber - 1)).Take(pageSize).ProjectTo<TGrid>(_mapper.ConfigurationProvider).ToListAsync();
         }
 
-        public virtual async Task<int> GetPagesCount(int pageSize, TFilter filter, string searchString)
+        public virtual async Task<int> GetPagesCountAsync(int pageSize, TFilter filter, string searchString)
         {
             var query = ApplyFilter(GetQuery(), filter);
             query = ApplySearch(query, searchString);
@@ -124,12 +124,12 @@ namespace CoreLibrary
             return pages;
         }
 
-        public virtual async Task<TFilter> GetFilter()
+        public virtual async Task<TFilter> GetFilterAsync()
         {
             return new TFilter();
         }
 
-        public virtual async Task<byte[]> ExcelExport(string orderBy, TFilter filter, string searchString)
+        public virtual async Task<byte[]> ExcelExportAsync(string orderBy, TFilter filter, string searchString)
         {
             var query = ApplyFilter(GetQuery(), filter);
             query = ApplySorting(query, orderBy);
@@ -177,7 +177,7 @@ namespace CoreLibrary
             return ms.ToArray();
         }
 
-        public virtual async Task<byte[]> ImportTemplate()
+        public virtual async Task<byte[]> ImportTemplateAsync()
         {
             var wb = new XLWorkbook();
             var ws = wb.Worksheets.Add("Import");
@@ -213,7 +213,7 @@ namespace CoreLibrary
             return ms.ToArray();
         }
 
-        public virtual async Task Import(Stream file)
+        public virtual async Task ImportAsync(Stream file)
         {
             var workbook = new XLWorkbook(file);
             var rows = workbook.Worksheet(1).RowsUsed().Skip(1);
@@ -333,8 +333,8 @@ namespace CoreLibrary
 
             if (string.IsNullOrEmpty(errors))
             {
-                items.ForEach(async i => await _repository.Add(_mapper.Map<TCreate, TEntity>(i)));
-                await _repository.SaveChanges();
+                items.ForEach(async i => await _repository.AddAsync(_mapper.Map<TCreate, TEntity>(i)));
+                await _repository.SaveChangesAsync();
             }
             else
             {

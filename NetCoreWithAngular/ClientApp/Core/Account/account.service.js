@@ -56,7 +56,7 @@ var CoreAccountService = /** @class */ (function () {
         this._http = http;
         this._accGlobals = accGlobals;
     }
-    CoreAccountService.prototype.getToken = function (model) {
+    CoreAccountService.prototype.getTokenAsync = function (model) {
         return __awaiter(this, void 0, void 0, function () {
             var data;
             return __generator(this, function (_a) {
@@ -74,17 +74,12 @@ var CoreAccountService = /** @class */ (function () {
         });
     };
     CoreAccountService.prototype.deleteToken = function () {
-        return __awaiter(this, void 0, void 0, function () {
-            return __generator(this, function (_a) {
-                localStorage.removeItem("token");
-                localStorage.removeItem("login");
-                localStorage.removeItem("role");
-                this._accGlobals.refresh();
-                return [2 /*return*/];
-            });
-        });
+        localStorage.removeItem("token");
+        localStorage.removeItem("login");
+        localStorage.removeItem("role");
+        this._accGlobals.refresh();
     };
-    CoreAccountService.prototype.changePassword = function (model) {
+    CoreAccountService.prototype.changePasswordAsync = function (model) {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {

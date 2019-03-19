@@ -6,7 +6,7 @@ namespace NetCoreWithAngular.Services
 {
     public interface IFrontDataService
     {
-        Task<List<FrontDataViewModel>> GetAllBooks();
-        Task<List<FrontDataViewModel>> GetAllAnime();
+        Task<List<FrontDataViewModel>> GetAllBooksAsync();
+        Task<List<FrontDataViewModel>> GetAllAnimeAsync();
     }
 }

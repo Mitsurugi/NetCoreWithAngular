@@ -23,23 +23,23 @@ namespace CoreLibrary
         where TParentEntity: class, IEntity<TParentKey>, new()
         where TParentView : class, IEntity<TParentKey>, new()
     {
-        Task<TEntity> Get(TKey id);
-        Task<TCreate> Create(TCreate create);
-        Task<TEdit> Edit(TEdit editView);
-        Task<TEdit> Edit(TKey id);
-        Task Delete(TKey id);
-        Task Delete(TKey[] ids);
-        Task<TFilter> GetFilter();
-        Task<byte[]> ImportTemplate();
+        Task<TEntity> GetAsync(TKey id);
+        Task<TCreate> CreateAsync(TCreate create);
+        Task<TEdit> EditAsync(TEdit editView);
+        Task<TEdit> EditAsync(TKey id);
+        Task DeleteAsync(TKey id);
+        Task DeleteAsync(TKey[] ids);
+        Task<TFilter> GetFilterAsync();
+        Task<byte[]> ImportTemplateAsync();
 
         IQueryable<TEntity> GetQuery(TParentKey parentId);
-        Task<TCreate> Create(TParentKey parentId);
-        Task<int> GetPagesCount(int pageSize, TParentKey parentId, TFilter filter, string searchString);
-        Task<List<TGrid>> GetGrid(int pageSize, int pageNumber, TParentKey parentId, string orderBy, TFilter filter, string searchString);
-        Task<byte[]> ExcelExport(TParentKey parentId, string orderBy, TFilter filter, string searchString);
-        Task Import(TParentKey parentId, Stream file);
+        Task<TCreate> CreateAsync(TParentKey parentId);
+        Task<int> GetPagesCountAsync(int pageSize, TParentKey parentId, TFilter filter, string searchString);
+        Task<List<TGrid>> GetGridAsync(int pageSize, int pageNumber, TParentKey parentId, string orderBy, TFilter filter, string searchString);
+        Task<byte[]> ExcelExportAsync(TParentKey parentId, string orderBy, TFilter filter, string searchString);
+        Task ImportAsync(TParentKey parentId, Stream file);
 
-        Task<TParentEntity> GetParent(TParentKey parentId);
-        Task<TParentView> GetParentView(TParentKey parentId);
+        Task<TParentEntity> GetParentAsync(TParentKey parentId);
+        Task<TParentView> GetParentViewAsync(TParentKey parentId);
     }
 }

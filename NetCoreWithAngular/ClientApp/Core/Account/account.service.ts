@@ -23,7 +23,7 @@ export class CoreAccountService {
         this._accGlobals = accGlobals;
     }
 
-    public async getToken(model: LoginModel) {
+    public async getTokenAsync(model: LoginModel) {
         let data = await this._http.post<TokenResponse>('/api/' + this._controllerName + '/gettoken', model).toPromise();
         localStorage.setItem('token', data.token);
         localStorage.setItem('login', data.login);
@@ -31,14 +31,14 @@ export class CoreAccountService {
         this._accGlobals.refresh();
     }
 
-    public async deleteToken() {
+    public deleteToken() {
         localStorage.removeItem("token");
         localStorage.removeItem("login");
         localStorage.removeItem("role");
         this._accGlobals.refresh();        
     }
 
-    public async changePassword(model: ChangePasswordModel) {
+    public async changePasswordAsync(model: ChangePasswordModel) {
         await this._http.post('/api/' + this._controllerName + '/ChangePassword', model).toPromise();
         this.deleteToken();
     }

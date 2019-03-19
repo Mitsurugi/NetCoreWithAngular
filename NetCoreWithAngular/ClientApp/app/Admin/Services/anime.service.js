@@ -69,18 +69,18 @@ var AnimeService = /** @class */ (function (_super) {
         _this._sanitizer = sanitaizer;
         return _this;
     }
-    AnimeService.prototype.getGrid = function (pageNumber, pageSize, orderBy, filter) {
+    AnimeService.prototype.getGridAsync = function (pageNumber, pageSize, orderBy, filter) {
         return __awaiter(this, void 0, void 0, function () {
             var _this = this;
             return __generator(this, function (_a) {
-                return [2 /*return*/, _super.prototype.getGrid.call(this, pageNumber, pageSize, orderBy, filter).then(function (response) {
+                return [2 /*return*/, _super.prototype.getGridAsync.call(this, pageNumber, pageSize, orderBy, filter).then(function (response) {
                         response.forEach(function (i) { return __awaiter(_this, void 0, void 0, function () {
                             var blob, url;
                             return __generator(this, function (_a) {
                                 switch (_a.label) {
                                     case 0:
                                         if (!i.imageId) return [3 /*break*/, 2];
-                                        return [4 /*yield*/, this._fileService.download(i.imageId)];
+                                        return [4 /*yield*/, this._fileService.downloadAsync(i.imageId)];
                                     case 1:
                                         blob = _a.sent();
                                         url = window.URL.createObjectURL(blob);

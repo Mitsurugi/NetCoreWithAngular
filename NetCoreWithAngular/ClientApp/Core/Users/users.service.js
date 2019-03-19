@@ -50,7 +50,7 @@ var UsersService = /** @class */ (function () {
         this._controller = "users";
         this._http = http;
     }
-    UsersService.prototype.getPagesCount = function (pageSize, filter) {
+    UsersService.prototype.getPagesCountAsync = function (pageSize, filter) {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
@@ -60,7 +60,7 @@ var UsersService = /** @class */ (function () {
             });
         });
     };
-    UsersService.prototype.getGrid = function (pageNumber, pageSize, orderBy, filter) {
+    UsersService.prototype.getGridAsync = function (pageNumber, pageSize, orderBy, filter) {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
@@ -70,7 +70,7 @@ var UsersService = /** @class */ (function () {
             });
         });
     };
-    UsersService.prototype.getCreate = function () {
+    UsersService.prototype.getCreateAsync = function () {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
@@ -80,7 +80,7 @@ var UsersService = /** @class */ (function () {
             });
         });
     };
-    UsersService.prototype.postCreate = function (item) {
+    UsersService.prototype.postCreateAsync = function (item) {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
@@ -90,7 +90,7 @@ var UsersService = /** @class */ (function () {
             });
         });
     };
-    UsersService.prototype.getEdit = function (id) {
+    UsersService.prototype.getEditAsync = function (id) {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
@@ -100,7 +100,7 @@ var UsersService = /** @class */ (function () {
             });
         });
     };
-    UsersService.prototype.postEdit = function (item) {
+    UsersService.prototype.postEditAsync = function (item) {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
@@ -110,7 +110,7 @@ var UsersService = /** @class */ (function () {
             });
         });
     };
-    UsersService.prototype.delete = function (id) {
+    UsersService.prototype.deleteAsync = function (id) {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
@@ -122,7 +122,7 @@ var UsersService = /** @class */ (function () {
             });
         });
     };
-    UsersService.prototype.deleteMany = function (ids) {
+    UsersService.prototype.deleteManyAsync = function (ids) {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
@@ -134,7 +134,7 @@ var UsersService = /** @class */ (function () {
             });
         });
     };
-    UsersService.prototype.getFilter = function () {
+    UsersService.prototype.getFilterAsync = function () {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
@@ -144,7 +144,7 @@ var UsersService = /** @class */ (function () {
             });
         });
     };
-    UsersService.prototype.getExcelExport = function (orderBy, filter) {
+    UsersService.prototype.getExcelExportAsync = function (orderBy, filter) {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
@@ -154,7 +154,7 @@ var UsersService = /** @class */ (function () {
             });
         });
     };
-    UsersService.prototype.getImportTemplate = function () {
+    UsersService.prototype.getImportTemplateAsync = function () {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
@@ -164,7 +164,7 @@ var UsersService = /** @class */ (function () {
             });
         });
     };
-    UsersService.prototype.postResetPassword = function (id, newPassword) {
+    UsersService.prototype.postResetPasswordAsync = function (id, newPassword) {
         return __awaiter(this, void 0, void 0, function () {
             var formData;
             return __generator(this, function (_a) {
@@ -178,7 +178,7 @@ var UsersService = /** @class */ (function () {
             });
         });
     };
-    UsersService.prototype.postImport = function (file) {
+    UsersService.prototype.postImportAsync = function (file) {
         return __awaiter(this, void 0, void 0, function () {
             var formData;
             return __generator(this, function (_a) {

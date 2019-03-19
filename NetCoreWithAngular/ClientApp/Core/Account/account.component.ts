@@ -26,17 +26,17 @@ export class CoreAccountComponent implements OnInit {
         this._accGlobals.refresh();        
     }
 
-    public async getToken() {
+    public async getTokenAsync() {
         this._message = null;
         try {
-            await this._service.getToken(this._loginModel);
+            await this._service.getTokenAsync(this._loginModel);
         }
         catch (e) {
             this._message = e.error;
         }
     }
 
-    public async deleteToken() {
+    public deleteToken() {
         try {
             this._service.deleteToken();
         }
@@ -48,7 +48,7 @@ export class CoreAccountComponent implements OnInit {
     public async changePassword() {
         this._message = null;
         try {
-            await this._service.changePassword(this._changePasswordModel);
+            await this._service.changePasswordAsync(this._changePasswordModel);
             this._message = "Пароль успешно изменен."
         }
         catch (e) {

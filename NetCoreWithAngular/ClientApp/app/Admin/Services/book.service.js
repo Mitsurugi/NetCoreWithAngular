@@ -66,14 +66,18 @@ var BookService = /** @class */ (function (_super) {
         _this._controller = 'book';
         return _this;
     }
-    BookService.prototype.postCreate = function (item) {
-        item.title = '!' + item.title + '!';
-        return _super.prototype.postCreate.call(this, item);
-    };
-    BookService.prototype.getGrid = function (pageNumber, pageSize, orderBy, filter) {
+    BookService.prototype.postCreateAsync = function (item) {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
-                return [2 /*return*/, _super.prototype.getGrid.call(this, pageNumber, pageSize, orderBy, filter).then(function (response) {
+                item.title = '!' + item.title + '!';
+                return [2 /*return*/, _super.prototype.postCreateAsync.call(this, item)];
+            });
+        });
+    };
+    BookService.prototype.getGridAsync = function (pageNumber, pageSize, orderBy, filter) {
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                return [2 /*return*/, _super.prototype.getGridAsync.call(this, pageNumber, pageSize, orderBy, filter).then(function (response) {
                         var b = new BookGrid();
                         b.id = 999;
                         b.title = "fromService";

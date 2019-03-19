@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Identity;
 using CoreLibrary.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace NetCoreWithAngular.Controllers
 {
@@ -17,17 +18,17 @@ namespace NetCoreWithAngular.Controllers
 
         public override async Task<IActionResult> GetToken(LoginModel model)
         {
-            var anyRoles = _service.GetRoles().Any();
+            var anyRoles = await _service.GetRoles().AnyAsync();
             if (!anyRoles)
             {
-                await _service.CreateRole(new Role<System.Guid> { Name = "Admin", DisplayName = "Administrator" });
+                await _service.CreateRoleAsync(new Role<System.Guid> { Name = "Admin", DisplayName = "Administrator" });
             }
             var anyUsers = _service.GetUsersQuery().Any();
             if (!anyUsers)
             {
-                await _service.CreateUser(new Models.User { UserName = "admin", Role = "Admin" }, "11!!qqQQqq");
-                var user = await _service.FindUserByName("admin");
-                await _service.AddUserToRole(user.Id, "Admin");
+                await _service.CreateUserAsync(new Models.User { UserName = "admin", Role = "Admin" }, "11!!qqQQqq");
+                var user = await _service.FindUserByNameAsync("admin");
+                await _service.AddUserToRoleAsync(user.Id, "Admin");
             }
             return await base.GetToken(model);
         }

@@ -50,7 +50,7 @@ var CoreService = /** @class */ (function () {
         this._controller = "";
         this._http = http;
     }
-    CoreService.prototype.getPagesCount = function (pageSize, filter) {
+    CoreService.prototype.getPagesCountAsync = function (pageSize, filter) {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
@@ -60,7 +60,7 @@ var CoreService = /** @class */ (function () {
             });
         });
     };
-    CoreService.prototype.getGrid = function (pageNumber, pageSize, orderBy, filter) {
+    CoreService.prototype.getGridAsync = function (pageNumber, pageSize, orderBy, filter) {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
@@ -70,7 +70,7 @@ var CoreService = /** @class */ (function () {
             });
         });
     };
-    CoreService.prototype.getCreate = function () {
+    CoreService.prototype.getCreateAsync = function () {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
@@ -80,7 +80,7 @@ var CoreService = /** @class */ (function () {
             });
         });
     };
-    CoreService.prototype.postCreate = function (item) {
+    CoreService.prototype.postCreateAsync = function (item) {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
@@ -90,7 +90,7 @@ var CoreService = /** @class */ (function () {
             });
         });
     };
-    CoreService.prototype.getEdit = function (id) {
+    CoreService.prototype.getEditAsync = function (id) {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
@@ -100,7 +100,7 @@ var CoreService = /** @class */ (function () {
             });
         });
     };
-    CoreService.prototype.postEdit = function (item) {
+    CoreService.prototype.postEditAsync = function (item) {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
@@ -110,7 +110,7 @@ var CoreService = /** @class */ (function () {
             });
         });
     };
-    CoreService.prototype.delete = function (id) {
+    CoreService.prototype.deleteAsync = function (id) {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
@@ -122,7 +122,7 @@ var CoreService = /** @class */ (function () {
             });
         });
     };
-    CoreService.prototype.deleteMany = function (ids) {
+    CoreService.prototype.deleteManyAsync = function (ids) {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
@@ -134,7 +134,7 @@ var CoreService = /** @class */ (function () {
             });
         });
     };
-    CoreService.prototype.getFilter = function () {
+    CoreService.prototype.getFilterAsync = function () {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
@@ -144,7 +144,7 @@ var CoreService = /** @class */ (function () {
             });
         });
     };
-    CoreService.prototype.getExcelExport = function (orderBy, filter) {
+    CoreService.prototype.getExcelExportAsync = function (orderBy, filter) {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
@@ -154,7 +154,7 @@ var CoreService = /** @class */ (function () {
             });
         });
     };
-    CoreService.prototype.getImportTemplate = function () {
+    CoreService.prototype.getImportTemplateAsync = function () {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
@@ -164,7 +164,7 @@ var CoreService = /** @class */ (function () {
             });
         });
     };
-    CoreService.prototype.postImport = function (file) {
+    CoreService.prototype.postImportAsync = function (file) {
         return __awaiter(this, void 0, void 0, function () {
             var formData;
             return __generator(this, function (_a) {

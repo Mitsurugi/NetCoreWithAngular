@@ -63,7 +63,7 @@ var CoreAccountComponent = /** @class */ (function () {
             });
         });
     };
-    CoreAccountComponent.prototype.getToken = function () {
+    CoreAccountComponent.prototype.getTokenAsync = function () {
         return __awaiter(this, void 0, void 0, function () {
             var e_1;
             return __generator(this, function (_a) {
@@ -73,7 +73,7 @@ var CoreAccountComponent = /** @class */ (function () {
                         _a.label = 1;
                     case 1:
                         _a.trys.push([1, 3, , 4]);
-                        return [4 /*yield*/, this._service.getToken(this._loginModel)];
+                        return [4 /*yield*/, this._service.getTokenAsync(this._loginModel)];
                     case 2:
                         _a.sent();
                         return [3 /*break*/, 4];
@@ -87,17 +87,12 @@ var CoreAccountComponent = /** @class */ (function () {
         });
     };
     CoreAccountComponent.prototype.deleteToken = function () {
-        return __awaiter(this, void 0, void 0, function () {
-            return __generator(this, function (_a) {
-                try {
-                    this._service.deleteToken();
-                }
-                catch (e) {
-                    this._message = e.error;
-                }
-                return [2 /*return*/];
-            });
-        });
+        try {
+            this._service.deleteToken();
+        }
+        catch (e) {
+            this._message = e.error;
+        }
     };
     CoreAccountComponent.prototype.changePassword = function () {
         return __awaiter(this, void 0, void 0, function () {
@@ -109,7 +104,7 @@ var CoreAccountComponent = /** @class */ (function () {
                         _a.label = 1;
                     case 1:
                         _a.trys.push([1, 3, , 4]);
-                        return [4 /*yield*/, this._service.changePassword(this._changePasswordModel)];
+                        return [4 /*yield*/, this._service.changePasswordAsync(this._changePasswordModel)];
                     case 2:
                         _a.sent();
                         this._message = "Пароль успешно изменен.";

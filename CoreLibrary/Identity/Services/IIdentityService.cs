@@ -12,32 +12,32 @@ namespace CoreLibrary.Identity
     {        
         //Auth
 
-        Task SignOut();
-        Task<SignInResult> SignIn(string userName, string password, bool isPersistent = false, bool lockOnFailure = false);
-        Task<bool> VerifyPassword(string userName, string password);
-        Task<string> GetToken(string userName, string password);
+        Task SignOutAsync();
+        Task<SignInResult> SignInAsync(string userName, string password, bool isPersistent = false, bool lockOnFailure = false);
+        Task<bool> VerifyPasswordAsync(string userName, string password);
+        Task<string> GetTokenAsync(string userName, string password);
 
         //Users
 
         IQueryable<TIdentityUser> GetUsersQuery();        
-        Task CreateUser(TIdentityUser user, string password);        
-        Task<TIdentityUser> FindUserById(TKey userId);
-        Task<TIdentityUser> FindUserByName(string userName);        
-        Task ChangePassword(TKey userId, string currentPassword, string newPassword);
-        Task<string> GeneratePasswordResetToken(TKey userId);
-        Task ResetPasswordWithToken(TKey userId, string token, string newPassword);
-        Task ResetPassword(TKey userId, string newPassword);        
-        Task DeleteUser(TKey userId);
-        Task EditUser(TIdentityUser user);
+        Task CreateUserAsync(TIdentityUser user, string password);        
+        Task<TIdentityUser> FindUserByIdAsync(TKey userId);
+        Task<TIdentityUser> FindUserByNameAsync(string userName);        
+        Task ChangePasswordAsync(TKey userId, string currentPassword, string newPassword);
+        Task<string> GeneratePasswordResetTokenAsync(TKey userId);
+        Task ResetPasswordWithTokenAsync(TKey userId, string token, string newPassword);
+        Task ResetPasswordAsync(TKey userId, string newPassword);        
+        Task DeleteUserAsync(TKey userId);
+        Task EditUserAsync(TIdentityUser user);
 
         //Roles
 
         IQueryable<Role<TKey>> GetRoles();
-        Task CreateRole(Role<TKey> role);
-        Task<bool> RoleExists(string roleName);
-        Task AddUserToRole(TKey userId, string roleName);
-        Task RemoveUserFromRole(TKey userId, string roleName);
-        Task<IList<string>> GetRolesForUser(TKey userId);
-        Task<bool> IsUserInRole(TKey userId, string roleName);
+        Task CreateRoleAsync(Role<TKey> role);
+        Task<bool> RoleExistsAsync(string roleName);
+        Task AddUserToRoleAsync(TKey userId, string roleName);
+        Task RemoveUserFromRoleAsync(TKey userId, string roleName);
+        Task<IList<string>> GetRolesForUserAsync(TKey userId);
+        Task<bool> IsUserInRoleAsync(TKey userId, string roleName);
     }
 }

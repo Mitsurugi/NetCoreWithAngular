@@ -68,13 +68,13 @@ var BookComponent = /** @class */ (function (_super) {
         _this._pageSize = 3;
         return _this;
     }
-    BookComponent.prototype.postCreate = function () {
+    BookComponent.prototype.postCreateAsync = function () {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         this._itemCreate.title = '*' + this._itemCreate.title + '*';
-                        return [4 /*yield*/, _super.prototype.postCreate.call(this)];
+                        return [4 /*yield*/, _super.prototype.postCreateAsync.call(this)];
                     case 1:
                         _a.sent();
                         return [2 /*return*/];

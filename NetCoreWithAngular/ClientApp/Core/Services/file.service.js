@@ -49,7 +49,7 @@ var FileService = /** @class */ (function () {
         this._controller = "file";
         this._http = http;
     }
-    FileService.prototype.delete = function (id) {
+    FileService.prototype.deleteAsync = function (id) {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
@@ -61,7 +61,7 @@ var FileService = /** @class */ (function () {
             });
         });
     };
-    FileService.prototype.upload = function (file) {
+    FileService.prototype.uploadAsync = function (file) {
         return __awaiter(this, void 0, void 0, function () {
             var formData;
             return __generator(this, function (_a) {
@@ -75,7 +75,7 @@ var FileService = /** @class */ (function () {
             });
         });
     };
-    FileService.prototype.download = function (id) {
+    FileService.prototype.downloadAsync = function (id) {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {

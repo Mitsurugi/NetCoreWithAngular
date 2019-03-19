@@ -50,7 +50,7 @@ var DependentService = /** @class */ (function () {
         this._controller = "";
         this._http = http;
     }
-    DependentService.prototype.getPagesCount = function (pageSize, parentId, filter) {
+    DependentService.prototype.getPagesCountAsync = function (pageSize, parentId, filter) {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
@@ -60,7 +60,7 @@ var DependentService = /** @class */ (function () {
             });
         });
     };
-    DependentService.prototype.getGrid = function (parentId, pageNumber, pageSize, orderBy, filter) {
+    DependentService.prototype.getGridAsync = function (parentId, pageNumber, pageSize, orderBy, filter) {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
@@ -70,7 +70,7 @@ var DependentService = /** @class */ (function () {
             });
         });
     };
-    DependentService.prototype.getCreate = function (parentId) {
+    DependentService.prototype.getCreateAsync = function (parentId) {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
@@ -80,7 +80,7 @@ var DependentService = /** @class */ (function () {
             });
         });
     };
-    DependentService.prototype.postCreate = function (item) {
+    DependentService.prototype.postCreateAsync = function (item) {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
@@ -90,7 +90,7 @@ var DependentService = /** @class */ (function () {
             });
         });
     };
-    DependentService.prototype.getEdit = function (id) {
+    DependentService.prototype.getEditAsync = function (id) {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
@@ -100,7 +100,7 @@ var DependentService = /** @class */ (function () {
             });
         });
     };
-    DependentService.prototype.postEdit = function (item) {
+    DependentService.prototype.postEditAsync = function (item) {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
@@ -110,7 +110,7 @@ var DependentService = /** @class */ (function () {
             });
         });
     };
-    DependentService.prototype.delete = function (id) {
+    DependentService.prototype.deleteAsync = function (id) {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
@@ -122,7 +122,7 @@ var DependentService = /** @class */ (function () {
             });
         });
     };
-    DependentService.prototype.deleteMany = function (ids) {
+    DependentService.prototype.deleteManyAsync = function (ids) {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
@@ -134,7 +134,7 @@ var DependentService = /** @class */ (function () {
             });
         });
     };
-    DependentService.prototype.getFilter = function () {
+    DependentService.prototype.getFilterAsync = function () {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
@@ -144,7 +144,7 @@ var DependentService = /** @class */ (function () {
             });
         });
     };
-    DependentService.prototype.getExcelExport = function (parentId, orderBy, filter) {
+    DependentService.prototype.getExcelExportAsync = function (parentId, orderBy, filter) {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
@@ -154,7 +154,7 @@ var DependentService = /** @class */ (function () {
             });
         });
     };
-    DependentService.prototype.getImportTemplate = function () {
+    DependentService.prototype.getImportTemplateAsync = function () {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
@@ -164,7 +164,7 @@ var DependentService = /** @class */ (function () {
             });
         });
     };
-    DependentService.prototype.postImport = function (pareintId, file) {
+    DependentService.prototype.postImportAsync = function (pareintId, file) {
         return __awaiter(this, void 0, void 0, function () {
             var formData;
             return __generator(this, function (_a) {
@@ -178,7 +178,7 @@ var DependentService = /** @class */ (function () {
             });
         });
     };
-    DependentService.prototype.getParent = function (parentId) {
+    DependentService.prototype.getParentAsync = function (parentId) {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {

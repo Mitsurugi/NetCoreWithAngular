@@ -33,45 +33,45 @@ export class EditComponent<TKey, TGrid extends IEntity<TKey>, TCreate extends IE
         route.params.subscribe(params => this._id = params['id']);
     }
 
+    protected async getCreateAsync() {
+        this._message = null;
+        try {
+            this._itemCreate = await this._service.getCreateAsync();
+        }
+        catch (e) {
+            this._message = "Ошибка: " + e.error;
+        }
+    }
+
+    protected async getEditAsync() {
+        this._message = null;
+        try {
+            this._itemEdit = await this._service.getEditAsync(this._id);
+        }
+        catch (e) {
+            this._message = "Ошибка: " + e.error;
+        }
+    }
+
     public async ngOnInit() {
         this._message = null;
         try {
             if (this._id) {
-                this.getEdit();
+                this.getEditAsync();
             } else {
-                this.getCreate();
+                this.getCreateAsync();
             }
         }
         catch (e) {
             this._message = "Ошибка: " + e.error;
         }
-    }
+    }    
 
-    protected async getCreate() {
+    public async postCreateAsync() {
         this._message = null;
         try {
-            this._itemCreate = await this._service.getCreate();
-        }
-        catch (e) {
-            this._message = "Ошибка: " + e.error;
-        }
-    }
-
-    protected async getEdit() {
-        this._message = null;
-        try {
-            this._itemEdit = await this._service.getEdit(this._id);
-        }
-        catch (e) {
-            this._message = "Ошибка: " + e.error;
-        }
-    }
-
-    public async postCreate() {
-        this._message = null;
-        try {
-            var result = await this._service.postCreate(this._itemCreate);
-            await this.getCreate();
+            var result = await this._service.postCreateAsync(this._itemCreate);
+            await this.getCreateAsync();
             this._router.navigate([this._listUrl + 'edit/' + result.id]);
         }
         catch (e) {
@@ -79,10 +79,10 @@ export class EditComponent<TKey, TGrid extends IEntity<TKey>, TCreate extends IE
         }
     }
 
-    public async postEdit() {
+    public async postEditAsync() {
         this._message = null;
         try {
-            this._itemEdit = await this._service.postEdit(this._itemEdit);
+            this._itemEdit = await this._service.postEditAsync(this._itemEdit);
             this._message = "Изменения успешно сохранены";
         }
         catch (e) {

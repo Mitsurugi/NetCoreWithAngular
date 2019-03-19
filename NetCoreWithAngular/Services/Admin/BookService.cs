@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System;
 using Microsoft.Extensions.Localization;
+using Microsoft.EntityFrameworkCore;
 
 namespace NetCoreWithAngular.Services
 {
@@ -16,17 +17,17 @@ namespace NetCoreWithAngular.Services
         {
         }
 
-        public override Task<List<BookGridModel>> GetGrid(int pageSize, int pageNumber, string orderBy, BookFilterModel filter, string searchString)
+        public override async Task<List<BookGridModel>> GetGridAsync(int pageSize, int pageNumber, string orderBy, BookFilterModel filter, string searchString)
         {
-            if (!_repository.GetQuery().Any())
+            if (!(await _repository.GetQuery().AnyAsync()))
             {
                 for (int i = 1; i <= 10; i++)
                 {
-                    _repository.Add(new Book { Title = $"Book{i}", Author = $"Author{i}", PageCount = i });
+                    await _repository.AddAsync(new Book { Title = $"Book{i}", Author = $"Author{i}", PageCount = i });
                 }
-                _repository.SaveChanges();
+                await _repository.SaveChangesAsync();
             }
-            return base.GetGrid(pageSize, pageNumber, orderBy, filter, searchString);
+            return await base.GetGridAsync(pageSize, pageNumber, orderBy, filter, searchString);
         }
 
         protected override IQueryable<Book> ApplySorting(IQueryable<Book> query, string orderBy)

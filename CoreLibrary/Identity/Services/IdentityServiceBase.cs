@@ -36,16 +36,16 @@ namespace CoreLibrary.Identity
 
         //Auth
 
-        public virtual async Task<string> GetToken(string userName, string password)
+        public virtual async Task<string> GetTokenAsync(string userName, string password)
         {
-            var valid = await VerifyPassword(userName, password);
+            var valid = await VerifyPasswordAsync(userName, password);
             if (!valid)
                 throw new Exception(_localizer["InvalidLoginPass"]);
-            var user = await FindUserByName(userName);
+            var user = await FindUserByNameAsync(userName);
 
             var claims = new List<Claim>();
             claims.Add(new Claim(ClaimsIdentity.DefaultNameClaimType, user.UserName));
-            var roles = await GetRolesForUser(user.Id);
+            var roles = await GetRolesForUserAsync(user.Id);
             if (roles.Any())
             {
                 string r = "";
@@ -69,19 +69,19 @@ namespace CoreLibrary.Identity
             return new JwtSecurityTokenHandler().WriteToken(jwt);
         }
 
-        public virtual async Task<SignInResult> SignIn(string userName, string password, bool isPersistent = false, bool lockOnFailure = false)
+        public virtual async Task<SignInResult> SignInAsync(string userName, string password, bool isPersistent = false, bool lockOnFailure = false)
         {
             return await _signInManager.PasswordSignInAsync(userName, password, isPersistent, lockOnFailure);
         }
 
-        public virtual async Task SignOut()
+        public virtual async Task SignOutAsync()
         {
             await _signInManager.SignOutAsync();
         }
 
-        public virtual async Task<bool> VerifyPassword(string userName, string password)
+        public virtual async Task<bool> VerifyPasswordAsync(string userName, string password)
         {
-            var user = await FindUserByName(userName);
+            var user = await FindUserByNameAsync(userName);
             return await _userManager.CheckPasswordAsync(user, password);
         }
 
@@ -92,7 +92,7 @@ namespace CoreLibrary.Identity
             return _userManager.Users;
         }
 
-        public virtual async Task CreateUser(TIdentityUser user, string password)
+        public virtual async Task CreateUserAsync(TIdentityUser user, string password)
         {
             var identityResult = await _userManager.CreateAsync(user, password);
 
@@ -108,19 +108,19 @@ namespace CoreLibrary.Identity
             }
         }
 
-        public virtual async Task<TIdentityUser> FindUserById(TKey userId)
+        public virtual async Task<TIdentityUser> FindUserByIdAsync(TKey userId)
         {
             return await _userManager.FindByIdAsync(userId.ToString());            
         }
 
-        public virtual async Task<TIdentityUser> FindUserByName(string userName)
+        public virtual async Task<TIdentityUser> FindUserByNameAsync(string userName)
         {
             return await _userManager.FindByNameAsync(userName);
         }        
 
-        public virtual async Task ChangePassword(TKey userId, string currentPassword, string newPassword)
+        public virtual async Task ChangePasswordAsync(TKey userId, string currentPassword, string newPassword)
         {
-            var user = await FindUserById(userId);
+            var user = await FindUserByIdAsync(userId);
             var identityResult = await _userManager.ChangePasswordAsync(user, currentPassword, newPassword);
 
             if (!identityResult.Succeeded)
@@ -135,15 +135,15 @@ namespace CoreLibrary.Identity
             }
         }
 
-        public virtual async Task<string> GeneratePasswordResetToken(TKey userId)
+        public virtual async Task<string> GeneratePasswordResetTokenAsync(TKey userId)
         {
-            var user = await FindUserById(userId);
+            var user = await FindUserByIdAsync(userId);
             return await _userManager.GeneratePasswordResetTokenAsync(user);
         }
 
-        public virtual async Task ResetPasswordWithToken(TKey userId, string token, string newPassword)
+        public virtual async Task ResetPasswordWithTokenAsync(TKey userId, string token, string newPassword)
         {
-            var user = await FindUserById(userId);
+            var user = await FindUserByIdAsync(userId);
             var identityResult = await _userManager.ResetPasswordAsync(user, token, newPassword);
 
             if (!identityResult.Succeeded)
@@ -158,16 +158,16 @@ namespace CoreLibrary.Identity
             }
         }
 
-        public virtual async Task ResetPassword(TKey userId, string newPassword)
+        public virtual async Task ResetPasswordAsync(TKey userId, string newPassword)
         {
-            var token = await GeneratePasswordResetToken(userId);
+            var token = await GeneratePasswordResetTokenAsync(userId);
 
-            await ResetPasswordWithToken(userId, token, newPassword);
+            await ResetPasswordWithTokenAsync(userId, token, newPassword);
         }
 
-        public virtual async Task DeleteUser(TKey userId)
+        public virtual async Task DeleteUserAsync(TKey userId)
         {
-            var user = await FindUserById(userId);
+            var user = await FindUserByIdAsync(userId);
 
             var identityResult = await _userManager.DeleteAsync(user);
 
@@ -183,7 +183,7 @@ namespace CoreLibrary.Identity
             }
         }
 
-        public virtual async Task EditUser(TIdentityUser user)
+        public virtual async Task EditUserAsync(TIdentityUser user)
         {
             var identityResult = await _userManager.UpdateAsync(user);
 
@@ -206,7 +206,7 @@ namespace CoreLibrary.Identity
             return _roleManager.Roles;
         }
 
-        public virtual async Task CreateRole(Role<TKey> role)
+        public virtual async Task CreateRoleAsync(Role<TKey> role)
         {
             var identityResult = await _roleManager.CreateAsync(role);
 
@@ -222,14 +222,14 @@ namespace CoreLibrary.Identity
             }
         }
 
-        public virtual async Task<bool> RoleExists(string roleName)
+        public virtual async Task<bool> RoleExistsAsync(string roleName)
         {
             return await _roleManager.RoleExistsAsync(roleName);
         }
 
-        public virtual async Task AddUserToRole(TKey userId, string roleName)
+        public virtual async Task AddUserToRoleAsync(TKey userId, string roleName)
         {
-            var user = await FindUserById(userId);
+            var user = await FindUserByIdAsync(userId);
 
             var identityResult = await _userManager.AddToRoleAsync(user, roleName);
 
@@ -245,9 +245,9 @@ namespace CoreLibrary.Identity
             }
         }
 
-        public virtual async Task RemoveUserFromRole(TKey userId, string roleName)
+        public virtual async Task RemoveUserFromRoleAsync(TKey userId, string roleName)
         {
-            var user = await FindUserById(userId);
+            var user = await FindUserByIdAsync(userId);
 
             var identityResult = await _userManager.RemoveFromRoleAsync(user, roleName);
 
@@ -263,16 +263,16 @@ namespace CoreLibrary.Identity
             }
         }
 
-        public virtual async Task<IList<string>> GetRolesForUser(TKey userId)
+        public virtual async Task<IList<string>> GetRolesForUserAsync(TKey userId)
         {
-            var user = await FindUserById(userId);
+            var user = await FindUserByIdAsync(userId);
 
             return await _userManager.GetRolesAsync(user);
         }        
 
-        public virtual async Task<bool> IsUserInRole(TKey userId, string roleName)
+        public virtual async Task<bool> IsUserInRoleAsync(TKey userId, string roleName)
         {
-            var user = await FindUserById(userId);
+            var user = await FindUserByIdAsync(userId);
 
             return await _userManager.IsInRoleAsync(user, roleName);
         }

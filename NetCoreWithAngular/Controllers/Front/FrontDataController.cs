@@ -20,13 +20,13 @@ namespace NetCoreWithAngular.Controllers
         [HttpGet]
         public async Task<List<FrontDataViewModel>> GetAllBooks()
         {
-            return await _service.GetAllBooks();
+            return await _service.GetAllBooksAsync();
         }
 
         [HttpGet]
         public async Task<List<FrontDataViewModel>> GetAllAnime()
         {
-            return await _service.GetAllAnime();
+            return await _service.GetAllAnimeAsync();
         }
     }
 }

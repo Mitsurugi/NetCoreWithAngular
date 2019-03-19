@@ -4,10 +4,10 @@
 </div>
 <div class="grid">
     <div class="pagination">
-        <button class="btn btn-default" (click)="prevPage()">Previous</button>
+        <button class="btn btn-default" (click)="prevPageAsync()">Previous</button>
         <span>Page {{_currentPage}} of {{_totalPages}}</span>
-        <button class="btn btn-default" (click)="nextPage()">Next</button>
-        <button class="btn btn-default" (click)="excelExport()">Export all pages to excel</button>
+        <button class="btn btn-default" (click)="nextPageAsync()">Next</button>
+        <button class="btn btn-default" (click)="getExcelExportAsync()">Export all pages to excel</button>
     </div>
     <table class="table">
         <thead>
@@ -28,10 +28,10 @@
                         {{i.title}}
                     </td>
                     <td>
-                        <button class="btn btn-default" (click)="toggleEdit(i.id)">Edit</button>
+                        <button class="btn btn-default" (click)="toggleEditAsync(i.id)">Edit</button>
                     </td>
                     <td>
-                        <button class="btn btn-default" (click)="delete(i.id)">Delete</button>
+                        <button class="btn btn-default" (click)="deleteAsync(i.id)">Delete</button>
                     </td>
                 </tr>
                 <tr *ngIf="_showEditId==i.id; then edit"></tr>
@@ -40,7 +40,7 @@
     </table>
 </div>
 <div class="create-new">
-    <button class="btn btn-default" (click)="toggleCreate()">Create new</button>
+    <button class="btn btn-default" (click)="toggleCreateAsync()">Create new</button>
     <div *ngIf="_isShowCreate; then create"></div>
 </div>
 
@@ -59,7 +59,7 @@
                         </div>
                     </div>                    
                     <div class="form-group col-sm-10">
-                        <button class="btn btn-default" (click)="postEdit()" [disabled]="editForm.invalid">Submit</button>
+                        <button class="btn btn-default" (click)="postEditAsync()" [disabled]="editForm.invalid">Submit</button>
                     </div>
                 </form>
                 <div style="clear:both"></div>
@@ -81,7 +81,7 @@
                 </div>
             </div>            
             <div class="form-group col-sm-10">
-                <button class="btn btn-default" (click)="postCreate()" [disabled]="createForm.invalid">Submit</button>
+                <button class="btn btn-default" (click)="postCreateAsync()" [disabled]="createForm.invalid">Submit</button>
             </div>
         </form>
         <div style="clear:both"></div>

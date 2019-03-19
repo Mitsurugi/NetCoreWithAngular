@@ -2,7 +2,7 @@
     <h2>Logged in as {{_accGlobals.login}}</h2>
     <h2>Role: {{_accGlobals.role}}</h2>
     <div class="form-group">
-        <button class="btn btn-default" (click)="deleteToken()">Logout</button>
+        <button class="btn btn-default" (click)="deleteTokenAsync()">Logout</button>
     </div> 
     <div class="form-group">
         <h2>Change password</h2>
@@ -30,7 +30,7 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <button class="btn btn-default" (click)="changePassword()" [disabled]="passwordChangeForm.invalid">Change password</button>
+                    <button class="btn btn-default" (click)="changePasswordAsync()" [disabled]="passwordChangeForm.invalid">Change password</button>
                 </div>
             </form>
         </div>
@@ -65,7 +65,7 @@
                 </div>
             </div>
             <div class="form-group">
-                <button class="btn btn-default" (click)="getToken()" [disabled]="loginForm.invalid">LogIn</button>
+                <button class="btn btn-default" (click)="getTokenAsync()" [disabled]="loginForm.invalid">LogIn</button>
             </div>
         </form>
     </div>

@@ -20,18 +20,18 @@ namespace CoreLibrary
         where TFilter: class, new()
     {
         IQueryable<TEntity> GetQuery();
-        Task<TEntity> Get(TKey id);
-        Task<TCreate> Create(TCreate create);
-        Task<TCreate> Create();        
-        Task<TEdit> Edit(TEdit editView);
-        Task<TEdit> Edit(TKey id);
-        Task Delete(TKey id);
-        Task Delete(TKey[] ids);
-        Task<int> GetPagesCount(int pageSize, TFilter filter, string searchSting);
-        Task<List<TGrid>> GetGrid(int pageSize, int pageNumber, string orderBy, TFilter filter, string searchSting);
-        Task<TFilter> GetFilter();
-        Task<byte[]> ExcelExport(string orderBy, TFilter filter, string searchString);
-        Task<byte[]> ImportTemplate();
-        Task Import(Stream file);
+        Task<TEntity> GetAsync(TKey id);
+        Task<TCreate> CreateAsync(TCreate create);
+        Task<TCreate> CreateAsync();        
+        Task<TEdit> EditAsync(TEdit editView);
+        Task<TEdit> EditAsync(TKey id);
+        Task DeleteAsync(TKey id);
+        Task DeleteAsync(TKey[] ids);
+        Task<int> GetPagesCountAsync(int pageSize, TFilter filter, string searchSting);
+        Task<List<TGrid>> GetGridAsync(int pageSize, int pageNumber, string orderBy, TFilter filter, string searchSting);
+        Task<TFilter> GetFilterAsync();
+        Task<byte[]> ExcelExportAsync(string orderBy, TFilter filter, string searchString);
+        Task<byte[]> ImportTemplateAsync();
+        Task ImportAsync(Stream file);
     }
 }
