@@ -66,11 +66,11 @@ var BookService = /** @class */ (function (_super) {
         _this._controller = 'book';
         return _this;
     }
-    BookService.prototype.postCreateAsync = function (item) {
+    BookService.prototype.saveCreateModelAsync = function (item) {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
                 item.title = '!' + item.title + '!';
-                return [2 /*return*/, _super.prototype.postCreateAsync.call(this, item)];
+                return [2 /*return*/, _super.prototype.saveCreateModelAsync.call(this, item)];
             });
         });
     };

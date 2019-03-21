@@ -22,7 +22,7 @@ namespace CoreLibrary.Identity
         }        
 
         [HttpPost]
-        public virtual async Task<IActionResult> GetToken(LoginModel model)
+        public virtual async Task<IActionResult> TokenRequest(LoginModel model)
         {
             if (!ModelState.IsValid)
             {

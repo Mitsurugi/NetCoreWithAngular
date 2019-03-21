@@ -16,7 +16,7 @@ namespace NetCoreWithAngular.Controllers
         {
         }
 
-        public override async Task<IActionResult> GetToken(LoginModel model)
+        public override async Task<IActionResult> TokenRequest(LoginModel model)
         {
             var anyRoles = await _service.GetRoles().AnyAsync();
             if (!anyRoles)
@@ -30,7 +30,7 @@ namespace NetCoreWithAngular.Controllers
                 var user = await _service.FindUserByNameAsync("admin");
                 await _service.AddUserToRoleAsync(user.Id, "Admin");
             }
-            return await base.GetToken(model);
+            return await base.TokenRequest(model);
         }
     }
 }

@@ -64,47 +64,47 @@ var UsersService = /** @class */ (function () {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, this._http.get('api/' + this._controller + '/grid?pageNumber=' + pageNumber + '&pageSize=' + pageSize + '&orderBy=' + orderBy, { params: StaticMethods.ObjectToHttpParams('filter', filter) }).toPromise()];
+                    case 0: return [4 /*yield*/, this._http.get('api/' + this._controller + '/getGrid?pageNumber=' + pageNumber + '&pageSize=' + pageSize + '&orderBy=' + orderBy, { params: StaticMethods.ObjectToHttpParams('filter', filter) }).toPromise()];
                     case 1: return [2 /*return*/, _a.sent()];
                 }
             });
         });
     };
-    UsersService.prototype.getCreateAsync = function () {
+    UsersService.prototype.getCreateModelAsync = function () {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, this._http.get('api/' + this._controller + '/create').toPromise()];
+                    case 0: return [4 /*yield*/, this._http.get('api/' + this._controller + '/getCreateModel').toPromise()];
                     case 1: return [2 /*return*/, _a.sent()];
                 }
             });
         });
     };
-    UsersService.prototype.postCreateAsync = function (item) {
+    UsersService.prototype.saveCreateModelAsync = function (item) {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, this._http.post('/api/' + this._controller + '/create', item).toPromise()];
+                    case 0: return [4 /*yield*/, this._http.post('/api/' + this._controller + '/saveCreateModel', item).toPromise()];
                     case 1: return [2 /*return*/, _a.sent()];
                 }
             });
         });
     };
-    UsersService.prototype.getEditAsync = function (id) {
+    UsersService.prototype.getEditModelAsync = function (id) {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, this._http.get('api/' + this._controller + '/edit?id=' + id).toPromise()];
+                    case 0: return [4 /*yield*/, this._http.get('api/' + this._controller + '/getEditModel?id=' + id).toPromise()];
                     case 1: return [2 /*return*/, _a.sent()];
                 }
             });
         });
     };
-    UsersService.prototype.postEditAsync = function (item) {
+    UsersService.prototype.saveEditModelAsync = function (item) {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, this._http.post('/api/' + this._controller + '/edit', item).toPromise()];
+                    case 0: return [4 /*yield*/, this._http.post('/api/' + this._controller + '/saveEditModel', item).toPromise()];
                     case 1: return [2 /*return*/, _a.sent()];
                 }
             });
@@ -134,11 +134,11 @@ var UsersService = /** @class */ (function () {
             });
         });
     };
-    UsersService.prototype.getFilterAsync = function () {
+    UsersService.prototype.getFilterModelAsync = function () {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, this._http.get('api/' + this._controller + '/getFilter').toPromise()];
+                    case 0: return [4 /*yield*/, this._http.get('api/' + this._controller + '/getFilterModel').toPromise()];
                     case 1: return [2 /*return*/, _a.sent()];
                 }
             });
@@ -148,7 +148,7 @@ var UsersService = /** @class */ (function () {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, this._http.get('api/' + this._controller + '/ExcelExport?orderBy=' + orderBy, { responseType: 'blob', params: StaticMethods.ObjectToHttpParams('filter', filter) }).toPromise()];
+                    case 0: return [4 /*yield*/, this._http.get('api/' + this._controller + '/getExcelExport?orderBy=' + orderBy, { responseType: 'blob', params: StaticMethods.ObjectToHttpParams('filter', filter) }).toPromise()];
                     case 1: return [2 /*return*/, _a.sent()];
                 }
             });
@@ -158,13 +158,13 @@ var UsersService = /** @class */ (function () {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, this._http.get('api/' + this._controller + '/ImportTemplate', { responseType: 'blob' }).toPromise()];
+                    case 0: return [4 /*yield*/, this._http.get('api/' + this._controller + '/getImportTemplate', { responseType: 'blob' }).toPromise()];
                     case 1: return [2 /*return*/, _a.sent()];
                 }
             });
         });
     };
-    UsersService.prototype.postResetPasswordAsync = function (id, newPassword) {
+    UsersService.prototype.resetPasswordAsync = function (id, newPassword) {
         return __awaiter(this, void 0, void 0, function () {
             var formData;
             return __generator(this, function (_a) {
@@ -178,7 +178,7 @@ var UsersService = /** @class */ (function () {
             });
         });
     };
-    UsersService.prototype.postImportAsync = function (file) {
+    UsersService.prototype.importAsync = function (file) {
         return __awaiter(this, void 0, void 0, function () {
             var formData;
             return __generator(this, function (_a) {

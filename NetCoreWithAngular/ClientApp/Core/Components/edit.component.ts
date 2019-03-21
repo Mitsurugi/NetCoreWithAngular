@@ -33,20 +33,20 @@ export class EditComponent<TKey, TGrid extends IEntity<TKey>, TCreate extends IE
         route.params.subscribe(params => this._id = params['id']);
     }
 
-    protected async getCreateAsync() {
+    protected async getCreateModelAsync() {
         this._message = null;
         try {
-            this._itemCreate = await this._service.getCreateAsync();
+            this._itemCreate = await this._service.getCreateModelAsync();
         }
         catch (e) {
             this._message = "Ошибка: " + e.error;
         }
     }
 
-    protected async getEditAsync() {
+    protected async getEditModelAsync() {
         this._message = null;
         try {
-            this._itemEdit = await this._service.getEditAsync(this._id);
+            this._itemEdit = await this._service.getEditModelAsync(this._id);
         }
         catch (e) {
             this._message = "Ошибка: " + e.error;
@@ -57,9 +57,9 @@ export class EditComponent<TKey, TGrid extends IEntity<TKey>, TCreate extends IE
         this._message = null;
         try {
             if (this._id) {
-                this.getEditAsync();
+                this.getEditModelAsync();
             } else {
-                this.getCreateAsync();
+                this.getCreateModelAsync();
             }
         }
         catch (e) {
@@ -67,11 +67,11 @@ export class EditComponent<TKey, TGrid extends IEntity<TKey>, TCreate extends IE
         }
     }    
 
-    public async postCreateAsync() {
+    public async saveCreateModelAsync() {
         this._message = null;
         try {
-            var result = await this._service.postCreateAsync(this._itemCreate);
-            await this.getCreateAsync();
+            var result = await this._service.saveCreateModelAsync(this._itemCreate);
+            await this.getCreateModelAsync();
             this._router.navigate([this._listUrl + 'edit/' + result.id]);
         }
         catch (e) {
@@ -79,10 +79,10 @@ export class EditComponent<TKey, TGrid extends IEntity<TKey>, TCreate extends IE
         }
     }
 
-    public async postEditAsync() {
+    public async saveEditModelAsync() {
         this._message = null;
         try {
-            this._itemEdit = await this._service.postEditAsync(this._itemEdit);
+            this._itemEdit = await this._service.saveEditModelAsync(this._itemEdit);
             this._message = "Изменения успешно сохранены";
         }
         catch (e) {

@@ -53,7 +53,7 @@
                         </div>
                     </div>
                     <div class="form-group col-sm-10">
-                        <button class="btn btn-default" (click)="postEditAsync()" [disabled]="editForm.invalid">Submit</button>
+                        <button class="btn btn-default" (click)="saveEditModelAsync()" [disabled]="editForm.invalid">Submit</button>
                     </div>
                 </form>
                 <div style="clear:both"></div>
@@ -104,7 +104,7 @@
                 </div>
             </div>
             <div class="form-group col-sm-10">
-                <button class="btn btn-default" (click)="postCreateAsync()" [disabled]="createForm.invalid">Submit</button>
+                <button class="btn btn-default" (click)="saveCreateModelAsync()" [disabled]="createForm.invalid">Submit</button>
             </div>
         </form>
         <div style="clear:both"></div>

@@ -64,47 +64,47 @@ var DependentService = /** @class */ (function () {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, this._http.get('api/' + this._controller + '/grid?pageNumber=' + pageNumber + '&pageSize=' + pageSize + '&parentId=' + parentId + '&orderBy=' + orderBy, { params: StaticMethods.ObjectToHttpParams('filter', filter) }).toPromise()];
+                    case 0: return [4 /*yield*/, this._http.get('api/' + this._controller + '/getGrid?pageNumber=' + pageNumber + '&pageSize=' + pageSize + '&parentId=' + parentId + '&orderBy=' + orderBy, { params: StaticMethods.ObjectToHttpParams('filter', filter) }).toPromise()];
                     case 1: return [2 /*return*/, _a.sent()];
                 }
             });
         });
     };
-    DependentService.prototype.getCreateAsync = function (parentId) {
+    DependentService.prototype.getCreateModelAsync = function (parentId) {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, this._http.get('api/' + this._controller + '/create?parentId=' + parentId).toPromise()];
+                    case 0: return [4 /*yield*/, this._http.get('api/' + this._controller + '/getCreateModel?parentId=' + parentId).toPromise()];
                     case 1: return [2 /*return*/, _a.sent()];
                 }
             });
         });
     };
-    DependentService.prototype.postCreateAsync = function (item) {
+    DependentService.prototype.saveCreateModelAsync = function (item) {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, this._http.post('/api/' + this._controller + '/create', item).toPromise()];
+                    case 0: return [4 /*yield*/, this._http.post('/api/' + this._controller + '/saveCreateModel', item).toPromise()];
                     case 1: return [2 /*return*/, _a.sent()];
                 }
             });
         });
     };
-    DependentService.prototype.getEditAsync = function (id) {
+    DependentService.prototype.getEditModelAsync = function (id) {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, this._http.get('api/' + this._controller + '/edit?id=' + id).toPromise()];
+                    case 0: return [4 /*yield*/, this._http.get('api/' + this._controller + '/getEditModel?id=' + id).toPromise()];
                     case 1: return [2 /*return*/, _a.sent()];
                 }
             });
         });
     };
-    DependentService.prototype.postEditAsync = function (item) {
+    DependentService.prototype.saveEditModelAsync = function (item) {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, this._http.post('/api/' + this._controller + '/edit', item).toPromise()];
+                    case 0: return [4 /*yield*/, this._http.post('/api/' + this._controller + '/saveEditModel', item).toPromise()];
                     case 1: return [2 /*return*/, _a.sent()];
                 }
             });
@@ -134,11 +134,11 @@ var DependentService = /** @class */ (function () {
             });
         });
     };
-    DependentService.prototype.getFilterAsync = function () {
+    DependentService.prototype.getFilterModelAsync = function () {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, this._http.get('api/' + this._controller + '/getFilter').toPromise()];
+                    case 0: return [4 /*yield*/, this._http.get('api/' + this._controller + '/getFilterModel').toPromise()];
                     case 1: return [2 /*return*/, _a.sent()];
                 }
             });
@@ -148,7 +148,7 @@ var DependentService = /** @class */ (function () {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, this._http.get('api/' + this._controller + '/ExcelExport?parentId=' + parentId + '&orderBy=' + orderBy, { responseType: 'blob', params: StaticMethods.ObjectToHttpParams('filter', filter) }).toPromise()];
+                    case 0: return [4 /*yield*/, this._http.get('api/' + this._controller + '/getExcelExport?parentId=' + parentId + '&orderBy=' + orderBy, { responseType: 'blob', params: StaticMethods.ObjectToHttpParams('filter', filter) }).toPromise()];
                     case 1: return [2 /*return*/, _a.sent()];
                 }
             });
@@ -158,13 +158,13 @@ var DependentService = /** @class */ (function () {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, this._http.get('api/' + this._controller + '/ImportTemplate', { responseType: 'blob' }).toPromise()];
+                    case 0: return [4 /*yield*/, this._http.get('api/' + this._controller + '/getImportTemplate', { responseType: 'blob' }).toPromise()];
                     case 1: return [2 /*return*/, _a.sent()];
                 }
             });
         });
     };
-    DependentService.prototype.postImportAsync = function (pareintId, file) {
+    DependentService.prototype.importAsync = function (pareintId, file) {
         return __awaiter(this, void 0, void 0, function () {
             var formData;
             return __generator(this, function (_a) {
@@ -182,7 +182,7 @@ var DependentService = /** @class */ (function () {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, this._http.get('api/' + this._controller + '/GetParent?parentId=' + parentId).toPromise()];
+                    case 0: return [4 /*yield*/, this._http.get('api/' + this._controller + '/getParent?parentId=' + parentId).toPromise()];
                     case 1: return [2 /*return*/, _a.sent()];
                 }
             });

@@ -50,12 +50,12 @@ namespace CoreLibrary.Identity
             return _identityService.GetUsersQuery();
         }
 
-        public virtual async Task<TEntity> GetAsync(TKey id)
+        public virtual async Task<TEntity> GetByIdAsync(TKey id)
         {
             return await _identityService.FindUserByIdAsync(id);
         }
 
-        public virtual async Task<TCreate> CreateAsync(TCreate createView)
+        public virtual async Task<TCreate> SaveCreateModelAsync(TCreate createView)
         {
             string role = createView.Role.Trim();
             if (!string.IsNullOrEmpty(role))
@@ -88,7 +88,7 @@ namespace CoreLibrary.Identity
             return createView;
         }
 
-        public virtual async Task<TCreate> CreateAsync()
+        public virtual async Task<TCreate> GetCreateModelAsync()
         {
             var model = new TCreate();
 
@@ -99,7 +99,7 @@ namespace CoreLibrary.Identity
             return model;
         }
 
-        public virtual async Task<TEdit> EditAsync(TEdit editView)
+        public virtual async Task<TEdit> SaveEditModelAsync(TEdit editView)
         {
             string newRole = editView.Role.Trim();
             if (!string.IsNullOrEmpty(newRole))
@@ -135,9 +135,9 @@ namespace CoreLibrary.Identity
             return editView;
         }
 
-        public virtual async Task<TEdit> EditAsync(TKey id)
+        public virtual async Task<TEdit> GetEditModelAsync(TKey id)
         {
-            var entity = await GetAsync(id);
+            var entity = await GetByIdAsync(id);
 
             var edit = _mapper.Map<TEntity, TEdit>(entity);
 
@@ -153,7 +153,7 @@ namespace CoreLibrary.Identity
 
         public virtual async Task DeleteAsync(TKey id)
         {
-            var delete = await GetAsync(id);
+            var delete = await GetByIdAsync(id);
             await _identityService.DeleteUserAsync(delete.Id);
         }
 
@@ -201,12 +201,12 @@ namespace CoreLibrary.Identity
             return pages;
         }
 
-        public virtual async Task<TFilter> GetFilterAsync()
+        public virtual async Task<TFilter> GetFilterModelAsync()
         {
             return new TFilter();
         }
 
-        public virtual async Task<byte[]> ExcelExportAsync(string orderBy, TFilter filter, string searchString)
+        public virtual async Task<byte[]> GetExcelExportAsync(string orderBy, TFilter filter, string searchString)
         {
             var query = ApplyFilter(GetQuery(), filter);
             query = ApplySorting(query, orderBy);
@@ -260,7 +260,7 @@ namespace CoreLibrary.Identity
             return ms.ToArray();
         }
 
-        public virtual async Task<byte[]> ImportTemplateAsync()
+        public virtual async Task<byte[]> GetImportTemplateAsync()
         {
             var wb = new XLWorkbook();
             var ws = wb.Worksheets.Add("Import");
@@ -477,8 +477,8 @@ namespace CoreLibrary.Identity
             foreach (var prop in filterProperties)
             {
                 var value = prop.GetValue(filter);
-                if (value == null || !entityProperties.Any(i => i.Name == prop.Name) || !prop.GetType().IsValueType) continue;
-                if (value.Equals(Activator.CreateInstance(prop.GetType()))) continue;
+                if (value == null || !entityProperties.Any(i => i.Name == prop.Name)) continue;
+                if (prop.GetType().IsValueType && value.Equals(Activator.CreateInstance(prop.GetType()))) continue;
 
                 var t = prop.PropertyType;
                 if (t.IsGenericType && t.GetGenericTypeDefinition() == typeof(Nullable<>))

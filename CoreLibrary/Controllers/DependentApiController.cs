@@ -58,7 +58,7 @@ namespace CoreLibrary
         }
 
         [HttpGet]
-        public virtual async Task<ActionResult<List<TGrid>>> Grid([FromQuery] TParentKey parentId, [FromQuery] int pageNumber, [FromQuery] int? pageSize = null, [FromQuery] string orderBy = null, [FromQuery] TFilter filter = null, [FromQuery] string searchString = null)
+        public virtual async Task<ActionResult<List<TGrid>>> GetGrid([FromQuery] TParentKey parentId, [FromQuery] int pageNumber, [FromQuery] int? pageSize = null, [FromQuery] string orderBy = null, [FromQuery] TFilter filter = null, [FromQuery] string searchString = null)
         {
             if (!pageSize.HasValue) pageSize = _pageSize;
 
@@ -73,11 +73,11 @@ namespace CoreLibrary
         }
 
         [HttpGet]
-        public virtual async Task<ActionResult<TCreate>> Create([FromQuery] TParentKey parentId)
+        public virtual async Task<ActionResult<TCreate>> GetCreateModel([FromQuery] TParentKey parentId)
         {
             try
             {
-                return await _service.CreateAsync(parentId);
+                return await _service.GetCreateModelAsync(parentId);
             }
             catch (Exception ex)
             {
@@ -86,7 +86,7 @@ namespace CoreLibrary
         }
 
         [HttpPost]
-        public virtual async Task<ActionResult<TCreate>> Create([FromBody] TCreate create)
+        public virtual async Task<ActionResult<TCreate>> SaveCreateModel([FromBody] TCreate create)
         {
             if (!ModelState.IsValid)
             {
@@ -95,7 +95,7 @@ namespace CoreLibrary
             
             try
             {
-                create = await _service.CreateAsync(create);
+                create = await _service.SaveCreateModelAsync(create);
                 return create;
             }
             catch (Exception ex)
@@ -105,11 +105,11 @@ namespace CoreLibrary
         }
 
         [HttpGet]
-        public virtual async Task<ActionResult<TEdit>> Edit([FromQuery] TKey id)
+        public virtual async Task<ActionResult<TEdit>> GetEditModel([FromQuery] TKey id)
         {
             try
             {
-                return await _service.EditAsync(id);
+                return await _service.GetEditModelAsync(id);
             }
             catch (Exception ex)
             {
@@ -118,7 +118,7 @@ namespace CoreLibrary
         }
 
         [HttpPost]
-        public virtual async Task<ActionResult<TEdit>> Edit([FromBody] TEdit edit)
+        public virtual async Task<ActionResult<TEdit>> SaveEditModel([FromBody] TEdit edit)
         {
 
             if (!ModelState.IsValid)
@@ -128,7 +128,7 @@ namespace CoreLibrary
 
             try
             {
-                edit = await _service.EditAsync(edit);
+                edit = await _service.SaveEditModelAsync(edit);
                 return edit;
             }
             catch (Exception ex)
@@ -166,11 +166,11 @@ namespace CoreLibrary
         }
 
         [HttpGet]
-        public virtual async Task<ActionResult<TFilter>> GetFilter()
+        public virtual async Task<ActionResult<TFilter>> GetFilterModel()
         {
             try
             {
-                return await _service.GetFilterAsync();
+                return await _service.GetFilterModelAsync();
             }
             catch (Exception ex)
             {
@@ -179,11 +179,11 @@ namespace CoreLibrary
         }
 
         [HttpGet]
-        public virtual async Task<IActionResult> ExcelExport([FromQuery] TParentKey parentId, [FromQuery] string orderBy = null, [FromQuery] TFilter filter = null, [FromQuery] string searchString = null)
+        public virtual async Task<IActionResult> GetExcelExport([FromQuery] TParentKey parentId, [FromQuery] string orderBy = null, [FromQuery] TFilter filter = null, [FromQuery] string searchString = null)
         {
             try
             {
-                byte[] reportData = await _service.ExcelExportAsync(parentId, orderBy, filter, searchString);
+                byte[] reportData = await _service.GetExcelExportAsync(parentId, orderBy, filter, searchString);
                 return File(reportData, "application/vnd.openxmlformat");
             }
             catch (Exception ex)
@@ -193,11 +193,11 @@ namespace CoreLibrary
         }
 
         [HttpGet]
-        public virtual async Task<IActionResult> ImportTemplate()
+        public virtual async Task<IActionResult> GetImportTemplate()
         {
             try
             {
-                byte[] reportData = await _service.ImportTemplateAsync();
+                byte[] reportData = await _service.GetImportTemplateAsync();
                 return File(reportData, "application/vnd.openxmlformat");
             } catch (Exception ex)
             {

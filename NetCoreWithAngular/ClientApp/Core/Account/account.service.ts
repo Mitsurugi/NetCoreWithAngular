@@ -24,7 +24,7 @@ export class CoreAccountService {
     }
 
     public async getTokenAsync(model: LoginModel) {
-        let data = await this._http.post<TokenResponse>('/api/' + this._controllerName + '/gettoken', model).toPromise();
+        let data = await this._http.post<TokenResponse>('/api/' + this._controllerName + '/tokenRequest', model).toPromise();
         localStorage.setItem('token', data.token);
         localStorage.setItem('login', data.login);
         localStorage.setItem('role', data.role);

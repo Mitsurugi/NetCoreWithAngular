@@ -52,20 +52,20 @@ export class DependentComponent<TKey, TParentKey, TParentView, TGrid extends IDe
         }        
     }
 
-    protected async getCreateAsync() {
+    protected async getCreateModelAsync() {
         this._message = null;
         try {
-            this._itemCreate = await this._service.getCreateAsync(this._parentId);
+            this._itemCreate = await this._service.getCreateModelAsync(this._parentId);
         }
         catch (e) {
             this._message = "Ошибка: " + e.error;
         }
     }
 
-    protected async getEditAsync(id: TKey) {
+    protected async getEditModelAsync(id: TKey) {
         this._message = null;
         try {
-            this._itemEdit = await this._service.getEditAsync(id);
+            this._itemEdit = await this._service.getEditModelAsync(id);
         }
         catch (e) {
             this._message = "Ошибка: " + e.error;
@@ -74,7 +74,7 @@ export class DependentComponent<TKey, TParentKey, TParentView, TGrid extends IDe
 
     public async ngOnInit() {
         try {
-            this._filter = await this._service.getFilterAsync();
+            this._filter = await this._service.getFilterModelAsync();
             this._parent = await this._service.getParentAsync(this._parentId);
             await this.reloadGridAsync();
         }
@@ -89,7 +89,7 @@ export class DependentComponent<TKey, TParentKey, TParentView, TGrid extends IDe
             this._showEditId = null;
             this._totalPages = await this._service.getPagesCountAsync(this._pageSize, this._parentId, this._filter);
             this._items = await this._service.getGridAsync(this._parentId, this._currentPage, this._pageSize, this._orderBy, this._filter);    
-            await this.getCreateAsync();
+            await this.getCreateModelAsync();
         }
         catch (e) {
             this._message = "Ошибка: " + e.error;
@@ -99,7 +99,7 @@ export class DependentComponent<TKey, TParentKey, TParentView, TGrid extends IDe
     public async clearFilterAsync() {
         this._filter = new this.typeFilter();
         try {
-            this._filter = await this._service.getFilterAsync();
+            this._filter = await this._service.getFilterModelAsync();
             await this.reloadGridAsync();
         }
         catch (e) {
@@ -137,7 +137,7 @@ export class DependentComponent<TKey, TParentKey, TParentView, TGrid extends IDe
         }
         else {
             try {
-                await this.getCreateAsync();
+                await this.getCreateModelAsync();
                 this._isShowCreate = true;
                 this._isShowImport = false;
             }
@@ -168,7 +168,7 @@ export class DependentComponent<TKey, TParentKey, TParentView, TGrid extends IDe
         }
         else {
             try {
-                await this.getEditAsync(id);
+                await this.getEditModelAsync(id);
                 this._showEditId = id;
             }
             catch (e) {
@@ -201,12 +201,12 @@ export class DependentComponent<TKey, TParentKey, TParentView, TGrid extends IDe
         }
     }
 
-    public async postCreateAsync() {
+    public async saveCreateModelAsync() {
         this._message = null;
         try {
-            await this._service.postCreateAsync(this._itemCreate);
+            await this._service.saveCreateModelAsync(this._itemCreate);
             this._isShowCreate = false;
-            await this.getCreateAsync();
+            await this.getCreateModelAsync();
             await this.reloadGridAsync();
         }
         catch (e) {
@@ -214,10 +214,10 @@ export class DependentComponent<TKey, TParentKey, TParentView, TGrid extends IDe
         }
     }
 
-    public async postEditAsync() {
+    public async saveEditAsync() {
         this._message = null;
         try {
-            this._itemEdit = await this._service.postEditAsync(this._itemEdit);
+            this._itemEdit = await this._service.saveEditModelAsync(this._itemEdit);
             await this.reloadGridAsync();
         }
         catch (e) {
@@ -247,13 +247,13 @@ export class DependentComponent<TKey, TParentKey, TParentView, TGrid extends IDe
         }
     }
 
-    public async postImportAsync() {
+    public async importAsync() {
         if (this._importFile == null) {
             this._importResult = "Файл импорта не выбран";
         }
         else {
             try {
-                await this._service.postImportAsync(this._parentId, this._importFile);
+                await this._service.importAsync(this._parentId, this._importFile);
                 await this.reloadGridAsync();
                 this._importResult = "Импорт прошел успешно";
             }

@@ -58,7 +58,7 @@ var EditComponent = /** @class */ (function () {
         this.typeEdit = typeEdit;
         route.params.subscribe(function (params) { return _this._id = params['id']; });
     }
-    EditComponent.prototype.getCreateAsync = function () {
+    EditComponent.prototype.getCreateModelAsync = function () {
         return __awaiter(this, void 0, void 0, function () {
             var _a, e_1;
             return __generator(this, function (_b) {
@@ -69,7 +69,7 @@ var EditComponent = /** @class */ (function () {
                     case 1:
                         _b.trys.push([1, 3, , 4]);
                         _a = this;
-                        return [4 /*yield*/, this._service.getCreateAsync()];
+                        return [4 /*yield*/, this._service.getCreateModelAsync()];
                     case 2:
                         _a._itemCreate = _b.sent();
                         return [3 /*break*/, 4];
@@ -82,7 +82,7 @@ var EditComponent = /** @class */ (function () {
             });
         });
     };
-    EditComponent.prototype.getEditAsync = function () {
+    EditComponent.prototype.getEditModelAsync = function () {
         return __awaiter(this, void 0, void 0, function () {
             var _a, e_2;
             return __generator(this, function (_b) {
@@ -93,7 +93,7 @@ var EditComponent = /** @class */ (function () {
                     case 1:
                         _b.trys.push([1, 3, , 4]);
                         _a = this;
-                        return [4 /*yield*/, this._service.getEditAsync(this._id)];
+                        return [4 /*yield*/, this._service.getEditModelAsync(this._id)];
                     case 2:
                         _a._itemEdit = _b.sent();
                         return [3 /*break*/, 4];
@@ -112,10 +112,10 @@ var EditComponent = /** @class */ (function () {
                 this._message = null;
                 try {
                     if (this._id) {
-                        this.getEditAsync();
+                        this.getEditModelAsync();
                     }
                     else {
-                        this.getCreateAsync();
+                        this.getCreateModelAsync();
                     }
                 }
                 catch (e) {
@@ -125,7 +125,7 @@ var EditComponent = /** @class */ (function () {
             });
         });
     };
-    EditComponent.prototype.postCreateAsync = function () {
+    EditComponent.prototype.saveCreateModelAsync = function () {
         return __awaiter(this, void 0, void 0, function () {
             var result, e_3;
             return __generator(this, function (_a) {
@@ -135,10 +135,10 @@ var EditComponent = /** @class */ (function () {
                         _a.label = 1;
                     case 1:
                         _a.trys.push([1, 4, , 5]);
-                        return [4 /*yield*/, this._service.postCreateAsync(this._itemCreate)];
+                        return [4 /*yield*/, this._service.saveCreateModelAsync(this._itemCreate)];
                     case 2:
                         result = _a.sent();
-                        return [4 /*yield*/, this.getCreateAsync()];
+                        return [4 /*yield*/, this.getCreateModelAsync()];
                     case 3:
                         _a.sent();
                         this._router.navigate([this._listUrl + 'edit/' + result.id]);
@@ -152,7 +152,7 @@ var EditComponent = /** @class */ (function () {
             });
         });
     };
-    EditComponent.prototype.postEditAsync = function () {
+    EditComponent.prototype.saveEditModelAsync = function () {
         return __awaiter(this, void 0, void 0, function () {
             var _a, e_4;
             return __generator(this, function (_b) {
@@ -163,7 +163,7 @@ var EditComponent = /** @class */ (function () {
                     case 1:
                         _b.trys.push([1, 3, , 4]);
                         _a = this;
-                        return [4 /*yield*/, this._service.postEditAsync(this._itemEdit)];
+                        return [4 /*yield*/, this._service.saveEditModelAsync(this._itemEdit)];
                     case 2:
                         _a._itemEdit = _b.sent();
                         this._message = "Изменения успешно сохранены";

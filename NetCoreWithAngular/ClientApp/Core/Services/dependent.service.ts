@@ -19,23 +19,23 @@ export class DependentService<TKey, TParentKey, TParentView, TGrid extends IDepe
     }
 
     public async getGridAsync(parentId: TParentKey, pageNumber: number, pageSize: number, orderBy: string, filter: TFilter): Promise<TGrid[]> {
-        return await this._http.get<TGrid[]>('api/' + this._controller + '/grid?pageNumber=' + pageNumber + '&pageSize=' + pageSize + '&parentId=' + parentId + '&orderBy=' + orderBy, { params: StaticMethods.ObjectToHttpParams('filter', filter) }).toPromise();
+        return await this._http.get<TGrid[]>('api/' + this._controller + '/getGrid?pageNumber=' + pageNumber + '&pageSize=' + pageSize + '&parentId=' + parentId + '&orderBy=' + orderBy, { params: StaticMethods.ObjectToHttpParams('filter', filter) }).toPromise();
     }
 
-    public async getCreateAsync(parentId: TParentKey): Promise<TCreate> {
-        return await this._http.get<TCreate>('api/' + this._controller + '/create?parentId=' + parentId).toPromise();
+    public async getCreateModelAsync(parentId: TParentKey): Promise<TCreate> {
+        return await this._http.get<TCreate>('api/' + this._controller + '/getCreateModel?parentId=' + parentId).toPromise();
     }
 
-    public async postCreateAsync(item: TCreate): Promise<TCreate> {
-        return await this._http.post<TCreate>('/api/' + this._controller + '/create', item).toPromise();
+    public async saveCreateModelAsync(item: TCreate): Promise<TCreate> {
+        return await this._http.post<TCreate>('/api/' + this._controller + '/saveCreateModel', item).toPromise();
     }
 
-    public async getEditAsync(id: TKey): Promise<TEdit> {
-        return await this._http.get<TEdit>('api/' + this._controller + '/edit?id=' + id).toPromise();
+    public async getEditModelAsync(id: TKey): Promise<TEdit> {
+        return await this._http.get<TEdit>('api/' + this._controller + '/getEditModel?id=' + id).toPromise();
     }
 
-    public async postEditAsync(item: TEdit): Promise<TEdit> {
-        return await this._http.post<TEdit>('/api/' + this._controller + '/edit', item).toPromise();
+    public async saveEditModelAsync(item: TEdit): Promise<TEdit> {
+        return await this._http.post<TEdit>('/api/' + this._controller + '/saveEditModel', item).toPromise();
     }
 
     public async deleteAsync(id: TKey) {
@@ -46,25 +46,25 @@ export class DependentService<TKey, TParentKey, TParentView, TGrid extends IDepe
         await this._http.delete('api/' + this._controller + '/deleteMany', { params: StaticMethods.ArrayToHttpParams('ids', ids) }).toPromise();
     }
 
-    public async getFilterAsync(): Promise<TFilter> {
-        return await this._http.get<TFilter>('api/' + this._controller + '/getFilter').toPromise();
+    public async getFilterModelAsync(): Promise<TFilter> {
+        return await this._http.get<TFilter>('api/' + this._controller + '/getFilterModel').toPromise();
     }
 
     public async getExcelExportAsync(parentId: TParentKey, orderBy: string, filter: TFilter): Promise<Blob> {
-        return await this._http.get<Blob>('api/' + this._controller + '/ExcelExport?parentId=' + parentId + '&orderBy=' + orderBy, { responseType: 'blob' as 'json', params: StaticMethods.ObjectToHttpParams('filter', filter) }).toPromise();
+        return await this._http.get<Blob>('api/' + this._controller + '/getExcelExport?parentId=' + parentId + '&orderBy=' + orderBy, { responseType: 'blob' as 'json', params: StaticMethods.ObjectToHttpParams('filter', filter) }).toPromise();
     }
 
     public async getImportTemplateAsync(): Promise<Blob> {
-        return await this._http.get<Blob>('api/' + this._controller + '/ImportTemplate', { responseType: 'blob' as 'json' }).toPromise();
+        return await this._http.get<Blob>('api/' + this._controller + '/getImportTemplate', { responseType: 'blob' as 'json' }).toPromise();
     }
 
-    public async postImportAsync(pareintId: TParentKey, file: File) {
+    public async importAsync(pareintId: TParentKey, file: File) {
         let formData = new FormData();
         formData.append("file", file);
         return await this._http.post('/api/' + this._controller + '/import?parentId=' + pareintId, formData).toPromise();
     }
 
     public async getParentAsync(parentId: TParentKey): Promise<TParentView> {
-        return await this._http.get<TParentView>('api/' + this._controller + '/GetParent?parentId=' + parentId).toPromise();
+        return await this._http.get<TParentView>('api/' + this._controller + '/getParent?parentId=' + parentId).toPromise();
     }
 }

@@ -23,20 +23,20 @@ namespace CoreLibrary
         where TParentEntity: class, IEntity<TParentKey>, new()
         where TParentView : class, IEntity<TParentKey>, new()
     {
-        Task<TEntity> GetAsync(TKey id);
-        Task<TCreate> CreateAsync(TCreate create);
-        Task<TEdit> EditAsync(TEdit editView);
-        Task<TEdit> EditAsync(TKey id);
+        Task<TEntity> GetByIdAsync(TKey id);
+        Task<TCreate> SaveCreateModelAsync(TCreate create);
+        Task<TEdit> SaveEditModelAsync(TEdit editView);
+        Task<TEdit> GetEditModelAsync(TKey id);
         Task DeleteAsync(TKey id);
         Task DeleteAsync(TKey[] ids);
-        Task<TFilter> GetFilterAsync();
-        Task<byte[]> ImportTemplateAsync();
+        Task<TFilter> GetFilterModelAsync();
+        Task<byte[]> GetImportTemplateAsync();
 
         IQueryable<TEntity> GetQuery(TParentKey parentId);
-        Task<TCreate> CreateAsync(TParentKey parentId);
+        Task<TCreate> GetCreateModelAsync(TParentKey parentId);
         Task<int> GetPagesCountAsync(int pageSize, TParentKey parentId, TFilter filter, string searchString);
         Task<List<TGrid>> GetGridAsync(int pageSize, int pageNumber, TParentKey parentId, string orderBy, TFilter filter, string searchString);
-        Task<byte[]> ExcelExportAsync(TParentKey parentId, string orderBy, TFilter filter, string searchString);
+        Task<byte[]> GetExcelExportAsync(TParentKey parentId, string orderBy, TFilter filter, string searchString);
         Task ImportAsync(TParentKey parentId, Stream file);
 
         Task<TParentEntity> GetParentAsync(TParentKey parentId);

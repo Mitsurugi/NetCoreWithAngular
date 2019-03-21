@@ -59,12 +59,12 @@ namespace CoreLibrary
             return GetQuery().Where(i => i.ParentId.Equals(parentId));
         }
 
-        public virtual async Task<TEntity> GetAsync(TKey id)
+        public virtual async Task<TEntity> GetByIdAsync(TKey id)
         {
             return await GetQuery().SingleAsync(i => i.Id.Equals(id));
         }
 
-        public virtual async Task<TCreate> CreateAsync(TCreate createView)
+        public virtual async Task<TCreate> SaveCreateModelAsync(TCreate createView)
         {
             var create = _mapper.Map<TCreate, TEntity>(createView);
 
@@ -74,25 +74,25 @@ namespace CoreLibrary
             return _mapper.Map<TEntity, TCreate>(create);
         }
 
-        public virtual async Task<TCreate> CreateAsync(TParentKey parentId)
+        public virtual async Task<TCreate> GetCreateModelAsync(TParentKey parentId)
         {
             var entity = new TCreate();
             entity.ParentId = parentId;
             return entity;
         }
 
-        public virtual async Task<TEdit> EditAsync(TEdit editView)
+        public virtual async Task<TEdit> SaveEditModelAsync(TEdit editView)
         {
-            var old = await GetAsync(editView.Id);
+            var old = await GetByIdAsync(editView.Id);
             var entity = _mapper.Map<TEdit, TEntity>(editView, old);
             entity = await _repository.UpdateAsync(entity);
             await _repository.SaveChangesAsync();
             return _mapper.Map<TEntity, TEdit>(entity);
         }
 
-        public virtual async Task<TEdit> EditAsync(TKey id)
+        public virtual async Task<TEdit> GetEditModelAsync(TKey id)
         {
-            var entity = await GetAsync(id);
+            var entity = await GetByIdAsync(id);
 
             var edit = _mapper.Map<TEntity, TEdit>(entity);
 
@@ -138,12 +138,12 @@ namespace CoreLibrary
             return pages;
         }
 
-        public virtual async Task<TFilter> GetFilterAsync()
+        public virtual async Task<TFilter> GetFilterModelAsync()
         {
             return new TFilter();
         }
 
-        public virtual async Task<byte[]> ExcelExportAsync(TParentKey parentId, string orderBy, TFilter filter, string searchString)
+        public virtual async Task<byte[]> GetExcelExportAsync(TParentKey parentId, string orderBy, TFilter filter, string searchString)
         {
             var query = ApplyFilter(GetQuery(parentId), filter);
             query = ApplySorting(query, orderBy);
@@ -190,7 +190,7 @@ namespace CoreLibrary
             return ms.ToArray();
         }
 
-        public virtual async Task<byte[]> ImportTemplateAsync()
+        public virtual async Task<byte[]> GetImportTemplateAsync()
         {
             var wb = new XLWorkbook();
             var ws = wb.Worksheets.Add("Import");
@@ -386,8 +386,8 @@ namespace CoreLibrary
             foreach (var prop in filterProperties)
             {
                 var value = prop.GetValue(filter);
-                if (value == null || !entityProperties.Any(i => i.Name == prop.Name) || !prop.GetType().IsValueType) continue;
-                if (value.Equals(Activator.CreateInstance(prop.GetType()))) continue;
+                if (value == null || !entityProperties.Any(i => i.Name == prop.Name)) continue;
+                if (prop.GetType().IsValueType && value.Equals(Activator.CreateInstance(prop.GetType()))) continue;
 
                 var t = prop.PropertyType;
                 if (t.IsGenericType && t.GetGenericTypeDefinition() == typeof(Nullable<>))

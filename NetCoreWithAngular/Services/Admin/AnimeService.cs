@@ -34,7 +34,7 @@ namespace NetCoreWithAngular.Services
 
         public override async Task DeleteAsync(int id)
         {
-            var delete = await GetAsync(id);
+            var delete = await GetByIdAsync(id);
 
             if (delete.ImageId.HasValue)
                 await _fileService.DeleteAsync(delete.ImageId.Value);

@@ -23,18 +23,18 @@ namespace CoreLibrary.Identity
         where TFilter: class, new()
     {
         IQueryable<TEntity> GetQuery();
-        Task<TEntity> GetAsync(TKey id);
-        Task<TCreate> CreateAsync(TCreate create);
-        Task<TCreate> CreateAsync();        
-        Task<TEdit> EditAsync(TEdit editView);
-        Task<TEdit> EditAsync(TKey id);
+        Task<TEntity> GetByIdAsync(TKey id);
+        Task<TCreate> SaveCreateModelAsync(TCreate create);
+        Task<TCreate> GetCreateModelAsync();        
+        Task<TEdit> SaveEditModelAsync(TEdit editView);
+        Task<TEdit> GetEditModelAsync(TKey id);
         Task DeleteAsync(TKey id);
         Task DeleteAsync(TKey[] ids);
         Task<int> GetPagesCountAsync(int pageSize, TFilter filter, string searchSting);
         Task<List<TGrid>> GetGridAsync(int pageSize, int pageNumber, string orderBy, TFilter filter, string searchSting);
-        Task<TFilter> GetFilterAsync();
-        Task<byte[]> ExcelExportAsync(string orderBy, TFilter filter, string searchString);
-        Task<byte[]> ImportTemplateAsync();
+        Task<TFilter> GetFilterModelAsync();
+        Task<byte[]> GetExcelExportAsync(string orderBy, TFilter filter, string searchString);
+        Task<byte[]> GetImportTemplateAsync();
         Task ImportAsync(Stream file);
         Task ResetPasswordAsync(TKey userId, string newPassword);
     }

@@ -66,7 +66,7 @@ var UsersBaseComponent = /** @class */ (function () {
         this.typeEdit = typeEdit;
         this.typeFilter = typeFilter;
     }
-    UsersBaseComponent.prototype.getCreateAsync = function () {
+    UsersBaseComponent.prototype.getCreateModelAsync = function () {
         return __awaiter(this, void 0, void 0, function () {
             var _a, e_1;
             return __generator(this, function (_b) {
@@ -77,7 +77,7 @@ var UsersBaseComponent = /** @class */ (function () {
                     case 1:
                         _b.trys.push([1, 3, , 4]);
                         _a = this;
-                        return [4 /*yield*/, this._service.getCreateAsync()];
+                        return [4 /*yield*/, this._service.getCreateModelAsync()];
                     case 2:
                         _a._itemCreate = _b.sent();
                         return [3 /*break*/, 4];
@@ -90,7 +90,7 @@ var UsersBaseComponent = /** @class */ (function () {
             });
         });
     };
-    UsersBaseComponent.prototype.getEditAsync = function (id) {
+    UsersBaseComponent.prototype.getEditModelAsync = function (id) {
         return __awaiter(this, void 0, void 0, function () {
             var _a, e_2;
             return __generator(this, function (_b) {
@@ -101,7 +101,7 @@ var UsersBaseComponent = /** @class */ (function () {
                     case 1:
                         _b.trys.push([1, 3, , 4]);
                         _a = this;
-                        return [4 /*yield*/, this._service.getEditAsync(id)];
+                        return [4 /*yield*/, this._service.getEditModelAsync(id)];
                     case 2:
                         _a._itemEdit = _b.sent();
                         return [3 /*break*/, 4];
@@ -122,7 +122,7 @@ var UsersBaseComponent = /** @class */ (function () {
                     case 0:
                         _b.trys.push([0, 3, , 4]);
                         _a = this;
-                        return [4 /*yield*/, this._service.getFilterAsync()];
+                        return [4 /*yield*/, this._service.getFilterModelAsync()];
                     case 1:
                         _a._filter = _b.sent();
                         return [4 /*yield*/, this.reloadGridAsync()];
@@ -179,7 +179,7 @@ var UsersBaseComponent = /** @class */ (function () {
                     case 1:
                         _b.trys.push([1, 4, , 5]);
                         _a = this;
-                        return [4 /*yield*/, this._service.getFilterAsync()];
+                        return [4 /*yield*/, this._service.getFilterModelAsync()];
                     case 2:
                         _a._filter = _b.sent();
                         return [4 /*yield*/, this.reloadGridAsync()];
@@ -254,7 +254,7 @@ var UsersBaseComponent = /** @class */ (function () {
                         return [3 /*break*/, 4];
                     case 1:
                         _a.trys.push([1, 3, , 4]);
-                        return [4 /*yield*/, this.getCreateAsync()];
+                        return [4 /*yield*/, this.getCreateModelAsync()];
                     case 2:
                         _a.sent();
                         this._isShowCreate = true;
@@ -294,7 +294,7 @@ var UsersBaseComponent = /** @class */ (function () {
                         return [3 /*break*/, 4];
                     case 1:
                         _a.trys.push([1, 3, , 4]);
-                        return [4 /*yield*/, this.getEditAsync(id)];
+                        return [4 /*yield*/, this.getEditModelAsync(id)];
                     case 2:
                         _a.sent();
                         this._showEditId = id;
@@ -360,7 +360,7 @@ var UsersBaseComponent = /** @class */ (function () {
             });
         });
     };
-    UsersBaseComponent.prototype.postCreateAsync = function () {
+    UsersBaseComponent.prototype.saveCreateModelAsync = function () {
         return __awaiter(this, void 0, void 0, function () {
             var e_12;
             return __generator(this, function (_a) {
@@ -370,11 +370,11 @@ var UsersBaseComponent = /** @class */ (function () {
                         _a.label = 1;
                     case 1:
                         _a.trys.push([1, 5, , 6]);
-                        return [4 /*yield*/, this._service.postCreateAsync(this._itemCreate)];
+                        return [4 /*yield*/, this._service.saveCreateModelAsync(this._itemCreate)];
                     case 2:
                         _a.sent();
                         this._isShowCreate = false;
-                        return [4 /*yield*/, this.getCreateAsync()];
+                        return [4 /*yield*/, this.getCreateModelAsync()];
                     case 3:
                         _a.sent();
                         return [4 /*yield*/, this.reloadGridAsync()];
@@ -390,7 +390,7 @@ var UsersBaseComponent = /** @class */ (function () {
             });
         });
     };
-    UsersBaseComponent.prototype.postEditAsync = function () {
+    UsersBaseComponent.prototype.saveEditModelAsync = function () {
         return __awaiter(this, void 0, void 0, function () {
             var _a, e_13;
             return __generator(this, function (_b) {
@@ -401,7 +401,7 @@ var UsersBaseComponent = /** @class */ (function () {
                     case 1:
                         _b.trys.push([1, 4, , 5]);
                         _a = this;
-                        return [4 /*yield*/, this._service.postEditAsync(this._itemEdit)];
+                        return [4 /*yield*/, this._service.saveEditModelAsync(this._itemEdit)];
                     case 2:
                         _a._itemEdit = _b.sent();
                         return [4 /*yield*/, this.reloadGridAsync()];
@@ -465,7 +465,7 @@ var UsersBaseComponent = /** @class */ (function () {
             });
         });
     };
-    UsersBaseComponent.prototype.postImportAsync = function () {
+    UsersBaseComponent.prototype.importAsync = function () {
         return __awaiter(this, void 0, void 0, function () {
             var e_16;
             return __generator(this, function (_a) {
@@ -476,7 +476,7 @@ var UsersBaseComponent = /** @class */ (function () {
                         return [3 /*break*/, 5];
                     case 1:
                         _a.trys.push([1, 4, , 5]);
-                        return [4 /*yield*/, this._service.postImportAsync(this._importFile)];
+                        return [4 /*yield*/, this._service.importAsync(this._importFile)];
                     case 2:
                         _a.sent();
                         return [4 /*yield*/, this.reloadGridAsync()];
@@ -528,7 +528,7 @@ var UsersBaseComponent = /** @class */ (function () {
             });
         }
     };
-    UsersBaseComponent.prototype.postResetPasswordAsync = function (newPassword) {
+    UsersBaseComponent.prototype.resetPasswordAsync = function (newPassword) {
         return __awaiter(this, void 0, void 0, function () {
             var e_17;
             return __generator(this, function (_a) {
@@ -538,7 +538,7 @@ var UsersBaseComponent = /** @class */ (function () {
                         _a.label = 1;
                     case 1:
                         _a.trys.push([1, 4, , 5]);
-                        return [4 /*yield*/, this._service.postResetPasswordAsync(this._resetPasswordId, newPassword)];
+                        return [4 /*yield*/, this._service.resetPasswordAsync(this._resetPasswordId, newPassword)];
                     case 2:
                         _a.sent();
                         return [4 /*yield*/, this.reloadGridAsync()];

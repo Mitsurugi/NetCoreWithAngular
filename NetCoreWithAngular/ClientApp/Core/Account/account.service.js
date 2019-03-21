@@ -61,7 +61,7 @@ var CoreAccountService = /** @class */ (function () {
             var data;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, this._http.post('/api/' + this._controllerName + '/gettoken', model).toPromise()];
+                    case 0: return [4 /*yield*/, this._http.post('/api/' + this._controllerName + '/tokenRequest', model).toPromise()];
                     case 1:
                         data = _a.sent();
                         localStorage.setItem('token', data.token);
