@@ -42,7 +42,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-import { Component } from '@angular/core';
+import { Input, Component } from '@angular/core';
 import { CoreService } from '../Services/core.service';
 import { ActivatedRoute, Router } from "@angular/router";
 var EditComponent = /** @class */ (function () {
@@ -56,7 +56,9 @@ var EditComponent = /** @class */ (function () {
         this._itemCreate = new typeCreate();
         this.typeCreate = typeCreate;
         this.typeEdit = typeEdit;
-        route.params.subscribe(function (params) { return _this._id = params['id']; });
+        if (!this._id) {
+            route.params.subscribe(function (params) { return _this._id = params['id']; });
+        }
     }
     EditComponent.prototype.getCreateModelAsync = function () {
         return __awaiter(this, void 0, void 0, function () {
@@ -177,6 +179,10 @@ var EditComponent = /** @class */ (function () {
             });
         });
     };
+    __decorate([
+        Input(),
+        __metadata("design:type", Object)
+    ], EditComponent.prototype, "_id", void 0);
     EditComponent = __decorate([
         Component({}),
         __metadata("design:paramtypes", [CoreService, Function, Function, ActivatedRoute, Router, String])
