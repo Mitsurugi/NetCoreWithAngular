@@ -1,4 +1,4 @@
-﻿import { Component, OnInit } from '@angular/core';
+﻿import { Component, OnInit, Input } from '@angular/core';
 import { CoreService } from '../Services/core.service';
 import { IEntity } from '../Models/IEntity'
 import { saveAs } from 'file-saver';
@@ -12,7 +12,7 @@ export class EditComponent<TKey, TGrid extends IEntity<TKey>, TCreate extends IE
     _router: Router;
     _listUrl: string;
 
-    _id?: TKey;
+    @Input() _id?: TKey;
     _itemEdit: TEdit;
     _itemCreate: TCreate;
     _message: string = null;
