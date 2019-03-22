@@ -30,7 +30,9 @@ export class EditComponent<TKey, TGrid extends IEntity<TKey>, TCreate extends IE
         this._itemCreate = new typeCreate();
         this.typeCreate = typeCreate;
         this.typeEdit = typeEdit;
-        route.params.subscribe(params => this._id = params['id']);
+        if (!this._id) {
+            route.params.subscribe(params => this._id = params['id']);
+        }
     }
 
     protected async getCreateModelAsync() {
