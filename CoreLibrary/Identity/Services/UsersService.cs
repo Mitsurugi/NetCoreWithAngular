@@ -478,7 +478,7 @@ namespace CoreLibrary.Identity
             {
                 var value = prop.GetValue(filter);
                 if (value == null || !entityProperties.Any(i => i.Name == prop.Name)) continue;
-                if (prop.GetType().IsValueType && value.Equals(Activator.CreateInstance(prop.GetType()))) continue;
+                if (value.Equals(Activator.CreateInstance(prop.PropertyType))) continue;
 
                 var t = prop.PropertyType;
                 if (t.IsGenericType && t.GetGenericTypeDefinition() == typeof(Nullable<>))
