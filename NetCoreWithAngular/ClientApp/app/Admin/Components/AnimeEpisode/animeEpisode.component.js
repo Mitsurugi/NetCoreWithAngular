@@ -25,10 +25,11 @@ import { DependentComponent } from '../../../../Core/Components/dependent.compon
 import { AnimeEpisodeService } from '../../Services/animeEpisode.service';
 import { AnimeEpisode } from '../../Models/AnimeEpisode/animeEpisode';
 import { ActivatedRoute } from "@angular/router";
+import { Anime } from '../../Models/Anime/anime';
 var AnimeEpisodeComponent = /** @class */ (function (_super) {
     __extends(AnimeEpisodeComponent, _super);
     function AnimeEpisodeComponent(service, route) {
-        return _super.call(this, service, AnimeEpisode, AnimeEpisode, AnimeEpisode, AnimeEpisode, route) || this;
+        return _super.call(this, service, AnimeEpisode, AnimeEpisode, AnimeEpisode, AnimeEpisode, Anime, route) || this;
     }
     AnimeEpisodeComponent = __decorate([
         Component({

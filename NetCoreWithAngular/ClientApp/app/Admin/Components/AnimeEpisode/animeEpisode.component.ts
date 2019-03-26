@@ -16,6 +16,6 @@ import { Anime } from '../../Models/Anime/anime';
 export class AnimeEpisodeComponent extends DependentComponent<number, number, Anime, AnimeEpisode> {
 
     constructor(service: AnimeEpisodeService, route: ActivatedRoute) {
-        super(service, AnimeEpisode, AnimeEpisode, AnimeEpisode, AnimeEpisode, route);
+        super(service, AnimeEpisode, AnimeEpisode, AnimeEpisode, AnimeEpisode, Anime, route);
     }
 }

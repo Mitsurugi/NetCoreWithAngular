@@ -47,7 +47,7 @@ import { DependentService } from '../Services/dependent.service';
 import { ActivatedRoute } from "@angular/router";
 import { saveAs } from 'file-saver';
 var DependentComponent = /** @class */ (function () {
-    function DependentComponent(service, typeGrid, typeCreate, typeEdit, typeFilter, route) {
+    function DependentComponent(service, typeGrid, typeCreate, typeEdit, typeFilter, typeParent, route) {
         var _this = this;
         this._currentPage = 1;
         this._pageSize = 20;
@@ -64,10 +64,12 @@ var DependentComponent = /** @class */ (function () {
         this._itemEdit = new typeEdit();
         this._itemCreate = new typeCreate();
         this._filter = new typeFilter();
+        this._parent = new typeParent();
         this.typeGrid = typeGrid;
         this.typeCreate = typeCreate;
         this.typeEdit = typeEdit;
         this.typeFilter = typeFilter;
+        this.typeParent = typeParent;
         if (!this._parentId) {
             route.params.subscribe(function (params) { return _this._parentId = params['parentId']; });
         }
@@ -402,7 +404,7 @@ var DependentComponent = /** @class */ (function () {
             });
         });
     };
-    DependentComponent.prototype.saveEditAsync = function () {
+    DependentComponent.prototype.saveEditModelAsync = function () {
         return __awaiter(this, void 0, void 0, function () {
             var _a, e_13;
             return __generator(this, function (_b) {
@@ -546,7 +548,7 @@ var DependentComponent = /** @class */ (function () {
     ], DependentComponent.prototype, "_parentId", void 0);
     DependentComponent = __decorate([
         Component({}),
-        __metadata("design:paramtypes", [DependentService, Function, Function, Function, Function, ActivatedRoute])
+        __metadata("design:paramtypes", [DependentService, Function, Function, Function, Function, Function, ActivatedRoute])
     ], DependentComponent);
     return DependentComponent;
 }());
