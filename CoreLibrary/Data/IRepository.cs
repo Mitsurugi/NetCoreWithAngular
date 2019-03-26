@@ -14,8 +14,8 @@ namespace CoreLibrary
         Task<TEntity> UpdateAsync(TEntity entity);
         Task ReferenceLoadAsync(TEntity entity, params string[] references);
         Task CollectionLoadAsync(TEntity entity, params string[] collections);
-        void Delete(TEntity entity);
-        void Delete(Expression<Func<TEntity, bool>> predicate);
+        Task DeleteAsync(TEntity entity);
+        Task DeleteAsync(Expression<Func<TEntity, bool>> predicate);
         Task SaveChangesAsync();
     }
 }

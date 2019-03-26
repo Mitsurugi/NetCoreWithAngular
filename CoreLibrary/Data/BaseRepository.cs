@@ -65,17 +65,16 @@ namespace CoreLibrary
                 await DbContext.Entry(entity).Collection(collection).LoadAsync();
         }
 
-        public virtual void Delete(TEntity entity)
+        public virtual async Task DeleteAsync(TEntity entity)
         {
             if (entity == null)
                 throw new ArgumentNullException("entity");
-
             DbSet.Remove(entity);
         }
 
-        public virtual void Delete(Expression<Func<TEntity, bool>> predicate)
+        public virtual async Task DeleteAsync(Expression<Func<TEntity, bool>> predicate)
         {
-            GetQuery().Where(predicate).ForEachAsync(x => Delete(x));
+            await GetQuery().Where(predicate).ForEachAsync(async x => await DeleteAsync(x));
         }
 
         public virtual async Task SaveChangesAsync()

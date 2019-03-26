@@ -106,7 +106,7 @@ namespace CoreLibrary
 
         public virtual async Task DeleteAsync(TKey[] ids)
         {
-            _repository.Delete(i => ids.Contains(i.Id));
+            await _repository.DeleteAsync(i => ids.Contains(i.Id));
             await _repository.SaveChangesAsync();
         }
 
