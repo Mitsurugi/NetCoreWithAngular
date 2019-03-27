@@ -39,7 +39,7 @@ namespace NetCoreWithAngular.Services
             if (delete.ImageId.HasValue)
                 await _fileService.DeleteAsync(delete.ImageId.Value);
 
-            _repository.Delete(delete);
+            await _repository.DeleteAsync(delete);
             await _repository.SaveChangesAsync();
         }
     }

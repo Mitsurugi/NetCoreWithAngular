@@ -85,6 +85,8 @@ namespace CoreLibrary.Identity
             var roleEntity = _identityService.GetRoles().FirstOrDefault(i => i.Name == createView.Role);
             if (roleEntity != null) createView.RoleDisplayName = roleEntity.DisplayName;
 
+            createView = await FillCreateModelAsync(createView);
+
             return createView;
         }
 
@@ -95,6 +97,8 @@ namespace CoreLibrary.Identity
             var list = new List<SelectListItem>();
             list.AddRange( await _identityService.GetRoles().Select(i => new SelectListItem { Text = i.DisplayName, Value = i.Name }).ToListAsync() );
             model.RoleList = list;
+
+            model = await FillCreateModelAsync(model);
 
             return model;
         }
@@ -132,6 +136,8 @@ namespace CoreLibrary.Identity
             var roleEntity = await _identityService.GetRoles().FirstOrDefaultAsync(i => i.Name == editView.Role);
             if (roleEntity != null) editView.RoleDisplayName = roleEntity.DisplayName;
 
+            editView = await FillEditModelAsync(editView);
+
             return editView;
         }
 
@@ -147,6 +153,8 @@ namespace CoreLibrary.Identity
 
             var roleEntity = await _identityService.GetRoles().FirstOrDefaultAsync(i => i.Name == edit.Role);
             if (roleEntity != null) edit.RoleDisplayName = roleEntity.DisplayName;
+
+            edit = await FillEditModelAsync(edit);
 
             return edit;
         }
@@ -184,6 +192,8 @@ namespace CoreLibrary.Identity
                 if (roleEntity != null) x.RoleDisplayName = roleEntity.DisplayName;
             });
 
+            grid = await FillGridModelAsync(grid);
+
             return grid;
         }
 
@@ -203,7 +213,7 @@ namespace CoreLibrary.Identity
 
         public virtual async Task<TFilter> GetFilterModelAsync()
         {
-            return new TFilter();
+            return await FillFilterModelAsync (new TFilter());
         }
 
         public virtual async Task<byte[]> GetExcelExportAsync(string orderBy, TFilter filter, string searchString)
@@ -219,6 +229,8 @@ namespace CoreLibrary.Identity
                 var roleEntity = roles.FirstOrDefault(r => r.Name == x.Role);
                 if (roleEntity != null) x.RoleDisplayName = roleEntity.DisplayName;
             });
+
+            grid = await FillGridModelAsync(grid);
 
             var wb = new XLWorkbook();
             var ws = wb.Worksheets.Add("Export");
@@ -317,7 +329,7 @@ namespace CoreLibrary.Identity
             foreach (var row in rows)
             {
                 rowNumber++;
-                var item = new TCreate();
+                var item = await FillCreateModelAsync(new TCreate());
 
                 int colNumber = 0;
                 foreach (var field in fields)
@@ -568,6 +580,23 @@ namespace CoreLibrary.Identity
             }
 
             return query;
-        }        
+        }
+
+        protected virtual async Task<TCreate> FillCreateModelAsync(TCreate model)
+        {
+            return model;
+        }
+        protected virtual async Task<TEdit> FillEditModelAsync(TEdit model)
+        {
+            return model;
+        }
+        protected virtual async Task<TFilter> FillFilterModelAsync(TFilter model)
+        {
+            return model;
+        }
+        protected virtual async Task<List<TGrid>> FillGridModelAsync(List<TGrid> model)
+        {
+            return model;
+        }
     }
 }

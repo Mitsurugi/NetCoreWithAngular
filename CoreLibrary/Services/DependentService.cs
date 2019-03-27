@@ -71,14 +71,14 @@ namespace CoreLibrary
             create = await _repository.AddAsync(create);
             await _repository.SaveChangesAsync();
 
-            return _mapper.Map<TEntity, TCreate>(create);
+            return await FillCreateModelAsync(_mapper.Map<TEntity, TCreate>(create));
         }
 
         public virtual async Task<TCreate> GetCreateModelAsync(TParentKey parentId)
         {
-            var entity = new TCreate();
-            entity.ParentId = parentId;
-            return entity;
+            var model = new TCreate();
+            model.ParentId = parentId;
+            return await FillCreateModelAsync(model);
         }
 
         public virtual async Task<TEdit> SaveEditModelAsync(TEdit editView)
@@ -87,16 +87,14 @@ namespace CoreLibrary
             var entity = _mapper.Map<TEdit, TEntity>(editView, old);
             entity = await _repository.UpdateAsync(entity);
             await _repository.SaveChangesAsync();
-            return _mapper.Map<TEntity, TEdit>(entity);
+            return await FillEditModelAsync(_mapper.Map<TEntity, TEdit>(entity));
         }
 
         public virtual async Task<TEdit> GetEditModelAsync(TKey id)
         {
             var entity = await GetByIdAsync(id);
 
-            var edit = _mapper.Map<TEntity, TEdit>(entity);
-
-            return edit;
+            return await FillEditModelAsync(_mapper.Map<TEntity, TEdit>(entity));
         }
 
         public virtual async Task DeleteAsync(TKey id)
@@ -121,7 +119,9 @@ namespace CoreLibrary
             query = ApplySorting(query, orderBy);
             query = ApplySearch(query, searchString);
 
-            return await query.Skip(pageSize * (pageNumber - 1)).Take(pageSize).ProjectTo<TGrid>(_mapper.ConfigurationProvider).ToListAsync();
+            var grid =  await query.Skip(pageSize * (pageNumber - 1)).Take(pageSize).ProjectTo<TGrid>(_mapper.ConfigurationProvider).ToListAsync();
+            grid = await FillGridModelAsync(grid);
+            return grid;
         }
 
         public virtual async Task<int> GetPagesCountAsync(int pageSize, TParentKey parentId, TFilter filter, string searchString)
@@ -140,7 +140,7 @@ namespace CoreLibrary
 
         public virtual async Task<TFilter> GetFilterModelAsync()
         {
-            return new TFilter();
+            return await FillFilterModelAsync(new TFilter());
         }
 
         public virtual async Task<byte[]> GetExcelExportAsync(TParentKey parentId, string orderBy, TFilter filter, string searchString)
@@ -149,6 +149,7 @@ namespace CoreLibrary
             query = ApplySorting(query, orderBy);
             query = ApplySearch(query, searchString);
             var grid = await query.ProjectTo<TGrid>(_mapper.ConfigurationProvider).ToListAsync();
+            grid = await FillGridModelAsync(grid);
 
             var wb = new XLWorkbook();
             var ws = wb.Worksheets.Add("Export");
@@ -247,7 +248,7 @@ namespace CoreLibrary
             foreach (var row in rows)
             {
                 rowNumber++;
-                var item = new TCreate();
+                var item = await FillCreateModelAsync(new TCreate());
                 item.ParentId = parentId;
 
                 int colNumber = 0;
@@ -354,6 +355,20 @@ namespace CoreLibrary
             {
                 throw new Exception(errors);
             }
+        }
+
+        public virtual async Task<TParentEntity> GetParentAsync(TParentKey parentId)
+        {
+            var parent = await _parentRepository.GetQuery().SingleOrDefaultAsync(i => i.Id.Equals(parentId));
+
+            return parent;
+        }
+
+        public virtual async Task<TParentView> GetParentViewAsync(TParentKey parentId)
+        {
+            var parent = await _parentRepository.GetQuery().SingleOrDefaultAsync(i => i.Id.Equals(parentId));
+
+            return _mapper.Map<TParentEntity, TParentView>(parent);
         }
 
         protected virtual IQueryable<TEntity> ApplySorting(IQueryable<TEntity> query, string orderBy)
@@ -479,18 +494,21 @@ namespace CoreLibrary
             return query;
         }
 
-        public virtual async Task<TParentEntity> GetParentAsync(TParentKey parentId)
+        protected virtual async Task<TCreate> FillCreateModelAsync(TCreate model)
         {
-            var parent = await _parentRepository.GetQuery().SingleOrDefaultAsync(i => i.Id.Equals(parentId));
-
-            return parent;
+            return model;
         }
-
-        public virtual async Task<TParentView> GetParentViewAsync(TParentKey parentId)
+        protected virtual async Task<TEdit> FillEditModelAsync(TEdit model)
         {
-            var parent = await _parentRepository.GetQuery().SingleOrDefaultAsync(i => i.Id.Equals(parentId));
-
-            return _mapper.Map<TParentEntity, TParentView>(parent);
+            return model;
+        }
+        protected virtual async Task<TFilter> FillFilterModelAsync(TFilter model)
+        {
+            return model;
+        }
+        protected virtual async Task<List<TGrid>> FillGridModelAsync(List<TGrid> model)
+        {
+            return model;
         }
     }
 }

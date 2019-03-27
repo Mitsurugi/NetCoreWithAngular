@@ -37,5 +37,23 @@ namespace NetCoreWithAngular.Services
 
             return base.ApplySorting(query, orderBy);
         }
+
+        protected override async Task<BookViewModel> FillCreateModelAsync(BookViewModel model)
+        {
+            model.GenreList = System.Enum.GetValues(typeof(Models.Genre)).Cast<Models.Genre>().ToList().Select(i => new Microsoft.AspNetCore.Mvc.Rendering.SelectListItem { Selected = model.Genre == i, Disabled = i == Genre.Drama, Text = i.GetDisplayName(), Value = ((int)i).ToString() });
+            return model;
+        }
+
+        protected override async Task<BookViewModel> FillEditModelAsync(BookViewModel model)
+        {
+            model.GenreList = System.Enum.GetValues(typeof(Models.Genre)).Cast<Models.Genre>().ToList().Select(i => new Microsoft.AspNetCore.Mvc.Rendering.SelectListItem { Selected = model.Genre == i, Disabled = i == Genre.Drama, Text = i.GetDisplayName(), Value = ((int)i).ToString() });
+            return model;
+        }
+
+        protected override async Task<BookFilterModel> FillFilterModelAsync(BookFilterModel model)
+        {
+            model.GenreList = System.Enum.GetValues(typeof(Models.Genre)).Cast<Models.Genre>().ToList().Select(i => new Microsoft.AspNetCore.Mvc.Rendering.SelectListItem { Selected = model.Genre == i, Disabled = i == Genre.Drama, Text = i.GetDisplayName(), Value = ((int)i).ToString() });
+            return model;
+        }
     }    
 }
