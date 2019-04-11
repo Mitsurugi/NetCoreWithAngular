@@ -179,7 +179,7 @@ export class CoreComponent<TKey, TGrid extends IEntity<TKey>, TCreate extends IE
         }
     }
 
-    public async deleteChecked() {
+    public async deleteCheckedAsync() {
         this._message = null;
         try {
             await this._service.deleteManyAsync(this._checkedItems);
