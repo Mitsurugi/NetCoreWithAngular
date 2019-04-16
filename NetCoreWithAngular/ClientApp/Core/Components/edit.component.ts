@@ -38,9 +38,10 @@ export class EditComponent<TKey, TGrid extends IEntity<TKey>, TCreate extends IE
     }
 
     protected async getCreateModelAsync() {
-        this._message = null;
+        this._message = "Загрузка...";
         try {
             this._itemCreate = await this._service.getCreateModelAsync();
+            this._message = null;
         }
         catch (e) {
             this._message = "Ошибка: " + e.error;
@@ -48,9 +49,10 @@ export class EditComponent<TKey, TGrid extends IEntity<TKey>, TCreate extends IE
     }
 
     protected async getEditModelAsync() {
-        this._message = null;
+        this._message = "Загрузка...";
         try {
             this._itemEdit = await this._service.getEditModelAsync(this._id);
+            this._message = null;
         }
         catch (e) {
             this._message = "Ошибка: " + e.error;
@@ -58,13 +60,14 @@ export class EditComponent<TKey, TGrid extends IEntity<TKey>, TCreate extends IE
     }
 
     public async ngOnInit() {
-        this._message = null;
+        this._message = "Загрузка...";
         try {
             if (this._id) {
                 this.getEditModelAsync();
             } else {
                 this.getCreateModelAsync();
             }
+            this._message = null;
         }
         catch (e) {
             this._message = "Ошибка: " + e.error;
@@ -72,11 +75,12 @@ export class EditComponent<TKey, TGrid extends IEntity<TKey>, TCreate extends IE
     }    
 
     public async saveCreateModelAsync() {
-        this._message = null;
+        this._message = "Загрузка...";        
         try {
             var result = await this._service.saveCreateModelAsync(this._itemCreate);
             await this.getCreateModelAsync();
-            this._router.navigate([this._listUrl + 'edit/' + result.id]);
+            this._message = null;
+            this._router.navigate([this._listUrl + 'edit/' + result.id]);            
         }
         catch (e) {
             this._message = "Ошибка: " + e.error;
@@ -84,7 +88,7 @@ export class EditComponent<TKey, TGrid extends IEntity<TKey>, TCreate extends IE
     }
 
     public async saveEditModelAsync() {
-        this._message = null;
+        this._message = "Загрузка...";                
         try {
             this._itemEdit = await this._service.saveEditModelAsync(this._itemEdit);
             this._message = "Изменения успешно сохранены";

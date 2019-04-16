@@ -121,6 +121,7 @@ var CoreComponent = /** @class */ (function () {
                 switch (_b.label) {
                     case 0:
                         _b.trys.push([0, 3, , 4]);
+                        this._message = "Загрузка...";
                         _a = this;
                         return [4 /*yield*/, this._service.getFilterModelAsync()];
                     case 1:
@@ -128,6 +129,7 @@ var CoreComponent = /** @class */ (function () {
                         return [4 /*yield*/, this.reloadGridAsync()];
                     case 2:
                         _b.sent();
+                        this._message = null;
                         return [3 /*break*/, 4];
                     case 3:
                         e_3 = _b.sent();
@@ -144,7 +146,7 @@ var CoreComponent = /** @class */ (function () {
             return __generator(this, function (_c) {
                 switch (_c.label) {
                     case 0:
-                        this._message = null;
+                        this._message = "Загрузка...";
                         _c.label = 1;
                     case 1:
                         _c.trys.push([1, 5, , 6]);
@@ -160,6 +162,7 @@ var CoreComponent = /** @class */ (function () {
                         return [4 /*yield*/, this.getCreateModelAsync()];
                     case 4:
                         _c.sent();
+                        this._message = null;
                         return [3 /*break*/, 6];
                     case 5:
                         e_4 = _c.sent();
@@ -336,7 +339,7 @@ var CoreComponent = /** @class */ (function () {
             });
         });
     };
-    CoreComponent.prototype.deleteChecked = function () {
+    CoreComponent.prototype.deleteCheckedAsync = function () {
         return __awaiter(this, void 0, void 0, function () {
             var e_11;
             return __generator(this, function (_a) {
@@ -368,7 +371,7 @@ var CoreComponent = /** @class */ (function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        this._message = null;
+                        this._message = "Загрузка...";
                         _a.label = 1;
                     case 1:
                         _a.trys.push([1, 5, , 6]);
@@ -382,6 +385,7 @@ var CoreComponent = /** @class */ (function () {
                         return [4 /*yield*/, this.reloadGridAsync()];
                     case 4:
                         _a.sent();
+                        this._message = null;
                         return [3 /*break*/, 6];
                     case 5:
                         e_12 = _a.sent();
@@ -398,7 +402,7 @@ var CoreComponent = /** @class */ (function () {
             return __generator(this, function (_b) {
                 switch (_b.label) {
                     case 0:
-                        this._message = null;
+                        this._message = "Загрузка...";
                         _b.label = 1;
                     case 1:
                         _b.trys.push([1, 4, , 5]);
@@ -409,6 +413,7 @@ var CoreComponent = /** @class */ (function () {
                         return [4 /*yield*/, this.reloadGridAsync()];
                     case 3:
                         _b.sent();
+                        this._message = null;
                         return [3 /*break*/, 5];
                     case 4:
                         e_13 = _b.sent();
@@ -425,13 +430,14 @@ var CoreComponent = /** @class */ (function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        this._message = null;
+                        this._message = "Загрузка...";
                         _a.label = 1;
                     case 1:
                         _a.trys.push([1, 3, , 4]);
                         return [4 /*yield*/, this._service.getExcelExportAsync(this._orderBy, this._filter)];
                     case 2:
                         b = _a.sent();
+                        this._message = null;
                         saveAs(b, "ExcelExport.xlsx");
                         return [3 /*break*/, 4];
                     case 3:
@@ -449,13 +455,14 @@ var CoreComponent = /** @class */ (function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        this._message = null;
+                        this._message = "Загрузка...";
                         _a.label = 1;
                     case 1:
                         _a.trys.push([1, 3, , 4]);
                         return [4 /*yield*/, this._service.getImportTemplateAsync()];
                     case 2:
                         b = _a.sent();
+                        this._message = null;
                         saveAs(b, "ImportTemplate.xlsx");
                         return [3 /*break*/, 4];
                     case 3:
@@ -478,6 +485,7 @@ var CoreComponent = /** @class */ (function () {
                         return [3 /*break*/, 5];
                     case 1:
                         _a.trys.push([1, 4, , 5]);
+                        this._importResult = "Загрузка...";
                         return [4 /*yield*/, this._service.importAsync(this._importFile)];
                     case 2:
                         _a.sent();

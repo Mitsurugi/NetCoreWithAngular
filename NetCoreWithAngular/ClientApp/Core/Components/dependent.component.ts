@@ -77,9 +77,11 @@ export class DependentComponent<TKey, TParentKey, TParentView, TGrid extends IDe
 
     public async ngOnInit() {
         try {
+            this._message = "Загрузка...";
             this._filter = await this._service.getFilterModelAsync();
             this._parent = await this._service.getParentAsync(this._parentId);
             await this.reloadGridAsync();
+            this._message = null;
         }
         catch (e) {
             this._message = "Ошибка: " + e.error;
@@ -87,12 +89,13 @@ export class DependentComponent<TKey, TParentKey, TParentView, TGrid extends IDe
     }
 
     public async reloadGridAsync() {
-        this._message = null;
+        this._message = "Загрузка...";
         try {
             this._showEditId = null;
             this._totalPages = await this._service.getPagesCountAsync(this._pageSize, this._parentId, this._filter);
             this._items = await this._service.getGridAsync(this._parentId, this._currentPage, this._pageSize, this._orderBy, this._filter);    
             await this.getCreateModelAsync();
+            this._message = null;
         }
         catch (e) {
             this._message = "Ошибка: " + e.error;
@@ -205,12 +208,13 @@ export class DependentComponent<TKey, TParentKey, TParentView, TGrid extends IDe
     }
 
     public async saveCreateModelAsync() {
-        this._message = null;
+        this._message = "Загрузка...";        
         try {
             await this._service.saveCreateModelAsync(this._itemCreate);
             this._isShowCreate = false;
             await this.getCreateModelAsync();
             await this.reloadGridAsync();
+            this._message = null;
         }
         catch (e) {
             this._message = "Ошибка: " + e.error;
@@ -218,10 +222,11 @@ export class DependentComponent<TKey, TParentKey, TParentView, TGrid extends IDe
     }
 
     public async saveEditModelAsync() {
-        this._message = null;
+        this._message = "Загрузка...";
         try {
             this._itemEdit = await this._service.saveEditModelAsync(this._itemEdit);
             await this.reloadGridAsync();
+            this._message = null;
         }
         catch (e) {
             this._message = "Ошибка: " + e.error;
@@ -229,9 +234,10 @@ export class DependentComponent<TKey, TParentKey, TParentView, TGrid extends IDe
     }
 
     public async getExcelExportAsync() {
-        this._message = null;
+        this._message = "Загрузка...";
         try {
             let b = await this._service.getExcelExportAsync(this._parentId, this._orderBy, this._filter);
+            this._message = null;
             saveAs(b, "ExcelExport.xlsx");
         }
         catch (e) {
@@ -240,9 +246,10 @@ export class DependentComponent<TKey, TParentKey, TParentView, TGrid extends IDe
     }
 
     public async getImportTemplateAsync() {
-        this._message = null;
+        this._message = "Загрузка...";        
         try {
             let b = await this._service.getImportTemplateAsync();
+            this._message = null;
             saveAs(b, "ImportTemplate.xlsx");
         }
         catch (e) {
@@ -256,6 +263,7 @@ export class DependentComponent<TKey, TParentKey, TParentView, TGrid extends IDe
         }
         else {
             try {
+                this._importResult = "Загрузка...";
                 await this._service.importAsync(this._parentId, this._importFile);
                 await this.reloadGridAsync();
                 this._importResult = "Импорт прошел успешно";
