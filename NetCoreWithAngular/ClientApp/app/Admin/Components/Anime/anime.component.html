@@ -1,9 +1,9 @@
 ﻿<h2>Anime</h2>
-<div *ngIf="_message" class="message">
-    <p>{{_message}}</p>
+<div class="message">
+    <p>&nbsp; {{_message}}</p>
 </div>
 <div class="sorting">
-    <label>Sort by</label>
+    <label>{{_localizer.localize("OrderBy")}}</label>
     <select class="form-control" [(ngModel)]="_orderBy" (change)="reloadGridAsync()">
         <option value="">Default</option>
         <option value="Id_desc">Id descending</option>
@@ -16,11 +16,11 @@
 
 <div class="grid">
     <div class="pagination">
-        <button class="btn btn-default" (click)="prevPageAsync()">Previous</button>
-        <span>Page {{_currentPage}} of {{_totalPages}}</span>
-        <button class="btn btn-default" (click)="nextPageAsync()">Next</button>
-        <button class="btn btn-default" (click)="getExcelExportAsync()">Export all pages to excel</button>
-        <button class="btn btn-default" (click)="deleteCheckedAsync()">Delete selected items</button>
+        <button class="btn btn-default" (click)="prevPageAsync()">{{_localizer.localize("PrevPage")}}</button>
+        <span>{{_localizer.localizeWithValues("PageXofY", _currentPage, _totalPages)}}</span>
+        <button class="btn btn-default" (click)="nextPageAsync()">{{_localizer.localize("NextPage")}}</button>
+        <button class="btn btn-default" (click)="getExcelExportAsync()">{{_localizer.localize("ExcelExport")}}</button>
+        <button class="btn btn-default" (click)="deleteCheckedAsync()">{{_localizer.localize("DeleteSelected")}}</button>
     </div>
     <table class="table">
         <thead>
@@ -28,7 +28,7 @@
                 <th>
                     <input type="button" (click)="toggleCheckAll()" value="Check all"/>
                 </th>
-                <th>Id</th>
+                <th>{{_localizer.localize("Id")}}</th>
                 <th>Title</th>
                 <th>Image</th>
                 <th>Season count</th>
@@ -59,10 +59,10 @@
                         <a href="/admin/AnimeEpisodes/{{i.id}}">View episodes</a>
                     </td>
                     <td>
-                        <button class="btn btn-default" [routerLink]="['/admin/anime/edit', i.id]">Edit</button>
+                        <button class="btn btn-default" [routerLink]="['/admin/anime/edit', i.id]">{{_localizer.localize("Edit")}}</button>
                     </td>
                     <td>
-                        <button class="btn btn-default" (click)="deleteAsync(i.id)">Delete</button>
+                        <button class="btn btn-default" (click)="deleteAsync(i.id)">{{_localizer.localize("Delete")}}</button>
                     </td>
                 </tr>
                 <tr *ngIf="_showEditId==i.id; then edit"></tr>
@@ -71,7 +71,7 @@
     </table>
 </div>
 <div class="create-new">
-    <button class="btn btn-default" [routerLink]="['/admin/anime/create']">Create new</button>
+    <button class="btn btn-default" [routerLink]="['/admin/anime/create']">{{_localizer.localize("Create")}}</button>
     <div *ngIf="_isShowCreate; then create"></div>
 </div>
 
@@ -103,7 +103,7 @@
                         <input type="file" (change)="uploadImageEditAsync($event.target.files[0])" />
                     </div>
                     <div class="form-group col-sm-10">
-                        <button class="btn btn-default" (click)="saveEditModelAsync()" [disabled]="editForm.invalid">Submit</button>
+                        <button class="btn btn-default" (click)="saveEditModelAsync()" [disabled]="editForm.invalid">{{_localizer.localize("Save")}}</button>
                     </div>
                 </form>
                 <div style="clear:both"></div>
@@ -138,7 +138,7 @@
                 <input type="file" (change)="uploadImageCreateAsync($event.target.files[0])" />
             </div>
             <div class="form-group col-sm-10">
-                <button class="btn btn-default" (click)="saveCreateModelAsync()" [disabled]="createForm.invalid">Submit</button>
+                <button class="btn btn-default" (click)="saveCreateModelAsync()" [disabled]="createForm.invalid">{{_localizer.localize("Save")}}</button>
             </div>
         </form>
         <div style="clear:both"></div>

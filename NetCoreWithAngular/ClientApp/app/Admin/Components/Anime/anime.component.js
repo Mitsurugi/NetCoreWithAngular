@@ -60,10 +60,11 @@ import { CoreComponent } from '../../../../Core/Components/core.component';
 import { AnimeService } from '../../Services/anime.service';
 import { FileService } from '../../../../Core/Services/file.service';
 import { Anime } from '../../Models/Anime/anime';
+import { LocalizerService } from '../../../Localizer/localizer.service';
 var AnimeComponent = /** @class */ (function (_super) {
     __extends(AnimeComponent, _super);
-    function AnimeComponent(service, fileService) {
-        var _this = _super.call(this, service, Anime, Anime, Anime, Anime) || this;
+    function AnimeComponent(service, localizer, fileService) {
+        var _this = _super.call(this, service, localizer, Anime, Anime, Anime, Anime) || this;
         _this._fileService = fileService;
         return _this;
     }
@@ -171,7 +172,7 @@ var AnimeComponent = /** @class */ (function (_super) {
             styleUrls: ['./anime.component.css'],
             providers: [AnimeService, FileService]
         }),
-        __metadata("design:paramtypes", [AnimeService, FileService])
+        __metadata("design:paramtypes", [AnimeService, LocalizerService, FileService])
     ], AnimeComponent);
     return AnimeComponent;
 }(CoreComponent));

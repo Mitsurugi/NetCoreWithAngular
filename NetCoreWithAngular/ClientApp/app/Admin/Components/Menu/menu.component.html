@@ -2,12 +2,13 @@
     <div class='navbar navbar-inverse'>
         <div class='navbar-header'>
             <button type='button' class='navbar-toggle' data-toggle='collapse' data-target='.navbar-collapse' [attr.aria-expanded]='isExpanded' (click)='toggle()'>
-                <span class='sr-only'>Toggle navigation</span>
+                <span class='sr-only'>{{_localizer.localize("ToggleNavButton")}}</span>
                 <span class='icon-bar'></span>
                 <span class='icon-bar'></span>
                 <span class='icon-bar'></span>
             </button>
-            <a class='navbar-brand' [routerLink]='["/"]'>Asp.Net Core with Angular</a>
+            <a class='navbar-brand' [routerLink]='["/admin"]'>Asp.Net Core with Angular</a>
+            <language></language>
         </div>
         <div class='clearfix'></div>
         <div class='navbar-collapse collapse' [ngClass]='{ "in": isExpanded }'>

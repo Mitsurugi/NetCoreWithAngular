@@ -6,6 +6,7 @@ import { FileService } from '../../../../Core/Services/file.service';
 import { Anime } from '../../Models/Anime/anime';
 import { read } from 'fs';
 import { ActivatedRoute, Router } from '@angular/router';
+import { LocalizerService } from '../../../Localizer/localizer.service';
 
 @Component({
     selector: 'anime-edit',
@@ -17,8 +18,8 @@ export class AnimeEditComponent extends EditComponent<number, Anime> {
 
     _fileService: FileService<number>;
 
-    constructor(service: AnimeService, fileService: FileService<number>, route: ActivatedRoute, router: Router) {
-        super(service, Anime, Anime, route, router, 'admin/anime');
+    constructor(service: AnimeService, localizer: LocalizerService, fileService: FileService<number>, route: ActivatedRoute, router: Router) {
+        super(service, localizer, Anime, Anime, route, router, 'admin/anime');
         this._fileService = fileService;
     }
 

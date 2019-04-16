@@ -3,6 +3,7 @@ import { NgForm } from '@angular/forms';
 import { CoreAccountComponent } from '../../../../Core/Account/account.component';
 import { AccountService } from '../../Services/account.service';
 import { AccountGlobals } from '../../../../Core/Account/AccountGlobals';
+import { LocalizerService } from '../../../Localizer/localizer.service';
 
 @Component({
     selector: 'account',
@@ -12,7 +13,11 @@ import { AccountGlobals } from '../../../../Core/Account/AccountGlobals';
 })
 export class AccountComponent extends CoreAccountComponent {
 
-    constructor(service: AccountService, accGlobals: AccountGlobals) {
+    _localizer: LocalizerService;
+
+    constructor(service: AccountService, localizer: LocalizerService, accGlobals: AccountGlobals) {
         super(service, accGlobals);
+
+        this._localizer = localizer;
     }
 }

@@ -61,10 +61,11 @@ import { AnimeService } from '../../Services/anime.service';
 import { FileService } from '../../../../Core/Services/file.service';
 import { Anime } from '../../Models/Anime/anime';
 import { ActivatedRoute, Router } from '@angular/router';
+import { LocalizerService } from '../../../Localizer/localizer.service';
 var AnimeEditComponent = /** @class */ (function (_super) {
     __extends(AnimeEditComponent, _super);
-    function AnimeEditComponent(service, fileService, route, router) {
-        var _this = _super.call(this, service, Anime, Anime, route, router, 'admin/anime') || this;
+    function AnimeEditComponent(service, localizer, fileService, route, router) {
+        var _this = _super.call(this, service, localizer, Anime, Anime, route, router, 'admin/anime') || this;
         _this._fileService = fileService;
         return _this;
     }
@@ -172,7 +173,7 @@ var AnimeEditComponent = /** @class */ (function (_super) {
             styleUrls: ['./animeEdit.component.css'],
             providers: [AnimeService, FileService]
         }),
-        __metadata("design:paramtypes", [AnimeService, FileService, ActivatedRoute, Router])
+        __metadata("design:paramtypes", [AnimeService, LocalizerService, FileService, ActivatedRoute, Router])
     ], AnimeEditComponent);
     return AnimeEditComponent;
 }(EditComponent));

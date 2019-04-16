@@ -4,6 +4,7 @@ import { read } from 'fs';
 import { UsersService } from '../../../../Core/Users/users.service';
 import { UsersBaseComponent } from '../../../../Core/Users/usersBase.component';
 import { User } from '../../Models/User/user';
+import { LocalizerService } from '../../../Localizer/localizer.service';
 
 @Component({
     selector: 'users',
@@ -13,7 +14,7 @@ import { User } from '../../Models/User/user';
 })
 export class UsersComponent extends UsersBaseComponent<string, User> {
 
-    constructor(service: UsersService<string, User>) {
-        super(service, User, User, User, User);
+    constructor(service: UsersService<string, User>, localizer: LocalizerService) {
+        super(service, localizer, User, User, User, User);
     }
 }

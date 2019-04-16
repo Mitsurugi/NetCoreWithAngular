@@ -2,53 +2,53 @@
     <h2>Logged in as {{_accGlobals.login}}</h2>
     <h2>Role: {{_accGlobals.role}}</h2>
     <div class="form-group">
-        <button class="btn btn-default" (click)="deleteTokenAsync()">Logout</button>
+        <button class="btn btn-default" (click)="deleteToken()">{{_localizer.localize("LogOutButton")}}</button>
     </div> 
     <div class="form-group">
-        <h2>Change password</h2>
-        <div *ngIf="_message" class="message">
-            <p>{{_message}}</p>
+        <h2>{{_localizer.localize("ChangePassHeader")}}</h2>
+        <div class="message">
+            <p>&nbsp; {{_message}}</p>
         </div>
         <div>
             <form #passwordChangeForm="ngForm">
                 <div class="form-group">
-                    <label>Current password *</label>
+                    <label>{{_localizer.localize("CurrentPasswordLabel")}} *</label>
                     <input class="form-control" name="currentPassword" [(ngModel)]="_changePasswordModel.currentPassword" #currentPassword="ngModel" type="password" required/>
                     <div *ngIf="currentPassword.touched && currentPassword.invalid">
                         <p *ngIf="currentPassword.errors.required" class="validation-text">
-                            Current password required
+                            {{_localizer.localizeWithValues("RequiredX",_localizer.localize("CurrentPasswordLabel"))}}
                         </p>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label>New password *</label>
+                    <label>{{_localizer.localize("NewPasswordLabel")}} *</label>
                     <input class="form-control" name="newPassword" [(ngModel)]="_changePasswordModel.newPassword" #newPassword="ngModel" type="password" required />
                     <div *ngIf="newPassword.touched && newPassword.invalid">
                         <p *ngIf="newPassword.errors.required" class="validation-text">
-                            New password required
+                            {{_localizer.localizeWithValues("RequiredX",_localizer.localize("NewPasswordLabel"))}}
                         </p>
                     </div>
                 </div>
                 <div class="form-group">
-                    <button class="btn btn-default" (click)="changePasswordAsync()" [disabled]="passwordChangeForm.invalid">Change password</button>
+                    <button class="btn btn-default" (click)="changePasswordAsync()" [disabled]="passwordChangeForm.invalid">{{_localizer.localize("ChangePassButton")}}</button>
                 </div>
             </form>
         </div>
     </div>
 </div>
 <div *ngIf="!_accGlobals.isLogged">
-    <h2>Login</h2>
-    <div *ngIf="_message" class="message">
-        <p>{{_message}}</p>
+    <h2>{{_localizer.localize("LoginHeader")}}</h2>
+    <div class="message">
+        <p>&nbsp; {{_message}}</p>
     </div>
     <div>
         <form #loginForm="ngForm">
             <div class="form-group">
-                <label>Login *</label>
+                <label>{{_localizer.localize("LoginLabel")}} *</label>
                 <input class="form-control" name="login" [(ngModel)]="_loginModel.login" #login="ngModel" type="text" required pattern="^[a-zA-Z0-9]*$" />
                 <div *ngIf="login.touched && login.invalid">
                     <p *ngIf="login.errors.required" class="validation-text">
-                        Login required
+                        {{_localizer.localizeWithValues("RequiredX",_localizer.localize("LoginLabel"))}}
                     </p>
                     <p *ngIf="login.errors.pattern" class="validation-text">
                         Only letters and numbers allowed
@@ -56,16 +56,16 @@
                 </div>
             </div>
             <div class="form-group">
-                <label>Password *</label>
+                <label>{{_localizer.localize("PasswordLabel")}} *</label>
                 <input class="form-control" name="password" [(ngModel)]="_loginModel.password" #password="ngModel" type="password" required />
                 <div *ngIf="password.touched && password.invalid">
                     <p *ngIf="password.errors.required" class="validation-text">
-                        Password required
+                        {{_localizer.localizeWithValues("RequiredX",_localizer.localize("PasswordLabel"))}}
                     </p>
                 </div>
             </div>
             <div class="form-group">
-                <button class="btn btn-default" (click)="getTokenAsync()" [disabled]="loginForm.invalid">LogIn</button>
+                <button class="btn btn-default" (click)="getTokenAsync()" [disabled]="loginForm.invalid">{{_localizer.localize("LogInButton")}}</button>
             </div>
         </form>
     </div>

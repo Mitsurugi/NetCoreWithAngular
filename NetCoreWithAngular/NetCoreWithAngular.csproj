@@ -11,6 +11,7 @@
     <None Remove="ClientApp\app\Admin\Components\AnimeEpisode\animeEpisode.component.ts" />
     <None Remove="ClientApp\app\Admin\Components\Anime\animeEdit.component.ts" />
     <None Remove="ClientApp\app\Admin\Components\Book\bookEdit.component.ts" />
+    <None Remove="ClientApp\app\Admin\Components\Language\language.component.ts" />
     <None Remove="ClientApp\app\Admin\Components\User\users.component.ts" />
     <None Remove="ClientApp\app\Admin\Models\AnimeEpisode\animeEpisode.ts" />
     <None Remove="ClientApp\app\Admin\Models\bookFilter.ts" />
@@ -31,6 +32,9 @@
     <None Remove="ClientApp\app\Admin\Components\Menu\menu.component.ts" />
     <None Remove="ClientApp\app\Admin\Models\Anime.ts" />
     <None Remove="ClientApp\app\Admin\Models\Book.ts" />
+    <None Remove="ClientApp\Core\Localization\language.component.ts" />
+    <None Remove="ClientApp\Core\Localization\language.interceptor.ts" />
+    <None Remove="ClientApp\Core\Localization\localizer.service.ts" />
     <None Remove="ClientApp\polyfills.ts" />
     <None Remove="ClientApp\app\Admin\Services\anime.service.ts" />
     <None Remove="ClientApp\app\Admin\Services\book.service.ts" />
@@ -59,6 +63,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <TypeScriptCompile Include="ClientApp\app\Admin\Components\Language\language.component.ts" />
     <TypeScriptCompile Include="ClientApp\app\Admin\Components\AdminMain\admin.component.ts" />
     <TypeScriptCompile Include="ClientApp\app\Admin\Components\Account\account.component.ts" />
     <TypeScriptCompile Include="ClientApp\app\Admin\Components\User\users.component.ts" />
@@ -71,6 +76,10 @@
     <TypeScriptCompile Include="ClientApp\app\Admin\Models\User\user.ts" />
     <TypeScriptCompile Include="ClientApp\app\Admin\Models\Book\bookFilter.ts" />
     <TypeScriptCompile Include="ClientApp\app\Admin\Models\Book\bookGrid.ts" />
+    <TypeScriptCompile Include="ClientApp\app\Localizer\localizer.service.ts" />
+    <TypeScriptCompile Include="ClientApp\Core\Localization\localizer.service.ts" />
+    <TypeScriptCompile Include="ClientApp\Core\Localization\language.component.ts" />
+    <TypeScriptCompile Include="ClientApp\Core\Localization\language.interceptor.ts" />
     <TypeScriptCompile Include="ClientApp\Core\Account\changePasswordModel.ts" />
     <TypeScriptCompile Include="ClientApp\Core\Account\loginModel.ts" />
     <TypeScriptCompile Include="ClientApp\app\Admin\Services\account.service.ts" />

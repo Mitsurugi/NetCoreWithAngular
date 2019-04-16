@@ -8,9 +8,8 @@ namespace NetCoreWithAngular.Localization
 {
     public class CustomStringLocalizer : CoreLibraryStringLocalizer
     {
-        protected override void CreateStrings()
+        protected override void AddOrUpdateString()
         {
-            base.CreateStrings();
             var ruRUDict = _strings["ru-RU"];
             var enUSDict = _strings["en-US"];
 

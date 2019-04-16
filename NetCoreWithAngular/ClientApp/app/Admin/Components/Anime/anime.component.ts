@@ -5,6 +5,7 @@ import { AnimeService } from '../../Services/anime.service';
 import { FileService } from '../../../../Core/Services/file.service';
 import { Anime } from '../../Models/Anime/anime';
 import { read } from 'fs';
+import { LocalizerService } from '../../../Localizer/localizer.service';
 
 @Component({
     selector: 'anime',
@@ -16,8 +17,8 @@ export class AnimeComponent extends CoreComponent<number, Anime> {
 
     _fileService: FileService<number>;
 
-    constructor(service: AnimeService, fileService: FileService<number>) {
-        super(service, Anime, Anime, Anime, Anime);
+    constructor(service: AnimeService, localizer: LocalizerService, fileService: FileService<number>) {
+        super(service, localizer, Anime, Anime, Anime, Anime);
         this._fileService = fileService;
     }
 

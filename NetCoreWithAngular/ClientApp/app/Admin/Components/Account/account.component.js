@@ -24,10 +24,13 @@ import { Component } from '@angular/core';
 import { CoreAccountComponent } from '../../../../Core/Account/account.component';
 import { AccountService } from '../../Services/account.service';
 import { AccountGlobals } from '../../../../Core/Account/AccountGlobals';
+import { LocalizerService } from '../../../Localizer/localizer.service';
 var AccountComponent = /** @class */ (function (_super) {
     __extends(AccountComponent, _super);
-    function AccountComponent(service, accGlobals) {
-        return _super.call(this, service, accGlobals) || this;
+    function AccountComponent(service, localizer, accGlobals) {
+        var _this = _super.call(this, service, accGlobals) || this;
+        _this._localizer = localizer;
+        return _this;
     }
     AccountComponent = __decorate([
         Component({
@@ -36,7 +39,7 @@ var AccountComponent = /** @class */ (function (_super) {
             styleUrls: ['./account.component.css'],
             providers: [AccountService]
         }),
-        __metadata("design:paramtypes", [AccountService, AccountGlobals])
+        __metadata("design:paramtypes", [AccountService, LocalizerService, AccountGlobals])
     ], AccountComponent);
     return AccountComponent;
 }(CoreAccountComponent));

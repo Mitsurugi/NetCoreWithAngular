@@ -44,8 +44,9 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 import { Component } from '@angular/core';
 import { UsersService } from './users.service';
+import { CoreLocalizerService } from '../Localization/localizer.service';
 var UsersBaseComponent = /** @class */ (function () {
-    function UsersBaseComponent(service, typeGrid, typeCreate, typeEdit, typeFilter) {
+    function UsersBaseComponent(service, localizer, typeGrid, typeCreate, typeEdit, typeFilter) {
         this._currentPage = 1;
         this._pageSize = 5;
         this._totalPages = 1;
@@ -57,6 +58,7 @@ var UsersBaseComponent = /** @class */ (function () {
         this._orderBy = 'UserName';
         this._resetPasswordId = null;
         this._service = service;
+        this._localizer = localizer;
         this._items = new Array();
         this._itemEdit = new typeEdit();
         this._itemCreate = new typeCreate();
@@ -72,20 +74,19 @@ var UsersBaseComponent = /** @class */ (function () {
             return __generator(this, function (_b) {
                 switch (_b.label) {
                     case 0:
-                        this._message = null;
-                        _b.label = 1;
-                    case 1:
-                        _b.trys.push([1, 3, , 4]);
+                        _b.trys.push([0, 2, , 3]);
+                        this._message = this._localizer.localize("Loading");
                         _a = this;
                         return [4 /*yield*/, this._service.getCreateModelAsync()];
-                    case 2:
+                    case 1:
                         _a._itemCreate = _b.sent();
-                        return [3 /*break*/, 4];
-                    case 3:
+                        this._message = null;
+                        return [3 /*break*/, 3];
+                    case 2:
                         e_1 = _b.sent();
-                        this._message = "Ошибка: " + e_1.error;
-                        return [3 /*break*/, 4];
-                    case 4: return [2 /*return*/];
+                        this._message = this._localizer.localizeWithValues("Error", e_1.error);
+                        return [3 /*break*/, 3];
+                    case 3: return [2 /*return*/];
                 }
             });
         });
@@ -96,20 +97,19 @@ var UsersBaseComponent = /** @class */ (function () {
             return __generator(this, function (_b) {
                 switch (_b.label) {
                     case 0:
-                        this._message = null;
-                        _b.label = 1;
-                    case 1:
-                        _b.trys.push([1, 3, , 4]);
+                        _b.trys.push([0, 2, , 3]);
+                        this._message = this._localizer.localize("Loading");
                         _a = this;
                         return [4 /*yield*/, this._service.getEditModelAsync(id)];
-                    case 2:
+                    case 1:
                         _a._itemEdit = _b.sent();
-                        return [3 /*break*/, 4];
-                    case 3:
+                        this._message = null;
+                        return [3 /*break*/, 3];
+                    case 2:
                         e_2 = _b.sent();
-                        this._message = "Ошибка: " + e_2.error;
-                        return [3 /*break*/, 4];
-                    case 4: return [2 /*return*/];
+                        this._message = this._localizer.localizeWithValues("Error", e_2.error);
+                        return [3 /*break*/, 3];
+                    case 3: return [2 /*return*/];
                 }
             });
         });
@@ -121,6 +121,7 @@ var UsersBaseComponent = /** @class */ (function () {
                 switch (_b.label) {
                     case 0:
                         _b.trys.push([0, 3, , 4]);
+                        this._message = this._localizer.localize("Loading");
                         _a = this;
                         return [4 /*yield*/, this._service.getFilterModelAsync()];
                     case 1:
@@ -128,10 +129,11 @@ var UsersBaseComponent = /** @class */ (function () {
                         return [4 /*yield*/, this.reloadGridAsync()];
                     case 2:
                         _b.sent();
+                        this._message = null;
                         return [3 /*break*/, 4];
                     case 3:
                         e_3 = _b.sent();
-                        this._message = "Ошибка: " + e_3.error;
+                        this._message = this._localizer.localizeWithValues("Error", e_3.error);
                         return [3 /*break*/, 4];
                     case 4: return [2 /*return*/];
                 }
@@ -144,26 +146,25 @@ var UsersBaseComponent = /** @class */ (function () {
             return __generator(this, function (_c) {
                 switch (_c.label) {
                     case 0:
-                        this._message = null;
-                        _c.label = 1;
-                    case 1:
-                        _c.trys.push([1, 4, , 5]);
+                        _c.trys.push([0, 3, , 4]);
+                        this._message = this._localizer.localize("Loading");
                         this._showEditId = null;
                         this._resetPasswordId = null;
                         _a = this;
                         return [4 /*yield*/, this._service.getPagesCountAsync(this._pageSize, this._filter)];
-                    case 2:
+                    case 1:
                         _a._totalPages = _c.sent();
                         _b = this;
                         return [4 /*yield*/, this._service.getGridAsync(this._currentPage, this._pageSize, this._orderBy, this._filter)];
-                    case 3:
+                    case 2:
                         _b._items = _c.sent();
-                        return [3 /*break*/, 5];
-                    case 4:
+                        this._message = null;
+                        return [3 /*break*/, 4];
+                    case 3:
                         e_4 = _c.sent();
-                        this._message = "Ошибка: " + e_4.error;
-                        return [3 /*break*/, 5];
-                    case 5: return [2 /*return*/];
+                        this._message = this._localizer.localizeWithValues("Error", e_4.error);
+                        return [3 /*break*/, 4];
+                    case 4: return [2 /*return*/];
                 }
             });
         });
@@ -178,6 +179,7 @@ var UsersBaseComponent = /** @class */ (function () {
                         _b.label = 1;
                     case 1:
                         _b.trys.push([1, 4, , 5]);
+                        this._message = this._localizer.localize("Loading");
                         _a = this;
                         return [4 /*yield*/, this._service.getFilterModelAsync()];
                     case 2:
@@ -185,10 +187,11 @@ var UsersBaseComponent = /** @class */ (function () {
                         return [4 /*yield*/, this.reloadGridAsync()];
                     case 3:
                         _b.sent();
+                        this._message = null;
                         return [3 /*break*/, 5];
                     case 4:
                         e_5 = _b.sent();
-                        this._message = "Ошибка: " + e_5.error;
+                        this._message = this._localizer.localizeWithValues("Error", e_5.error);
                         return [3 /*break*/, 5];
                     case 5: return [2 /*return*/];
                 }
@@ -206,13 +209,15 @@ var UsersBaseComponent = /** @class */ (function () {
                         _a.label = 1;
                     case 1:
                         _a.trys.push([1, 3, , 4]);
+                        this._message = this._localizer.localize("Loading");
                         return [4 /*yield*/, this.reloadGridAsync()];
                     case 2:
                         _a.sent();
+                        this._message = null;
                         return [3 /*break*/, 4];
                     case 3:
                         e_6 = _a.sent();
-                        this._message = "Ошибка: " + e_6.error;
+                        this._message = this._localizer.localizeWithValues("Error", e_6.error);
                         return [3 /*break*/, 4];
                     case 4: return [2 /*return*/];
                 }
@@ -230,13 +235,15 @@ var UsersBaseComponent = /** @class */ (function () {
                         _a.label = 1;
                     case 1:
                         _a.trys.push([1, 3, , 4]);
+                        this._message = this._localizer.localize("Loading");
                         return [4 /*yield*/, this.reloadGridAsync()];
                     case 2:
                         _a.sent();
+                        this._message = null;
                         return [3 /*break*/, 4];
                     case 3:
                         e_7 = _a.sent();
-                        this._message = "Ошибка: " + e_7.error;
+                        this._message = this._localizer.localizeWithValues("Error", e_7.error);
                         return [3 /*break*/, 4];
                     case 4: return [2 /*return*/];
                 }
@@ -254,15 +261,17 @@ var UsersBaseComponent = /** @class */ (function () {
                         return [3 /*break*/, 4];
                     case 1:
                         _a.trys.push([1, 3, , 4]);
+                        this._message = this._localizer.localize("Loading");
                         return [4 /*yield*/, this.getCreateModelAsync()];
                     case 2:
                         _a.sent();
                         this._isShowCreate = true;
                         this._isShowImport = false;
+                        this._message = null;
                         return [3 /*break*/, 4];
                     case 3:
                         e_8 = _a.sent();
-                        this._message = "Ошибка: " + e_8.error;
+                        this._message = this._localizer.localizeWithValues("Error", e_8.error);
                         return [3 /*break*/, 4];
                     case 4: return [2 /*return*/];
                 }
@@ -279,7 +288,7 @@ var UsersBaseComponent = /** @class */ (function () {
                 this._isShowCreate = false;
             }
             catch (e) {
-                this._message = "Ошибка: " + e.error;
+                this._message = this._localizer.localizeWithValues("Error", e.error);
             }
         }
     };
@@ -294,14 +303,16 @@ var UsersBaseComponent = /** @class */ (function () {
                         return [3 /*break*/, 4];
                     case 1:
                         _a.trys.push([1, 3, , 4]);
+                        this._message = this._localizer.localize("Loading");
                         return [4 /*yield*/, this.getEditModelAsync(id)];
                     case 2:
                         _a.sent();
                         this._showEditId = id;
+                        this._message = null;
                         return [3 /*break*/, 4];
                     case 3:
                         e_9 = _a.sent();
-                        this._message = "Ошибка: " + e_9.error;
+                        this._message = this._localizer.localizeWithValues("Error", e_9.error);
                         return [3 /*break*/, 4];
                     case 4: return [2 /*return*/];
                 }
@@ -314,22 +325,21 @@ var UsersBaseComponent = /** @class */ (function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        this._message = null;
-                        _a.label = 1;
-                    case 1:
-                        _a.trys.push([1, 4, , 5]);
+                        _a.trys.push([0, 3, , 4]);
+                        this._message = this._localizer.localize("Loading");
                         return [4 /*yield*/, this._service.deleteAsync(id)];
-                    case 2:
+                    case 1:
                         _a.sent();
                         return [4 /*yield*/, this.reloadGridAsync()];
-                    case 3:
+                    case 2:
                         _a.sent();
-                        return [3 /*break*/, 5];
-                    case 4:
+                        this._message = null;
+                        return [3 /*break*/, 4];
+                    case 3:
                         e_10 = _a.sent();
-                        this._message = "Ошибка: " + e_10.error;
-                        return [3 /*break*/, 5];
-                    case 5: return [2 /*return*/];
+                        this._message = this._localizer.localizeWithValues("Error", e_10.error);
+                        return [3 /*break*/, 4];
+                    case 4: return [2 /*return*/];
                 }
             });
         });
@@ -340,22 +350,21 @@ var UsersBaseComponent = /** @class */ (function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        this._message = null;
-                        _a.label = 1;
-                    case 1:
-                        _a.trys.push([1, 4, , 5]);
+                        _a.trys.push([0, 3, , 4]);
+                        this._message = this._localizer.localize("Loading");
                         return [4 /*yield*/, this._service.deleteManyAsync(this._checkedItems)];
-                    case 2:
+                    case 1:
                         _a.sent();
                         return [4 /*yield*/, this.reloadGridAsync()];
-                    case 3:
+                    case 2:
                         _a.sent();
-                        return [3 /*break*/, 5];
-                    case 4:
+                        this._message = null;
+                        return [3 /*break*/, 4];
+                    case 3:
                         e_11 = _a.sent();
-                        this._message = "Ошибка: " + e_11.error;
-                        return [3 /*break*/, 5];
-                    case 5: return [2 /*return*/];
+                        this._message = this._localizer.localizeWithValues("Error", e_11.error);
+                        return [3 /*break*/, 4];
+                    case 4: return [2 /*return*/];
                 }
             });
         });
@@ -366,26 +375,25 @@ var UsersBaseComponent = /** @class */ (function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        this._message = null;
-                        _a.label = 1;
-                    case 1:
-                        _a.trys.push([1, 5, , 6]);
+                        _a.trys.push([0, 4, , 5]);
+                        this._message = this._localizer.localize("Loading");
                         return [4 /*yield*/, this._service.saveCreateModelAsync(this._itemCreate)];
-                    case 2:
+                    case 1:
                         _a.sent();
                         this._isShowCreate = false;
                         return [4 /*yield*/, this.getCreateModelAsync()];
-                    case 3:
+                    case 2:
                         _a.sent();
                         return [4 /*yield*/, this.reloadGridAsync()];
-                    case 4:
+                    case 3:
                         _a.sent();
-                        return [3 /*break*/, 6];
-                    case 5:
+                        this._message = null;
+                        return [3 /*break*/, 5];
+                    case 4:
                         e_12 = _a.sent();
-                        this._message = "Ошибка: " + e_12.error;
-                        return [3 /*break*/, 6];
-                    case 6: return [2 /*return*/];
+                        this._message = this._localizer.localizeWithValues("Error", e_12.error);
+                        return [3 /*break*/, 5];
+                    case 5: return [2 /*return*/];
                 }
             });
         });
@@ -396,23 +404,22 @@ var UsersBaseComponent = /** @class */ (function () {
             return __generator(this, function (_b) {
                 switch (_b.label) {
                     case 0:
-                        this._message = null;
-                        _b.label = 1;
-                    case 1:
-                        _b.trys.push([1, 4, , 5]);
+                        _b.trys.push([0, 3, , 4]);
+                        this._message = this._localizer.localize("Loading");
                         _a = this;
                         return [4 /*yield*/, this._service.saveEditModelAsync(this._itemEdit)];
-                    case 2:
+                    case 1:
                         _a._itemEdit = _b.sent();
                         return [4 /*yield*/, this.reloadGridAsync()];
-                    case 3:
+                    case 2:
                         _b.sent();
-                        return [3 /*break*/, 5];
-                    case 4:
+                        this._message = null;
+                        return [3 /*break*/, 4];
+                    case 3:
                         e_13 = _b.sent();
-                        this._message = "Ошибка: " + e_13.error;
-                        return [3 /*break*/, 5];
-                    case 5: return [2 /*return*/];
+                        this._message = this._localizer.localizeWithValues("Error", e_13.error);
+                        return [3 /*break*/, 4];
+                    case 4: return [2 /*return*/];
                 }
             });
         });
@@ -423,20 +430,19 @@ var UsersBaseComponent = /** @class */ (function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        this._message = null;
-                        _a.label = 1;
-                    case 1:
-                        _a.trys.push([1, 3, , 4]);
+                        _a.trys.push([0, 2, , 3]);
+                        this._message = this._localizer.localize("Loading");
                         return [4 /*yield*/, this._service.getExcelExportAsync(this._orderBy, this._filter)];
-                    case 2:
+                    case 1:
                         b = _a.sent();
+                        this._message = null;
                         saveAs(b, "ExcelExport.xlsx");
-                        return [3 /*break*/, 4];
-                    case 3:
+                        return [3 /*break*/, 3];
+                    case 2:
                         e_14 = _a.sent();
-                        this._message = "Ошибка: " + e_14.error;
-                        return [3 /*break*/, 4];
-                    case 4: return [2 /*return*/];
+                        this._message = this._localizer.localizeWithValues("Error", e_14.error);
+                        return [3 /*break*/, 3];
+                    case 3: return [2 /*return*/];
                 }
             });
         });
@@ -447,20 +453,19 @@ var UsersBaseComponent = /** @class */ (function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        this._message = null;
-                        _a.label = 1;
-                    case 1:
-                        _a.trys.push([1, 3, , 4]);
+                        _a.trys.push([0, 2, , 3]);
+                        this._message = this._localizer.localize("Loading");
                         return [4 /*yield*/, this._service.getImportTemplateAsync()];
-                    case 2:
+                    case 1:
                         b = _a.sent();
+                        this._message = null;
                         saveAs(b, "ImportTemplate.xlsx");
-                        return [3 /*break*/, 4];
-                    case 3:
+                        return [3 /*break*/, 3];
+                    case 2:
                         e_15 = _a.sent();
-                        this._message = "Ошибка: " + e_15.error;
-                        return [3 /*break*/, 4];
-                    case 4: return [2 /*return*/];
+                        this._message = this._localizer.localizeWithValues("Error", e_15.error);
+                        return [3 /*break*/, 3];
+                    case 3: return [2 /*return*/];
                 }
             });
         });
@@ -472,21 +477,23 @@ var UsersBaseComponent = /** @class */ (function () {
                 switch (_a.label) {
                     case 0:
                         if (!(this._importFile == null)) return [3 /*break*/, 1];
-                        this._importResult = "Файл импорта не выбран";
+                        this._importResult = this._localizer.localize("ImportFileNull");
                         return [3 /*break*/, 5];
                     case 1:
                         _a.trys.push([1, 4, , 5]);
+                        this._importResult = this._localizer.localize("Loading");
                         return [4 /*yield*/, this._service.importAsync(this._importFile)];
                     case 2:
                         _a.sent();
                         return [4 /*yield*/, this.reloadGridAsync()];
                     case 3:
                         _a.sent();
-                        this._importResult = "Импорт прошел успешно";
+                        this._importResult = null;
+                        this._importResult = this._localizer.localize("ImportSuccess");
                         return [3 /*break*/, 5];
                     case 4:
                         e_16 = _a.sent();
-                        this._importResult = JSON.stringify("Ошибка: " + e_16.error);
+                        this._importResult = JSON.stringify(this._localizer.localizeWithValues("Error", e_16.error));
                         return [3 /*break*/, 5];
                     case 5: return [2 /*return*/];
                 }
@@ -534,23 +541,21 @@ var UsersBaseComponent = /** @class */ (function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        this._message = null;
-                        _a.label = 1;
-                    case 1:
-                        _a.trys.push([1, 4, , 5]);
+                        _a.trys.push([0, 3, , 4]);
+                        this._message = this._localizer.localize("Loading");
                         return [4 /*yield*/, this._service.resetPasswordAsync(this._resetPasswordId, newPassword)];
-                    case 2:
+                    case 1:
                         _a.sent();
                         return [4 /*yield*/, this.reloadGridAsync()];
-                    case 3:
+                    case 2:
                         _a.sent();
-                        this._message = "Пароль успешно сброшен";
-                        return [3 /*break*/, 5];
-                    case 4:
+                        this._message = this._localizer.localize("PassResetSuccess");
+                        return [3 /*break*/, 4];
+                    case 3:
                         e_17 = _a.sent();
-                        this._message = "Ошибка: " + e_17.error;
-                        return [3 /*break*/, 5];
-                    case 5: return [2 /*return*/];
+                        this._message = this._localizer.localizeWithValues("Error", e_17.error);
+                        return [3 /*break*/, 4];
+                    case 4: return [2 /*return*/];
                 }
             });
         });
@@ -565,7 +570,7 @@ var UsersBaseComponent = /** @class */ (function () {
     };
     UsersBaseComponent = __decorate([
         Component({}),
-        __metadata("design:paramtypes", [UsersService, Function, Function, Function, Function])
+        __metadata("design:paramtypes", [UsersService, CoreLocalizerService, Function, Function, Function, Function])
     ], UsersBaseComponent);
     return UsersBaseComponent;
 }());

@@ -9,10 +9,12 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 import { Component } from '@angular/core';
 import { AccountGlobals } from '../../../../Core/Account/AccountGlobals';
+import { LocalizerService } from '../../../Localizer/localizer.service';
 var MenuComponent = /** @class */ (function () {
-    function MenuComponent(accGlobals) {
+    function MenuComponent(accGlobals, localizer) {
         this._isExpanded = false;
         this._accGlobals = accGlobals;
+        this._localizer = localizer;
     }
     MenuComponent.prototype.ngOnInit = function () {
         this._accGlobals.refresh();
@@ -29,7 +31,7 @@ var MenuComponent = /** @class */ (function () {
             templateUrl: './menu.component.html',
             styleUrls: ['./menu.component.css']
         }),
-        __metadata("design:paramtypes", [AccountGlobals])
+        __metadata("design:paramtypes", [AccountGlobals, LocalizerService])
     ], MenuComponent);
     return MenuComponent;
 }());

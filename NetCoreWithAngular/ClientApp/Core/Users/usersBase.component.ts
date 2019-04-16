@@ -1,12 +1,14 @@
 ﻿import { Component, OnInit } from '@angular/core';
 import { UsersService } from './users.service';
 import { IUser } from './IUser';
+import { CoreLocalizerService } from '../Localization/localizer.service';
 
 @Component({
 })
 export class UsersBaseComponent<TKey, TGrid extends IUser<TKey>, TCreate extends IUser<TKey> = TGrid, TEdit extends IUser<TKey> = TGrid, TFilter = TGrid> implements OnInit {
 
     _service: UsersService<TKey, TGrid, TCreate, TEdit, TFilter>;
+    _localizer: CoreLocalizerService;
 
     _items: TGrid[];
     _itemEdit: TEdit;
@@ -30,8 +32,9 @@ export class UsersBaseComponent<TKey, TGrid extends IUser<TKey>, TCreate extends
     typeEdit: (new () => TEdit);
     typeFilter: (new () => TFilter);
 
-    constructor(service: UsersService<TKey, TGrid, TCreate, TEdit, TFilter>, typeGrid: (new () => TGrid), typeCreate: (new () => TCreate), typeEdit: (new () => TEdit), typeFilter: (new () => TFilter)) {
+    constructor(service: UsersService<TKey, TGrid, TCreate, TEdit, TFilter>, localizer: CoreLocalizerService, typeGrid: (new () => TGrid), typeCreate: (new () => TCreate), typeEdit: (new () => TEdit), typeFilter: (new () => TFilter)) {
         this._service = service;
+        this._localizer = localizer;
         this._items = new Array<TGrid>();
         this._itemEdit = new typeEdit();
         this._itemCreate = new typeCreate();
@@ -44,56 +47,63 @@ export class UsersBaseComponent<TKey, TGrid extends IUser<TKey>, TCreate extends
     }
 
     protected async getCreateModelAsync() {
-        this._message = null;
         try {
+            this._message = this._localizer.localize("Loading");
             this._itemCreate = await this._service.getCreateModelAsync();
+            this._message = null;
         }
         catch (e) {
-            this._message = "Ошибка: " + e.error;
+            this._message = this._localizer.localizeWithValues("Error", e.error);
         }
     }
 
     protected async getEditModelAsync(id: TKey) {
-        this._message = null;
         try {
+            this._message = this._localizer.localize("Loading");
             this._itemEdit = await this._service.getEditModelAsync(id);
+            this._message = null;
         }
         catch (e) {
-            this._message = "Ошибка: " + e.error;
+            this._message = this._localizer.localizeWithValues("Error", e.error);
         }
     }
 
     public async ngOnInit() {
         try {
+            this._message = this._localizer.localize("Loading");
             this._filter = await this._service.getFilterModelAsync();
             await this.reloadGridAsync();
+            this._message = null;
         }
         catch (e) {
-            this._message = "Ошибка: " + e.error;
+            this._message = this._localizer.localizeWithValues("Error", e.error);
         }
     }
 
     public async reloadGridAsync() {
-        this._message = null;
         try {
+            this._message = this._localizer.localize("Loading");
             this._showEditId = null;
             this._resetPasswordId = null;
             this._totalPages = await this._service.getPagesCountAsync(this._pageSize, this._filter);
             this._items = await this._service.getGridAsync(this._currentPage, this._pageSize, this._orderBy, this._filter);
+            this._message = null;
         }
         catch (e) {
-            this._message = "Ошибка: " + e.error;
+            this._message = this._localizer.localizeWithValues("Error", e.error);
         }
     }
 
     public async clearFilterAsync() {
         this._filter = new this.typeFilter();
         try {
+            this._message = this._localizer.localize("Loading");
             this._filter = await this._service.getFilterModelAsync();
             await this.reloadGridAsync();
+            this._message = null;
         }
         catch (e) {
-            this._message = "Ошибка: " + e.error;
+            this._message = this._localizer.localizeWithValues("Error", e.error);
         }
     }
 
@@ -101,10 +111,12 @@ export class UsersBaseComponent<TKey, TGrid extends IUser<TKey>, TCreate extends
         if (this._currentPage < this._totalPages) {
             this._currentPage++;
             try {
+                this._message = this._localizer.localize("Loading");
                 await this.reloadGridAsync();
+                this._message = null;
             }
             catch (e) {
-                this._message = "Ошибка: " + e.error;
+                this._message = this._localizer.localizeWithValues("Error", e.error);
             }
         }
     }
@@ -113,10 +125,12 @@ export class UsersBaseComponent<TKey, TGrid extends IUser<TKey>, TCreate extends
         if (this._currentPage > 1) {
             this._currentPage--;
             try {
+                this._message = this._localizer.localize("Loading");
                 await this.reloadGridAsync();
+                this._message = null;
             }
             catch (e) {
-                this._message = "Ошибка: " + e.error;
+                this._message = this._localizer.localizeWithValues("Error", e.error);
             }
         }
     }
@@ -127,12 +141,14 @@ export class UsersBaseComponent<TKey, TGrid extends IUser<TKey>, TCreate extends
         }
         else {
             try {
+                this._message = this._localizer.localize("Loading");
                 await this.getCreateModelAsync();
                 this._isShowCreate = true;
                 this._isShowImport = false;
+                this._message = null;
             }
             catch (e) {
-                this._message = "Ошибка: " + e.error;
+                this._message = this._localizer.localizeWithValues("Error", e.error);
             }
         }
     }
@@ -147,7 +163,7 @@ export class UsersBaseComponent<TKey, TGrid extends IUser<TKey>, TCreate extends
                 this._isShowCreate = false;
             }
             catch (e) {
-                this._message = "Ошибка: " + e.error;
+                this._message = this._localizer.localizeWithValues("Error", e.error);
             }
         }
     }
@@ -158,95 +174,105 @@ export class UsersBaseComponent<TKey, TGrid extends IUser<TKey>, TCreate extends
         }
         else {
             try {
+                this._message = this._localizer.localize("Loading");
                 await this.getEditModelAsync(id);
                 this._showEditId = id;
+                this._message = null;
             }
             catch (e) {
-                this._message = "Ошибка: " + e.error;
+                this._message = this._localizer.localizeWithValues("Error", e.error);
             }
         }
     }    
 
     public async deleteAsync(id: TKey) {
-        this._message = null;
         try {
+            this._message = this._localizer.localize("Loading");
             await this._service.deleteAsync(id);
             await this.reloadGridAsync();
+            this._message = null;
         }
         catch (e) {
-            this._message = "Ошибка: " + e.error;
+            this._message = this._localizer.localizeWithValues("Error", e.error);
         }
     }
 
     public async deleteCheckedAsync() {
-        this._message = null;
         try {
+            this._message = this._localizer.localize("Loading");
             await this._service.deleteManyAsync(this._checkedItems);
             await this.reloadGridAsync();
+            this._message = null;
         }
         catch (e) {
-            this._message = "Ошибка: " + e.error;
+            this._message = this._localizer.localizeWithValues("Error", e.error);
         }
     }
 
     public async saveCreateModelAsync() {
-        this._message = null;
         try {
+            this._message = this._localizer.localize("Loading");
             await this._service.saveCreateModelAsync(this._itemCreate);
             this._isShowCreate = false;
             await this.getCreateModelAsync();
             await this.reloadGridAsync();
+            this._message = null;
         }
         catch (e) {
-            this._message = "Ошибка: " + e.error;
+            this._message = this._localizer.localizeWithValues("Error", e.error);
         }
     }
 
     public async saveEditModelAsync() {
-        this._message = null;
         try {
+            this._message = this._localizer.localize("Loading");
             this._itemEdit = await this._service.saveEditModelAsync(this._itemEdit);
             await this.reloadGridAsync();
+            this._message = null;
         }
         catch (e) {
-            this._message = "Ошибка: " + e.error;
+            this._message = this._localizer.localizeWithValues("Error", e.error);
         }
     }
 
     public async getExcelExportAsync() {
-        this._message = null;
         try {
+            this._message = this._localizer.localize("Loading");
             let b = await this._service.getExcelExportAsync(this._orderBy, this._filter);
+            this._message = null;
             saveAs(b, "ExcelExport.xlsx");
         }
         catch (e) {
-            this._message = "Ошибка: " + e.error;
+            this._message = this._localizer.localizeWithValues("Error", e.error);
         }
     }
 
     public async getImportTemplateAsync() {
-        this._message = null;
         try {
+            this._message = this._localizer.localize("Loading");
             let b = await this._service.getImportTemplateAsync();
+            this._message = null;
             saveAs(b, "ImportTemplate.xlsx");
         }
         catch (e) {
-            this._message = "Ошибка: " + e.error;
+            this._message = this._localizer.localizeWithValues("Error", e.error);
         }
     }
 
     public async importAsync() {
         if (this._importFile == null) {
-            this._importResult = "Файл импорта не выбран";
+            this._importResult = this._localizer.localize("ImportFileNull");
         }
         else {
             try {
+                this._importResult = this._localizer.localize("Loading");
                 await this._service.importAsync(this._importFile);
                 await this.reloadGridAsync();
-                this._importResult = "Импорт прошел успешно";
+                this._importResult = null;
+                this._importResult = this._localizer.localize("ImportSuccess");
             }
             catch (e) {
-                this._importResult = JSON.stringify("Ошибка: " + e.error);
+                this._importResult = JSON.stringify(this._localizer.localizeWithValues("Error", e.error));
             }
         }
     }
@@ -284,14 +310,14 @@ export class UsersBaseComponent<TKey, TGrid extends IUser<TKey>, TCreate extends
     }
 
     public async resetPasswordAsync(newPassword: string) {
-        this._message = null;
         try {
+            this._message = this._localizer.localize("Loading");
             await this._service.resetPasswordAsync(this._resetPasswordId, newPassword);
             await this.reloadGridAsync();
-            this._message = "Пароль успешно сброшен";
+            this._message = this._localizer.localize("PassResetSuccess");
         }
         catch (e) {
-            this._message = "Ошибка: " + e.error;
+            this._message = this._localizer.localizeWithValues("Error", e.error);
         }
     }
 

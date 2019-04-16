@@ -24,10 +24,11 @@ import { Component } from '@angular/core';
 import { UsersService } from '../../../../Core/Users/users.service';
 import { UsersBaseComponent } from '../../../../Core/Users/usersBase.component';
 import { User } from '../../Models/User/user';
+import { LocalizerService } from '../../../Localizer/localizer.service';
 var UsersComponent = /** @class */ (function (_super) {
     __extends(UsersComponent, _super);
-    function UsersComponent(service) {
-        return _super.call(this, service, User, User, User, User) || this;
+    function UsersComponent(service, localizer) {
+        return _super.call(this, service, localizer, User, User, User, User) || this;
     }
     UsersComponent = __decorate([
         Component({
@@ -36,7 +37,7 @@ var UsersComponent = /** @class */ (function (_super) {
             styleUrls: ['./users.component.css'],
             providers: [UsersService]
         }),
-        __metadata("design:paramtypes", [UsersService])
+        __metadata("design:paramtypes", [UsersService, LocalizerService])
     ], UsersComponent);
     return UsersComponent;
 }(UsersBaseComponent));

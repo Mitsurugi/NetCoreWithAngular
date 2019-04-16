@@ -17,7 +17,7 @@ var TokenInterceptor = /** @class */ (function () {
     TokenInterceptor.prototype.intercept = function (req, next) {
         var _this = this;
         var token = localStorage.getItem("token");
-        var cloned = req.clone({ headers: req.headers.delete("Accept-Language").append("Accept-Language", "ru-RU").append("Authorization", "Bearer " + token) });
+        var cloned = req.clone({ headers: req.headers.append("Authorization", "Bearer " + token) });
         return next.handle(cloned).pipe(map(function (response) { return response; }), catchError(function (e, c) { if (e.status === 401 || e.status === 403) {
             localStorage.removeItem("token");
             _this.router.navigate(['/admin/account']);

@@ -23,8 +23,10 @@ import { AnimeEditComponent } from './Admin/Components/Anime/animeEdit.component
 import { AnimeEpisodeComponent } from './Admin/Components/AnimeEpisode/animeEpisode.component';
 import { FrontComponent } from './Front/Components/Front/front.component';
 import { UsersComponent } from './Admin/Components/User/users.component';
+import { LanguageInterceptor } from '../Core/Localization/language.interceptor';
+import { LanguageComponent } from './Admin/Components/Language/language.component';
 var adminRoutes = [
-    { path: '', component: AccountComponent },
+    { path: '', component: UsersComponent },
     { path: 'account', component: AccountComponent },
     { path: 'users', component: UsersComponent },
     { path: 'anime', component: AnimeComponent },
@@ -49,8 +51,8 @@ var AppModule = /** @class */ (function () {
     AppModule = __decorate([
         NgModule({
             imports: [BrowserModule, FormsModule, HttpClientModule, RouterModule.forRoot(appRoutes)],
-            declarations: [AppComponent, NotFoundComponent, AdminComponent, AccountComponent, MenuComponent, AnimeComponent, AnimeEditComponent, BookComponent, BookEditComponent, FrontComponent, AnimeEpisodeComponent, UsersComponent],
-            providers: [{ provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true }],
+            declarations: [AppComponent, NotFoundComponent, AdminComponent, AccountComponent, MenuComponent, AnimeComponent, AnimeEditComponent, BookComponent, BookEditComponent, FrontComponent, AnimeEpisodeComponent, UsersComponent, LanguageComponent],
+            providers: [{ provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true }, { provide: HTTP_INTERCEPTORS, useClass: LanguageInterceptor, multi: true }],
             bootstrap: [AppComponent]
         })
     ], AppModule);
