@@ -19,7 +19,7 @@ namespace CoreLibrary.Localization
             _currentCulture = culture;
             _strings = new Dictionary<string, Dictionary<string, string>>();
             CreateStrings();
-            AddOrUpdateString();
+            AddOrUpdateStrings();
         }
 
         public LocalizedString this[string name] {
@@ -88,7 +88,7 @@ namespace CoreLibrary.Localization
             ruRUDict.Add("FileNotFound", "Файл не найден");            
         }
 
-        protected virtual void AddOrUpdateString()
+        protected virtual void AddOrUpdateStrings()
         {
 
         }
