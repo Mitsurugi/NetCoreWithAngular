@@ -21,7 +21,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 import { Component } from '@angular/core';
-import { CoreLanguageComponent } from '../../../../Core/Localization/language.component';
+import { CoreLanguageComponent } from '../../../Core/Localization/language.component';
 var LanguageComponent = /** @class */ (function (_super) {
     __extends(LanguageComponent, _super);
     function LanguageComponent() {

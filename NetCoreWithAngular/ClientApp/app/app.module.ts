@@ -19,7 +19,7 @@ import { AnimeEpisodeComponent } from './Admin/Components/AnimeEpisode/animeEpis
 import { FrontComponent } from './Front/Components/Front/front.component'
 import { UsersComponent } from './Admin/Components/User/users.component';
 import { LanguageInterceptor } from '../Core/Localization/language.interceptor';
-import { LanguageComponent } from './Admin/Components/Language/language.component';
+import { LanguageComponent } from './Localizer/Component/language.component';
 
 const adminRoutes: Routes = [
     { path: '', component: UsersComponent },

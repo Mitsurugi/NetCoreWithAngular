@@ -1,5 +1,5 @@
 ﻿import { Component, OnInit } from '@angular/core';
-import { CoreLanguageComponent } from '../../../../Core/Localization/language.component';
+import { CoreLanguageComponent } from '../../../Core/Localization/language.component';
 
 @Component({
     selector: 'language',
