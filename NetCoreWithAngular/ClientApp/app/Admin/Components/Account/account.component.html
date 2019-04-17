@@ -1,6 +1,6 @@
 ﻿<div *ngIf="_accGlobals.isLogged">
-    <h2>Logged in as {{_accGlobals.login}}</h2>
-    <h2>Role: {{_accGlobals.role}}</h2>
+    <h2>{{_localizer.localize("LoginLabel")}}: {{_accGlobals.login}}</h2>
+    <h2>{{_localizer.localize("Role")}}: {{_accGlobals.role}}</h2>
     <div class="form-group">
         <button class="btn btn-default" (click)="deleteToken()">{{_localizer.localize("LogOutButton")}}</button>
     </div> 
@@ -51,7 +51,7 @@
                         {{_localizer.localizeWithValues("RequiredX",_localizer.localize("LoginLabel"))}}
                     </p>
                     <p *ngIf="login.errors.pattern" class="validation-text">
-                        Only letters and numbers allowed
+                        {{_localizer.localize("OnlyDigitsAndLettersAllowed")}}
                     </p>
                 </div>
             </div>

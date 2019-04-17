@@ -1,4 +1,4 @@
-﻿<h2>AnimeEpisodes</h2>
+﻿<h2>{{_localizer.localize("AnimeEpisodes")}}</h2>
 <div class="message">
     <p>&nbsp; {{_message}}</p>
 </div>
@@ -13,7 +13,7 @@
         <thead>
             <tr>
                 <th>{{_localizer.localize("Id")}}</th>
-                <th>Title</th>
+                <th>{{_localizer.localize("AnimeEpisode.Title")}}</th>
                 <th></th>
                 <th></th>
             </tr>
@@ -50,11 +50,11 @@
             <div class="edit-div">
                 <form #editForm="ngForm">
                     <div class="form-group col-sm-3">
-                        <label>Title *</label>
+                        <label>{{_localizer.localize("AnimeEpisode.Title")}} *</label>
                         <input class="form-control" name="title" [(ngModel)]="_itemEdit.title" #title="ngModel" type="text" required />
                         <div *ngIf="title.invalid">
                             <p *ngIf="title.errors.required" class="validation-text">
-                                Title required
+                                {{_localizer.localizeWithValues("RequiredX",_localizer.localize("AnimeEpisode.Title"))}}
                             </p>
                         </div>
                     </div>                    
@@ -72,11 +72,11 @@
     <div>
         <form #createForm="ngForm">
             <div class="form-group col-sm-3">
-                <label>Title *</label>
+                <label>{{_localizer.localize("AnimeEpisode.Title")}} *</label>
                 <input class="form-control" name="title" [(ngModel)]="_itemCreate.title" #title="ngModel" type="text" required />
                 <div *ngIf="title.touched && title.invalid">
                     <p *ngIf="title.errors.required" class="validation-text">
-                        Title required
+                        {{_localizer.localizeWithValues("RequiredX",_localizer.localize("AnimeEpisode.Title"))}}
                     </p>
                 </div>
             </div>            

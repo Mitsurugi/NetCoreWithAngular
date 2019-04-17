@@ -1,4 +1,4 @@
-﻿<h2>Books</h2>
+﻿<h2>{{_localizer.localize("Books")}}</h2>
 <div class="message">
     <p>&nbsp; {{_message}}</p>
 </div>
@@ -6,20 +6,20 @@
     <h3>{{_localizer.localize("Filter")}}</h3>
     <form #filterForm="ngForm">
         <div class="form-group col-sm-3">
-            <label>Title</label>
+            <label>{{_localizer.localize("Book.Title")}}</label>
             <input class="form-control" name="title" [(ngModel)]="_filter.title" #title="ngModel" type="text" />
         </div>
         <div class="form-group col-sm-3">
-            <label>Author</label>
+            <label>{{_localizer.localize("Book.Author")}}</label>
             <input class="form-control" name="author" [(ngModel)]="_filter.author" #author="ngModel" type="text" pattern="^[a-zA-Z\s]*$" />
             <div *ngIf="author.touched && author.invalid">
                 <p *ngIf="author.errors.pattern" class="validation-text">
-                    Only letters allowed
+                    {{_localizer.localize("OnlyLettersAllowed")}}
                 </p>
             </div>
         </div>
         <div class="form-group col-sm-3">
-            <label>Genre</label>
+            <label>{{_localizer.localize("Book.Genre")}}</label>
             <select class="form-control" name="genre" [(ngModel)]="_filter.genre" #genre="ngModel">
                 <ng-template ngFor let-i [ngForOf]="_filter.genreList" let-n="index">
                     <option value="{{i.value}}" [disabled]="i.disabled">{{i.text}}</option>
@@ -27,7 +27,7 @@
             </select>
         </div>
         <div class="form-group col-sm-3">
-            <label>Page count</label>
+            <label>{{_localizer.localize("Book.PageCount")}}</label>
             <input class="form-control" name="pageCount" [(ngModel)]="_filter.pageCount" #pageCount="ngModel" type="number" />
         </div>
         <div class="form-group col-sm-5">
@@ -50,10 +50,10 @@
         <thead>
             <tr>
                 <th>{{_localizer.localize("Id")}}</th>
-                <th>Title</th>
-                <th>Author</th>
-                <th>Genre</th>
-                <th>Page count</th>
+                <th>{{_localizer.localize("Book.Title")}}</th>
+                <th>{{_localizer.localize("Book.Author")}}</th>
+                <th>{{_localizer.localize("Book.Genre")}}</th>
+                <th>{{_localizer.localize("Book.PageCount")}}</th>
                 <th></th>
                 <th></th>
             </tr>
@@ -71,7 +71,7 @@
                         {{i.author}}
                     </td>
                     <td>
-                        {{i.genre}}
+                        {{i.genreName}}
                     </td>
                     <td>
                         {{i.pageCount}}
@@ -121,28 +121,28 @@
             <div class="edit-div">
                 <form #editForm="ngForm">
                     <div class="form-group col-sm-3">
-                        <label>Title *</label>
+                        <label>{{_localizer.localize("Book.Title")}} *</label>
                         <input class="form-control" name="title" [(ngModel)]="_itemEdit.title" #title="ngModel" type="text" required />
                         <div *ngIf="title.invalid">
                             <p *ngIf="title.errors.required" class="validation-text">
-                                Title required
+                                {{_localizer.localizeWithValues("RequiredX",_localizer.localize("Book.Title"))}}
                             </p>
                         </div>
                     </div>
                     <div class="form-group col-sm-3">
-                        <label>Author *</label>
+                        <label>{{_localizer.localize("Book.Author")}} *</label>
                         <input class="form-control" name="author" [(ngModel)]="_itemEdit.author" #author="ngModel" type="text" required pattern="^[a-zA-Z\s]*$" />
                         <div *ngIf="author.invalid">
                             <p *ngIf="author.errors.required" class="validation-text">
-                                Author required
+                                {{_localizer.localizeWithValues("RequiredX",_localizer.localize("Book.Author"))}}
                             </p>
                             <p *ngIf="author.errors.pattern" class="validation-text">
-                                Only letters allowed
+                                {{_localizer.localize("OnlyLettersAllowed")}}
                             </p>
                         </div>
                     </div>
                     <div class="form-group col-sm-3">
-                        <label>Genre</label>
+                        <label>{{_localizer.localize("Book.Genre")}}</label>
                         <select class="form-control" name="genre" [(ngModel)]="_itemEdit.genre" #genre="ngModel">
                             <ng-template ngFor let-i [ngForOf]="_itemEdit.genreList" let-n="index">
                                 <option value="{{i.value}}" [disabled]="i.disabled">{{i.text}}</option>
@@ -150,11 +150,11 @@
                         </select>
                     </div>
                     <div class="form-group col-sm-3">
-                        <label>Page count *</label>
+                        <label>{{_localizer.localize("Book.PageCount")}} *</label>
                         <input class="form-control" name="pageCount" [(ngModel)]="_itemEdit.pageCount" #pageCount="ngModel" type="text" required />
                         <div *ngIf="pageCount.invalid">
                             <p *ngIf="pageCount.errors.required" class="validation-text">
-                                Page count required
+                                {{_localizer.localizeWithValues("RequiredX",_localizer.localize("Book.PageCount"))}}
                             </p>
                         </div>
                     </div>
@@ -172,28 +172,28 @@
     <div>
         <form #createForm="ngForm">
             <div class="form-group col-sm-3">
-                <label>Title *</label>
+                <label>{{_localizer.localize("Book.Title")}} *</label>
                 <input class="form-control" name="title" [(ngModel)]="_itemCreate.title" #title="ngModel" type="text" required />
                 <div *ngIf="title.touched && title.invalid">
                     <p *ngIf="title.errors.required" class="validation-text">
-                        Title required
+                        {{_localizer.localizeWithValues("RequiredX",_localizer.localize("Book.Title"))}}
                     </p>
                 </div>
             </div>
             <div class="form-group col-sm-3">
-                <label>Author *</label>
+                <label>{{_localizer.localize("Book.Author")}} *</label>
                 <input class="form-control" name="author" [(ngModel)]="_itemCreate.author" #author="ngModel" type="text" required pattern="^[a-zA-Z\s]*$" />
                 <div *ngIf="author.touched && author.invalid">
                     <p *ngIf="author.errors.required" class="validation-text">
-                        Author required
+                        {{_localizer.localizeWithValues("RequiredX",_localizer.localize("Book.Author"))}}
                     </p>
                     <p *ngIf="author.errors.pattern" class="validation-text">
-                        Only letters allowed
+                        {{_localizer.localize("OnlyLettersAllowed")}}
                     </p>
                 </div>
             </div>
             <div class="form-group col-sm-3">
-                <label>Genre</label>
+                <label>{{_localizer.localize("Book.Genre")}}</label>
                 <select class="form-control" name="genre" [(ngModel)]="_itemCreate.genre" #genre="ngModel">
                     <ng-template ngFor let-i [ngForOf]="_itemCreate.genreList" let-n="index">
                         <option value="{{i.value}}" [disabled]="i.disabled">{{i.text}}</option>
@@ -201,11 +201,11 @@
                 </select>
             </div>
             <div class="form-group col-sm-3">
-                <label>Page count *</label>
+                <label>{{_localizer.localize("Book.PageCount")}} *</label>
                 <input class="form-control" name="pageCount" [(ngModel)]="_itemCreate.pageCount" #pageCount="ngModel" type="number" required />
                 <div *ngIf="pageCount.touched && pageCount.invalid">
                     <p *ngIf="pageCount.errors.required" class="validation-text">
-                        Page count required
+                        {{_localizer.localizeWithValues("RequiredX",_localizer.localize("Book.PageCount"))}}
                     </p>
                 </div>
             </div>

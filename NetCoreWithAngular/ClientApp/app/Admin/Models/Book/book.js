@@ -1,4 +1,4 @@
-var Genre;
+export var Genre;
 (function (Genre) {
     Genre[Genre["Fantasy"] = 1] = "Fantasy";
     Genre[Genre["Horror"] = 2] = "Horror";

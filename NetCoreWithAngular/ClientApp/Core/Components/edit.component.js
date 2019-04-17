@@ -45,7 +45,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 import { Input, Component } from '@angular/core';
 import { CoreService } from '../Services/core.service';
 import { ActivatedRoute, Router } from "@angular/router";
-import { CoreLocalizerService } from '../Localization/localizer.service';
+import { CoreLocalizerService } from '../Localization/coreLocalizer.service';
 var EditComponent = /** @class */ (function () {
     function EditComponent(service, localizer, typeCreate, typeEdit, route, router, listUrl) {
         var _this = this;

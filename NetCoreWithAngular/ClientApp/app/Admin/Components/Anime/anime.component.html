@@ -1,15 +1,15 @@
-﻿<h2>Anime</h2>
+﻿<h2>{{_localizer.localize("Animes")}}</h2>
 <div class="message">
     <p>&nbsp; {{_message}}</p>
 </div>
 <div class="sorting">
     <label>{{_localizer.localize("OrderBy")}}</label>
     <select class="form-control" [(ngModel)]="_orderBy" (change)="reloadGridAsync()">
-        <option value="">Default</option>
-        <option value="Id_desc">Id descending</option>
-        <option value="Id">Id ascending</option>
-        <option value="Title">Title ascending</option>
-        <option value="Title_desc">Title descending</option>
+        <option value="">{{_localizer.localize("Default")}}</option>
+        <option value="Id_desc">{{_localizer.localizeWithValues("OrderBy.DescendingX", _localizer.localize("Id"))}}</option>
+        <option value="Id">{{_localizer.localizeWithValues("OrderBy.AscendingX", _localizer.localize("Id"))}}</option>
+        <option value="Title">{{_localizer.localizeWithValues("OrderBy.AscendingX", _localizer.localize("Anime.Title"))}}</option>
+        <option value="Title_desc">{{_localizer.localizeWithValues("OrderBy.DescendingX", _localizer.localize("Anime.Title"))}}</option>
     </select>
     <div style="clear:both"></div>
 </div>
@@ -26,12 +26,12 @@
         <thead>
             <tr>
                 <th>
-                    <input type="button" (click)="toggleCheckAll()" value="Check all"/>
+                    <button class="btn btn-default" (click)="toggleCheckAll()">{{_localizer.localize("CheckAllButton")}}</button>
                 </th>
                 <th>{{_localizer.localize("Id")}}</th>
-                <th>Title</th>
-                <th>Image</th>
-                <th>Season count</th>
+                <th>{{_localizer.localize("Anime.Title")}}</th>
+                <th>{{_localizer.localize("Anime.Image")}}</th>
+                <th>{{_localizer.localize("Anime.SeasonCount")}}</th>
                 <th></th>
                 <th></th>
                 <th></th>
@@ -56,7 +56,7 @@
                         {{i.seasonCount}}
                     </td>
                     <td>
-                        <a href="/admin/AnimeEpisodes/{{i.id}}">View episodes</a>
+                        <a href="/admin/AnimeEpisodes/{{i.id}}">{{_localizer.localize("Anime.ViewEpisodesButton")}}</a>
                     </td>
                     <td>
                         <button class="btn btn-default" [routerLink]="['/admin/anime/edit', i.id]">{{_localizer.localize("Edit")}}</button>
@@ -81,25 +81,25 @@
             <div class="edit-div">
                 <form #editForm="ngForm">
                     <div class="form-group col-sm-3">
-                        <label>Title *</label>
+                        <label>{{_localizer.localize("Anime.Title")}} *</label>
                         <input class="form-control" name="title" [(ngModel)]="_itemEdit.title" #title="ngModel" type="text" required />
                         <div *ngIf="title.invalid">
                             <p *ngIf="title.errors.required" class="validation-text">
-                                Title required
+                                {{_localizer.localizeWithValues("RequiredX", _localizer.localize("Anime.Title"))}}
                             </p>
                         </div>
                     </div>
                     <div class="form-group col-sm-3">
-                        <label>Season count *</label>
+                        <label>{{_localizer.localize("Anime.SeasonCount")}} *</label>
                         <input class="form-control" name="seasonCount" [(ngModel)]="_itemEdit.seasonCount" #seasonCount="ngModel" type="number" required />
                         <div *ngIf="seasonCount.invalid">
                             <p *ngIf="seasonCount.errors.required" class="validation-text">
-                                Season count required
+                                {{_localizer.localizeWithValues("RequiredX", _localizer.localize("Anime.SeasonCount"))}}
                             </p>
                         </div>
                     </div>
                     <div class="form-group col-sm-3">
-                        <label>Image</label>
+                        <label>{{_localizer.localize("Anime.Image")}}</label>
                         <input type="file" (change)="uploadImageEditAsync($event.target.files[0])" />
                     </div>
                     <div class="form-group col-sm-10">
@@ -116,25 +116,25 @@
     <div>
         <form #createForm="ngForm">
             <div class="form-group col-sm-3">
-                <label>Title *</label>
+                <label>{{_localizer.localize("Anime.Title")}} *</label>
                 <input class="form-control" name="title" [(ngModel)]="_itemCreate.title" #title="ngModel" type="text" required />
                 <div *ngIf="title.touched && title.invalid">
                     <p *ngIf="title.errors.required" class="validation-text">
-                        Title required
+                        {{_localizer.localizeWithValues("RequiredX", _localizer.localize("Anime.Title"))}}
                     </p>
                 </div>
             </div>
             <div class="form-group col-sm-3">
-                <label>Season count *</label>
+                <label>{{_localizer.localize("Anime.SeasonCount")}} *</label>
                 <input class="form-control" name="seasonCount" [(ngModel)]="_itemCreate.seasonCount" #seasonCount="ngModel" type="number" required />
                 <div *ngIf="seasonCount.touched && seasonCount.invalid">
                     <p *ngIf="seasonCount.errors.required" class="validation-text">
-                        Season count required
+                        {{_localizer.localizeWithValues("RequiredX", _localizer.localize("Anime.SeasonCount"))}}
                     </p>
                 </div>
             </div>
             <div class="form-group col-sm-3">
-                <label>Image</label>
+                <label>{{_localizer.localize("Anime.Image")}}</label>
                 <input type="file" (change)="uploadImageCreateAsync($event.target.files[0])" />
             </div>
             <div class="form-group col-sm-10">

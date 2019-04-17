@@ -3,7 +3,7 @@ import { DependentService } from '../Services/dependent.service';
 import { IDependentEntity } from '../Models/IDependentEntity';
 import { ActivatedRoute } from "@angular/router";
 import { saveAs } from 'file-saver';
-import { CoreLocalizerService } from '../Localization/localizer.service';
+import { CoreLocalizerService } from '../Localization/coreLocalizer.service';
 
 @Component({
 })

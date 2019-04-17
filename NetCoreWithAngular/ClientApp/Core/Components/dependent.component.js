@@ -46,7 +46,7 @@ import { Input, Component } from '@angular/core';
 import { DependentService } from '../Services/dependent.service';
 import { ActivatedRoute } from "@angular/router";
 import { saveAs } from 'file-saver';
-import { CoreLocalizerService } from '../Localization/localizer.service';
+import { CoreLocalizerService } from '../Localization/coreLocalizer.service';
 var DependentComponent = /** @class */ (function () {
     function DependentComponent(service, localizer, typeGrid, typeCreate, typeEdit, typeFilter, typeParent, route) {
         var _this = this;

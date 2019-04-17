@@ -1,7 +1,7 @@
 ﻿import { IEntity } from '../../../../Core/Models/IEntity'
 import { SelectListItem } from '../../../../Core/Models/SelectListItem';
 
-enum Genre {
+export enum Genre {
     Fantasy = 1,
     Horror = 2,
     Drama = 3,

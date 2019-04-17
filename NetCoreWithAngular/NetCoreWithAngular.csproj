@@ -32,9 +32,9 @@
     <None Remove="ClientApp\app\Admin\Components\Menu\menu.component.ts" />
     <None Remove="ClientApp\app\Admin\Models\Anime.ts" />
     <None Remove="ClientApp\app\Admin\Models\Book.ts" />
+    <None Remove="ClientApp\Core\Localization\coreLocalizer.service.ts" />
     <None Remove="ClientApp\Core\Localization\language.component.ts" />
     <None Remove="ClientApp\Core\Localization\language.interceptor.ts" />
-    <None Remove="ClientApp\Core\Localization\localizer.service.ts" />
     <None Remove="ClientApp\polyfills.ts" />
     <None Remove="ClientApp\app\Admin\Services\anime.service.ts" />
     <None Remove="ClientApp\app\Admin\Services\book.service.ts" />
@@ -77,7 +77,7 @@
     <TypeScriptCompile Include="ClientApp\app\Admin\Models\Book\bookFilter.ts" />
     <TypeScriptCompile Include="ClientApp\app\Admin\Models\Book\bookGrid.ts" />
     <TypeScriptCompile Include="ClientApp\app\Localizer\localizer.service.ts" />
-    <TypeScriptCompile Include="ClientApp\Core\Localization\localizer.service.ts" />
+    <TypeScriptCompile Include="ClientApp\Core\Localization\coreLocalizer.service.ts" />
     <TypeScriptCompile Include="ClientApp\Core\Localization\language.component.ts" />
     <TypeScriptCompile Include="ClientApp\Core\Localization\language.interceptor.ts" />
     <TypeScriptCompile Include="ClientApp\Core\Account\changePasswordModel.ts" />

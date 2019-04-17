@@ -45,7 +45,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 import { Component } from '@angular/core';
 import { CoreService } from '../Services/core.service';
 import { saveAs } from 'file-saver';
-import { CoreLocalizerService } from '../Localization/localizer.service';
+import { CoreLocalizerService } from '../Localization/coreLocalizer.service';
 var CoreComponent = /** @class */ (function () {
     function CoreComponent(service, localizer, typeGrid, typeCreate, typeEdit, typeFilter) {
         this._currentPage = 1;

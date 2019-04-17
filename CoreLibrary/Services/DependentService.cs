@@ -161,6 +161,9 @@ namespace CoreLibrary
             int c = 1;
             foreach (var field in fields)
             {
+                var hide = field.GetCustomAttributes(typeof(ExportHideAttribute), false).FirstOrDefault() as ExportHideAttribute;
+                if (hide != null) continue;
+
                 var attr = field.GetCustomAttributes(typeof(DisplayAttribute), false).FirstOrDefault() as DisplayAttribute;
                 if (attr != null && !string.IsNullOrEmpty(attr.Name))
                 {
@@ -179,6 +182,9 @@ namespace CoreLibrary
                 c = 1;
                 foreach (var field in fields)
                 {
+                    var hide = field.GetCustomAttributes(typeof(ExportHideAttribute), false).FirstOrDefault() as ExportHideAttribute;
+                    if (hide != null) continue;
+
                     ws.Row(i).Cell(c).Value = typeof(TGrid).GetProperty(field.Name).GetValue(item);
                     c++;
                 }

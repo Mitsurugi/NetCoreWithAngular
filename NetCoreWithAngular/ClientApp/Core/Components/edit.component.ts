@@ -3,7 +3,7 @@ import { CoreService } from '../Services/core.service';
 import { IEntity } from '../Models/IEntity'
 import { saveAs } from 'file-saver';
 import { ActivatedRoute, Router } from "@angular/router";
-import { CoreLocalizerService } from '../Localization/localizer.service';
+import { CoreLocalizerService } from '../Localization/coreLocalizer.service';
 
 @Component({
 })

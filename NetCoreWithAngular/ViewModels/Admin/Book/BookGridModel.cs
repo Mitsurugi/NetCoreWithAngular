@@ -17,7 +17,10 @@ namespace NetCoreWithAngular.ViewModels
         [Display(Name = "BookPageCount")]
         public int? PageCount { get; set; }
 
+        [ExportHide]
+        public NetCoreWithAngular.Models.Genre Genre { get; set; }
+
         [Display(Name = "BookGenre")]
-        public string Genre { get; set; }
+        public string GenreName { get; set; }
     }
 }

@@ -1,7 +1,7 @@
 ﻿import { Component, OnInit } from '@angular/core';
 import { UsersService } from './users.service';
 import { IUser } from './IUser';
-import { CoreLocalizerService } from '../Localization/localizer.service';
+import { CoreLocalizerService } from '../Localization/coreLocalizer.service';
 
 @Component({
 })

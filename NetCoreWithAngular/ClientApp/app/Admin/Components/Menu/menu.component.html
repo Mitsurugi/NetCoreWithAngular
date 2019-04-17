@@ -15,22 +15,22 @@
             <ul class='nav navbar-nav'>
                 <li [routerLinkActive]='["link-active"]' [routerLinkActiveOptions]='{ exact: true }'>
                     <a [routerLink]='["/admin/account"]' (click)='collapse()'>
-                        Account
+                        {{_localizer.localize("AccountLabel")}}
                     </a>
                 </li>
                 <li *ngIf="_accGlobals.isLogged == true" [routerLinkActive]='["link-active"]' [routerLinkActiveOptions]='{ exact: true }'>
                     <a [routerLink]='["/admin/users"]' (click)='collapse()'>
-                        Users
+                        {{_localizer.localize("Users")}}
                     </a>
                 </li>
                 <li *ngIf="_accGlobals.isLogged == true" [routerLinkActive]='["link-active"]' [routerLinkActiveOptions]='{ exact: true }'>
                     <a [routerLink]='["/admin/anime"]' (click)='collapse()'>
-                        Anime
+                        {{_localizer.localize("Animes")}}
                     </a>
                 </li>
                 <li *ngIf="_accGlobals.isLogged == true && _accGlobals.role == 'Admin'" [routerLinkActive]='["link-active"]'>
                     <a [routerLink]='["/admin/book"]' (click)='collapse()'>
-                        Books
+                        {{_localizer.localize("Books")}}
                     </a>
                 </li>
             </ul>
