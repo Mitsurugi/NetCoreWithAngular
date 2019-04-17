@@ -47,9 +47,11 @@ import { CoreAccountService } from './account.service';
 import { AccountGlobals } from './AccountGlobals';
 import { LoginModel } from './loginModel';
 import { ChangePasswordModel } from './changePasswordModel';
+import { CoreLocalizerService } from '../Localization/coreLocalizer.service';
 var CoreAccountComponent = /** @class */ (function () {
-    function CoreAccountComponent(service, accGlobals) {
+    function CoreAccountComponent(service, localizer, accGlobals) {
         this._message = null;
+        this._localizer = localizer;
         this._service = service;
         this._accGlobals = accGlobals;
         this._loginModel = new LoginModel();
@@ -69,58 +71,57 @@ var CoreAccountComponent = /** @class */ (function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        this._message = null;
-                        _a.label = 1;
-                    case 1:
-                        _a.trys.push([1, 3, , 4]);
+                        _a.trys.push([0, 2, , 3]);
+                        this._message = this._localizer.localize("Loading");
                         return [4 /*yield*/, this._service.getTokenAsync(this._loginModel)];
-                    case 2:
+                    case 1:
                         _a.sent();
-                        return [3 /*break*/, 4];
-                    case 3:
+                        this._message = null;
+                        return [3 /*break*/, 3];
+                    case 2:
                         e_1 = _a.sent();
-                        this._message = e_1.error;
-                        return [3 /*break*/, 4];
-                    case 4: return [2 /*return*/];
+                        this._message = this._localizer.localizeWithValues("Error", e_1.error);
+                        return [3 /*break*/, 3];
+                    case 3: return [2 /*return*/];
                 }
             });
         });
     };
     CoreAccountComponent.prototype.deleteToken = function () {
         try {
+            this._message = this._localizer.localize("Loading");
             this._service.deleteToken();
+            this._message = null;
         }
         catch (e) {
-            this._message = e.error;
+            this._message = this._localizer.localizeWithValues("Error", e.error);
         }
     };
-    CoreAccountComponent.prototype.changePassword = function () {
+    CoreAccountComponent.prototype.changePasswordAsync = function () {
         return __awaiter(this, void 0, void 0, function () {
             var e_2;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        this._message = null;
-                        _a.label = 1;
-                    case 1:
-                        _a.trys.push([1, 3, , 4]);
+                        _a.trys.push([0, 2, , 3]);
+                        this._message = this._localizer.localize("Loading");
                         return [4 /*yield*/, this._service.changePasswordAsync(this._changePasswordModel)];
-                    case 2:
+                    case 1:
                         _a.sent();
-                        this._message = "Пароль успешно изменен.";
-                        return [3 /*break*/, 4];
-                    case 3:
+                        this._message = this._localizer.localize("PassChangeSuccess");
+                        return [3 /*break*/, 3];
+                    case 2:
                         e_2 = _a.sent();
-                        this._message = e_2.error;
-                        return [3 /*break*/, 4];
-                    case 4: return [2 /*return*/];
+                        this._message = this._localizer.localizeWithValues("Error", e_2.error);
+                        return [3 /*break*/, 3];
+                    case 3: return [2 /*return*/];
                 }
             });
         });
     };
     CoreAccountComponent = __decorate([
         Component({}),
-        __metadata("design:paramtypes", [CoreAccountService, AccountGlobals])
+        __metadata("design:paramtypes", [CoreAccountService, CoreLocalizerService, AccountGlobals])
     ], CoreAccountComponent);
     return CoreAccountComponent;
 }());

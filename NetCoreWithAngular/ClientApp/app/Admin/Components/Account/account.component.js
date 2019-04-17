@@ -28,9 +28,7 @@ import { LocalizerService } from '../../../Localizer/localizer.service';
 var AccountComponent = /** @class */ (function (_super) {
     __extends(AccountComponent, _super);
     function AccountComponent(service, localizer, accGlobals) {
-        var _this = _super.call(this, service, accGlobals) || this;
-        _this._localizer = localizer;
-        return _this;
+        return _super.call(this, service, localizer, accGlobals) || this;
     }
     AccountComponent = __decorate([
         Component({

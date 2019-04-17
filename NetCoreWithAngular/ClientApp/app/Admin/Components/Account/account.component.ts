@@ -13,11 +13,7 @@ import { LocalizerService } from '../../../Localizer/localizer.service';
 })
 export class AccountComponent extends CoreAccountComponent {
 
-    _localizer: LocalizerService;
-
     constructor(service: AccountService, localizer: LocalizerService, accGlobals: AccountGlobals) {
-        super(service, accGlobals);
-
-        this._localizer = localizer;
+        super(service, localizer, accGlobals);
     }
 }

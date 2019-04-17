@@ -65,6 +65,9 @@ export class CoreLocalizerService {
         this._strings["ru-RU"]["PassResetSuccess"] = "Пароль успешно изменен";
         this._strings["en-US"]["PassResetSuccess"] = "Password successfully changed";
 
+        this._strings["ru-RU"]["PassChangeSuccess"] = "Пароль успешно изменен";
+        this._strings["en-US"]["PassChangeSuccess"] = "Password successfully changed";
+
         this._strings["ru-RU"]["EditSuccess"] = "Изменения успешно сохранены";
         this._strings["en-US"]["EditSuccess"] = "Data successfully saved";
         
