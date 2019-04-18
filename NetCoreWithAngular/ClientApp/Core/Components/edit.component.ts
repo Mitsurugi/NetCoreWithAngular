@@ -83,7 +83,7 @@ export class EditComponent<TKey, TGrid extends IEntity<TKey>, TCreate extends IE
             var result = await this._service.saveCreateModelAsync(this._itemCreate);
             await this.getCreateModelAsync();
             this._message = null;
-            this._router.navigate([this._listUrl + '/edit/' + result.id]);            
+            this._router.navigate([this._listUrl + '/edit/' + result.id]);
         }
         catch (e) {
             this._message = this._localizer.localizeWithValues("Error", e.error);

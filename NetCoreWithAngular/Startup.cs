@@ -44,7 +44,7 @@ namespace NetCoreWithAngular
                 options.UseLazyLoadingProxies();
             });
 
-            services.AddIdentity<User, Role<System.Guid>>().AddEntityFrameworkStores<ExampleContext>().AddDefaultTokenProviders();
+            services.AddIdentity<User, IdentityRole<System.Guid>>().AddEntityFrameworkStores<ExampleContext>().AddDefaultTokenProviders();
 
             services.AddMvc();
             services.AddAutoMapper();

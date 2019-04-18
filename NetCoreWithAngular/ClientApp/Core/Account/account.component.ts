@@ -4,6 +4,7 @@ import { AccountGlobals } from './AccountGlobals';
 import { LoginModel } from './loginModel';
 import { ChangePasswordModel } from './changePasswordModel';
 import { CoreLocalizerService } from '../Localization/coreLocalizer.service';
+import { Router } from '@angular/router';
 
 @Component({
 })
@@ -14,13 +15,16 @@ export class CoreAccountComponent implements OnInit {
     _loginModel: LoginModel;
     _changePasswordModel: ChangePasswordModel;
     _localizer: CoreLocalizerService;
+    _router: Router;
+    _redirectUrl = "/admin";
     _message: string = null;
 
-    constructor(service: CoreAccountService, localizer: CoreLocalizerService, accGlobals: AccountGlobals)
+    constructor(service: CoreAccountService, localizer: CoreLocalizerService, accGlobals: AccountGlobals, router: Router)
     {
         this._localizer = localizer;
         this._service = service;
         this._accGlobals = accGlobals;
+        this._router = router;
         this._loginModel = new LoginModel();
         this._changePasswordModel = new ChangePasswordModel();
     }
@@ -34,6 +38,7 @@ export class CoreAccountComponent implements OnInit {
             this._message = this._localizer.localize("Loading");
             await this._service.getTokenAsync(this._loginModel);
             this._message = null;
+            this._router.navigate([this._redirectUrl]);
         }
         catch (e) {
             this._message = this._localizer.localizeWithValues("Error", e.error);

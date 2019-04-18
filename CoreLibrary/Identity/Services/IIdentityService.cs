@@ -31,8 +31,8 @@ namespace CoreLibrary.Identity
 
         //Roles
 
-        IQueryable<Role<TKey>> GetRoles();
-        Task CreateRoleAsync(Role<TKey> role);
+        IQueryable<IdentityRole<TKey>> GetRoles();
+        Task CreateRoleAsync(IdentityRole<TKey> role);
         Task<bool> RoleExistsAsync(string roleName);
         Task AddUserToRoleAsync(TKey userId, string roleName);
         Task RemoveUserFromRoleAsync(TKey userId, string roleName);

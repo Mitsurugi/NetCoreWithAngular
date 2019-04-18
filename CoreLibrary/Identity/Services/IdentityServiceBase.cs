@@ -16,7 +16,7 @@ namespace CoreLibrary.Identity
         where TIdentityUser : IdentityUser<TKey>, IUser<TKey>
     {
         protected readonly UserManager<TIdentityUser> _userManager;
-        protected readonly RoleManager<Role<TKey>> _roleManager;
+        protected readonly RoleManager<IdentityRole<TKey>> _roleManager;
         protected readonly SignInManager<TIdentityUser> _signInManager;
         protected readonly IStringLocalizer _localizer;
 
@@ -25,7 +25,7 @@ namespace CoreLibrary.Identity
         protected string _audience = "";
         protected TimeSpan _tokenLifeTime = new TimeSpan(24, 0, 0);
 
-        public IdentityServiceBase(UserManager<TIdentityUser> userManager, RoleManager<Role<TKey>> roleManager, SignInManager<TIdentityUser> signInManager, IStringLocalizer localizer)
+        public IdentityServiceBase(UserManager<TIdentityUser> userManager, RoleManager<IdentityRole<TKey>> roleManager, SignInManager<TIdentityUser> signInManager, IStringLocalizer localizer)
         {
             _userManager = userManager;
             _roleManager = roleManager;
@@ -200,12 +200,12 @@ namespace CoreLibrary.Identity
 
         //Roles
 
-        public virtual IQueryable<Role<TKey>> GetRoles()
+        public virtual IQueryable<IdentityRole<TKey>> GetRoles()
         {
             return _roleManager.Roles;
         }
 
-        public virtual async Task CreateRoleAsync(Role<TKey> role)
+        public virtual async Task CreateRoleAsync(IdentityRole<TKey> role)
         {
             var identityResult = await _roleManager.CreateAsync(role);
 

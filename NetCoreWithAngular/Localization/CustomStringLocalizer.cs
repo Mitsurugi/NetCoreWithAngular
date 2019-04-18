@@ -13,6 +13,9 @@ namespace NetCoreWithAngular.Localization
             var ruRUDict = _strings["ru-RU"];
             var enUSDict = _strings["en-US"];
 
+            enUSDict.Add("Role.Admin", "Administrator");
+            ruRUDict.Add("Role.Admin", "Администратор");
+
             enUSDict.Add("BookTitle", "Title");
             ruRUDict.Add("BookTitle", "Название");
             enUSDict.Add("BookAuthor", "Author");

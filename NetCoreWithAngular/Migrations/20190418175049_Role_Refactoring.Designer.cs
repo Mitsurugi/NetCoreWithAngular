@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NetCoreWithAngular.DataAccess;
 
 namespace NetCoreWithAngular.Migrations
 {
     [DbContext(typeof(ExampleContext))]
-    partial class ExampleContextModelSnapshot : ModelSnapshot
+    [Migration("20190418175049_Role_Refactoring")]
+    partial class Role_Refactoring
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -232,6 +234,8 @@ namespace NetCoreWithAngular.Migrations
                     b.Property<bool>("PhoneNumberConfirmed");
 
                     b.Property<string>("Role");
+
+                    b.Property<string>("RoleDisplayName");
 
                     b.Property<string>("SecurityStamp");
 

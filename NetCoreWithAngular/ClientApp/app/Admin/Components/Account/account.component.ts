@@ -4,6 +4,7 @@ import { CoreAccountComponent } from '../../../../Core/Account/account.component
 import { AccountService } from '../../Services/account.service';
 import { AccountGlobals } from '../../../../Core/Account/AccountGlobals';
 import { LocalizerService } from '../../../Localizer/localizer.service';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'account',
@@ -13,7 +14,7 @@ import { LocalizerService } from '../../../Localizer/localizer.service';
 })
 export class AccountComponent extends CoreAccountComponent {
 
-    constructor(service: AccountService, localizer: LocalizerService, accGlobals: AccountGlobals) {
-        super(service, localizer, accGlobals);
+    constructor(service: AccountService, localizer: LocalizerService, accGlobals: AccountGlobals, router: Router) {
+        super(service, localizer, accGlobals, router);
     }
 }

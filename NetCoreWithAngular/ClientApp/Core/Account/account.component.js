@@ -48,12 +48,15 @@ import { AccountGlobals } from './AccountGlobals';
 import { LoginModel } from './loginModel';
 import { ChangePasswordModel } from './changePasswordModel';
 import { CoreLocalizerService } from '../Localization/coreLocalizer.service';
+import { Router } from '@angular/router';
 var CoreAccountComponent = /** @class */ (function () {
-    function CoreAccountComponent(service, localizer, accGlobals) {
+    function CoreAccountComponent(service, localizer, accGlobals, router) {
+        this._redirectUrl = "/admin";
         this._message = null;
         this._localizer = localizer;
         this._service = service;
         this._accGlobals = accGlobals;
+        this._router = router;
         this._loginModel = new LoginModel();
         this._changePasswordModel = new ChangePasswordModel();
     }
@@ -77,6 +80,7 @@ var CoreAccountComponent = /** @class */ (function () {
                     case 1:
                         _a.sent();
                         this._message = null;
+                        this._router.navigate([this._redirectUrl]);
                         return [3 /*break*/, 3];
                     case 2:
                         e_1 = _a.sent();
@@ -121,7 +125,7 @@ var CoreAccountComponent = /** @class */ (function () {
     };
     CoreAccountComponent = __decorate([
         Component({}),
-        __metadata("design:paramtypes", [CoreAccountService, CoreLocalizerService, AccountGlobals])
+        __metadata("design:paramtypes", [CoreAccountService, CoreLocalizerService, AccountGlobals, Router])
     ], CoreAccountComponent);
     return CoreAccountComponent;
 }());

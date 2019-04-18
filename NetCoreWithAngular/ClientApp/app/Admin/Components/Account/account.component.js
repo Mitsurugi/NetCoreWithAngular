@@ -25,10 +25,11 @@ import { CoreAccountComponent } from '../../../../Core/Account/account.component
 import { AccountService } from '../../Services/account.service';
 import { AccountGlobals } from '../../../../Core/Account/AccountGlobals';
 import { LocalizerService } from '../../../Localizer/localizer.service';
+import { Router } from '@angular/router';
 var AccountComponent = /** @class */ (function (_super) {
     __extends(AccountComponent, _super);
-    function AccountComponent(service, localizer, accGlobals) {
-        return _super.call(this, service, localizer, accGlobals) || this;
+    function AccountComponent(service, localizer, accGlobals, router) {
+        return _super.call(this, service, localizer, accGlobals, router) || this;
     }
     AccountComponent = __decorate([
         Component({
@@ -37,7 +38,7 @@ var AccountComponent = /** @class */ (function (_super) {
             styleUrls: ['./account.component.css'],
             providers: [AccountService]
         }),
-        __metadata("design:paramtypes", [AccountService, LocalizerService, AccountGlobals])
+        __metadata("design:paramtypes", [AccountService, LocalizerService, AccountGlobals, Router])
     ], AccountComponent);
     return AccountComponent;
 }(CoreAccountComponent));

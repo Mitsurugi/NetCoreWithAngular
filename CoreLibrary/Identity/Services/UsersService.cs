@@ -79,11 +79,11 @@ namespace CoreLibrary.Identity
             createView = _mapper.Map<TEntity, TCreate>(create);
 
             var list = new List<SelectListItem>();
-            list.AddRange( await _identityService.GetRoles().Select(i => new SelectListItem { Text = i.DisplayName, Value = i.Name, Selected = i.Name == createView.Role }).ToListAsync() );
+            list.AddRange(await _identityService.GetRoles().Select(i => new SelectListItem { Text = _localizer[$"Role.{i.Name}"], Value = i.Name, Selected = i.Name == createView.Role }).ToListAsync());
             createView.RoleList = list;
 
             var roleEntity = _identityService.GetRoles().FirstOrDefault(i => i.Name == createView.Role);
-            if (roleEntity != null) createView.RoleDisplayName = roleEntity.DisplayName;
+            if (roleEntity != null) createView.RoleDisplayName = _localizer[$"Role.{roleEntity.Name}"];
 
             createView = await FillCreateModelAsync(createView);
 
@@ -95,7 +95,7 @@ namespace CoreLibrary.Identity
             var model = new TCreate();
 
             var list = new List<SelectListItem>();
-            list.AddRange( await _identityService.GetRoles().Select(i => new SelectListItem { Text = i.DisplayName, Value = i.Name }).ToListAsync() );
+            list.AddRange( await _identityService.GetRoles().Select(i => new SelectListItem { Text = _localizer[$"Role.{i.Name}"], Value = i.Name }).ToListAsync() );
             model.RoleList = list;
 
             model = await FillCreateModelAsync(model);
@@ -130,11 +130,11 @@ namespace CoreLibrary.Identity
             editView = _mapper.Map<TEntity, TEdit>(entity);
 
             var list = new List<SelectListItem>();
-            list.AddRange( await _identityService.GetRoles().Select(i => new SelectListItem { Text = i.DisplayName, Value = i.Name, Selected = i.Name == editView.Role }).ToListAsync() );
+            list.AddRange( await _identityService.GetRoles().Select(i => new SelectListItem { Text = _localizer[$"Role.{i.Name}"], Value = i.Name, Selected = i.Name == editView.Role }).ToListAsync() );
             editView.RoleList = list;
 
             var roleEntity = await _identityService.GetRoles().FirstOrDefaultAsync(i => i.Name == editView.Role);
-            if (roleEntity != null) editView.RoleDisplayName = roleEntity.DisplayName;
+            if (roleEntity != null) editView.RoleDisplayName = _localizer[$"Role.{roleEntity.Name}"];
 
             editView = await FillEditModelAsync(editView);
 
@@ -148,11 +148,11 @@ namespace CoreLibrary.Identity
             var edit = _mapper.Map<TEntity, TEdit>(entity);
 
             var list = new List<SelectListItem>();
-            list.AddRange( await _identityService.GetRoles().Select(i => new SelectListItem { Text = i.Name, Value = i.Name }).ToListAsync() );
+            list.AddRange( await _identityService.GetRoles().Select(i => new SelectListItem { Text = _localizer[$"Role.{i.Name}"], Value = i.Name }).ToListAsync() );
             edit.RoleList = list;
 
             var roleEntity = await _identityService.GetRoles().FirstOrDefaultAsync(i => i.Name == edit.Role);
-            if (roleEntity != null) edit.RoleDisplayName = roleEntity.DisplayName;
+            if (roleEntity != null) edit.RoleDisplayName = _localizer[$"Role.{roleEntity.Name}"];
 
             edit = await FillEditModelAsync(edit);
 
@@ -189,7 +189,7 @@ namespace CoreLibrary.Identity
             var roles = await _identityService.GetRoles().ToListAsync();
             grid.AsParallel().ForAll(x => {
                 var roleEntity = roles.FirstOrDefault(i => i.Name == x.Role);
-                if (roleEntity != null) x.RoleDisplayName = roleEntity.DisplayName;
+                if (roleEntity != null) x.RoleDisplayName = _localizer[$"Role.{roleEntity.Name}"];
             });
 
             grid = await FillGridModelAsync(grid);
@@ -227,7 +227,7 @@ namespace CoreLibrary.Identity
             var roles = await _identityService.GetRoles().ToListAsync();
             grid.AsParallel().ForAll(x => {
                 var roleEntity = roles.FirstOrDefault(r => r.Name == x.Role);
-                if (roleEntity != null) x.RoleDisplayName = roleEntity.DisplayName;
+                if (roleEntity != null) x.RoleDisplayName = _localizer[$"Role.{roleEntity.Name}"];
             });
 
             grid = await FillGridModelAsync(grid);
