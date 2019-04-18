@@ -44,6 +44,12 @@ export class CoreLocalizerService {
         this._strings["ru-RU"] = {};
         this._strings["en-US"] = {};
 
+        this._strings["ru-RU"]["Yes"] = "Да";
+        this._strings["en-US"]["Yes"] = "Yes";
+
+        this._strings["ru-RU"]["No"] = "Нет";
+        this._strings["en-US"]["No"] = "No";
+
         this._strings["ru-RU"]["Loading"] = "Загрузка...";
         this._strings["en-US"]["Loading"] = "Loading...";
 
