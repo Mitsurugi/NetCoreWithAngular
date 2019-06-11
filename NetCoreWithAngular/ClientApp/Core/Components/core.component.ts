@@ -3,6 +3,7 @@ import { CoreService } from '../Services/core.service';
 import { IEntity } from '../Models/IEntity'
 import { saveAs } from 'file-saver';
 import { CoreLocalizerService } from '../Localization/coreLocalizer.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
 })
@@ -10,6 +11,7 @@ export class CoreComponent<TKey, TGrid extends IEntity<TKey>, TCreate extends IE
 
     _service: CoreService<TKey, TGrid, TCreate, TEdit, TFilter>;
     _localizer: CoreLocalizerService;
+    _snackBar: MatSnackBar;
 
     _items: TGrid[];
     _itemEdit: TEdit;
@@ -18,7 +20,6 @@ export class CoreComponent<TKey, TGrid extends IEntity<TKey>, TCreate extends IE
     _currentPage: number = 1;
     _pageSize: number = 20;
     _totalPages: number = 1;
-    _message: string = null;
     _isShowCreate = false;
     _showEditId?: TKey = null;
     _checkedItems: TKey[] = [];
@@ -32,9 +33,10 @@ export class CoreComponent<TKey, TGrid extends IEntity<TKey>, TCreate extends IE
     typeEdit: (new () => TEdit);
     typeFilter: (new () => TFilter);
 
-    constructor(service: CoreService<TKey, TGrid, TCreate, TEdit, TFilter>, localizer: CoreLocalizerService, typeGrid: (new () => TGrid), typeCreate: (new () => TCreate), typeEdit: (new () => TEdit), typeFilter: (new () => TFilter)) {
+    constructor(service: CoreService<TKey, TGrid, TCreate, TEdit, TFilter>, localizer: CoreLocalizerService, snackBar: MatSnackBar, typeGrid: (new () => TGrid), typeCreate: (new () => TCreate), typeEdit: (new () => TEdit), typeFilter: (new () => TFilter)) {
         this._service = service;
         this._localizer = localizer;
+        this._snackBar = snackBar;
 
         this._items = new Array<TGrid>();
         this._itemEdit = new typeEdit();
@@ -49,62 +51,62 @@ export class CoreComponent<TKey, TGrid extends IEntity<TKey>, TCreate extends IE
 
     protected async getCreateModelAsync() {        
         try {
-            this._message = this._localizer.localize("Loading");
+            var popup = this._snackBar.open(this._localizer.localize("Loading"));
             this._itemCreate = await this._service.getCreateModelAsync();
-            this._message = null;
+            popup.dismiss();
         }
         catch (e) {
-            this._message = this._localizer.localizeWithValues("Error", e.error);
+            var popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e.error));
         }
     }
 
     protected async getEditModelAsync(id: TKey) {        
         try {
-            this._message = this._localizer.localize("Loading");
+            var popup = this._snackBar.open(this._localizer.localize("Loading"));
             this._itemEdit = await this._service.getEditModelAsync(id);
-            this._message = null;
+            popup.dismiss();
         }
         catch (e) {
-            this._message = this._localizer.localizeWithValues("Error", e.error);
+            var popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e.error));
         }
     }
 
     public async ngOnInit() {
         try {
-            this._message = this._localizer.localize("Loading");
+            var popup = this._snackBar.open(this._localizer.localize("Loading"));
             this._filter = await this._service.getFilterModelAsync();
             await this.reloadGridAsync();
-            this._message = null;
+            popup.dismiss();
         }
         catch (e) {
-            this._message = this._localizer.localizeWithValues("Error", e.error);
+            var popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e.error));
         }
     }
 
     public async reloadGridAsync() {        
         try {
-            this._message = this._localizer.localize("Loading");
+            var popup = this._snackBar.open(this._localizer.localize("Loading"));
             this._showEditId = null;
             this._totalPages = await this._service.getPagesCountAsync(this._pageSize, this._filter);
             this._items = await this._service.getGridAsync(this._currentPage, this._pageSize, this._orderBy, this._filter);
             await this.getCreateModelAsync();
-            this._message = null;
+            popup.dismiss();
         }
         catch (e) {
-            this._message = this._localizer.localizeWithValues("Error", e.error);
+            var popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e.error));
         }
     }
 
     public async clearFilterAsync() {
         this._filter = new this.typeFilter();        
         try {
-            this._message = this._localizer.localize("Loading");
+            var popup = this._snackBar.open(this._localizer.localize("Loading"));
             this._filter = await this._service.getFilterModelAsync();
             await this.reloadGridAsync();
-            this._message = null;
+            popup.dismiss();
         }
         catch (e) {
-            this._message = this._localizer.localizeWithValues("Error", e.error);
+            var popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e.error));
         }
     }
 
@@ -112,12 +114,12 @@ export class CoreComponent<TKey, TGrid extends IEntity<TKey>, TCreate extends IE
         if (this._currentPage < this._totalPages) {
             this._currentPage++;
             try {
-                this._message = this._localizer.localize("Loading");
+                var popup = this._snackBar.open(this._localizer.localize("Loading"));
                 await this.reloadGridAsync();
-                this._message = null;
+                popup.dismiss();
             }
             catch (e) {
-                this._message = this._localizer.localizeWithValues("Error", e.error);
+                var popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e.error));
             }
         }
     }
@@ -126,12 +128,12 @@ export class CoreComponent<TKey, TGrid extends IEntity<TKey>, TCreate extends IE
         if (this._currentPage > 1) {
             this._currentPage--;
             try {
-                this._message = this._localizer.localize("Loading");
+                var popup = this._snackBar.open(this._localizer.localize("Loading"));
                 await this.reloadGridAsync();
-                this._message = null;
+                popup.dismiss();
             }
             catch (e) {
-                this._message = this._localizer.localizeWithValues("Error", e.error);
+                var popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e.error));
             }
         }
     }
@@ -142,14 +144,14 @@ export class CoreComponent<TKey, TGrid extends IEntity<TKey>, TCreate extends IE
         }
         else {
             try {
-                this._message = this._localizer.localize("Loading");
+                var popup = this._snackBar.open(this._localizer.localize("Loading"));
                 await this.getCreateModelAsync();
                 this._isShowCreate = true;
                 this._isShowImport = false;
-                this._message = null;
+                popup.dismiss();
             }
             catch (e) {
-                this._message = this._localizer.localizeWithValues("Error", e.error);
+                var popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e.error));
             }
         }
     }
@@ -164,7 +166,7 @@ export class CoreComponent<TKey, TGrid extends IEntity<TKey>, TCreate extends IE
                 this._isShowCreate = false;
             }
             catch (e) {
-                this._message = this._localizer.localizeWithValues("Error", e.error);
+                var popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e.error));
             }
         }
     }
@@ -175,88 +177,88 @@ export class CoreComponent<TKey, TGrid extends IEntity<TKey>, TCreate extends IE
         }
         else {
             try {
-                this._message = this._localizer.localize("Loading");
+                var popup = this._snackBar.open(this._localizer.localize("Loading"));
                 await this.getEditModelAsync(id);
                 this._showEditId = id;
-                this._message = null;
+                popup.dismiss();
             }
             catch (e) {
-                this._message = this._localizer.localizeWithValues("Error", e.error);
+                var popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e.error));
             }
         }
     }    
 
     public async deleteAsync(id: TKey) {
         try {
-            this._message = this._localizer.localize("Loading");
+            var popup = this._snackBar.open(this._localizer.localize("Loading"));
             await this._service.deleteAsync(id);
             await this.reloadGridAsync();
-            this._message = null;
+            popup.dismiss();
         }
         catch (e) {
-            this._message = this._localizer.localizeWithValues("Error", e.error);
+            var popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e.error));
         }
     }
 
     public async deleteCheckedAsync() {
         try {
-            this._message = this._localizer.localize("Loading");
+            var popup = this._snackBar.open(this._localizer.localize("Loading"));
             await this._service.deleteManyAsync(this._checkedItems);
             await this.reloadGridAsync();
-            this._message = null;
+            popup.dismiss();
         }
         catch (e) {
-            this._message = this._localizer.localizeWithValues("Error", e.error);
+            var popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e.error));
         }
     }
 
     public async saveCreateModelAsync() {
         try {
-            this._message = this._localizer.localize("Loading");
+            var popup = this._snackBar.open(this._localizer.localize("Loading"));
             await this._service.saveCreateModelAsync(this._itemCreate);
             this._isShowCreate = false;
             await this.getCreateModelAsync();
             await this.reloadGridAsync();
-            this._message = null;
+            popup.dismiss();
         }
         catch (e) {
-            this._message = this._localizer.localizeWithValues("Error", e.error);
+            var popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e.error));
         }
     }
 
     public async saveEditModelAsync() {     
         try {
-            this._message = this._localizer.localize("Loading");
+            var popup = this._snackBar.open(this._localizer.localize("Loading"));
             this._itemEdit = await this._service.saveEditModelAsync(this._itemEdit);
             await this.reloadGridAsync();
-            this._message = null;
+            popup.dismiss();
         }
         catch (e) {
-            this._message = this._localizer.localizeWithValues("Error", e.error);
+            var popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e.error));
         }
     }
 
     public async getExcelExportAsync() {
         try {
-            this._message = this._localizer.localize("Loading");
+            var popup = this._snackBar.open(this._localizer.localize("Loading"));
             let b = await this._service.getExcelExportAsync(this._orderBy, this._filter);
-            this._message = null;
+            popup.dismiss();
             saveAs(b, "ExcelExport.xlsx");
         }
         catch (e) {
-            this._message = this._localizer.localizeWithValues("Error", e.error);
+            var popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e.error));
         }
     }
 
     public async getImportTemplateAsync() {                    
         try {
-            this._message = this._localizer.localize("Loading");
+            var popup = this._snackBar.open(this._localizer.localize("Loading"));
             let b = await this._service.getImportTemplateAsync();
-            this._message = null;
+            popup.dismiss();
             saveAs(b, "ImportTemplate.xlsx");
         }
         catch (e) {
-            this._message = this._localizer.localizeWithValues("Error", e.error);
+            var popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e.error));
         }
     }
 

@@ -5,6 +5,7 @@ import { AccountService } from '../../Services/account.service';
 import { AccountGlobals } from '../../../../Core/Account/AccountGlobals';
 import { LocalizerService } from '../../../Localizer/localizer.service';
 import { Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
     selector: 'account',
@@ -14,7 +15,7 @@ import { Router } from '@angular/router';
 })
 export class AccountComponent extends CoreAccountComponent {
 
-    constructor(service: AccountService, localizer: LocalizerService, accGlobals: AccountGlobals, router: Router) {
-        super(service, localizer, accGlobals, router);
+    constructor(service: AccountService, localizer: LocalizerService, accGlobals: AccountGlobals, router: Router, snackBar: MatSnackBar) {
+        super(service, localizer, accGlobals, router, snackBar);
     }
 }

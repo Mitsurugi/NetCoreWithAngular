@@ -27,10 +27,11 @@ import { AnimeEpisode } from '../../Models/AnimeEpisode/animeEpisode';
 import { ActivatedRoute } from "@angular/router";
 import { Anime } from '../../Models/Anime/anime';
 import { LocalizerService } from '../../../Localizer/localizer.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 var AnimeEpisodeComponent = /** @class */ (function (_super) {
     __extends(AnimeEpisodeComponent, _super);
-    function AnimeEpisodeComponent(service, localizer, route) {
-        return _super.call(this, service, localizer, AnimeEpisode, AnimeEpisode, AnimeEpisode, AnimeEpisode, Anime, route) || this;
+    function AnimeEpisodeComponent(service, localizer, route, snackBar) {
+        return _super.call(this, service, localizer, snackBar, AnimeEpisode, AnimeEpisode, AnimeEpisode, AnimeEpisode, Anime, route) || this;
     }
     AnimeEpisodeComponent = __decorate([
         Component({
@@ -39,7 +40,7 @@ var AnimeEpisodeComponent = /** @class */ (function (_super) {
             styleUrls: ['./animeEpisode.component.css'],
             providers: [AnimeEpisodeService]
         }),
-        __metadata("design:paramtypes", [AnimeEpisodeService, LocalizerService, ActivatedRoute])
+        __metadata("design:paramtypes", [AnimeEpisodeService, LocalizerService, ActivatedRoute, MatSnackBar])
     ], AnimeEpisodeComponent);
     return AnimeEpisodeComponent;
 }(DependentComponent));

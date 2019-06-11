@@ -47,13 +47,13 @@ import { DependentService } from '../Services/dependent.service';
 import { ActivatedRoute } from "@angular/router";
 import { saveAs } from 'file-saver';
 import { CoreLocalizerService } from '../Localization/coreLocalizer.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 var DependentComponent = /** @class */ (function () {
-    function DependentComponent(service, localizer, typeGrid, typeCreate, typeEdit, typeFilter, typeParent, route) {
+    function DependentComponent(service, localizer, snackBar, typeGrid, typeCreate, typeEdit, typeFilter, typeParent, route) {
         var _this = this;
         this._currentPage = 1;
         this._pageSize = 20;
         this._totalPages = 1;
-        this._message = null;
         this._isShowCreate = false;
         this._showEditId = null;
         this._checkedItems = [];
@@ -62,6 +62,7 @@ var DependentComponent = /** @class */ (function () {
         this._orderBy = 'Id_desc';
         this._service = service;
         this._localizer = localizer;
+        this._snackBar = snackBar;
         this._items = new Array();
         this._itemEdit = new typeEdit();
         this._itemCreate = new typeCreate();
@@ -78,21 +79,21 @@ var DependentComponent = /** @class */ (function () {
     }
     DependentComponent.prototype.getCreateModelAsync = function () {
         return __awaiter(this, void 0, void 0, function () {
-            var _a, e_1;
+            var popup, _a, e_1, popup;
             return __generator(this, function (_b) {
                 switch (_b.label) {
                     case 0:
                         _b.trys.push([0, 2, , 3]);
-                        this._message = this._localizer.localize("Loading");
+                        popup = this._snackBar.open(this._localizer.localize("Loading"));
                         _a = this;
                         return [4 /*yield*/, this._service.getCreateModelAsync(this._parentId)];
                     case 1:
                         _a._itemCreate = _b.sent();
-                        this._message = null;
+                        popup.dismiss();
                         return [3 /*break*/, 3];
                     case 2:
                         e_1 = _b.sent();
-                        this._message = this._localizer.localizeWithValues("Error", e_1.error);
+                        popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e_1.error));
                         return [3 /*break*/, 3];
                     case 3: return [2 /*return*/];
                 }
@@ -101,21 +102,21 @@ var DependentComponent = /** @class */ (function () {
     };
     DependentComponent.prototype.getEditModelAsync = function (id) {
         return __awaiter(this, void 0, void 0, function () {
-            var _a, e_2;
+            var popup, _a, e_2, popup;
             return __generator(this, function (_b) {
                 switch (_b.label) {
                     case 0:
                         _b.trys.push([0, 2, , 3]);
-                        this._message = this._localizer.localize("Loading");
+                        popup = this._snackBar.open(this._localizer.localize("Loading"));
                         _a = this;
                         return [4 /*yield*/, this._service.getEditModelAsync(id)];
                     case 1:
                         _a._itemEdit = _b.sent();
-                        this._message = null;
+                        popup.dismiss();
                         return [3 /*break*/, 3];
                     case 2:
                         e_2 = _b.sent();
-                        this._message = this._localizer.localizeWithValues("Error", e_2.error);
+                        popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e_2.error));
                         return [3 /*break*/, 3];
                     case 3: return [2 /*return*/];
                 }
@@ -124,12 +125,12 @@ var DependentComponent = /** @class */ (function () {
     };
     DependentComponent.prototype.ngOnInit = function () {
         return __awaiter(this, void 0, void 0, function () {
-            var _a, _b, e_3;
+            var popup, _a, _b, e_3, popup;
             return __generator(this, function (_c) {
                 switch (_c.label) {
                     case 0:
                         _c.trys.push([0, 4, , 5]);
-                        this._message = this._localizer.localize("Loading");
+                        popup = this._snackBar.open(this._localizer.localize("Loading"));
                         _a = this;
                         return [4 /*yield*/, this._service.getFilterModelAsync()];
                     case 1:
@@ -141,11 +142,11 @@ var DependentComponent = /** @class */ (function () {
                         return [4 /*yield*/, this.reloadGridAsync()];
                     case 3:
                         _c.sent();
-                        this._message = null;
+                        popup.dismiss();
                         return [3 /*break*/, 5];
                     case 4:
                         e_3 = _c.sent();
-                        this._message = this._localizer.localizeWithValues("Error", e_3.error);
+                        popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e_3.error));
                         return [3 /*break*/, 5];
                     case 5: return [2 /*return*/];
                 }
@@ -154,12 +155,12 @@ var DependentComponent = /** @class */ (function () {
     };
     DependentComponent.prototype.reloadGridAsync = function () {
         return __awaiter(this, void 0, void 0, function () {
-            var _a, _b, e_4;
+            var popup, _a, _b, e_4, popup;
             return __generator(this, function (_c) {
                 switch (_c.label) {
                     case 0:
                         _c.trys.push([0, 4, , 5]);
-                        this._message = this._localizer.localize("Loading");
+                        popup = this._snackBar.open(this._localizer.localize("Loading"));
                         this._showEditId = null;
                         _a = this;
                         return [4 /*yield*/, this._service.getPagesCountAsync(this._pageSize, this._parentId, this._filter)];
@@ -172,11 +173,11 @@ var DependentComponent = /** @class */ (function () {
                         return [4 /*yield*/, this.getCreateModelAsync()];
                     case 3:
                         _c.sent();
-                        this._message = null;
+                        popup.dismiss();
                         return [3 /*break*/, 5];
                     case 4:
                         e_4 = _c.sent();
-                        this._message = this._localizer.localizeWithValues("Error", e_4.error);
+                        popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e_4.error));
                         return [3 /*break*/, 5];
                     case 5: return [2 /*return*/];
                 }
@@ -185,7 +186,7 @@ var DependentComponent = /** @class */ (function () {
     };
     DependentComponent.prototype.clearFilterAsync = function () {
         return __awaiter(this, void 0, void 0, function () {
-            var _a, e_5;
+            var popup, _a, e_5, popup;
             return __generator(this, function (_b) {
                 switch (_b.label) {
                     case 0:
@@ -193,7 +194,7 @@ var DependentComponent = /** @class */ (function () {
                         _b.label = 1;
                     case 1:
                         _b.trys.push([1, 4, , 5]);
-                        this._message = this._localizer.localize("Loading");
+                        popup = this._snackBar.open(this._localizer.localize("Loading"));
                         _a = this;
                         return [4 /*yield*/, this._service.getFilterModelAsync()];
                     case 2:
@@ -201,11 +202,11 @@ var DependentComponent = /** @class */ (function () {
                         return [4 /*yield*/, this.reloadGridAsync()];
                     case 3:
                         _b.sent();
-                        this._message = null;
+                        popup.dismiss();
                         return [3 /*break*/, 5];
                     case 4:
                         e_5 = _b.sent();
-                        this._message = this._localizer.localizeWithValues("Error", e_5.error);
+                        popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e_5.error));
                         return [3 /*break*/, 5];
                     case 5: return [2 /*return*/];
                 }
@@ -214,7 +215,7 @@ var DependentComponent = /** @class */ (function () {
     };
     DependentComponent.prototype.nextPageAsync = function () {
         return __awaiter(this, void 0, void 0, function () {
-            var e_6;
+            var popup, e_6, popup;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -223,15 +224,15 @@ var DependentComponent = /** @class */ (function () {
                         _a.label = 1;
                     case 1:
                         _a.trys.push([1, 3, , 4]);
-                        this._message = this._localizer.localize("Loading");
+                        popup = this._snackBar.open(this._localizer.localize("Loading"));
                         return [4 /*yield*/, this.reloadGridAsync()];
                     case 2:
                         _a.sent();
-                        this._message = null;
+                        popup.dismiss();
                         return [3 /*break*/, 4];
                     case 3:
                         e_6 = _a.sent();
-                        this._message = this._localizer.localizeWithValues("Error", e_6.error);
+                        popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e_6.error));
                         return [3 /*break*/, 4];
                     case 4: return [2 /*return*/];
                 }
@@ -240,7 +241,7 @@ var DependentComponent = /** @class */ (function () {
     };
     DependentComponent.prototype.prevPageAsync = function () {
         return __awaiter(this, void 0, void 0, function () {
-            var e_7;
+            var popup, e_7, popup;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -249,15 +250,15 @@ var DependentComponent = /** @class */ (function () {
                         _a.label = 1;
                     case 1:
                         _a.trys.push([1, 3, , 4]);
-                        this._message = this._localizer.localize("Loading");
+                        popup = this._snackBar.open(this._localizer.localize("Loading"));
                         return [4 /*yield*/, this.reloadGridAsync()];
                     case 2:
                         _a.sent();
-                        this._message = null;
+                        popup.dismiss();
                         return [3 /*break*/, 4];
                     case 3:
                         e_7 = _a.sent();
-                        this._message = this._localizer.localizeWithValues("Error", e_7.error);
+                        popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e_7.error));
                         return [3 /*break*/, 4];
                     case 4: return [2 /*return*/];
                 }
@@ -266,7 +267,7 @@ var DependentComponent = /** @class */ (function () {
     };
     DependentComponent.prototype.toggleCreateAsync = function () {
         return __awaiter(this, void 0, void 0, function () {
-            var e_8;
+            var popup, e_8, popup;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -275,17 +276,17 @@ var DependentComponent = /** @class */ (function () {
                         return [3 /*break*/, 4];
                     case 1:
                         _a.trys.push([1, 3, , 4]);
-                        this._message = this._localizer.localize("Loading");
+                        popup = this._snackBar.open(this._localizer.localize("Loading"));
                         return [4 /*yield*/, this.getCreateModelAsync()];
                     case 2:
                         _a.sent();
                         this._isShowCreate = true;
                         this._isShowImport = false;
-                        this._message = null;
+                        popup.dismiss();
                         return [3 /*break*/, 4];
                     case 3:
                         e_8 = _a.sent();
-                        this._message = this._localizer.localizeWithValues("Error", e_8.error);
+                        popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e_8.error));
                         return [3 /*break*/, 4];
                     case 4: return [2 /*return*/];
                 }
@@ -302,13 +303,13 @@ var DependentComponent = /** @class */ (function () {
                 this._isShowCreate = false;
             }
             catch (e) {
-                this._message = this._localizer.localizeWithValues("Error", e.error);
+                var popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e.error));
             }
         }
     };
     DependentComponent.prototype.toggleEditAsync = function (id) {
         return __awaiter(this, void 0, void 0, function () {
-            var e_9;
+            var popup, e_9, popup;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -317,16 +318,16 @@ var DependentComponent = /** @class */ (function () {
                         return [3 /*break*/, 4];
                     case 1:
                         _a.trys.push([1, 3, , 4]);
-                        this._message = this._localizer.localize("Loading");
+                        popup = this._snackBar.open(this._localizer.localize("Loading"));
                         return [4 /*yield*/, this.getEditModelAsync(id)];
                     case 2:
                         _a.sent();
                         this._showEditId = id;
-                        this._message = null;
+                        popup.dismiss();
                         return [3 /*break*/, 4];
                     case 3:
                         e_9 = _a.sent();
-                        this._message = this._localizer.localizeWithValues("Error", e_9.error);
+                        popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e_9.error));
                         return [3 /*break*/, 4];
                     case 4: return [2 /*return*/];
                 }
@@ -335,26 +336,26 @@ var DependentComponent = /** @class */ (function () {
     };
     DependentComponent.prototype.deleteAsync = function (id) {
         return __awaiter(this, void 0, void 0, function () {
-            var e_10;
+            var popup, e_10, popup;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        this._message = null;
+                        popup.dismiss();
                         _a.label = 1;
                     case 1:
                         _a.trys.push([1, 4, , 5]);
-                        this._message = this._localizer.localize("Loading");
+                        popup = this._snackBar.open(this._localizer.localize("Loading"));
                         return [4 /*yield*/, this._service.deleteAsync(id)];
                     case 2:
                         _a.sent();
                         return [4 /*yield*/, this.reloadGridAsync()];
                     case 3:
                         _a.sent();
-                        this._message = null;
+                        popup.dismiss();
                         return [3 /*break*/, 5];
                     case 4:
                         e_10 = _a.sent();
-                        this._message = this._localizer.localizeWithValues("Error", e_10.error);
+                        popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e_10.error));
                         return [3 /*break*/, 5];
                     case 5: return [2 /*return*/];
                 }
@@ -363,26 +364,26 @@ var DependentComponent = /** @class */ (function () {
     };
     DependentComponent.prototype.deleteCheckedAsync = function () {
         return __awaiter(this, void 0, void 0, function () {
-            var e_11;
+            var popup, e_11, popup;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        this._message = null;
+                        popup.dismiss();
                         _a.label = 1;
                     case 1:
                         _a.trys.push([1, 4, , 5]);
-                        this._message = this._localizer.localize("Loading");
+                        popup = this._snackBar.open(this._localizer.localize("Loading"));
                         return [4 /*yield*/, this._service.deleteManyAsync(this._checkedItems)];
                     case 2:
                         _a.sent();
                         return [4 /*yield*/, this.reloadGridAsync()];
                     case 3:
                         _a.sent();
-                        this._message = null;
+                        popup.dismiss();
                         return [3 /*break*/, 5];
                     case 4:
                         e_11 = _a.sent();
-                        this._message = this._localizer.localizeWithValues("Error", e_11.error);
+                        popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e_11.error));
                         return [3 /*break*/, 5];
                     case 5: return [2 /*return*/];
                 }
@@ -391,12 +392,12 @@ var DependentComponent = /** @class */ (function () {
     };
     DependentComponent.prototype.saveCreateModelAsync = function () {
         return __awaiter(this, void 0, void 0, function () {
-            var e_12;
+            var popup, e_12, popup;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         _a.trys.push([0, 4, , 5]);
-                        this._message = this._localizer.localize("Loading");
+                        popup = this._snackBar.open(this._localizer.localize("Loading"));
                         return [4 /*yield*/, this._service.saveCreateModelAsync(this._itemCreate)];
                     case 1:
                         _a.sent();
@@ -407,11 +408,11 @@ var DependentComponent = /** @class */ (function () {
                         return [4 /*yield*/, this.reloadGridAsync()];
                     case 3:
                         _a.sent();
-                        this._message = null;
+                        popup.dismiss();
                         return [3 /*break*/, 5];
                     case 4:
                         e_12 = _a.sent();
-                        this._message = this._localizer.localizeWithValues("Error", e_12.error);
+                        popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e_12.error));
                         return [3 /*break*/, 5];
                     case 5: return [2 /*return*/];
                 }
@@ -420,12 +421,12 @@ var DependentComponent = /** @class */ (function () {
     };
     DependentComponent.prototype.saveEditModelAsync = function () {
         return __awaiter(this, void 0, void 0, function () {
-            var _a, e_13;
+            var popup, _a, e_13, popup;
             return __generator(this, function (_b) {
                 switch (_b.label) {
                     case 0:
                         _b.trys.push([0, 3, , 4]);
-                        this._message = this._localizer.localize("Loading");
+                        popup = this._snackBar.open(this._localizer.localize("Loading"));
                         _a = this;
                         return [4 /*yield*/, this._service.saveEditModelAsync(this._itemEdit)];
                     case 1:
@@ -433,11 +434,11 @@ var DependentComponent = /** @class */ (function () {
                         return [4 /*yield*/, this.reloadGridAsync()];
                     case 2:
                         _b.sent();
-                        this._message = null;
+                        popup.dismiss();
                         return [3 /*break*/, 4];
                     case 3:
                         e_13 = _b.sent();
-                        this._message = this._localizer.localizeWithValues("Error", e_13.error);
+                        popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e_13.error));
                         return [3 /*break*/, 4];
                     case 4: return [2 /*return*/];
                 }
@@ -446,21 +447,21 @@ var DependentComponent = /** @class */ (function () {
     };
     DependentComponent.prototype.getExcelExportAsync = function () {
         return __awaiter(this, void 0, void 0, function () {
-            var b, e_14;
+            var popup, b, e_14, popup;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         _a.trys.push([0, 2, , 3]);
-                        this._message = this._localizer.localize("Loading");
+                        popup = this._snackBar.open(this._localizer.localize("Loading"));
                         return [4 /*yield*/, this._service.getExcelExportAsync(this._parentId, this._orderBy, this._filter)];
                     case 1:
                         b = _a.sent();
-                        this._message = null;
+                        popup.dismiss();
                         saveAs(b, "ExcelExport.xlsx");
                         return [3 /*break*/, 3];
                     case 2:
                         e_14 = _a.sent();
-                        this._message = this._localizer.localizeWithValues("Error", e_14.error);
+                        popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e_14.error));
                         return [3 /*break*/, 3];
                     case 3: return [2 /*return*/];
                 }
@@ -469,21 +470,21 @@ var DependentComponent = /** @class */ (function () {
     };
     DependentComponent.prototype.getImportTemplateAsync = function () {
         return __awaiter(this, void 0, void 0, function () {
-            var b, e_15;
+            var popup, b, e_15, popup;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         _a.trys.push([0, 2, , 3]);
-                        this._message = this._localizer.localize("Loading");
+                        popup = this._snackBar.open(this._localizer.localize("Loading"));
                         return [4 /*yield*/, this._service.getImportTemplateAsync()];
                     case 1:
                         b = _a.sent();
-                        this._message = null;
+                        popup.dismiss();
                         saveAs(b, "ImportTemplate.xlsx");
                         return [3 /*break*/, 3];
                     case 2:
                         e_15 = _a.sent();
-                        this._message = this._localizer.localizeWithValues("Error", e_15.error);
+                        popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e_15.error));
                         return [3 /*break*/, 3];
                     case 3: return [2 /*return*/];
                 }
@@ -560,7 +561,7 @@ var DependentComponent = /** @class */ (function () {
     ], DependentComponent.prototype, "_parentId", void 0);
     DependentComponent = __decorate([
         Component({}),
-        __metadata("design:paramtypes", [DependentService, CoreLocalizerService, Function, Function, Function, Function, Function, ActivatedRoute])
+        __metadata("design:paramtypes", [DependentService, CoreLocalizerService, MatSnackBar, Function, Function, Function, Function, Function, ActivatedRoute])
     ], DependentComponent);
     return DependentComponent;
 }());

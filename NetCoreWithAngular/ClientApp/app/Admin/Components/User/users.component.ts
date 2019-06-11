@@ -5,6 +5,7 @@ import { UsersService } from '../../../../Core/Users/users.service';
 import { UsersBaseComponent } from '../../../../Core/Users/usersBase.component';
 import { User } from '../../Models/User/user';
 import { LocalizerService } from '../../../Localizer/localizer.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
     selector: 'users',
@@ -14,7 +15,7 @@ import { LocalizerService } from '../../../Localizer/localizer.service';
 })
 export class UsersComponent extends UsersBaseComponent<string, User> {
 
-    constructor(service: UsersService<string, User>, localizer: LocalizerService) {
-        super(service, localizer, User, User, User, User);
+    constructor(service: UsersService<string, User>, localizer: LocalizerService, snackBar: MatSnackBar) {
+        super(service, localizer, snackBar, User, User, User, User);
     }
 }

@@ -11,6 +11,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { DragDropModule } from '@angular/cdk/drag-drop';
+import { MatSnackBarModule, MAT_SNACK_BAR_DEFAULT_OPTIONS } from '@angular/material/snack-bar';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TokenInterceptor } from '../Core/Account/token.interceptor';
 import { AppComponent } from './app.component';
 import { NotFoundComponent } from './Front/Components/NonFound/notFound.component';
@@ -51,9 +53,13 @@ var AppModule = /** @class */ (function () {
     }
     AppModule = __decorate([
         NgModule({
-            imports: [BrowserModule, FormsModule, HttpClientModule, RouterModule.forRoot(appRoutes), DragDropModule],
+            imports: [BrowserModule, FormsModule, HttpClientModule, RouterModule.forRoot(appRoutes), DragDropModule, MatSnackBarModule, BrowserAnimationsModule],
             declarations: [AppComponent, NotFoundComponent, AdminComponent, AccountComponent, MenuComponent, AnimeComponent, AnimeEditComponent, BookComponent, BookEditComponent, FrontComponent, AnimeEpisodeComponent, UsersComponent, LanguageComponent],
-            providers: [{ provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true }, { provide: HTTP_INTERCEPTORS, useClass: LanguageInterceptor, multi: true }],
+            providers: [
+                { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
+                { provide: HTTP_INTERCEPTORS, useClass: LanguageInterceptor, multi: true },
+                { provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: { duration: 5000, horizontalPosition: "center", verticalPosition: "top" } }
+            ],
             bootstrap: [AppComponent]
         })
     ], AppModule);

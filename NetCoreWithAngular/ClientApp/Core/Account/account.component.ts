@@ -5,6 +5,7 @@ import { LoginModel } from './loginModel';
 import { ChangePasswordModel } from './changePasswordModel';
 import { CoreLocalizerService } from '../Localization/coreLocalizer.service';
 import { Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
 })
@@ -16,15 +17,16 @@ export class CoreAccountComponent implements OnInit {
     _changePasswordModel: ChangePasswordModel;
     _localizer: CoreLocalizerService;
     _router: Router;
+    _snackBar: MatSnackBar;
     _redirectUrl = "/admin";
-    _message: string = null;
 
-    constructor(service: CoreAccountService, localizer: CoreLocalizerService, accGlobals: AccountGlobals, router: Router)
+    constructor(service: CoreAccountService, localizer: CoreLocalizerService, accGlobals: AccountGlobals, router: Router, snackBar: MatSnackBar)
     {
         this._localizer = localizer;
         this._service = service;
         this._accGlobals = accGlobals;
         this._router = router;
+        this._snackBar = snackBar;
         this._loginModel = new LoginModel();
         this._changePasswordModel = new ChangePasswordModel();
     }
@@ -35,35 +37,35 @@ export class CoreAccountComponent implements OnInit {
 
     public async getTokenAsync() {        
         try {
-            this._message = this._localizer.localize("Loading");
+            var popup = this._snackBar.open(this._localizer.localize("Loading"));
             await this._service.getTokenAsync(this._loginModel);
-            this._message = null;
+            popup.dismiss();
             this._router.navigate([this._redirectUrl]);
         }
         catch (e) {
-            this._message = this._localizer.localizeWithValues("Error", e.error);
+            var popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e.error));
         }
     }
 
     public deleteToken() {
         try {
-            this._message = this._localizer.localize("Loading");
+            var popup = this._snackBar.open(this._localizer.localize("Loading"));
             this._service.deleteToken();
-            this._message = null;
+            popup.dismiss();
         }
         catch (e) {
-            this._message = this._localizer.localizeWithValues("Error", e.error);
+            var popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e.error));
         }
     }
 
     public async changePasswordAsync() {        
         try {
-            this._message = this._localizer.localize("Loading");
+            var popup = this._snackBar.open(this._localizer.localize("Loading"));
             await this._service.changePasswordAsync(this._changePasswordModel);
-            this._message = this._localizer.localize("PassChangeSuccess");
+            popup = this._snackBar.open(this._localizer.localize(this._localizer.localize("PassChangeSuccess")));
         }
         catch (e) {
-            this._message = this._localizer.localizeWithValues("Error", e.error);
+            var popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e.error));
         }
     }
 }

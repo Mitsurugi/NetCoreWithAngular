@@ -7,6 +7,7 @@ import { BookGrid } from '../../Models/book/bookGrid';
 import { BookFilter } from '../../Models/book/bookFilter';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LocalizerService } from '../../../Localizer/localizer.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
     selector: 'book-edit',
@@ -16,7 +17,7 @@ import { LocalizerService } from '../../../Localizer/localizer.service';
 })
 export class BookEditComponent extends EditComponent<number, BookGrid, Book, Book, BookFilter> {
 
-    constructor(service: BookService, localizer: LocalizerService, route: ActivatedRoute, router: Router) {
-        super(service, localizer, Book, Book, route, router, 'admin/book');
+    constructor(service: BookService, localizer: LocalizerService, route: ActivatedRoute, router: Router, snackBar: MatSnackBar) {
+        super(service, localizer, snackBar, Book, Book, route, router, 'admin/book');
     }
 }

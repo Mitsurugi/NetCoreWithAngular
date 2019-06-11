@@ -7,6 +7,7 @@ import { read } from 'fs';
 import { ActivatedRoute } from "@angular/router";
 import { Anime } from '../../Models/Anime/anime';
 import { LocalizerService } from '../../../Localizer/localizer.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
     selector: 'anime-episodes',
@@ -16,7 +17,7 @@ import { LocalizerService } from '../../../Localizer/localizer.service';
 })
 export class AnimeEpisodeComponent extends DependentComponent<number, number, Anime, AnimeEpisode> {
 
-    constructor(service: AnimeEpisodeService, localizer: LocalizerService, route: ActivatedRoute) {
-        super(service, localizer, AnimeEpisode, AnimeEpisode, AnimeEpisode, AnimeEpisode, Anime, route);
+    constructor(service: AnimeEpisodeService, localizer: LocalizerService, route: ActivatedRoute, snackBar: MatSnackBar) {
+        super(service, localizer, snackBar, AnimeEpisode, AnimeEpisode, AnimeEpisode, AnimeEpisode, Anime, route);
     }
 }

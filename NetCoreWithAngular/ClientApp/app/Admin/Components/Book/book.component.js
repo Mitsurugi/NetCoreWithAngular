@@ -62,10 +62,11 @@ import { Book } from '../../Models/Book/book';
 import { BookGrid } from '../../Models/book/bookGrid';
 import { BookFilter } from '../../Models/book/bookFilter';
 import { LocalizerService } from '../../../Localizer/localizer.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 var BookComponent = /** @class */ (function (_super) {
     __extends(BookComponent, _super);
-    function BookComponent(service, localizer) {
-        var _this = _super.call(this, service, localizer, BookGrid, Book, Book, BookFilter) || this;
+    function BookComponent(service, localizer, snackBar) {
+        var _this = _super.call(this, service, localizer, snackBar, BookGrid, Book, Book, BookFilter) || this;
         _this._pageSize = 3;
         return _this;
     }
@@ -90,7 +91,7 @@ var BookComponent = /** @class */ (function (_super) {
             styleUrls: ['./book.component.css'],
             providers: [BookService]
         }),
-        __metadata("design:paramtypes", [BookService, LocalizerService])
+        __metadata("design:paramtypes", [BookService, LocalizerService, MatSnackBar])
     ], BookComponent);
     return BookComponent;
 }(CoreComponent));

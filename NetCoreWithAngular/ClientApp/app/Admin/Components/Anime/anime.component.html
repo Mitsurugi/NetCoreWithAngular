@@ -1,7 +1,4 @@
 ﻿<h2>{{_localizer.localize("Animes")}}</h2>
-<div class="message">
-    <p>&nbsp; {{_message}}</p>
-</div>
 <div class="sorting">
     <label>{{_localizer.localize("OrderBy")}}</label>
     <select class="form-control" [(ngModel)]="_orderBy" (change)="reloadGridAsync()">

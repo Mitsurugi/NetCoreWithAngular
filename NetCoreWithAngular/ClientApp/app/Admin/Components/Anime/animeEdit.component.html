@@ -1,8 +1,5 @@
 ﻿<h2>{{_localizer.localize("Anime")}}</h2>
 <button class="btn btn-default" [routerLink]="['/admin/anime']">{{_localizer.localize("BackToList")}}</button>
-<div class="message">
-    <p>&nbsp; {{_message}}</p>
-</div>
 
 <div class="create-new">
     <div *ngIf="_id; then edit"></div>

@@ -6,6 +6,7 @@ import { Book } from '../../Models/Book/book';
 import { BookGrid } from '../../Models/book/bookGrid';
 import { BookFilter } from '../../Models/book/bookFilter';
 import { LocalizerService } from '../../../Localizer/localizer.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
     selector: 'books',
@@ -15,8 +16,8 @@ import { LocalizerService } from '../../../Localizer/localizer.service';
 })
 export class BookComponent extends CoreComponent<number, BookGrid, Book, Book, BookFilter> {
 
-    constructor(service: BookService, localizer: LocalizerService) {
-        super(service, localizer, BookGrid, Book, Book, BookFilter);
+    constructor(service: BookService, localizer: LocalizerService, snackBar: MatSnackBar) {
+        super(service, localizer, snackBar, BookGrid, Book, Book, BookFilter);
         this._pageSize = 3;
     }
 

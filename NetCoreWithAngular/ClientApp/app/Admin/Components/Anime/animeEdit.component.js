@@ -62,20 +62,21 @@ import { FileService } from '../../../../Core/Services/file.service';
 import { Anime } from '../../Models/Anime/anime';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LocalizerService } from '../../../Localizer/localizer.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 var AnimeEditComponent = /** @class */ (function (_super) {
     __extends(AnimeEditComponent, _super);
-    function AnimeEditComponent(service, localizer, fileService, route, router) {
-        var _this = _super.call(this, service, localizer, Anime, Anime, route, router, 'admin/anime') || this;
+    function AnimeEditComponent(service, localizer, fileService, route, router, snackBar) {
+        var _this = _super.call(this, service, localizer, snackBar, Anime, Anime, route, router, 'admin/anime') || this;
         _this._fileService = fileService;
         return _this;
     }
     AnimeEditComponent.prototype.deleteImageEditAsync = function () {
         return __awaiter(this, void 0, void 0, function () {
-            var e_1;
+            var popup, e_1, popup;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        this._message = null;
+                        popup = this._snackBar.open(this._localizer.localize("Loading"));
                         _a.label = 1;
                     case 1:
                         _a.trys.push([1, 4, , 5]);
@@ -85,10 +86,12 @@ var AnimeEditComponent = /** @class */ (function (_super) {
                         _a.sent();
                         this._itemEdit.imageId = null;
                         _a.label = 3;
-                    case 3: return [3 /*break*/, 5];
+                    case 3:
+                        popup.dismiss();
+                        return [3 /*break*/, 5];
                     case 4:
                         e_1 = _a.sent();
-                        this._message = e_1.error;
+                        popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e_1.error));
                         return [3 /*break*/, 5];
                     case 5: return [2 /*return*/];
                 }
@@ -97,11 +100,11 @@ var AnimeEditComponent = /** @class */ (function (_super) {
     };
     AnimeEditComponent.prototype.deleteImageCreateAsync = function () {
         return __awaiter(this, void 0, void 0, function () {
-            var e_2;
+            var popup, e_2, popup;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        this._message = null;
+                        popup = this._snackBar.open(this._localizer.localize("Loading"));
                         _a.label = 1;
                     case 1:
                         _a.trys.push([1, 4, , 5]);
@@ -111,10 +114,12 @@ var AnimeEditComponent = /** @class */ (function (_super) {
                         _a.sent();
                         this._itemCreate.imageId = null;
                         _a.label = 3;
-                    case 3: return [3 /*break*/, 5];
+                    case 3:
+                        popup.dismiss();
+                        return [3 /*break*/, 5];
                     case 4:
                         e_2 = _a.sent();
-                        this._message = e_2.error;
+                        popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e_2.error));
                         return [3 /*break*/, 5];
                     case 5: return [2 /*return*/];
                 }
@@ -123,45 +128,53 @@ var AnimeEditComponent = /** @class */ (function (_super) {
     };
     AnimeEditComponent.prototype.uploadImageEditAsync = function (file) {
         return __awaiter(this, void 0, void 0, function () {
-            var id, e_3;
+            var popup, id, e_3, popup;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        _a.trys.push([0, 2, , 3]);
-                        return [4 /*yield*/, this._fileService.uploadAsync(file)];
+                        popup = this._snackBar.open(this._localizer.localize("Loading"));
+                        _a.label = 1;
                     case 1:
+                        _a.trys.push([1, 3, , 4]);
+                        return [4 /*yield*/, this._fileService.uploadAsync(file)];
+                    case 2:
                         id = _a.sent();
                         this._itemEdit.imageId = id;
-                        return [3 /*break*/, 3];
-                    case 2:
+                        popup.dismiss();
+                        return [3 /*break*/, 4];
+                    case 3:
                         e_3 = _a.sent();
-                        this._message = e_3.error;
-                        return [3 /*break*/, 3];
-                    case 3: return [2 /*return*/];
+                        popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e_3.error));
+                        return [3 /*break*/, 4];
+                    case 4: return [2 /*return*/];
                 }
             });
         });
     };
     AnimeEditComponent.prototype.uploadImageCreateAsync = function (file) {
         return __awaiter(this, void 0, void 0, function () {
-            var id, e_4;
+            var popup, id, e_4, popup;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        _a.trys.push([0, 3, , 4]);
-                        return [4 /*yield*/, this.deleteImageCreateAsync()];
+                        popup = this._snackBar.open(this._localizer.localize("Loading"));
+                        _a.label = 1;
                     case 1:
+                        _a.trys.push([1, 4, , 5]);
+                        return [4 /*yield*/, this.deleteImageCreateAsync()];
+                    case 2:
                         _a.sent();
                         return [4 /*yield*/, this._fileService.uploadAsync(file)];
-                    case 2:
+                    case 3:
                         id = _a.sent();
                         this._itemCreate.imageId = id;
-                        return [3 /*break*/, 4];
-                    case 3:
+                        popup.dismiss();
+                        return [3 /*break*/, 5];
+                    case 4:
                         e_4 = _a.sent();
-                        this._message = e_4.error;
-                        return [3 /*break*/, 4];
-                    case 4: return [2 /*return*/];
+                        popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e_4.error));
+                        return [3 /*break*/, 5];
+                    case 5: return [2 /*return*/];
                 }
             });
         });
@@ -173,7 +186,7 @@ var AnimeEditComponent = /** @class */ (function (_super) {
             styleUrls: ['./animeEdit.component.css'],
             providers: [AnimeService, FileService]
         }),
-        __metadata("design:paramtypes", [AnimeService, LocalizerService, FileService, ActivatedRoute, Router])
+        __metadata("design:paramtypes", [AnimeService, LocalizerService, FileService, ActivatedRoute, Router, MatSnackBar])
     ], AnimeEditComponent);
     return AnimeEditComponent;
 }(EditComponent));

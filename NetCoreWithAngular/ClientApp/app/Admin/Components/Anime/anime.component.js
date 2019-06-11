@@ -62,21 +62,22 @@ import { FileService } from '../../../../Core/Services/file.service';
 import { Anime } from '../../Models/Anime/anime';
 import { LocalizerService } from '../../../Localizer/localizer.service';
 import { moveItemInArray } from '@angular/cdk/drag-drop';
+import { MatSnackBar } from '@angular/material/snack-bar';
 var AnimeComponent = /** @class */ (function (_super) {
     __extends(AnimeComponent, _super);
-    function AnimeComponent(service, localizer, fileService, animeService) {
-        var _this = _super.call(this, service, localizer, Anime, Anime, Anime, Anime) || this;
+    function AnimeComponent(service, localizer, fileService, animeService, snackBar) {
+        var _this = _super.call(this, service, localizer, snackBar, Anime, Anime, Anime, Anime) || this;
         _this._fileService = fileService;
         _this._animeService = animeService;
         return _this;
     }
     AnimeComponent.prototype.deleteImageEditAsync = function () {
         return __awaiter(this, void 0, void 0, function () {
-            var e_1;
+            var popup, e_1, popup;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        this._message = null;
+                        popup = this._snackBar.open(this._localizer.localize("Loading"));
                         _a.label = 1;
                     case 1:
                         _a.trys.push([1, 4, , 5]);
@@ -89,7 +90,7 @@ var AnimeComponent = /** @class */ (function (_super) {
                     case 3: return [3 /*break*/, 5];
                     case 4:
                         e_1 = _a.sent();
-                        this._message = e_1.error;
+                        popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e_1.error));
                         return [3 /*break*/, 5];
                     case 5: return [2 /*return*/];
                 }
@@ -98,11 +99,11 @@ var AnimeComponent = /** @class */ (function (_super) {
     };
     AnimeComponent.prototype.deleteImageCreateAsync = function () {
         return __awaiter(this, void 0, void 0, function () {
-            var e_2;
+            var popup, e_2, popup;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        this._message = null;
+                        popup = this._snackBar.open(this._localizer.localize("Loading"));
                         _a.label = 1;
                     case 1:
                         _a.trys.push([1, 4, , 5]);
@@ -112,10 +113,12 @@ var AnimeComponent = /** @class */ (function (_super) {
                         _a.sent();
                         this._itemCreate.imageId = null;
                         _a.label = 3;
-                    case 3: return [3 /*break*/, 5];
+                    case 3:
+                        popup.dismiss();
+                        return [3 /*break*/, 5];
                     case 4:
                         e_2 = _a.sent();
-                        this._message = e_2.error;
+                        popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e_2.error));
                         return [3 /*break*/, 5];
                     case 5: return [2 /*return*/];
                 }
@@ -124,57 +127,65 @@ var AnimeComponent = /** @class */ (function (_super) {
     };
     AnimeComponent.prototype.uploadImageEditAsync = function (file) {
         return __awaiter(this, void 0, void 0, function () {
-            var id, e_3;
+            var popup, id, e_3, popup;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        _a.trys.push([0, 2, , 3]);
-                        return [4 /*yield*/, this._fileService.uploadAsync(file)];
+                        popup = this._snackBar.open(this._localizer.localize("Loading"));
+                        _a.label = 1;
                     case 1:
+                        _a.trys.push([1, 3, , 4]);
+                        return [4 /*yield*/, this._fileService.uploadAsync(file)];
+                    case 2:
                         id = _a.sent();
                         this._itemEdit.imageId = id;
-                        return [3 /*break*/, 3];
-                    case 2:
-                        e_3 = _a.sent();
-                        this._message = e_3.error;
-                        return [3 /*break*/, 3];
-                    case 3: return [2 /*return*/];
-                }
-            });
-        });
-    };
-    AnimeComponent.prototype.uploadImageCreateAsync = function (file) {
-        return __awaiter(this, void 0, void 0, function () {
-            var id, e_4;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        _a.trys.push([0, 3, , 4]);
-                        return [4 /*yield*/, this.deleteImageCreateAsync()];
-                    case 1:
-                        _a.sent();
-                        return [4 /*yield*/, this._fileService.uploadAsync(file)];
-                    case 2:
-                        id = _a.sent();
-                        this._itemCreate.imageId = id;
+                        popup.dismiss();
                         return [3 /*break*/, 4];
                     case 3:
-                        e_4 = _a.sent();
-                        this._message = e_4.error;
+                        e_3 = _a.sent();
+                        popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e_3.error));
                         return [3 /*break*/, 4];
                     case 4: return [2 /*return*/];
                 }
             });
         });
     };
+    AnimeComponent.prototype.uploadImageCreateAsync = function (file) {
+        return __awaiter(this, void 0, void 0, function () {
+            var popup, id, e_4, popup;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        popup = this._snackBar.open(this._localizer.localize("Loading"));
+                        _a.label = 1;
+                    case 1:
+                        _a.trys.push([1, 4, , 5]);
+                        return [4 /*yield*/, this.deleteImageCreateAsync()];
+                    case 2:
+                        _a.sent();
+                        return [4 /*yield*/, this._fileService.uploadAsync(file)];
+                    case 3:
+                        id = _a.sent();
+                        this._itemCreate.imageId = id;
+                        popup.dismiss();
+                        return [3 /*break*/, 5];
+                    case 4:
+                        e_4 = _a.sent();
+                        popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e_4.error));
+                        return [3 /*break*/, 5];
+                    case 5: return [2 /*return*/];
+                }
+            });
+        });
+    };
     AnimeComponent.prototype.moveAsync = function (event) {
         return __awaiter(this, void 0, void 0, function () {
-            var id, newPos, e_5;
+            var popup, id, newPos, e_5, popup;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         _a.trys.push([0, 3, , 4]);
-                        this._message = this._localizer.localize("Loading");
+                        popup = this._snackBar.open(this._localizer.localize("Loading"));
                         id = this._items[event.previousIndex].id;
                         newPos = this._items[event.currentIndex].position;
                         moveItemInArray(this._items, event.previousIndex, event.currentIndex);
@@ -184,11 +195,11 @@ var AnimeComponent = /** @class */ (function (_super) {
                         return [4 /*yield*/, this.reloadGridAsync()];
                     case 2:
                         _a.sent();
-                        this._message = null;
+                        popup.dismiss();
                         return [3 /*break*/, 4];
                     case 3:
                         e_5 = _a.sent();
-                        this._message = this._localizer.localizeWithValues("Error", e_5.error);
+                        popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e_5.error));
                         return [3 /*break*/, 4];
                     case 4: return [2 /*return*/];
                 }
@@ -202,7 +213,7 @@ var AnimeComponent = /** @class */ (function (_super) {
             styleUrls: ['./anime.component.css'],
             providers: [AnimeService, FileService]
         }),
-        __metadata("design:paramtypes", [AnimeService, LocalizerService, FileService, AnimeService])
+        __metadata("design:paramtypes", [AnimeService, LocalizerService, FileService, AnimeService, MatSnackBar])
     ], AnimeComponent);
     return AnimeComponent;
 }(CoreComponent));

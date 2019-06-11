@@ -26,10 +26,11 @@ import { BookService } from '../../Services/book.service';
 import { Book } from '../../Models/Book/book';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LocalizerService } from '../../../Localizer/localizer.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 var BookEditComponent = /** @class */ (function (_super) {
     __extends(BookEditComponent, _super);
-    function BookEditComponent(service, localizer, route, router) {
-        return _super.call(this, service, localizer, Book, Book, route, router, 'admin/book') || this;
+    function BookEditComponent(service, localizer, route, router, snackBar) {
+        return _super.call(this, service, localizer, snackBar, Book, Book, route, router, 'admin/book') || this;
     }
     BookEditComponent = __decorate([
         Component({
@@ -38,7 +39,7 @@ var BookEditComponent = /** @class */ (function (_super) {
             styleUrls: ['./bookEdit.component.css'],
             providers: [BookService]
         }),
-        __metadata("design:paramtypes", [BookService, LocalizerService, ActivatedRoute, Router])
+        __metadata("design:paramtypes", [BookService, LocalizerService, ActivatedRoute, Router, MatSnackBar])
     ], BookEditComponent);
     return BookEditComponent;
 }(EditComponent));

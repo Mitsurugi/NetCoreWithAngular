@@ -46,14 +46,15 @@ import { Input, Component } from '@angular/core';
 import { CoreService } from '../Services/core.service';
 import { ActivatedRoute, Router } from "@angular/router";
 import { CoreLocalizerService } from '../Localization/coreLocalizer.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 var EditComponent = /** @class */ (function () {
-    function EditComponent(service, localizer, typeCreate, typeEdit, route, router, listUrl) {
+    function EditComponent(service, localizer, snackBar, typeCreate, typeEdit, route, router, listUrl) {
         var _this = this;
-        this._message = null;
         this._listUrl = listUrl;
         this._service = service;
         this._router = router;
         this._localizer = localizer;
+        this._snackBar = snackBar;
         this._itemEdit = new typeEdit();
         this._itemCreate = new typeCreate();
         this.typeCreate = typeCreate;
@@ -64,11 +65,11 @@ var EditComponent = /** @class */ (function () {
     }
     EditComponent.prototype.getCreateModelAsync = function () {
         return __awaiter(this, void 0, void 0, function () {
-            var _a, e_1;
+            var popup, _a, e_1, popup;
             return __generator(this, function (_b) {
                 switch (_b.label) {
                     case 0:
-                        this._message = this._localizer.localize("Loading");
+                        popup = this._snackBar.open(this._localizer.localize("Loading"));
                         _b.label = 1;
                     case 1:
                         _b.trys.push([1, 3, , 4]);
@@ -76,11 +77,11 @@ var EditComponent = /** @class */ (function () {
                         return [4 /*yield*/, this._service.getCreateModelAsync()];
                     case 2:
                         _a._itemCreate = _b.sent();
-                        this._message = null;
+                        popup.dismiss();
                         return [3 /*break*/, 4];
                     case 3:
                         e_1 = _b.sent();
-                        this._message = this._localizer.localizeWithValues("Error", e_1.error);
+                        popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e_1.error));
                         return [3 /*break*/, 4];
                     case 4: return [2 /*return*/];
                 }
@@ -89,11 +90,11 @@ var EditComponent = /** @class */ (function () {
     };
     EditComponent.prototype.getEditModelAsync = function () {
         return __awaiter(this, void 0, void 0, function () {
-            var _a, e_2;
+            var popup, _a, e_2, popup;
             return __generator(this, function (_b) {
                 switch (_b.label) {
                     case 0:
-                        this._message = this._localizer.localize("Loading");
+                        popup = this._snackBar.open(this._localizer.localize("Loading"));
                         _b.label = 1;
                     case 1:
                         _b.trys.push([1, 3, , 4]);
@@ -101,11 +102,11 @@ var EditComponent = /** @class */ (function () {
                         return [4 /*yield*/, this._service.getEditModelAsync(this._id)];
                     case 2:
                         _a._itemEdit = _b.sent();
-                        this._message = null;
+                        popup.dismiss();
                         return [3 /*break*/, 4];
                     case 3:
                         e_2 = _b.sent();
-                        this._message = this._localizer.localizeWithValues("Error", e_2.error);
+                        popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e_2.error));
                         return [3 /*break*/, 4];
                     case 4: return [2 /*return*/];
                 }
@@ -114,8 +115,9 @@ var EditComponent = /** @class */ (function () {
     };
     EditComponent.prototype.ngOnInit = function () {
         return __awaiter(this, void 0, void 0, function () {
+            var popup, popup;
             return __generator(this, function (_a) {
-                this._message = this._localizer.localize("Loading");
+                popup = this._snackBar.open(this._localizer.localize("Loading"));
                 try {
                     if (this._id) {
                         this.getEditModelAsync();
@@ -123,10 +125,10 @@ var EditComponent = /** @class */ (function () {
                     else {
                         this.getCreateModelAsync();
                     }
-                    this._message = null;
+                    popup.dismiss();
                 }
                 catch (e) {
-                    this._message = this._localizer.localizeWithValues("Error", e.error);
+                    popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e.error));
                 }
                 return [2 /*return*/];
             });
@@ -134,11 +136,11 @@ var EditComponent = /** @class */ (function () {
     };
     EditComponent.prototype.saveCreateModelAsync = function () {
         return __awaiter(this, void 0, void 0, function () {
-            var result, e_3;
+            var popup, result, e_3, popup;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        this._message = this._localizer.localize("Loading");
+                        popup = this._snackBar.open(this._localizer.localize("Loading"));
                         _a.label = 1;
                     case 1:
                         _a.trys.push([1, 4, , 5]);
@@ -148,12 +150,12 @@ var EditComponent = /** @class */ (function () {
                         return [4 /*yield*/, this.getCreateModelAsync()];
                     case 3:
                         _a.sent();
-                        this._message = null;
+                        popup.dismiss();
                         this._router.navigate([this._listUrl + '/edit/' + result.id]);
                         return [3 /*break*/, 5];
                     case 4:
                         e_3 = _a.sent();
-                        this._message = this._localizer.localizeWithValues("Error", e_3.error);
+                        popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e_3.error));
                         return [3 /*break*/, 5];
                     case 5: return [2 /*return*/];
                 }
@@ -162,11 +164,11 @@ var EditComponent = /** @class */ (function () {
     };
     EditComponent.prototype.saveEditModelAsync = function () {
         return __awaiter(this, void 0, void 0, function () {
-            var _a, e_4;
+            var popup, _a, e_4, popup;
             return __generator(this, function (_b) {
                 switch (_b.label) {
                     case 0:
-                        this._message = this._localizer.localize("Loading");
+                        popup = this._snackBar.open(this._localizer.localize("Loading"));
                         _b.label = 1;
                     case 1:
                         _b.trys.push([1, 3, , 4]);
@@ -174,11 +176,11 @@ var EditComponent = /** @class */ (function () {
                         return [4 /*yield*/, this._service.saveEditModelAsync(this._itemEdit)];
                     case 2:
                         _a._itemEdit = _b.sent();
-                        this._message = this._localizer.localize("EditSuccess");
+                        popup = this._snackBar.open(this._localizer.localize("EditSuccess"));
                         return [3 /*break*/, 4];
                     case 3:
                         e_4 = _b.sent();
-                        this._message = this._localizer.localizeWithValues("Error", e_4.error);
+                        popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e_4.error));
                         return [3 /*break*/, 4];
                     case 4: return [2 /*return*/];
                 }
@@ -191,7 +193,7 @@ var EditComponent = /** @class */ (function () {
     ], EditComponent.prototype, "_id", void 0);
     EditComponent = __decorate([
         Component({}),
-        __metadata("design:paramtypes", [CoreService, CoreLocalizerService, Function, Function, ActivatedRoute, Router, String])
+        __metadata("design:paramtypes", [CoreService, CoreLocalizerService, MatSnackBar, Function, Function, ActivatedRoute, Router, String])
     ], EditComponent);
     return EditComponent;
 }());

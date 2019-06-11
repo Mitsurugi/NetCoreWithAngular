@@ -6,9 +6,6 @@
     </div> 
     <div class="form-group">
         <h2>{{_localizer.localize("ChangePassHeader")}}</h2>
-        <div class="message">
-            <p>&nbsp; {{_message}}</p>
-        </div>
         <div>
             <form #passwordChangeForm="ngForm">
                 <div class="form-group">
@@ -38,9 +35,6 @@
 </div>
 <div *ngIf="!_accGlobals.isLogged">
     <h2>{{_localizer.localize("LoginHeader")}}</h2>
-    <div class="message">
-        <p>&nbsp; {{_message}}</p>
-    </div>
     <div>
         <form #loginForm="ngForm">
             <div class="form-group">

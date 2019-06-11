@@ -7,6 +7,7 @@ import { Anime } from '../../Models/Anime/anime';
 import { read } from 'fs';
 import { LocalizerService } from '../../../Localizer/localizer.service';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
     selector: 'anime',
@@ -19,14 +20,14 @@ export class AnimeComponent extends CoreComponent<number, Anime> {
     _fileService: FileService<number>;
     _animeService: AnimeService;
 
-    constructor(service: AnimeService, localizer: LocalizerService, fileService: FileService<number>, animeService: AnimeService) {
-        super(service, localizer, Anime, Anime, Anime, Anime);
+    constructor(service: AnimeService, localizer: LocalizerService, fileService: FileService<number>, animeService: AnimeService, snackBar: MatSnackBar) {
+        super(service, localizer, snackBar, Anime, Anime, Anime, Anime);
         this._fileService = fileService;
         this._animeService = animeService;
     }
 
     async deleteImageEditAsync() {
-        this._message = null;
+        var popup = this._snackBar.open(this._localizer.localize("Loading"));
         try {
             if (this._itemEdit.imageId != null) {
                 await this._fileService.deleteAsync(this._itemEdit.imageId);
@@ -34,56 +35,61 @@ export class AnimeComponent extends CoreComponent<number, Anime> {
             }
         }
         catch (e) {
-            this._message = e.error;
+            var popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e.error));
         }
     }
 
     async deleteImageCreateAsync() {
-        this._message = null;
+        var popup = this._snackBar.open(this._localizer.localize("Loading"));
         try {
             if (this._itemCreate.imageId != null) {
                 await this._fileService.deleteAsync(this._itemCreate.imageId);
                 this._itemCreate.imageId = null;
             }
+            popup.dismiss();
         }
         catch (e) {
-            this._message = e.error;
+            var popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e.error));
         }
     }
 
     async uploadImageEditAsync(file: File) {
+        var popup = this._snackBar.open(this._localizer.localize("Loading"));
         try {
             let id = await this._fileService.uploadAsync(file);
             this._itemEdit.imageId = id;
+            popup.dismiss();
         }
         catch (e) {
-            this._message = e.error;
+            var popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e.error));
         }
     }
 
     async uploadImageCreateAsync(file: File) {
+        var popup = this._snackBar.open(this._localizer.localize("Loading"));
         try {
             await this.deleteImageCreateAsync();
             let id = await this._fileService.uploadAsync(file);
             this._itemCreate.imageId = id;
+            popup.dismiss();
         }
         catch (e) {
-            this._message = e.error;
+            var popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e.error));
         }
     }
 
     public async moveAsync(event: CdkDragDrop<Anime[]>) {
         try {
-            this._message = this._localizer.localize("Loading");
+            var popup = this._snackBar.open(this._localizer.localize("Loading"));
             var id = this._items[event.previousIndex].id;
             var newPos = this._items[event.currentIndex].position;
             moveItemInArray(this._items, event.previousIndex, event.currentIndex);
             await this._animeService.moveAsync(id, newPos);
             await this.reloadGridAsync();
-            this._message = null;
+            popup.dismiss();
         }
         catch (e) {
-            this._message = this._localizer.localizeWithValues("Error", e.error);
+            var popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e.error));
         }
     }
 }
