@@ -12,7 +12,9 @@ namespace NetCoreWithAngular
             CreateMap<Book, BookViewModel>().ReverseMap();
             CreateMap<Anime, AnimeViewModel>().ReverseMap();
             CreateMap<AnimeEpisode, AnimeEpisodeViewModel>().ReverseMap();
-            CreateMap<User, UserViewModel>().ReverseMap();            
+            CreateMap<User, UserViewModel>().ReverseMap();
+            CreateMap<Book, FrontDataViewModel>();
+            CreateMap<Anime, FrontDataViewModel>();
         }
     }
 }

@@ -4,3 +4,5 @@
 /NetCoreWithAngular/bin/
 /NetCoreWithAngular/obj/
 /Deploy/
+/NetCoreWithAngular/node_modules/
+/NetCoreWithAngular/wwwroot/dist/
