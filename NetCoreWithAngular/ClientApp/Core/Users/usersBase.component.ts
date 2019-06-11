@@ -28,24 +28,10 @@ export class UsersBaseComponent<TKey, TGrid extends IUser<TKey>, TCreate extends
     _orderBy: string = 'UserName';
     _resetPasswordId?: TKey = null;
 
-    typeGrid: (new () => TGrid);
-    typeCreate: (new () => TCreate);
-    typeEdit: (new () => TEdit);
-    typeFilter: (new () => TFilter);
-
-    constructor(service: UsersService<TKey, TGrid, TCreate, TEdit, TFilter>, localizer: CoreLocalizerService, snackBar: MatSnackBar, typeGrid: (new () => TGrid), typeCreate: (new () => TCreate), typeEdit: (new () => TEdit), typeFilter: (new () => TFilter)) {
+    constructor(service: UsersService<TKey, TGrid, TCreate, TEdit, TFilter>, localizer: CoreLocalizerService, snackBar: MatSnackBar) {
         this._service = service;
         this._localizer = localizer;
         this._snackBar = snackBar;
-        this._items = new Array<TGrid>();
-        this._itemEdit = new typeEdit();
-        this._itemCreate = new typeCreate();
-        this._filter = new typeFilter();
-
-        this.typeGrid = typeGrid;
-        this.typeCreate = typeCreate;
-        this.typeEdit = typeEdit;
-        this.typeFilter = typeFilter;
     }
 
     protected async getCreateModelAsync() {
@@ -97,7 +83,6 @@ export class UsersBaseComponent<TKey, TGrid extends IUser<TKey>, TCreate extends
     }
 
     public async clearFilterAsync() {
-        this._filter = new this.typeFilter();
         try {
             var popup = this._snackBar.open(this._localizer.localize("Loading"));
             this._filter = await this._service.getFilterModelAsync();

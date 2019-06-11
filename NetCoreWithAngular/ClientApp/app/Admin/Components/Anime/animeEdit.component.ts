@@ -20,7 +20,7 @@ export class AnimeEditComponent extends EditComponent<number, Anime> {
     _fileService: FileService<number>;
 
     constructor(service: AnimeService, localizer: LocalizerService, fileService: FileService<number>, route: ActivatedRoute, router: Router, snackBar: MatSnackBar) {
-        super(service, localizer, snackBar, Anime, Anime, route, router, 'admin/anime');
+        super(service, localizer, snackBar, route, router, 'admin/anime');
         this._fileService = fileService;
     }
 

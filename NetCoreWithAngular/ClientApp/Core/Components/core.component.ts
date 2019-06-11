@@ -28,25 +28,10 @@ export class CoreComponent<TKey, TGrid extends IEntity<TKey>, TCreate extends IE
     _isShowImport: boolean;
     _orderBy: string = '';
 
-    typeGrid: (new () => TGrid);
-    typeCreate: (new () => TCreate);
-    typeEdit: (new () => TEdit);
-    typeFilter: (new () => TFilter);
-
-    constructor(service: CoreService<TKey, TGrid, TCreate, TEdit, TFilter>, localizer: CoreLocalizerService, snackBar: MatSnackBar, typeGrid: (new () => TGrid), typeCreate: (new () => TCreate), typeEdit: (new () => TEdit), typeFilter: (new () => TFilter)) {
+    constructor(service: CoreService<TKey, TGrid, TCreate, TEdit, TFilter>, localizer: CoreLocalizerService, snackBar: MatSnackBar) {
         this._service = service;
         this._localizer = localizer;
         this._snackBar = snackBar;
-
-        this._items = new Array<TGrid>();
-        this._itemEdit = new typeEdit();
-        this._itemCreate = new typeCreate();
-        this._filter = new typeFilter();
-
-        this.typeGrid = typeGrid;
-        this.typeCreate = typeCreate;
-        this.typeEdit = typeEdit;
-        this.typeFilter = typeFilter;
     }
 
     protected async getCreateModelAsync() {        
@@ -98,7 +83,6 @@ export class CoreComponent<TKey, TGrid extends IEntity<TKey>, TCreate extends IE
     }
 
     public async clearFilterAsync() {
-        this._filter = new this.typeFilter();        
         try {
             var popup = this._snackBar.open(this._localizer.localize("Loading"));
             this._filter = await this._service.getFilterModelAsync();

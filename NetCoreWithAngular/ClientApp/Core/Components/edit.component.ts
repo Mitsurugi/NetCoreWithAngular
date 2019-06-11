@@ -20,10 +20,8 @@ export class EditComponent<TKey, TGrid extends IEntity<TKey>, TCreate extends IE
 
     _itemEdit: TEdit;
     _itemCreate: TCreate;
-    typeCreate: (new () => TCreate);
-    typeEdit: (new () => TEdit);
 
-    constructor(service: CoreService<TKey, TGrid, TCreate, TEdit, TFilter>, localizer: CoreLocalizerService, snackBar: MatSnackBar, typeCreate: (new () => TCreate), typeEdit: (new () => TEdit), route: ActivatedRoute, router: Router, listUrl: string) {
+    constructor(service: CoreService<TKey, TGrid, TCreate, TEdit, TFilter>, localizer: CoreLocalizerService, snackBar: MatSnackBar, route: ActivatedRoute, router: Router, listUrl: string) {
 
         this._listUrl = listUrl;
 
@@ -32,10 +30,6 @@ export class EditComponent<TKey, TGrid extends IEntity<TKey>, TCreate extends IE
         this._localizer = localizer;
         this._snackBar = snackBar;
 
-        this._itemEdit = new typeEdit();
-        this._itemCreate = new typeCreate();
-        this.typeCreate = typeCreate;
-        this.typeEdit = typeEdit;
         if (!this._id) {
             route.params.subscribe(params => this._id = params['id']);
         }

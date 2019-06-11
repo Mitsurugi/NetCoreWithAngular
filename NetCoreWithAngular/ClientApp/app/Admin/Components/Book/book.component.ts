@@ -17,7 +17,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 export class BookComponent extends CoreComponent<number, BookGrid, Book, Book, BookFilter> {
 
     constructor(service: BookService, localizer: LocalizerService, snackBar: MatSnackBar) {
-        super(service, localizer, snackBar, BookGrid, Book, Book, BookFilter);
+        super(service, localizer, snackBar);
         this._pageSize = 3;
     }
 

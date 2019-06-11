@@ -33,28 +33,11 @@ export class DependentComponent<TKey, TParentKey, TParentView, TGrid extends IDe
     _isShowImport: boolean;
     _orderBy: string = 'Id_desc';
 
-    typeGrid: (new () => TGrid);
-    typeCreate: (new () => TCreate);
-    typeEdit: (new () => TEdit);
-    typeFilter: (new () => TFilter);
-    typeParent: (new () => TParentView);
 
-    constructor(service: DependentService<TKey, TParentKey, TParentView, TGrid, TCreate, TEdit, TFilter>, localizer: CoreLocalizerService, snackBar: MatSnackBar, typeGrid: (new () => TGrid), typeCreate: (new () => TCreate), typeEdit: (new () => TEdit), typeFilter: (new () => TFilter), typeParent: (new () => TParentView), route: ActivatedRoute) {
+    constructor(service: DependentService<TKey, TParentKey, TParentView, TGrid, TCreate, TEdit, TFilter>, localizer: CoreLocalizerService, snackBar: MatSnackBar, route: ActivatedRoute) {
         this._service = service;
         this._localizer = localizer;
         this._snackBar = snackBar;
-
-        this._items = new Array<TGrid>();
-        this._itemEdit = new typeEdit();
-        this._itemCreate = new typeCreate();
-        this._filter = new typeFilter();
-        this._parent = new typeParent();
-
-        this.typeGrid = typeGrid;
-        this.typeCreate = typeCreate;
-        this.typeEdit = typeEdit;
-        this.typeFilter = typeFilter;
-        this.typeParent = typeParent;
 
         if (!this._parentId) {
             route.params.subscribe(params => this._parentId = params['parentId']);
@@ -111,7 +94,6 @@ export class DependentComponent<TKey, TParentKey, TParentView, TGrid extends IDe
     }
 
     public async clearFilterAsync() {
-        this._filter = new this.typeFilter();
         try {
             var popup = this._snackBar.open(this._localizer.localize("Loading"));
             this._filter = await this._service.getFilterModelAsync();

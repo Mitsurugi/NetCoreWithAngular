@@ -178,6 +178,9 @@ export class CoreLocalizerService {
 
         this._strings["ru-RU"]["Role"] = "Роль";
         this._strings["en-US"]["Role"] = "Role";
+
+        this._strings["ru-RU"]["ClearFilter"] = "Очистить";
+        this._strings["en-US"]["ClearFilter"] = "Clear";
     }
 
     protected AddOrUpdateStrings() {

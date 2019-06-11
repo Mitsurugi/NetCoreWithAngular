@@ -10,6 +10,7 @@ namespace NetCoreWithAngular
         public MappingProfile()
         {
             CreateMap<Book, BookViewModel>().ReverseMap();
+            CreateMap<Book, BookGridModel>();
             CreateMap<Anime, AnimeViewModel>().ReverseMap();
             CreateMap<AnimeEpisode, AnimeEpisodeViewModel>().ReverseMap();
             CreateMap<User, UserViewModel>().ReverseMap();

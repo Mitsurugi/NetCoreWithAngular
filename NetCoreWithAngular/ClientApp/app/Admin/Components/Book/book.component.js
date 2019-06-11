@@ -58,15 +58,12 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 import { Component } from '@angular/core';
 import { CoreComponent } from '../../../../Core/Components/core.component';
 import { BookService } from '../../Services/book.service';
-import { Book } from '../../Models/Book/book';
-import { BookGrid } from '../../Models/book/bookGrid';
-import { BookFilter } from '../../Models/book/bookFilter';
 import { LocalizerService } from '../../../Localizer/localizer.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 var BookComponent = /** @class */ (function (_super) {
     __extends(BookComponent, _super);
     function BookComponent(service, localizer, snackBar) {
-        var _this = _super.call(this, service, localizer, snackBar, BookGrid, Book, Book, BookFilter) || this;
+        var _this = _super.call(this, service, localizer, snackBar) || this;
         _this._pageSize = 3;
         return _this;
     }

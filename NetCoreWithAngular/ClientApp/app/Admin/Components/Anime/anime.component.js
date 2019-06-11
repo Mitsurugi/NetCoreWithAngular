@@ -59,14 +59,13 @@ import { Component } from '@angular/core';
 import { CoreComponent } from '../../../../Core/Components/core.component';
 import { AnimeService } from '../../Services/anime.service';
 import { FileService } from '../../../../Core/Services/file.service';
-import { Anime } from '../../Models/Anime/anime';
 import { LocalizerService } from '../../../Localizer/localizer.service';
 import { moveItemInArray } from '@angular/cdk/drag-drop';
 import { MatSnackBar } from '@angular/material/snack-bar';
 var AnimeComponent = /** @class */ (function (_super) {
     __extends(AnimeComponent, _super);
     function AnimeComponent(service, localizer, fileService, animeService, snackBar) {
-        var _this = _super.call(this, service, localizer, snackBar, Anime, Anime, Anime, Anime) || this;
+        var _this = _super.call(this, service, localizer, snackBar) || this;
         _this._fileService = fileService;
         _this._animeService = animeService;
         return _this;

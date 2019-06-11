@@ -18,6 +18,6 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 export class AnimeEpisodeComponent extends DependentComponent<number, number, Anime, AnimeEpisode> {
 
     constructor(service: AnimeEpisodeService, localizer: LocalizerService, route: ActivatedRoute, snackBar: MatSnackBar) {
-        super(service, localizer, snackBar, AnimeEpisode, AnimeEpisode, AnimeEpisode, AnimeEpisode, Anime, route);
+        super(service, localizer, snackBar, route);
     }
 }

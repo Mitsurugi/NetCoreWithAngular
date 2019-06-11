@@ -18,6 +18,6 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 export class BookEditComponent extends EditComponent<number, BookGrid, Book, Book, BookFilter> {
 
     constructor(service: BookService, localizer: LocalizerService, route: ActivatedRoute, router: Router, snackBar: MatSnackBar) {
-        super(service, localizer, snackBar, Book, Book, route, router, 'admin/book');
+        super(service, localizer, snackBar, route, router, 'admin/book');
     }
 }

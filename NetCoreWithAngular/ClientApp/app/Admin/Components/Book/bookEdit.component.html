@@ -2,8 +2,8 @@
 <button class="btn btn-default" [routerLink]="['/admin/book']">{{_localizer.localize("BackToList")}}</button>
 
 <div class="create-new">
-    <div *ngIf="_id; then edit"></div>
-    <div *ngIf="!_id; then create"></div>
+    <div *ngIf="_id && _itemEdit; then edit"></div>
+    <div *ngIf="!_id && _itemCreate; then create"></div>
 </div>
 
 <ng-template #edit>

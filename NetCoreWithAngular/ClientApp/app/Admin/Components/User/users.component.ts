@@ -16,6 +16,6 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 export class UsersComponent extends UsersBaseComponent<string, User> {
 
     constructor(service: UsersService<string, User>, localizer: LocalizerService, snackBar: MatSnackBar) {
-        super(service, localizer, snackBar, User, User, User, User);
+        super(service, localizer, snackBar);
     }
 }

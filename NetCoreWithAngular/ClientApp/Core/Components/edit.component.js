@@ -48,17 +48,13 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { CoreLocalizerService } from '../Localization/coreLocalizer.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 var EditComponent = /** @class */ (function () {
-    function EditComponent(service, localizer, snackBar, typeCreate, typeEdit, route, router, listUrl) {
+    function EditComponent(service, localizer, snackBar, route, router, listUrl) {
         var _this = this;
         this._listUrl = listUrl;
         this._service = service;
         this._router = router;
         this._localizer = localizer;
         this._snackBar = snackBar;
-        this._itemEdit = new typeEdit();
-        this._itemCreate = new typeCreate();
-        this.typeCreate = typeCreate;
-        this.typeEdit = typeEdit;
         if (!this._id) {
             route.params.subscribe(function (params) { return _this._id = params['id']; });
         }
@@ -193,7 +189,7 @@ var EditComponent = /** @class */ (function () {
     ], EditComponent.prototype, "_id", void 0);
     EditComponent = __decorate([
         Component({}),
-        __metadata("design:paramtypes", [CoreService, CoreLocalizerService, MatSnackBar, Function, Function, ActivatedRoute, Router, String])
+        __metadata("design:paramtypes", [CoreService, CoreLocalizerService, MatSnackBar, ActivatedRoute, Router, String])
     ], EditComponent);
     return EditComponent;
 }());

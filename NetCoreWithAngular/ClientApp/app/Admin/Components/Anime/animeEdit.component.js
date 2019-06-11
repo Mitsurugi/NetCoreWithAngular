@@ -59,14 +59,13 @@ import { Component } from '@angular/core';
 import { EditComponent } from '../../../../Core/Components/edit.component';
 import { AnimeService } from '../../Services/anime.service';
 import { FileService } from '../../../../Core/Services/file.service';
-import { Anime } from '../../Models/Anime/anime';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LocalizerService } from '../../../Localizer/localizer.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 var AnimeEditComponent = /** @class */ (function (_super) {
     __extends(AnimeEditComponent, _super);
     function AnimeEditComponent(service, localizer, fileService, route, router, snackBar) {
-        var _this = _super.call(this, service, localizer, snackBar, Anime, Anime, route, router, 'admin/anime') || this;
+        var _this = _super.call(this, service, localizer, snackBar, route, router, 'admin/anime') || this;
         _this._fileService = fileService;
         return _this;
     }

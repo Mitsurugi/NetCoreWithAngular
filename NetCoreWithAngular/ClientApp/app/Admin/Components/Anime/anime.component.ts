@@ -21,7 +21,7 @@ export class AnimeComponent extends CoreComponent<number, Anime> {
     _animeService: AnimeService;
 
     constructor(service: AnimeService, localizer: LocalizerService, fileService: FileService<number>, animeService: AnimeService, snackBar: MatSnackBar) {
-        super(service, localizer, snackBar, Anime, Anime, Anime, Anime);
+        super(service, localizer, snackBar);
         this._fileService = fileService;
         this._animeService = animeService;
     }

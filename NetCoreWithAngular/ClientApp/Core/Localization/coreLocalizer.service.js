@@ -136,6 +136,8 @@ var CoreLocalizerService = /** @class */ (function () {
         this._strings["en-US"]["UserName"] = "User name";
         this._strings["ru-RU"]["Role"] = "Роль";
         this._strings["en-US"]["Role"] = "Role";
+        this._strings["ru-RU"]["ClearFilter"] = "Очистить";
+        this._strings["en-US"]["ClearFilter"] = "Clear";
     };
     CoreLocalizerService.prototype.AddOrUpdateStrings = function () {
     };

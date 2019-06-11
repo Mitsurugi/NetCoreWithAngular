@@ -49,7 +49,7 @@ import { saveAs } from 'file-saver';
 import { CoreLocalizerService } from '../Localization/coreLocalizer.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 var DependentComponent = /** @class */ (function () {
-    function DependentComponent(service, localizer, snackBar, typeGrid, typeCreate, typeEdit, typeFilter, typeParent, route) {
+    function DependentComponent(service, localizer, snackBar, route) {
         var _this = this;
         this._currentPage = 1;
         this._pageSize = 20;
@@ -63,16 +63,6 @@ var DependentComponent = /** @class */ (function () {
         this._service = service;
         this._localizer = localizer;
         this._snackBar = snackBar;
-        this._items = new Array();
-        this._itemEdit = new typeEdit();
-        this._itemCreate = new typeCreate();
-        this._filter = new typeFilter();
-        this._parent = new typeParent();
-        this.typeGrid = typeGrid;
-        this.typeCreate = typeCreate;
-        this.typeEdit = typeEdit;
-        this.typeFilter = typeFilter;
-        this.typeParent = typeParent;
         if (!this._parentId) {
             route.params.subscribe(function (params) { return _this._parentId = params['parentId']; });
         }
@@ -190,25 +180,22 @@ var DependentComponent = /** @class */ (function () {
             return __generator(this, function (_b) {
                 switch (_b.label) {
                     case 0:
-                        this._filter = new this.typeFilter();
-                        _b.label = 1;
-                    case 1:
-                        _b.trys.push([1, 4, , 5]);
+                        _b.trys.push([0, 3, , 4]);
                         popup = this._snackBar.open(this._localizer.localize("Loading"));
                         _a = this;
                         return [4 /*yield*/, this._service.getFilterModelAsync()];
-                    case 2:
+                    case 1:
                         _a._filter = _b.sent();
                         return [4 /*yield*/, this.reloadGridAsync()];
-                    case 3:
+                    case 2:
                         _b.sent();
                         popup.dismiss();
-                        return [3 /*break*/, 5];
-                    case 4:
+                        return [3 /*break*/, 4];
+                    case 3:
                         e_5 = _b.sent();
                         popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e_5.error));
-                        return [3 /*break*/, 5];
-                    case 5: return [2 /*return*/];
+                        return [3 /*break*/, 4];
+                    case 4: return [2 /*return*/];
                 }
             });
         });
@@ -561,7 +548,7 @@ var DependentComponent = /** @class */ (function () {
     ], DependentComponent.prototype, "_parentId", void 0);
     DependentComponent = __decorate([
         Component({}),
-        __metadata("design:paramtypes", [DependentService, CoreLocalizerService, MatSnackBar, Function, Function, Function, Function, Function, ActivatedRoute])
+        __metadata("design:paramtypes", [DependentService, CoreLocalizerService, MatSnackBar, ActivatedRoute])
     ], DependentComponent);
     return DependentComponent;
 }());

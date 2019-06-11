@@ -23,15 +23,13 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 import { Component } from '@angular/core';
 import { DependentComponent } from '../../../../Core/Components/dependent.component';
 import { AnimeEpisodeService } from '../../Services/animeEpisode.service';
-import { AnimeEpisode } from '../../Models/AnimeEpisode/animeEpisode';
 import { ActivatedRoute } from "@angular/router";
-import { Anime } from '../../Models/Anime/anime';
 import { LocalizerService } from '../../../Localizer/localizer.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 var AnimeEpisodeComponent = /** @class */ (function (_super) {
     __extends(AnimeEpisodeComponent, _super);
     function AnimeEpisodeComponent(service, localizer, route, snackBar) {
-        return _super.call(this, service, localizer, snackBar, AnimeEpisode, AnimeEpisode, AnimeEpisode, AnimeEpisode, Anime, route) || this;
+        return _super.call(this, service, localizer, snackBar, route) || this;
     }
     AnimeEpisodeComponent = __decorate([
         Component({

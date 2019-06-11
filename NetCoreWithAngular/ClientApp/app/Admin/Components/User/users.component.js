@@ -23,13 +23,12 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 import { Component } from '@angular/core';
 import { UsersService } from '../../../../Core/Users/users.service';
 import { UsersBaseComponent } from '../../../../Core/Users/usersBase.component';
-import { User } from '../../Models/User/user';
 import { LocalizerService } from '../../../Localizer/localizer.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 var UsersComponent = /** @class */ (function (_super) {
     __extends(UsersComponent, _super);
     function UsersComponent(service, localizer, snackBar) {
-        return _super.call(this, service, localizer, snackBar, User, User, User, User) || this;
+        return _super.call(this, service, localizer, snackBar) || this;
     }
     UsersComponent = __decorate([
         Component({
