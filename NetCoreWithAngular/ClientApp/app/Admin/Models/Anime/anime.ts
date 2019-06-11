@@ -7,4 +7,5 @@ export class Anime implements IEntity<number>{
     seasonCount: number;
     imageId?: number;
     imageUrl: SafeResourceUrl;
+    position: number;
 }

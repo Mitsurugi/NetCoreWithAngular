@@ -2,7 +2,6 @@
 import { CoreService } from '../Services/core.service';
 import { IEntity } from '../Models/IEntity'
 import { saveAs } from 'file-saver';
-import { forEach } from '@angular/router/src/utils/collection';
 import { CoreLocalizerService } from '../Localization/coreLocalizer.service';
 
 @Component({

@@ -37,9 +37,9 @@
                 <th></th>
             </tr>
         </thead>
-        <tbody>
+        <tbody cdkDropList (cdkDropListDropped)="moveAsync($event)">
             <ng-template ngFor let-i [ngForOf]="_items" let-n="index">
-                <tr>
+                <tr cdkDrag cdkDragLockAxis="y">
                     <th>
                         <input type="checkbox" [checked]="_checkedItems.indexOf(i.id) >= 0" (change)="toggleChecked(i.id)"/>
                     </th>

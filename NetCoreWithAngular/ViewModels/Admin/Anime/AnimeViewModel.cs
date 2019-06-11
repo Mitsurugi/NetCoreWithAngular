@@ -11,5 +11,7 @@ namespace NetCoreWithAngular.ViewModels
         public int? SeasonCount { get; set; }
 
         public int? ImageId { get; set; }
+
+        public int Position { get; set; }
     }
 }

@@ -1,7 +1,7 @@
-﻿var path = require('path');
-var webpack = require('webpack');
-var UglifyJSPlugin = require('uglifyjs-webpack-plugin'); // плагин минимизации
+﻿const path = require('path');
+const webpack = require('webpack');
 module.exports = {
+    mode: 'development',
     entry: {
         'polyfills': './ClientApp/polyfills.ts',
         'app': './ClientApp/main.ts'
@@ -30,6 +30,7 @@ module.exports = {
                 loader: 'html-loader'
             }, {
                 test: /\.css$/,
+                include: path.resolve(__dirname, 'ClientApp/app'),
                 loader: 'raw-loader'
             }
         ]
@@ -39,7 +40,6 @@ module.exports = {
             /angular(\\|\/)core/,
             path.resolve(__dirname, 'ClientApp'), // каталог с исходными файлами
             {} // карта маршрутов
-        ),
-        new UglifyJSPlugin()
+        )
     ]
-}
+};

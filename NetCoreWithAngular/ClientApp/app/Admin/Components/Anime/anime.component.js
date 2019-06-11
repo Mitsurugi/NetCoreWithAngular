@@ -61,11 +61,13 @@ import { AnimeService } from '../../Services/anime.service';
 import { FileService } from '../../../../Core/Services/file.service';
 import { Anime } from '../../Models/Anime/anime';
 import { LocalizerService } from '../../../Localizer/localizer.service';
+import { moveItemInArray } from '@angular/cdk/drag-drop';
 var AnimeComponent = /** @class */ (function (_super) {
     __extends(AnimeComponent, _super);
-    function AnimeComponent(service, localizer, fileService) {
+    function AnimeComponent(service, localizer, fileService, animeService) {
         var _this = _super.call(this, service, localizer, Anime, Anime, Anime, Anime) || this;
         _this._fileService = fileService;
+        _this._animeService = animeService;
         return _this;
     }
     AnimeComponent.prototype.deleteImageEditAsync = function () {
@@ -165,6 +167,34 @@ var AnimeComponent = /** @class */ (function (_super) {
             });
         });
     };
+    AnimeComponent.prototype.moveAsync = function (event) {
+        return __awaiter(this, void 0, void 0, function () {
+            var id, newPos, e_5;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        _a.trys.push([0, 3, , 4]);
+                        this._message = this._localizer.localize("Loading");
+                        id = this._items[event.previousIndex].id;
+                        newPos = this._items[event.currentIndex].position;
+                        moveItemInArray(this._items, event.previousIndex, event.currentIndex);
+                        return [4 /*yield*/, this._animeService.moveAsync(id, newPos)];
+                    case 1:
+                        _a.sent();
+                        return [4 /*yield*/, this.reloadGridAsync()];
+                    case 2:
+                        _a.sent();
+                        this._message = null;
+                        return [3 /*break*/, 4];
+                    case 3:
+                        e_5 = _a.sent();
+                        this._message = this._localizer.localizeWithValues("Error", e_5.error);
+                        return [3 /*break*/, 4];
+                    case 4: return [2 /*return*/];
+                }
+            });
+        });
+    };
     AnimeComponent = __decorate([
         Component({
             selector: 'anime',
@@ -172,7 +202,7 @@ var AnimeComponent = /** @class */ (function (_super) {
             styleUrls: ['./anime.component.css'],
             providers: [AnimeService, FileService]
         }),
-        __metadata("design:paramtypes", [AnimeService, LocalizerService, FileService])
+        __metadata("design:paramtypes", [AnimeService, LocalizerService, FileService, AnimeService])
     ], AnimeComponent);
     return AnimeComponent;
 }(CoreComponent));

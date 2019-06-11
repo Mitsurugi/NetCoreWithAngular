@@ -69,6 +69,18 @@ var AnimeService = /** @class */ (function (_super) {
         _this._sanitizer = sanitaizer;
         return _this;
     }
+    AnimeService.prototype.moveAsync = function (id, newPosition) {
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, this._http.post('api/' + this._controller + '/moveAsync?id=' + id + '&newPosition=' + newPosition, null).toPromise()];
+                    case 1:
+                        _a.sent();
+                        return [2 /*return*/];
+                }
+            });
+        });
+    };
     AnimeService.prototype.getGridAsync = function (pageNumber, pageSize, orderBy, filter) {
         return __awaiter(this, void 0, void 0, function () {
             var _this = this;

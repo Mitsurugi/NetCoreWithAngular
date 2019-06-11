@@ -1,7 +1,4 @@
 ﻿import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { forEach } from '@angular/router/src/utils/collection';
 
 @Injectable()
 export class CoreLocalizerService {

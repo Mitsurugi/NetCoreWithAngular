@@ -6,6 +6,7 @@ import { FileService } from '../../../../Core/Services/file.service';
 import { Anime } from '../../Models/Anime/anime';
 import { read } from 'fs';
 import { LocalizerService } from '../../../Localizer/localizer.service';
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 
 @Component({
     selector: 'anime',
@@ -16,10 +17,12 @@ import { LocalizerService } from '../../../Localizer/localizer.service';
 export class AnimeComponent extends CoreComponent<number, Anime> {
 
     _fileService: FileService<number>;
+    _animeService: AnimeService;
 
-    constructor(service: AnimeService, localizer: LocalizerService, fileService: FileService<number>) {
+    constructor(service: AnimeService, localizer: LocalizerService, fileService: FileService<number>, animeService: AnimeService) {
         super(service, localizer, Anime, Anime, Anime, Anime);
         this._fileService = fileService;
+        this._animeService = animeService;
     }
 
     async deleteImageEditAsync() {
@@ -66,6 +69,21 @@ export class AnimeComponent extends CoreComponent<number, Anime> {
         }
         catch (e) {
             this._message = e.error;
+        }
+    }
+
+    public async moveAsync(event: CdkDragDrop<Anime[]>) {
+        try {
+            this._message = this._localizer.localize("Loading");
+            var id = this._items[event.previousIndex].id;
+            var newPos = this._items[event.currentIndex].position;
+            moveItemInArray(this._items, event.previousIndex, event.currentIndex);
+            await this._animeService.moveAsync(id, newPos);
+            await this.reloadGridAsync();
+            this._message = null;
+        }
+        catch (e) {
+            this._message = this._localizer.localizeWithValues("Error", e.error);
         }
     }
 }
