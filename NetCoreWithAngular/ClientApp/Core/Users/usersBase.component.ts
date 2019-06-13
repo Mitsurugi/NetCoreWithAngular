@@ -85,6 +85,8 @@ export class UsersBaseComponent<TKey, TGrid extends IUser<TKey>, TCreate extends
             this._showEditId = null;
             this._resetPasswordId = null;
             this._totalPages = await this._service.getPagesCountAsync(this._pageSize, this._filter);
+            if (this._currentPage < 1) this._currentPage = 1;
+            if (this._currentPage > this._totalPages) this._currentPage = this._totalPages;
             this._items = await this._service.getGridAsync(this._currentPage, this._pageSize, this._orderBy, this._filter);
             popup.dismiss();
         }

@@ -168,6 +168,10 @@ var DependentComponent = /** @class */ (function () {
                         return [4 /*yield*/, this._service.getPagesCountAsync(this._pageSize, this._parentId, this._filter)];
                     case 1:
                         _a._totalPages = _c.sent();
+                        if (this._currentPage < 1)
+                            this._currentPage = 1;
+                        if (this._currentPage > this._totalPages)
+                            this._currentPage = this._totalPages;
                         _b = this;
                         return [4 /*yield*/, this._service.getGridAsync(this._parentId, this._currentPage, this._pageSize, this._orderBy, this._filter)];
                     case 2:

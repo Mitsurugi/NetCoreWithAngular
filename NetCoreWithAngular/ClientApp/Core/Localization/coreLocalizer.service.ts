@@ -80,8 +80,11 @@ export class CoreLocalizerService {
         this._strings["ru-RU"]["NextPage"] = "Следующая";
         this._strings["en-US"]["NextPage"] = "Next";
 
-        this._strings["ru-RU"]["PageXofY"] = "Страница {0} из {1}";
-        this._strings["en-US"]["PageXofY"] = "Page {0} of {1}";
+        this._strings["ru-RU"]["Page"] = "Страница";
+        this._strings["en-US"]["Page"] = "Page";
+
+        this._strings["ru-RU"]["PageOf"] = "из";
+        this._strings["en-US"]["PageOf"] = "of";
 
         this._strings["ru-RU"]["ExcelExport"] = "Экспортировать все страници в Excel";
         this._strings["en-US"]["ExcelExport"] = "Export all pages to excel";

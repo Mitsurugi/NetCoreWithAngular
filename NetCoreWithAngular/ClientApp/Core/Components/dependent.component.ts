@@ -95,6 +95,8 @@ export class DependentComponent<TKey, TParentKey, TParentView, TGrid extends IDe
             var popup = this._snackBar.open(this._localizer.localize("Loading"));
             this._showEditId = null;
             this._totalPages = await this._service.getPagesCountAsync(this._pageSize, this._parentId, this._filter);
+            if (this._currentPage < 1) this._currentPage = 1;
+            if (this._currentPage > this._totalPages) this._currentPage = this._totalPages;
             this._items = await this._service.getGridAsync(this._parentId, this._currentPage, this._pageSize, this._orderBy, this._filter);    
             await this.getCreateModelAsync();
             popup.dismiss();

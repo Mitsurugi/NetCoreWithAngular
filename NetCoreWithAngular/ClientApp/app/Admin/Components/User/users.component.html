@@ -2,7 +2,7 @@
 <div class="grid">
     <div class="pagination">
         <button class="btn btn-default" (click)="prevPageAsync()">{{_localizer.localize("PrevPage")}}</button>
-        <span>{{_localizer.localizeWithValues("PageXofY", _currentPage, _totalPages)}}</span>
+        <span>{{_localizer.localize("Page")}} <input name="currentPage" [(ngModel)]="_currentPage" type="number" required (change)="reloadGridAsync()" style="width:100px;" /> {{_localizer.localize("PageOf")}} {{_totalPages}}</span>
         <button class="btn btn-default" (click)="nextPageAsync()">{{_localizer.localize("NextPage")}}</button>
         <button class="btn btn-default" (click)="getExcelExportAsync()">{{_localizer.localize("ExcelExport")}}</button>
     </div>
