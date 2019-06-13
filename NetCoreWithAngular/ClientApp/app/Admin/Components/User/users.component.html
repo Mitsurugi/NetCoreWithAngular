@@ -68,7 +68,7 @@
                     </div>
                 </div>
                 <div class="form-group col-sm-10">
-                    <button class="btn btn-default" (click)="resetPasswordAsync(newPassword.value)" [disabled]="editForm.invalid">{{_localizer.localize("Save")}}</button>
+                    <button class="btn btn-default" (click)="resetPasswordAsync(newPassword.value)" [disabled]="newPassword.invalid">{{_localizer.localize("Save")}}</button>
                 </div>
                 <div style="clear:both"></div>
             </div>
