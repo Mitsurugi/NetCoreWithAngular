@@ -77,7 +77,11 @@ var CoreComponent = /** @class */ (function () {
                         return [3 /*break*/, 3];
                     case 2:
                         e_1 = _b.sent();
-                        popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e_1.error));
+                        popup.dismiss();
+                        console.log(e_1);
+                        if (e_1.error) {
+                            popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e_1.error));
+                        }
                         return [3 /*break*/, 3];
                     case 3: return [2 /*return*/];
                 }
@@ -100,7 +104,11 @@ var CoreComponent = /** @class */ (function () {
                         return [3 /*break*/, 3];
                     case 2:
                         e_2 = _b.sent();
-                        popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e_2.error));
+                        popup.dismiss();
+                        console.log(e_2);
+                        if (e_2.error) {
+                            popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e_2.error));
+                        }
                         return [3 /*break*/, 3];
                     case 3: return [2 /*return*/];
                 }
@@ -126,7 +134,11 @@ var CoreComponent = /** @class */ (function () {
                         return [3 /*break*/, 4];
                     case 3:
                         e_3 = _b.sent();
-                        popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e_3.error));
+                        popup.dismiss();
+                        console.log(e_3);
+                        if (e_3.error) {
+                            popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e_3.error));
+                        }
                         return [3 /*break*/, 4];
                     case 4: return [2 /*return*/];
                 }
@@ -157,7 +169,11 @@ var CoreComponent = /** @class */ (function () {
                         return [3 /*break*/, 5];
                     case 4:
                         e_4 = _c.sent();
-                        popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e_4.error));
+                        popup.dismiss();
+                        console.log(e_4);
+                        if (e_4.error) {
+                            popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e_4.error));
+                        }
                         return [3 /*break*/, 5];
                     case 5: return [2 /*return*/];
                 }
@@ -183,7 +199,11 @@ var CoreComponent = /** @class */ (function () {
                         return [3 /*break*/, 4];
                     case 3:
                         e_5 = _b.sent();
-                        popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e_5.error));
+                        popup.dismiss();
+                        console.log(e_5);
+                        if (e_5.error) {
+                            popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e_5.error));
+                        }
                         return [3 /*break*/, 4];
                     case 4: return [2 /*return*/];
                 }
@@ -209,7 +229,11 @@ var CoreComponent = /** @class */ (function () {
                         return [3 /*break*/, 4];
                     case 3:
                         e_6 = _a.sent();
-                        popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e_6.error));
+                        popup.dismiss();
+                        console.log(e_6);
+                        if (e_6.error) {
+                            popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e_6.error));
+                        }
                         return [3 /*break*/, 4];
                     case 4: return [2 /*return*/];
                 }
@@ -235,7 +259,11 @@ var CoreComponent = /** @class */ (function () {
                         return [3 /*break*/, 4];
                     case 3:
                         e_7 = _a.sent();
-                        popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e_7.error));
+                        popup.dismiss();
+                        console.log(e_7);
+                        if (e_7.error) {
+                            popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e_7.error));
+                        }
                         return [3 /*break*/, 4];
                     case 4: return [2 /*return*/];
                 }
@@ -263,7 +291,11 @@ var CoreComponent = /** @class */ (function () {
                         return [3 /*break*/, 4];
                     case 3:
                         e_8 = _a.sent();
-                        popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e_8.error));
+                        popup.dismiss();
+                        console.log(e_8);
+                        if (e_8.error) {
+                            popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e_8.error));
+                        }
                         return [3 /*break*/, 4];
                     case 4: return [2 /*return*/];
                 }
@@ -280,7 +312,11 @@ var CoreComponent = /** @class */ (function () {
                 this._isShowCreate = false;
             }
             catch (e) {
-                var popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e.error));
+                popup.dismiss();
+                console.log(e);
+                if (e.error) {
+                    var popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e.error));
+                }
             }
         }
     };
@@ -304,7 +340,11 @@ var CoreComponent = /** @class */ (function () {
                         return [3 /*break*/, 4];
                     case 3:
                         e_9 = _a.sent();
-                        popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e_9.error));
+                        popup.dismiss();
+                        console.log(e_9);
+                        if (e_9.error) {
+                            popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e_9.error));
+                        }
                         return [3 /*break*/, 4];
                     case 4: return [2 /*return*/];
                 }
@@ -329,7 +369,11 @@ var CoreComponent = /** @class */ (function () {
                         return [3 /*break*/, 4];
                     case 3:
                         e_10 = _a.sent();
-                        popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e_10.error));
+                        popup.dismiss();
+                        console.log(e_10);
+                        if (e_10.error) {
+                            popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e_10.error));
+                        }
                         return [3 /*break*/, 4];
                     case 4: return [2 /*return*/];
                 }
@@ -354,7 +398,11 @@ var CoreComponent = /** @class */ (function () {
                         return [3 /*break*/, 4];
                     case 3:
                         e_11 = _a.sent();
-                        popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e_11.error));
+                        popup.dismiss();
+                        console.log(e_11);
+                        if (e_11.error) {
+                            popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e_11.error));
+                        }
                         return [3 /*break*/, 4];
                     case 4: return [2 /*return*/];
                 }
@@ -383,7 +431,11 @@ var CoreComponent = /** @class */ (function () {
                         return [3 /*break*/, 5];
                     case 4:
                         e_12 = _a.sent();
-                        popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e_12.error));
+                        popup.dismiss();
+                        console.log(e_12);
+                        if (e_12.error) {
+                            popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e_12.error));
+                        }
                         return [3 /*break*/, 5];
                     case 5: return [2 /*return*/];
                 }
@@ -409,7 +461,11 @@ var CoreComponent = /** @class */ (function () {
                         return [3 /*break*/, 4];
                     case 3:
                         e_13 = _b.sent();
-                        popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e_13.error));
+                        popup.dismiss();
+                        console.log(e_13);
+                        if (e_13.error) {
+                            popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e_13.error));
+                        }
                         return [3 /*break*/, 4];
                     case 4: return [2 /*return*/];
                 }
@@ -432,7 +488,11 @@ var CoreComponent = /** @class */ (function () {
                         return [3 /*break*/, 3];
                     case 2:
                         e_14 = _a.sent();
-                        popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e_14.error));
+                        popup.dismiss();
+                        console.log(e_14);
+                        if (e_14.error) {
+                            popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e_14.error));
+                        }
                         return [3 /*break*/, 3];
                     case 3: return [2 /*return*/];
                 }
@@ -455,7 +515,11 @@ var CoreComponent = /** @class */ (function () {
                         return [3 /*break*/, 3];
                     case 2:
                         e_15 = _a.sent();
-                        popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e_15.error));
+                        popup.dismiss();
+                        console.log(e_15);
+                        if (e_15.error) {
+                            popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e_15.error));
+                        }
                         return [3 /*break*/, 3];
                     case 3: return [2 /*return*/];
                 }
@@ -464,27 +528,31 @@ var CoreComponent = /** @class */ (function () {
     };
     CoreComponent.prototype.importAsync = function () {
         return __awaiter(this, void 0, void 0, function () {
-            var e_16;
+            var popup, popup, popup, e_16, popup;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         if (!(this._importFile == null)) return [3 /*break*/, 1];
-                        this._importResult = this._localizer.localize("ImportFileNull");
+                        popup = this._snackBar.open(this._localizer.localize("ImportFileNull"), null, { duration: 5000 });
                         return [3 /*break*/, 5];
                     case 1:
                         _a.trys.push([1, 4, , 5]);
-                        this._importResult = this._localizer.localize("Loading");
+                        popup = this._snackBar.open(this._localizer.localize("Loading"));
                         return [4 /*yield*/, this._service.importAsync(this._importFile)];
                     case 2:
                         _a.sent();
                         return [4 /*yield*/, this.reloadGridAsync()];
                     case 3:
                         _a.sent();
-                        this._importResult = this._localizer.localize("ImportSuccess");
+                        popup = this._snackBar.open(this._localizer.localize("ImportSuccess"), null, { duration: 5000 });
                         return [3 /*break*/, 5];
                     case 4:
                         e_16 = _a.sent();
-                        this._importResult = JSON.stringify(this._localizer.localizeWithValues("Error", e_16.error));
+                        popup.dismiss();
+                        console.log(e_16);
+                        if (e_16.error) {
+                            popup = this._snackBar.open(this._localizer.localizeWithValues("Error", JSON.stringify(e_16.error)));
+                        }
                         return [3 /*break*/, 5];
                     case 5: return [2 /*return*/];
                 }

@@ -24,56 +24,72 @@ export class AnimeEditComponent extends EditComponent<number, Anime> {
         this._fileService = fileService;
     }
 
-    async deleteImageEditAsync() {
-        var popup = this._snackBar.open(this._localizer.localize("Loading"));
+    async deleteImageEditAsync() {        
         try {
             if (this._itemEdit.imageId != null) {
+                var popup = this._snackBar.open(this._localizer.localize("Loading"));
                 await this._fileService.deleteAsync(this._itemEdit.imageId);
                 this._itemEdit.imageId = null;
-            }
-            popup.dismiss();
+                popup.dismiss();
+            }            
         }
         catch (e) {
-            var popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e.error));
+            popup.dismiss();
+            console.log(e);
+            if (e.error) {
+                var popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e.error));
+            }
         }
     }
 
-    async deleteImageCreateAsync() {
-        var popup = this._snackBar.open(this._localizer.localize("Loading"));
+    async deleteImageCreateAsync() {        
         try {
             if (this._itemCreate.imageId != null) {
+                var popup = this._snackBar.open(this._localizer.localize("Loading"));
                 await this._fileService.deleteAsync(this._itemCreate.imageId);
                 this._itemCreate.imageId = null;
-            }
-            popup.dismiss();
+                popup.dismiss();
+            }            
         }
         catch (e) {
-            var popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e.error));
+            popup.dismiss();
+            console.log(e);
+            if (e.error) {
+                var popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e.error));
+            }
         }
     }
 
-    async uploadImageEditAsync(file: File) {
-        var popup = this._snackBar.open(this._localizer.localize("Loading"));
+    async uploadImageEditAsync(file: File) {        
         try {
+            var popup = this._snackBar.open(this._localizer.localize("Loading"));
             let id = await this._fileService.uploadAsync(file);
             this._itemEdit.imageId = id;
             popup.dismiss();
         }
         catch (e) {
-            var popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e.error));
+            popup.dismiss();
+            console.log(e);
+            if (e.error) {
+                var popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e.error));
+            }
         }
     }
 
-    async uploadImageCreateAsync(file: File) {
-        var popup = this._snackBar.open(this._localizer.localize("Loading"));
+    async uploadImageCreateAsync(file: File) {        
         try {
+            var popup = this._snackBar.open(this._localizer.localize("Loading"));
             await this.deleteImageCreateAsync();
             let id = await this._fileService.uploadAsync(file);
             this._itemCreate.imageId = id;
             popup.dismiss();
         }
         catch (e) {
-            var popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e.error));
+            popup.dismiss();
+            console.log(e);
+            if (e.error) {
+                var popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e.error));
+            }
         }
     }
 }

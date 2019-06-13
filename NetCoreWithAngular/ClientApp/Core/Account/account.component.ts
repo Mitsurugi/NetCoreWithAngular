@@ -43,7 +43,11 @@ export class CoreAccountComponent implements OnInit {
             this._router.navigate([this._redirectUrl]);
         }
         catch (e) {
-            var popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e.error));
+            popup.dismiss();
+            console.log(e);
+            if (e.error) {
+                var popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e.error));
+            }
         }
     }
 
@@ -54,7 +58,11 @@ export class CoreAccountComponent implements OnInit {
             popup.dismiss();
         }
         catch (e) {
-            var popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e.error));
+            popup.dismiss();
+            console.log(e);
+            if (e.error) {
+                var popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e.error));
+            }
         }
     }
 
@@ -62,10 +70,14 @@ export class CoreAccountComponent implements OnInit {
         try {
             var popup = this._snackBar.open(this._localizer.localize("Loading"));
             await this._service.changePasswordAsync(this._changePasswordModel);
-            popup = this._snackBar.open(this._localizer.localize(this._localizer.localize("PassChangeSuccess")));
+            popup = this._snackBar.open(this._localizer.localize("PassChangeSuccess"), null, { duration: 5000 });
         }
         catch (e) {
-            var popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e.error));
+            popup.dismiss();
+            console.log(e);
+            if (e.error) {
+                var popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e.error));
+            }
         }
     }
 }

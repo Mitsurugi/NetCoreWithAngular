@@ -85,7 +85,11 @@ var CoreAccountComponent = /** @class */ (function () {
                         return [3 /*break*/, 3];
                     case 2:
                         e_1 = _a.sent();
-                        popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e_1.error));
+                        popup.dismiss();
+                        console.log(e_1);
+                        if (e_1.error) {
+                            popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e_1.error));
+                        }
                         return [3 /*break*/, 3];
                     case 3: return [2 /*return*/];
                 }
@@ -99,7 +103,11 @@ var CoreAccountComponent = /** @class */ (function () {
             popup.dismiss();
         }
         catch (e) {
-            var popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e.error));
+            popup.dismiss();
+            console.log(e);
+            if (e.error) {
+                var popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e.error));
+            }
         }
     };
     CoreAccountComponent.prototype.changePasswordAsync = function () {
@@ -113,11 +121,15 @@ var CoreAccountComponent = /** @class */ (function () {
                         return [4 /*yield*/, this._service.changePasswordAsync(this._changePasswordModel)];
                     case 1:
                         _a.sent();
-                        popup = this._snackBar.open(this._localizer.localize(this._localizer.localize("PassChangeSuccess")));
+                        popup = this._snackBar.open(this._localizer.localize("PassChangeSuccess"), null, { duration: 5000 });
                         return [3 /*break*/, 3];
                     case 2:
                         e_2 = _a.sent();
-                        popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e_2.error));
+                        popup.dismiss();
+                        console.log(e_2);
+                        if (e_2.error) {
+                            popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e_2.error));
+                        }
                         return [3 /*break*/, 3];
                     case 3: return [2 /*return*/];
                 }

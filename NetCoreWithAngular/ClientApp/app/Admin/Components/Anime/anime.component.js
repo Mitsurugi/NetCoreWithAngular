@@ -76,22 +76,25 @@ var AnimeComponent = /** @class */ (function (_super) {
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
+                        _a.trys.push([0, 3, , 4]);
+                        if (!(this._itemEdit.imageId != null)) return [3 /*break*/, 2];
                         popup = this._snackBar.open(this._localizer.localize("Loading"));
-                        _a.label = 1;
-                    case 1:
-                        _a.trys.push([1, 4, , 5]);
-                        if (!(this._itemEdit.imageId != null)) return [3 /*break*/, 3];
                         return [4 /*yield*/, this._fileService.deleteAsync(this._itemEdit.imageId)];
-                    case 2:
+                    case 1:
                         _a.sent();
                         this._itemEdit.imageId = null;
-                        _a.label = 3;
-                    case 3: return [3 /*break*/, 5];
-                    case 4:
+                        popup.dismiss();
+                        _a.label = 2;
+                    case 2: return [3 /*break*/, 4];
+                    case 3:
                         e_1 = _a.sent();
-                        popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e_1.error));
-                        return [3 /*break*/, 5];
-                    case 5: return [2 /*return*/];
+                        popup.dismiss();
+                        console.log(e_1);
+                        if (e_1.error) {
+                            popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e_1.error));
+                        }
+                        return [3 /*break*/, 4];
+                    case 4: return [2 /*return*/];
                 }
             });
         });
@@ -102,24 +105,21 @@ var AnimeComponent = /** @class */ (function (_super) {
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
+                        _a.trys.push([0, 3, , 4]);
+                        if (!(this._itemCreate.imageId != null)) return [3 /*break*/, 2];
                         popup = this._snackBar.open(this._localizer.localize("Loading"));
-                        _a.label = 1;
-                    case 1:
-                        _a.trys.push([1, 4, , 5]);
-                        if (!(this._itemCreate.imageId != null)) return [3 /*break*/, 3];
                         return [4 /*yield*/, this._fileService.deleteAsync(this._itemCreate.imageId)];
-                    case 2:
+                    case 1:
                         _a.sent();
                         this._itemCreate.imageId = null;
-                        _a.label = 3;
-                    case 3:
                         popup.dismiss();
-                        return [3 /*break*/, 5];
-                    case 4:
+                        _a.label = 2;
+                    case 2: return [3 /*break*/, 4];
+                    case 3:
                         e_2 = _a.sent();
                         popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e_2.error));
-                        return [3 /*break*/, 5];
-                    case 5: return [2 /*return*/];
+                        return [3 /*break*/, 4];
+                    case 4: return [2 /*return*/];
                 }
             });
         });
@@ -130,21 +130,19 @@ var AnimeComponent = /** @class */ (function (_super) {
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
+                        _a.trys.push([0, 2, , 3]);
                         popup = this._snackBar.open(this._localizer.localize("Loading"));
-                        _a.label = 1;
-                    case 1:
-                        _a.trys.push([1, 3, , 4]);
                         return [4 /*yield*/, this._fileService.uploadAsync(file)];
-                    case 2:
+                    case 1:
                         id = _a.sent();
                         this._itemEdit.imageId = id;
                         popup.dismiss();
-                        return [3 /*break*/, 4];
-                    case 3:
+                        return [3 /*break*/, 3];
+                    case 2:
                         e_3 = _a.sent();
                         popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e_3.error));
-                        return [3 /*break*/, 4];
-                    case 4: return [2 /*return*/];
+                        return [3 /*break*/, 3];
+                    case 3: return [2 /*return*/];
                 }
             });
         });
@@ -155,24 +153,22 @@ var AnimeComponent = /** @class */ (function (_super) {
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
+                        _a.trys.push([0, 3, , 4]);
                         popup = this._snackBar.open(this._localizer.localize("Loading"));
-                        _a.label = 1;
-                    case 1:
-                        _a.trys.push([1, 4, , 5]);
                         return [4 /*yield*/, this.deleteImageCreateAsync()];
-                    case 2:
+                    case 1:
                         _a.sent();
                         return [4 /*yield*/, this._fileService.uploadAsync(file)];
-                    case 3:
+                    case 2:
                         id = _a.sent();
                         this._itemCreate.imageId = id;
                         popup.dismiss();
-                        return [3 /*break*/, 5];
-                    case 4:
+                        return [3 /*break*/, 4];
+                    case 3:
                         e_4 = _a.sent();
                         popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e_4.error));
-                        return [3 /*break*/, 5];
-                    case 5: return [2 /*return*/];
+                        return [3 /*break*/, 4];
+                    case 4: return [2 /*return*/];
                 }
             });
         });

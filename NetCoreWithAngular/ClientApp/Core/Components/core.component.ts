@@ -24,7 +24,6 @@ export class CoreComponent<TKey, TGrid extends IEntity<TKey>, TCreate extends IE
     _showEditId?: TKey = null;
     _checkedItems: TKey[] = [];
     _importFile: File = null;
-    _importResult: string;
     _isShowImport: boolean;
     _orderBy: string = '';
 
@@ -41,7 +40,11 @@ export class CoreComponent<TKey, TGrid extends IEntity<TKey>, TCreate extends IE
             popup.dismiss();
         }
         catch (e) {
-            var popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e.error));
+            popup.dismiss();
+            console.log(e);
+            if (e.error) {
+                var popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e.error));
+            }
         }
     }
 
@@ -52,7 +55,11 @@ export class CoreComponent<TKey, TGrid extends IEntity<TKey>, TCreate extends IE
             popup.dismiss();
         }
         catch (e) {
-            var popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e.error));
+            popup.dismiss();
+            console.log(e);
+            if (e.error) {
+                var popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e.error));
+            }
         }
     }
 
@@ -64,7 +71,11 @@ export class CoreComponent<TKey, TGrid extends IEntity<TKey>, TCreate extends IE
             popup.dismiss();
         }
         catch (e) {
-            var popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e.error));
+            popup.dismiss();
+            console.log(e);
+            if (e.error) {
+                var popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e.error));
+            }
         }
     }
 
@@ -78,7 +89,11 @@ export class CoreComponent<TKey, TGrid extends IEntity<TKey>, TCreate extends IE
             popup.dismiss();
         }
         catch (e) {
-            var popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e.error));
+            popup.dismiss();
+            console.log(e);
+            if (e.error) {
+                var popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e.error));
+            }
         }
     }
 
@@ -90,7 +105,11 @@ export class CoreComponent<TKey, TGrid extends IEntity<TKey>, TCreate extends IE
             popup.dismiss();
         }
         catch (e) {
-            var popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e.error));
+            popup.dismiss();
+            console.log(e);
+            if (e.error) {
+                var popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e.error));
+            }
         }
     }
 
@@ -103,7 +122,11 @@ export class CoreComponent<TKey, TGrid extends IEntity<TKey>, TCreate extends IE
                 popup.dismiss();
             }
             catch (e) {
-                var popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e.error));
+                popup.dismiss();
+                console.log(e);
+                if (e.error) {
+                    var popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e.error));
+                }
             }
         }
     }
@@ -117,7 +140,11 @@ export class CoreComponent<TKey, TGrid extends IEntity<TKey>, TCreate extends IE
                 popup.dismiss();
             }
             catch (e) {
-                var popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e.error));
+                popup.dismiss();
+                console.log(e);
+                if (e.error) {
+                    var popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e.error));
+                }
             }
         }
     }
@@ -135,7 +162,11 @@ export class CoreComponent<TKey, TGrid extends IEntity<TKey>, TCreate extends IE
                 popup.dismiss();
             }
             catch (e) {
-                var popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e.error));
+                popup.dismiss();
+                console.log(e);
+                if (e.error) {
+                    var popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e.error));
+                }
             }
         }
     }
@@ -150,7 +181,11 @@ export class CoreComponent<TKey, TGrid extends IEntity<TKey>, TCreate extends IE
                 this._isShowCreate = false;
             }
             catch (e) {
-                var popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e.error));
+                popup.dismiss();
+                console.log(e);
+                if (e.error) {
+                    var popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e.error));
+                }
             }
         }
     }
@@ -167,7 +202,11 @@ export class CoreComponent<TKey, TGrid extends IEntity<TKey>, TCreate extends IE
                 popup.dismiss();
             }
             catch (e) {
-                var popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e.error));
+                popup.dismiss();
+                console.log(e);
+                if (e.error) {
+                    var popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e.error));
+                }
             }
         }
     }    
@@ -180,7 +219,11 @@ export class CoreComponent<TKey, TGrid extends IEntity<TKey>, TCreate extends IE
             popup.dismiss();
         }
         catch (e) {
-            var popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e.error));
+            popup.dismiss();
+            console.log(e);
+            if (e.error) {
+                var popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e.error));
+            }
         }
     }
 
@@ -192,7 +235,11 @@ export class CoreComponent<TKey, TGrid extends IEntity<TKey>, TCreate extends IE
             popup.dismiss();
         }
         catch (e) {
-            var popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e.error));
+            popup.dismiss();
+            console.log(e);
+            if (e.error) {
+                var popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e.error));
+            }
         }
     }
 
@@ -206,7 +253,11 @@ export class CoreComponent<TKey, TGrid extends IEntity<TKey>, TCreate extends IE
             popup.dismiss();
         }
         catch (e) {
-            var popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e.error));
+            popup.dismiss();
+            console.log(e);
+            if (e.error) {
+                var popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e.error));
+            }
         }
     }
 
@@ -218,7 +269,11 @@ export class CoreComponent<TKey, TGrid extends IEntity<TKey>, TCreate extends IE
             popup.dismiss();
         }
         catch (e) {
-            var popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e.error));
+            popup.dismiss();
+            console.log(e);
+            if (e.error) {
+                var popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e.error));
+            }
         }
     }
 
@@ -230,7 +285,11 @@ export class CoreComponent<TKey, TGrid extends IEntity<TKey>, TCreate extends IE
             saveAs(b, "ExcelExport.xlsx");
         }
         catch (e) {
-            var popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e.error));
+            popup.dismiss();
+            console.log(e);
+            if (e.error) {
+                var popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e.error));
+            }
         }
     }
 
@@ -242,23 +301,31 @@ export class CoreComponent<TKey, TGrid extends IEntity<TKey>, TCreate extends IE
             saveAs(b, "ImportTemplate.xlsx");
         }
         catch (e) {
-            var popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e.error));
+            popup.dismiss();
+            console.log(e);
+            if (e.error) {
+                var popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e.error));
+            }
         }
     }
 
     public async importAsync() {
         if (this._importFile == null) {
-            this._importResult = this._localizer.localize("ImportFileNull");
+            var popup = this._snackBar.open(this._localizer.localize("ImportFileNull"), null, { duration: 5000 });
         }
         else {
             try {
-                this._importResult = this._localizer.localize("Loading");       
+                var popup = this._snackBar.open(this._localizer.localize("Loading"));
                 await this._service.importAsync(this._importFile);
                 await this.reloadGridAsync();
-                this._importResult = this._localizer.localize("ImportSuccess");
+                var popup = this._snackBar.open(this._localizer.localize("ImportSuccess"), null, { duration: 5000 });
             }
             catch (e) {
-                this._importResult = JSON.stringify(this._localizer.localizeWithValues("Error", e.error));
+                popup.dismiss();
+                console.log(e);
+                if (e.error) {
+                    var popup = this._snackBar.open(this._localizer.localizeWithValues("Error", JSON.stringify(e.error)));
+                }
             }
         }
     }

@@ -43,7 +43,11 @@ export class EditComponent<TKey, TGrid extends IEntity<TKey>, TCreate extends IE
             popup.dismiss();
         }
         catch (e) {
-            var popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e.error));
+            popup.dismiss();
+            console.log(e);
+            if (e.error) {
+                var popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e.error));
+            }
         }
     }
 
@@ -54,7 +58,11 @@ export class EditComponent<TKey, TGrid extends IEntity<TKey>, TCreate extends IE
             popup.dismiss();
         }
         catch (e) {
-            var popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e.error));
+            popup.dismiss();
+            console.log(e);
+            if (e.error) {
+                var popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e.error));
+            }
         }
     }
 
@@ -69,7 +77,11 @@ export class EditComponent<TKey, TGrid extends IEntity<TKey>, TCreate extends IE
             popup.dismiss();
         }
         catch (e) {
-            var popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e.error));
+            popup.dismiss();
+            console.log(e);
+            if (e.error) {
+                var popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e.error));
+            }
         }
     }    
 
@@ -82,7 +94,11 @@ export class EditComponent<TKey, TGrid extends IEntity<TKey>, TCreate extends IE
             this._router.navigate([this._listUrl + '/edit/' + result.id]);
         }
         catch (e) {
-            var popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e.error));
+            popup.dismiss();
+            console.log(e);
+            if (e.error) {
+                var popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e.error));
+            }
         }
     }
 
@@ -90,10 +106,14 @@ export class EditComponent<TKey, TGrid extends IEntity<TKey>, TCreate extends IE
         var popup = this._snackBar.open(this._localizer.localize("Loading"));
         try {
             this._itemEdit = await this._service.saveEditModelAsync(this._itemEdit);
-            popup = this._snackBar.open(this._localizer.localize("EditSuccess"));
+            popup = this._snackBar.open(this._localizer.localize("EditSuccess"), null, { duration: 5000 });
         }
         catch (e) {
-            var popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e.error));
+            popup.dismiss();
+            console.log(e);
+            if (e.error) {
+                var popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e.error));
+            }
         }
     }
 }

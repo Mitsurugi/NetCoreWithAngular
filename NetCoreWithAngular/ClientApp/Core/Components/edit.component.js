@@ -77,7 +77,11 @@ var EditComponent = /** @class */ (function () {
                         return [3 /*break*/, 4];
                     case 3:
                         e_1 = _b.sent();
-                        popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e_1.error));
+                        popup.dismiss();
+                        console.log(e_1);
+                        if (e_1.error) {
+                            popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e_1.error));
+                        }
                         return [3 /*break*/, 4];
                     case 4: return [2 /*return*/];
                 }
@@ -102,7 +106,11 @@ var EditComponent = /** @class */ (function () {
                         return [3 /*break*/, 4];
                     case 3:
                         e_2 = _b.sent();
-                        popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e_2.error));
+                        popup.dismiss();
+                        console.log(e_2);
+                        if (e_2.error) {
+                            popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e_2.error));
+                        }
                         return [3 /*break*/, 4];
                     case 4: return [2 /*return*/];
                 }
@@ -124,7 +132,11 @@ var EditComponent = /** @class */ (function () {
                     popup.dismiss();
                 }
                 catch (e) {
-                    popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e.error));
+                    popup.dismiss();
+                    console.log(e);
+                    if (e.error) {
+                        popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e.error));
+                    }
                 }
                 return [2 /*return*/];
             });
@@ -151,7 +163,11 @@ var EditComponent = /** @class */ (function () {
                         return [3 /*break*/, 5];
                     case 4:
                         e_3 = _a.sent();
-                        popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e_3.error));
+                        popup.dismiss();
+                        console.log(e_3);
+                        if (e_3.error) {
+                            popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e_3.error));
+                        }
                         return [3 /*break*/, 5];
                     case 5: return [2 /*return*/];
                 }
@@ -172,11 +188,15 @@ var EditComponent = /** @class */ (function () {
                         return [4 /*yield*/, this._service.saveEditModelAsync(this._itemEdit)];
                     case 2:
                         _a._itemEdit = _b.sent();
-                        popup = this._snackBar.open(this._localizer.localize("EditSuccess"));
+                        popup = this._snackBar.open(this._localizer.localize("EditSuccess"), null, { duration: 5000 });
                         return [3 /*break*/, 4];
                     case 3:
                         e_4 = _b.sent();
-                        popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e_4.error));
+                        popup.dismiss();
+                        console.log(e_4);
+                        if (e_4.error) {
+                            popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e_4.error));
+                        }
                         return [3 /*break*/, 4];
                     case 4: return [2 /*return*/];
                 }
