@@ -3,10 +3,10 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Localization;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CoreLibrary
-{
-    [ApiController]
+{    
     [Route("api/[controller]/[action]")]
     public class BaseFileController<TFile, TKey> : Controller
         where TFile: FileModel<TKey>, new()

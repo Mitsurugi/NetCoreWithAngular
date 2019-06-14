@@ -97,9 +97,9 @@ namespace CoreLibrary
         public virtual async Task<List<TGrid>> GetGridAsync(int pageSize, int pageNumber, string orderBy, TFilter filter, string searchString)
         {
             if (pageNumber < 1)
-                throw new Exception($"Wrong pageNumber = {pageNumber}. Must be 1 or greater");
+                pageNumber = 1;
             if (pageSize < 1)
-                throw new Exception($"Wrong pageSize = {pageSize}. Must be 1 or greater");
+                pageSize = 1;
 
             var query = ApplyFilter(GetQuery(), filter);
             query = ApplySorting(query, orderBy);

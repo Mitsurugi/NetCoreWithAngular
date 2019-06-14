@@ -111,15 +111,15 @@ namespace CoreLibrary
         public virtual async Task<List<TGrid>> GetGridAsync(int pageSize, int pageNumber, TParentKey parentId, string orderBy, TFilter filter, string searchString)
         {
             if (pageNumber < 1)
-                throw new Exception($"Wrong pageNumber = {pageNumber}. Must be 1 or greater");
+                pageNumber = 1;
             if (pageSize < 1)
-                throw new Exception($"Wrong pageSize = {pageSize}. Must be 1 or greater");
+                pageSize = 1;
 
             var query = ApplyFilter(GetQuery(parentId), filter);
             query = ApplySorting(query, orderBy);
             query = ApplySearch(query, searchString);
 
-            var grid =  await query.Skip(pageSize * (pageNumber - 1)).Take(pageSize).ProjectTo<TGrid>(_mapper.ConfigurationProvider).ToListAsync();
+            var grid = await query.Skip(pageSize * (pageNumber - 1)).Take(pageSize).ProjectTo<TGrid>(_mapper.ConfigurationProvider).ToListAsync();
             grid = await FillGridModelAsync(grid);
             return grid;
         }
@@ -261,11 +261,11 @@ namespace CoreLibrary
                 foreach (var field in fields)
                 {
                     colNumber++;
-                    var cell = row.Cell(colNumber);                    
+                    var cell = row.Cell(colNumber);
                     try
-                    {                        
+                    {
                         string strVal = cell.GetValue<string>().Trim();
-                        var req = field.GetCustomAttributes(typeof(RequiredAttribute), false).FirstOrDefault() as RequiredAttribute;                        
+                        var req = field.GetCustomAttributes(typeof(RequiredAttribute), false).FirstOrDefault() as RequiredAttribute;
                         if (string.IsNullOrEmpty(strVal))
                         {
                             if (req != null)
@@ -301,7 +301,7 @@ namespace CoreLibrary
                         {
                             typeof(TCreate).GetProperty(field.Name).SetValue(item, strVal);
                             continue;
-                        }                        
+                        }
                         if (t.IsPrimitive || t == typeof(DateTime))
                         {
                             try
@@ -329,7 +329,7 @@ namespace CoreLibrary
 
                             continue;
                         }
-                        
+
                         throw new Exception("Unsopported field type. Check your create model");
 
                     }
@@ -346,7 +346,7 @@ namespace CoreLibrary
                             name = field.Name;
                         }
                         errors += _localizer["ImportRowError", rowNumber, name, ex.Message] + "; ";
-                    }                    
+                    }
                 }
 
                 items.Add(item);
@@ -437,7 +437,7 @@ namespace CoreLibrary
         }
 
         protected virtual IQueryable<TEntity> ApplySearch(IQueryable<TEntity> query, string searchString)
-        {            
+        {
             if (string.IsNullOrEmpty(searchString))
             {
                 return query;
