@@ -4,23 +4,20 @@ import { AccountService } from '../../Services/account.service';
 import { AccountGlobals } from '../../../../Core/Account/AccountGlobals';
 import { LocalizerService } from '../../../Localizer/localizer.service';
 import { LoginModel } from '../../../../Core/Account/loginModel';
-import { ChangePasswordModel } from '../../../../Core/Account/changePasswordModel';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { from } from 'rxjs';
 
 @Component({
-    selector: 'account',
-    templateUrl: './account.component.html',
-    styleUrls: ['./account.component.css'],
+    selector: 'login',
+    templateUrl: './login.component.html',
+    styleUrls: ['./login.component.css'],
     providers: [AccountService]
 })
-export class AccountComponent implements OnInit {
+export class LoginComponent implements OnInit {
 
     _service: AccountService;
     _accGlobals: AccountGlobals;
     _loginModel: LoginModel;
-    _changePasswordModel: ChangePasswordModel;
     _localizer: LocalizerService;
     _router: Router;
     _snackBar: MatSnackBar;
@@ -33,37 +30,21 @@ export class AccountComponent implements OnInit {
         this._router = router;
         this._snackBar = snackBar;
         this._loginModel = new LoginModel();
-        this._changePasswordModel = new ChangePasswordModel();
     }
 
     public async ngOnInit() {
         this._accGlobals.refresh();
-        if (!this._accGlobals.isLogged) {
+        if (this._accGlobals.isLogged) {
             this._router.navigate([this._redirectUrl]);
         }
     }
 
-    public deleteToken() {
+    public async getTokenAsync() {
         try {
             var popup = this._snackBar.open(this._localizer.localize("Loading"));
-            this._service.deleteToken();
+            await this._service.getTokenAsync(this._loginModel);
             popup.dismiss();
             this._router.navigate([this._redirectUrl]);
-        }
-        catch (e) {
-            popup.dismiss();
-            console.log(e);
-            if (e.error) {
-                var popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e.error));
-            }
-        }
-    }
-
-    public async changePasswordAsync() {
-        try {
-            var popup = this._snackBar.open(this._localizer.localize("Loading"));
-            await this._service.changePasswordAsync(this._changePasswordModel);
-            popup = this._snackBar.open(this._localizer.localize("PassChangeSuccess"), null, { duration: 5000 });
         }
         catch (e) {
             popup.dismiss();

@@ -43,15 +43,14 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 import { Component } from '@angular/core';
-import { CoreAccountService } from './account.service';
-import { AccountGlobals } from './AccountGlobals';
-import { LoginModel } from './loginModel';
-import { ChangePasswordModel } from './changePasswordModel';
-import { CoreLocalizerService } from '../Localization/coreLocalizer.service';
+import { AccountService } from '../../Services/account.service';
+import { AccountGlobals } from '../../../../Core/Account/AccountGlobals';
+import { LocalizerService } from '../../../Localizer/localizer.service';
+import { LoginModel } from '../../../../Core/Account/loginModel';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
-var CoreAccountComponent = /** @class */ (function () {
-    function CoreAccountComponent(service, localizer, accGlobals, router, snackBar) {
+var LoginComponent = /** @class */ (function () {
+    function LoginComponent(service, localizer, accGlobals, router, snackBar) {
         this._redirectUrl = "/admin";
         this._localizer = localizer;
         this._service = service;
@@ -59,17 +58,19 @@ var CoreAccountComponent = /** @class */ (function () {
         this._router = router;
         this._snackBar = snackBar;
         this._loginModel = new LoginModel();
-        this._changePasswordModel = new ChangePasswordModel();
     }
-    CoreAccountComponent.prototype.ngOnInit = function () {
+    LoginComponent.prototype.ngOnInit = function () {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
                 this._accGlobals.refresh();
+                if (this._accGlobals.isLogged) {
+                    this._router.navigate([this._redirectUrl]);
+                }
                 return [2 /*return*/];
             });
         });
     };
-    CoreAccountComponent.prototype.getTokenAsync = function () {
+    LoginComponent.prototype.getTokenAsync = function () {
         return __awaiter(this, void 0, void 0, function () {
             var popup, e_1, popup;
             return __generator(this, function (_a) {
@@ -96,51 +97,16 @@ var CoreAccountComponent = /** @class */ (function () {
             });
         });
     };
-    CoreAccountComponent.prototype.deleteToken = function () {
-        try {
-            var popup = this._snackBar.open(this._localizer.localize("Loading"));
-            this._service.deleteToken();
-            popup.dismiss();
-        }
-        catch (e) {
-            popup.dismiss();
-            console.log(e);
-            if (e.error) {
-                var popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e.error));
-            }
-        }
-    };
-    CoreAccountComponent.prototype.changePasswordAsync = function () {
-        return __awaiter(this, void 0, void 0, function () {
-            var popup, e_2, popup;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        _a.trys.push([0, 2, , 3]);
-                        popup = this._snackBar.open(this._localizer.localize("Loading"));
-                        return [4 /*yield*/, this._service.changePasswordAsync(this._changePasswordModel)];
-                    case 1:
-                        _a.sent();
-                        popup = this._snackBar.open(this._localizer.localize("PassChangeSuccess"), null, { duration: 5000 });
-                        return [3 /*break*/, 3];
-                    case 2:
-                        e_2 = _a.sent();
-                        popup.dismiss();
-                        console.log(e_2);
-                        if (e_2.error) {
-                            popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e_2.error));
-                        }
-                        return [3 /*break*/, 3];
-                    case 3: return [2 /*return*/];
-                }
-            });
-        });
-    };
-    CoreAccountComponent = __decorate([
-        Component({}),
-        __metadata("design:paramtypes", [CoreAccountService, CoreLocalizerService, AccountGlobals, Router, MatSnackBar])
-    ], CoreAccountComponent);
-    return CoreAccountComponent;
+    LoginComponent = __decorate([
+        Component({
+            selector: 'login',
+            templateUrl: './login.component.html',
+            styleUrls: ['./login.component.css'],
+            providers: [AccountService]
+        }),
+        __metadata("design:paramtypes", [AccountService, LocalizerService, AccountGlobals, Router, MatSnackBar])
+    ], LoginComponent);
+    return LoginComponent;
 }());
-export { CoreAccountComponent };
-//# sourceMappingURL=account.component.js.map
+export { LoginComponent };
+//# sourceMappingURL=login.component.js.map

@@ -28,6 +28,7 @@ import { FrontComponent } from './Front/Components/Front/front.component';
 import { UsersComponent } from './Admin/Components/User/users.component';
 import { LanguageInterceptor } from '../Core/Localization/language.interceptor';
 import { LanguageComponent } from './Localizer/Component/language.component';
+import { LoginComponent } from './Admin/Components/Login/login.component';
 var adminRoutes = [
     { path: '', component: UsersComponent },
     { path: 'account', component: AccountComponent },
@@ -46,6 +47,7 @@ var frontRoutes = [
 var appRoutes = [
     { path: '', component: FrontComponent, children: frontRoutes },
     { path: 'admin', component: AdminComponent, children: adminRoutes },
+    { path: 'login', component: LoginComponent },
     { path: '**', component: NotFoundComponent }
 ];
 var AppModule = /** @class */ (function () {
@@ -54,7 +56,7 @@ var AppModule = /** @class */ (function () {
     AppModule = __decorate([
         NgModule({
             imports: [BrowserModule, FormsModule, HttpClientModule, RouterModule.forRoot(appRoutes), DragDropModule, MatSnackBarModule, BrowserAnimationsModule],
-            declarations: [AppComponent, NotFoundComponent, AdminComponent, AccountComponent, MenuComponent, AnimeComponent, AnimeEditComponent, BookComponent, BookEditComponent, FrontComponent, AnimeEpisodeComponent, UsersComponent, LanguageComponent],
+            declarations: [AppComponent, NotFoundComponent, LoginComponent, AdminComponent, AccountComponent, MenuComponent, AnimeComponent, AnimeEditComponent, BookComponent, BookEditComponent, FrontComponent, AnimeEpisodeComponent, UsersComponent, LanguageComponent],
             providers: [
                 { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
                 { provide: HTTP_INTERCEPTORS, useClass: LanguageInterceptor, multi: true },

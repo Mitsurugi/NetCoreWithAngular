@@ -20,7 +20,7 @@ var TokenInterceptor = /** @class */ (function () {
         var cloned = req.clone({ headers: req.headers.append("Authorization", "Bearer " + token) });
         return next.handle(cloned).pipe(map(function (response) { return response; }), catchError(function (e, c) { if (e.status === 401 || e.status === 403) {
             localStorage.removeItem("token");
-            _this.router.navigate(['/admin/account']);
+            _this.router.navigate(['/login']);
         } throw e; }));
     };
     TokenInterceptor = __decorate([
