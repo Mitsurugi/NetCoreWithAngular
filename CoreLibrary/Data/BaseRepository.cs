@@ -21,7 +21,7 @@ namespace CoreLibrary
 
         public virtual IQueryable<TEntity> GetQuery()
         {
-            return DbSet.AsQueryable();
+            return DbSet.AsNoTracking();
         }
 
         public virtual async Task<TEntity> AddAsync(TEntity entity)
@@ -46,11 +46,31 @@ namespace CoreLibrary
             if (entity == null)
                 throw new ArgumentNullException("entity");
 
-            var updateEntity = await GetQuery().SingleAsync(i => i.Id.Equals(entity.Id));
+            var updateEntity = await DbSet.AsTracking().SingleAsync(i => i.Id.Equals(entity.Id));
 
             DbContext.Entry(updateEntity).CurrentValues.SetValues(entity);
 
             return updateEntity;
+        }
+
+        public virtual async Task UpdateAsync(Expression<Func<TEntity, bool>> predicate, Func<TEntity, TEntity> updateFunc)
+        {
+            await DbSet.Where(predicate).AsTracking().ForEachAsync(x => updateFunc(x));
+        }
+
+        public virtual async Task DeleteAsync(TKey id)
+        {
+            await DeleteAsync(i => i.Id.Equals(id));
+        }
+
+        public virtual async Task DeleteAsync(Expression<Func<TEntity, bool>> predicate)
+        {
+            await DbSet.Where(predicate).AsTracking().ForEachAsync(x => DbSet.Remove(x));
+        }
+
+        public virtual async Task SaveChangesAsync()
+        {
+            await DbContext.SaveChangesAsync();
         }
 
         public virtual async Task ReferenceLoadAsync(TEntity entity, params string[] references)
@@ -63,23 +83,6 @@ namespace CoreLibrary
         {
             foreach (var collection in collections)
                 await DbContext.Entry(entity).Collection(collection).LoadAsync();
-        }
-
-        public virtual async Task DeleteAsync(TEntity entity)
-        {
-            if (entity == null)
-                throw new ArgumentNullException("entity");
-            DbSet.Remove(entity);
-        }
-
-        public virtual async Task DeleteAsync(Expression<Func<TEntity, bool>> predicate)
-        {
-            await GetQuery().Where(predicate).ForEachAsync(async x => await DeleteAsync(x));
-        }
-
-        public virtual async Task SaveChangesAsync()
-        {
-            await DbContext.SaveChangesAsync();
         }
 
         public virtual void Dispose()

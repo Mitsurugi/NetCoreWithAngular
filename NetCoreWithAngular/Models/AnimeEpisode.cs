@@ -13,6 +13,6 @@ namespace NetCoreWithAngular.Models
 
         public string Title { get; set; }
         
-        public virtual Anime Anime { get; set; }
+        public Anime Anime { get; set; }
     }
 }

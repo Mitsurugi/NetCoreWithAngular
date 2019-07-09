@@ -41,7 +41,6 @@ namespace NetCoreWithAngular
             services.AddDbContext<ExampleContext>(options =>
             {
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
-                options.UseLazyLoadingProxies();
             });
 
             services.AddIdentity<User, IdentityRole<System.Guid>>().AddEntityFrameworkStores<ExampleContext>().AddDefaultTokenProviders();

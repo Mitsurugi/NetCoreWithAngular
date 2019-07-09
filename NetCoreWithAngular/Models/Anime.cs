@@ -17,8 +17,8 @@ namespace NetCoreWithAngular.Models
 
         public int Position { get; set; }
 
-        public virtual File Image { get; set; }
+        public File Image { get; set; }
 
-        public virtual List<AnimeEpisode> Episodes { get; set; }
+        public List<AnimeEpisode> Episodes { get; set; }
     }
 }
