@@ -46,7 +46,7 @@ namespace NetCoreWithAngular
             services.AddIdentity<User, IdentityRole<System.Guid>>().AddEntityFrameworkStores<ExampleContext>().AddDefaultTokenProviders();
 
             services.AddMvc();
-            services.AddAutoMapper();
+            services.AddAutoMapper(typeof(MappingProfile));
 
             services.AddAuthentication(options => {
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;

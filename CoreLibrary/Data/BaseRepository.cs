@@ -58,7 +58,7 @@ namespace CoreLibrary
             return updateEntity;
         }
 
-        public virtual async Task UpdateAsync(Expression<Func<TEntity, bool>> predicate, Func<TEntity, TEntity> updateFunc)
+        public virtual async Task UpdateAsync(Expression<Func<TEntity, bool>> predicate, Action<TEntity> updateFunc)
         {
             await DbSet.Where(predicate).AsTracking().ForEachAsync(x => updateFunc(x));
         }
@@ -76,18 +76,6 @@ namespace CoreLibrary
         public virtual async Task SaveChangesAsync()
         {
             await DbContext.SaveChangesAsync();
-        }
-
-        public virtual async Task ReferenceLoadAsync(TEntity entity, params Expression<Func<TEntity, object>>[] references)
-        {
-            foreach (var reference in references)
-                await DbContext.Entry(entity).Reference(reference).LoadAsync();
-        }
-
-        public virtual async Task CollectionLoadAsync(TEntity entity, params Expression<Func<TEntity, IEnumerable<object>>>[] collections)
-        {
-            foreach (var collection in collections)
-                await DbContext.Entry(entity).Collection(collection).LoadAsync();
         }
 
         public virtual void Dispose()

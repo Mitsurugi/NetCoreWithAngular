@@ -37,9 +37,9 @@ namespace NetCoreWithAngular.Services
             {
                 for (int i = 1; i <= 10; i++)
                 {
-                    _repository.AddAsync( new Anime { Title = $"Anime{i}", SeasonCount = (i % 2) + 1 });
+                    await _repository.AddAsync( new Anime { Title = $"Anime{i}", SeasonCount = (i % 2) + 1 });
                 }
-                _repository.SaveChangesAsync();
+                await _repository.SaveChangesAsync();
             }
 
             return await base.GetGridAsync(pageSize, pageNumber, orderBy, filter, searchString);
@@ -62,9 +62,14 @@ namespace NetCoreWithAngular.Services
             if (field == null) return;
             if (field.Position == newPosition) return;
 
-            var toReorder = newPosition > field.Position ? _repository.GetQueryNoTracking().Where(f => f.Position > field.Position && f.Position <= newPosition).ToList() : _repository.GetQueryNoTracking().Where(f => f.Position < field.Position && f.Position >= newPosition).ToList();
+            if (newPosition > field.Position)
+            {
+                await _repository.UpdateAsync(f => f.Position > field.Position && f.Position <= newPosition, f => f.Position = f.Position - 1);
+            } else
+            {
+                await _repository.UpdateAsync(f => f.Position < field.Position && f.Position >= newPosition, f => f.Position = f.Position + 1);
+            }
 
-            toReorder.ForEach(async f => { if (newPosition > field.Position) { f.Position = f.Position - 1; await _repository.UpdateAsync(f); } else { f.Position = f.Position + 1; await _repository.UpdateAsync(f); } });
             field.Position = newPosition;
             await _repository.UpdateAsync(field);
             await _repository.SaveChangesAsync();
