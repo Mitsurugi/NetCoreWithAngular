@@ -2,7 +2,7 @@
 <div class="sorting">
     <label>{{_localizer.localize("OrderBy")}}</label>
     <select class="form-control" [(ngModel)]="_orderBy" (change)="reloadGridAsync()">
-        <option value="">{{_localizer.localize("Default")}}</option>
+        <option value="Position">{{_localizer.localize("ManualSorting")}}</option>
         <option value="Id_desc">{{_localizer.localizeWithValues("OrderBy.DescendingX", _localizer.localize("Id"))}}</option>
         <option value="Id">{{_localizer.localizeWithValues("OrderBy.AscendingX", _localizer.localize("Id"))}}</option>
         <option value="Title">{{_localizer.localizeWithValues("OrderBy.AscendingX", _localizer.localize("Anime.Title"))}}</option>

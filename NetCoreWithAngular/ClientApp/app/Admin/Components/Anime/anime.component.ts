@@ -19,6 +19,7 @@ export class AnimeComponent extends CoreComponent<number, Anime> {
 
     _fileService: FileService<number>;
     _animeService: AnimeService;
+    _orderBy = "Position";
 
     constructor(service: AnimeService, localizer: LocalizerService, fileService: FileService<number>, animeService: AnimeService, snackBar: MatSnackBar) {
         super(service, localizer, snackBar);

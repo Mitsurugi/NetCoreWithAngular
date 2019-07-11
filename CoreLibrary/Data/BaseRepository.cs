@@ -3,6 +3,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
 
 namespace CoreLibrary
 {
@@ -19,9 +20,13 @@ namespace CoreLibrary
             DbSet = DbContext.Set<TEntity>();
         }
 
-        public virtual IQueryable<TEntity> GetQuery()
+        public virtual IQueryable<TEntity> GetQueryNoTracking()
         {
             return DbSet.AsNoTracking();
+        }
+        public virtual IQueryable<TEntity> GetQueryWithTracking()
+        {
+            return DbSet.AsTracking();
         }
 
         public virtual async Task<TEntity> AddAsync(TEntity entity)
@@ -73,13 +78,13 @@ namespace CoreLibrary
             await DbContext.SaveChangesAsync();
         }
 
-        public virtual async Task ReferenceLoadAsync(TEntity entity, params string[] references)
+        public virtual async Task ReferenceLoadAsync(TEntity entity, params Expression<Func<TEntity, object>>[] references)
         {
             foreach (var reference in references)
                 await DbContext.Entry(entity).Reference(reference).LoadAsync();
         }
 
-        public virtual async Task CollectionLoadAsync(TEntity entity, params string[] collections)
+        public virtual async Task CollectionLoadAsync(TEntity entity, params Expression<Func<TEntity, IEnumerable<object>>>[] collections)
         {
             foreach (var collection in collections)
                 await DbContext.Entry(entity).Collection(collection).LoadAsync();

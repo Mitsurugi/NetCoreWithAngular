@@ -24,12 +24,12 @@ namespace NetCoreWithAngular.Services
 
         public async Task<List<FrontDataViewModel>> GetAllAnimeAsync()
         {
-            return await _animeRepository.GetQuery().ProjectTo<FrontDataViewModel>(_mapper.ConfigurationProvider).ToListAsync();
+            return await _animeRepository.GetQueryNoTracking().ProjectTo<FrontDataViewModel>(_mapper.ConfigurationProvider).ToListAsync();
         }
 
         public async Task<List<FrontDataViewModel>> GetAllBooksAsync()
         {
-            return await _bookRepository.GetQuery().ProjectTo<FrontDataViewModel>(_mapper.ConfigurationProvider).ToListAsync();
+            return await _bookRepository.GetQueryNoTracking().ProjectTo<FrontDataViewModel>(_mapper.ConfigurationProvider).ToListAsync();
         }
     }
 }

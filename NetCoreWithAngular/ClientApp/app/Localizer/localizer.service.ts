@@ -10,6 +10,9 @@ export class LocalizerService extends CoreLocalizerService {
         this._strings["ru-RU"]["RequiredX"] = "Поле {0} обязательно";
         this._strings["en-US"]["RequiredX"] = "{0} required";
 
+        this._strings["ru-RU"]["ManualSorting"] = "Ручная сортировка (перетаскиванием)";
+        this._strings["en-US"]["ManualSorting"] = "Manual sorting (Drag and drop)";
+
         this._strings["ru-RU"]["Users"] = "Пользователи";
         this._strings["en-US"]["Users"] = "Users";
 

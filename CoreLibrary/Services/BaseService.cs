@@ -44,7 +44,7 @@ namespace CoreLibrary
 
         public virtual IQueryable<TEntity> GetQuery()
         {
-            return _repository.GetQuery();
+            return _repository.GetQueryNoTracking();
         }
 
         public virtual async Task<TEntity> GetByIdAsync(TKey id)

@@ -51,7 +51,7 @@ namespace CoreLibrary
 
         private IQueryable<TEntity> GetQuery()
         {
-            return _repository.GetQuery();
+            return _repository.GetQueryNoTracking();
         }
 
         public virtual IQueryable<TEntity> GetQuery(TParentKey parentId)
@@ -365,14 +365,14 @@ namespace CoreLibrary
 
         public virtual async Task<TParentEntity> GetParentAsync(TParentKey parentId)
         {
-            var parent = await _parentRepository.GetQuery().SingleOrDefaultAsync(i => i.Id.Equals(parentId));
+            var parent = await _parentRepository.GetQueryNoTracking().SingleOrDefaultAsync(i => i.Id.Equals(parentId));
 
             return parent;
         }
 
         public virtual async Task<TParentView> GetParentViewAsync(TParentKey parentId)
         {
-            var parent = await _parentRepository.GetQuery().SingleOrDefaultAsync(i => i.Id.Equals(parentId));
+            var parent = await _parentRepository.GetQueryNoTracking().SingleOrDefaultAsync(i => i.Id.Equals(parentId));
 
             return _mapper.Map<TParentEntity, TParentView>(parent);
         }

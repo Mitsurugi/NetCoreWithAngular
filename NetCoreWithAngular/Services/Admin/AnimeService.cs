@@ -22,22 +22,18 @@ namespace NetCoreWithAngular.Services
         public override async Task<AnimeViewModel> SaveCreateModelAsync(AnimeViewModel createView)
         {
             int lastPos = 0;
-            if (await _repository.GetQuery().AnyAsync())
+            if (await _repository.GetQueryNoTracking().AnyAsync())
             {
-                lastPos = await _repository.GetQuery().MaxAsync(i => i.Position);
+                lastPos = await _repository.GetQueryNoTracking().MaxAsync(i => i.Position);
             }
             createView.Position = lastPos + 1;
 
             return await base.SaveCreateModelAsync(createView);
         }
-
-        protected override IQueryable<Anime> ApplySorting(IQueryable<Anime> query, string orderBy)
-        {
-            return query.OrderBy(i => i.Position);
-        }
+        
         public override async Task<List<AnimeViewModel>> GetGridAsync(int pageSize, int pageNumber, string orderBy, AnimeViewModel filter, string searchString)
         {
-            if (!_repository.GetQuery().Any())
+            if (!_repository.GetQueryNoTracking().Any())
             {
                 for (int i = 1; i <= 10; i++)
                 {
@@ -62,11 +58,11 @@ namespace NetCoreWithAngular.Services
 
         public async Task MoveAsync(int id, int newPosition)
         {
-            var field = await _repository.GetQuery().SingleOrDefaultAsync(i => i.Id == id);
+            var field = await _repository.GetQueryNoTracking().SingleOrDefaultAsync(i => i.Id == id);
             if (field == null) return;
             if (field.Position == newPosition) return;
 
-            var toReorder = newPosition > field.Position ? _repository.GetQuery().Where(f => f.Position > field.Position && f.Position <= newPosition).ToList() : _repository.GetQuery().Where(f => f.Position < field.Position && f.Position >= newPosition).ToList();
+            var toReorder = newPosition > field.Position ? _repository.GetQueryNoTracking().Where(f => f.Position > field.Position && f.Position <= newPosition).ToList() : _repository.GetQueryNoTracking().Where(f => f.Position < field.Position && f.Position >= newPosition).ToList();
 
             toReorder.ForEach(async f => { if (newPosition > field.Position) { f.Position = f.Position - 1; await _repository.UpdateAsync(f); } else { f.Position = f.Position + 1; await _repository.UpdateAsync(f); } });
             field.Position = newPosition;

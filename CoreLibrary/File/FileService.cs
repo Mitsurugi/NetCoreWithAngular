@@ -20,7 +20,7 @@ namespace CoreLibrary
 
         public virtual async Task<TFile> GetAsync(TKey id)
         {
-            return await _repository.GetQuery().SingleAsync(i => i.Id.Equals(id));
+            return await _repository.GetQueryNoTracking().SingleAsync(i => i.Id.Equals(id));
         }
 
         public virtual async Task DeleteAsync(TKey id)

@@ -66,6 +66,7 @@ var AnimeComponent = /** @class */ (function (_super) {
     __extends(AnimeComponent, _super);
     function AnimeComponent(service, localizer, fileService, animeService, snackBar) {
         var _this = _super.call(this, service, localizer, snackBar) || this;
+        _this._orderBy = "Position";
         _this._fileService = fileService;
         _this._animeService = animeService;
         return _this;
