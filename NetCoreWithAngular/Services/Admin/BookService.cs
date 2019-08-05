@@ -19,14 +19,6 @@ namespace NetCoreWithAngular.Services
 
         public override async Task<List<BookGridModel>> GetGridAsync(int pageSize, int pageNumber, string orderBy, BookFilterModel filter, string searchString)
         {
-            if (!(await _repository.GetQueryNoTracking().AnyAsync()))
-            {
-                for (int i = 1; i <= 10; i++)
-                {
-                    await _repository.AddAsync(new Book { Title = $"Book{i}", Author = $"Author{i}", PageCount = i });
-                }
-                await _repository.SaveChangesAsync();
-            }
             return await base.GetGridAsync(pageSize, pageNumber, orderBy, filter, searchString);
         }
 

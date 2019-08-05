@@ -7,7 +7,7 @@ import { StaticMethods } from '../Services/staticMethods';
 @Injectable()
 export class DependentService<TKey, TParentKey, TParentView, TGrid extends IDependentEntity<TKey, TParentKey>, TCreate extends IDependentEntity<TKey, TParentKey> = TGrid, TEdit extends IDependentEntity<TKey, TParentKey> = TGrid, TFilter = TGrid> {
 
-    _controller = "";
+    protected _controller = "";
     protected _http: HttpClient;
 
     constructor(http: HttpClient) {

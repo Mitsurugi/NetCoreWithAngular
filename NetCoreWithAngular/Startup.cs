@@ -89,6 +89,8 @@ namespace NetCoreWithAngular
 
             services.AddScoped<IFrontDataService, FrontDataService>();
             services.AddScoped<IAnimeService, AnimeService>();
+
+            services.AddHostedService<BackgroundService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

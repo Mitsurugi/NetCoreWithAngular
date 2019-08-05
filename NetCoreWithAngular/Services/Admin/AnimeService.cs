@@ -33,15 +33,6 @@ namespace NetCoreWithAngular.Services
         
         public override async Task<List<AnimeViewModel>> GetGridAsync(int pageSize, int pageNumber, string orderBy, AnimeViewModel filter, string searchString)
         {
-            if (!_repository.GetQueryNoTracking().Any())
-            {
-                for (int i = 1; i <= 10; i++)
-                {
-                    await _repository.AddAsync( new Anime { Title = $"Anime{i}", SeasonCount = (i % 2) + 1 });
-                }
-                await _repository.SaveChangesAsync();
-            }
-
             return await base.GetGridAsync(pageSize, pageNumber, orderBy, filter, searchString);
         }
 

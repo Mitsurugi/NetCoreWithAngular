@@ -8,7 +8,7 @@ import { IUser } from './IUser';
 @Injectable()
 export class UsersService<TKey, TGrid extends IUser<TKey>, TCreate extends IUser<TKey> = TGrid, TEdit extends IUser<TKey> = TGrid, TFilter = TGrid> {
 
-    _controller = "users";
+    protected _controller = "users";
     protected _http: HttpClient;
 
     constructor(http: HttpClient) {

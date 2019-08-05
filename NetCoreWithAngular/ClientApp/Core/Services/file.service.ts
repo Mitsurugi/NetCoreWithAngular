@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 @Injectable()
 export class FileService<TKey> {
 
-    _controller = "file";
+    protected _controller = "file";
     protected _http: HttpClient;
 
     constructor(http: HttpClient) {

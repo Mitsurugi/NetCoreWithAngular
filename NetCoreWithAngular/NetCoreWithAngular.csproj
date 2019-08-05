@@ -90,7 +90,6 @@
     <TypeScriptCompile Include="ClientApp\app\Front\Models\frontData.ts" />
     <TypeScriptCompile Include="ClientApp\app\Front\Services\frontData.service.ts" />
     <TypeScriptCompile Include="ClientApp\Core\Account\account.service.ts" />
-    <TypeScriptCompile Include="ClientApp\Core\Account\account.component.ts" />
     <TypeScriptCompile Include="ClientApp\Core\Account\AccountGlobals.ts" />
     <TypeScriptCompile Include="ClientApp\Core\Components\edit.component.ts" />
     <TypeScriptCompile Include="ClientApp\Core\Components\dependent.component.ts" />

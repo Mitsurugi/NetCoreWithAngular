@@ -14,9 +14,9 @@ class TokenResponse {
 @Injectable()
 export class CoreAccountService {
 
-    _accGlobals: AccountGlobals;
-    _controllerName = "identity";
-    _http: HttpClient;
+    protected _accGlobals: AccountGlobals;
+    protected _controllerName = "identity";
+    protected _http: HttpClient;
 
     constructor(http: HttpClient, accGlobals: AccountGlobals) {
         this._http = http;
