@@ -87,28 +87,35 @@ var AccountComponent = /** @class */ (function () {
             }
         }
     };
-    AccountComponent.prototype.changePasswordAsync = function () {
+    AccountComponent.prototype.changePasswordAsync = function (valid) {
         return __awaiter(this, void 0, void 0, function () {
-            var popup, e_1, popup;
+            var popup, popup, e_1, popup;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        _a.trys.push([0, 2, , 3]);
+                        if (!valid) return [3 /*break*/, 4];
+                        _a.label = 1;
+                    case 1:
+                        _a.trys.push([1, 3, , 4]);
+                        if (this._changePasswordModel.newPassword != this._changePasswordModel.newPassword2) {
+                            popup = this._snackBar.open(this._localizer.localize("PassNotMatch"));
+                            return [2 /*return*/];
+                        }
                         popup = this._snackBar.open(this._localizer.localize("Loading"));
                         return [4 /*yield*/, this._service.changePasswordAsync(this._changePasswordModel)];
-                    case 1:
+                    case 2:
                         _a.sent();
                         popup = this._snackBar.open(this._localizer.localize("PassChangeSuccess"), null, { duration: 5000 });
-                        return [3 /*break*/, 3];
-                    case 2:
+                        return [3 /*break*/, 4];
+                    case 3:
                         e_1 = _a.sent();
                         popup.dismiss();
                         console.log(e_1);
                         if (e_1.error) {
                             popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e_1.error));
                         }
-                        return [3 /*break*/, 3];
-                    case 3: return [2 /*return*/];
+                        return [3 /*break*/, 4];
+                    case 4: return [2 /*return*/];
                 }
             });
         });

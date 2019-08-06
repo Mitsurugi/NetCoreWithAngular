@@ -22,23 +22,18 @@ namespace NetCoreWithAngular.Services
         public override async Task<AnimeViewModel> SaveCreateModelAsync(AnimeViewModel createView)
         {
             int lastPos = 0;
-            if (await _repository.GetQueryNoTracking().AnyAsync())
+            if (await GetQueryNoTracking().AnyAsync())
             {
-                lastPos = await _repository.GetQueryNoTracking().MaxAsync(i => i.Position);
+                lastPos = await GetQueryNoTracking().MaxAsync(i => i.Position);
             }
             createView.Position = lastPos + 1;
 
             return await base.SaveCreateModelAsync(createView);
         }
         
-        public override async Task<List<AnimeViewModel>> GetGridAsync(int pageSize, int pageNumber, string orderBy, AnimeViewModel filter, string searchString)
-        {
-            return await base.GetGridAsync(pageSize, pageNumber, orderBy, filter, searchString);
-        }
-
         public override async Task DeleteAsync(int id)
         {
-            var delete = await GetByIdAsync(id);
+            var delete = await GetQueryNoTracking().SingleAsync(i => i.Id == id);
 
             if (delete.ImageId.HasValue)
                 await _fileService.DeleteAsync(delete.ImageId.Value);
@@ -49,7 +44,7 @@ namespace NetCoreWithAngular.Services
 
         public async Task MoveAsync(int id, int newPosition)
         {
-            var field = await _repository.GetQueryNoTracking().SingleOrDefaultAsync(i => i.Id == id);
+            var field = await GetQueryNoTracking().SingleOrDefaultAsync(i => i.Id == id);
             if (field == null) return;
             if (field.Position == newPosition) return;
 

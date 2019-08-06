@@ -19,8 +19,8 @@ namespace CoreLibrary
         where TGrid : class, IEntity<TKey>, new()
         where TFilter: class, new()
     {
-        IQueryable<TEntity> GetQuery();
-        Task<TEntity> GetByIdAsync(TKey id);
+        IQueryable<TEntity> GetQueryNoTracking();
+        IQueryable<TEntity> GetQueryWithTracking();
         Task<TCreate> SaveCreateModelAsync(TCreate create);
         Task<TCreate> GetCreateModelAsync();        
         Task<TEdit> SaveEditModelAsync(TEdit editView);

@@ -86,7 +86,6 @@ var CoreAccountService = /** @class */ (function () {
                     case 0: return [4 /*yield*/, this._http.post('/api/' + this._controllerName + '/ChangePassword', model).toPromise()];
                     case 1:
                         _a.sent();
-                        this.deleteToken();
                         return [2 /*return*/];
                 }
             });

@@ -1,7 +1,6 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
 using CoreLibrary;
 using NetCoreWithAngular.Models;
-using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.ComponentModel.DataAnnotations;
 
@@ -27,6 +26,6 @@ namespace NetCoreWithAngular.ViewModels
         public Genre? Genre { get; set; }
 
         [ImportIgnore]
-        public IEnumerable<SelectListItem> GenreList { get; set; }        
+        public List<SelectListItem> GenreList { get; set; }        
     }
 }

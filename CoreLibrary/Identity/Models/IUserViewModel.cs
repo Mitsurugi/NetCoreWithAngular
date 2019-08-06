@@ -10,6 +10,6 @@ namespace CoreLibrary.Identity
 
         string RoleDisplayName { get; set; }
 
-        IEnumerable<SelectListItem> RoleList { get; set; }
+        List<SelectListItem> RoleList { get; set; }
     }    
 }

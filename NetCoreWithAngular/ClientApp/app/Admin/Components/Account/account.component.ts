@@ -59,18 +59,24 @@ export class AccountComponent implements OnInit {
         }
     }
 
-    public async changePasswordAsync() {
-        try {
-            var popup = this._snackBar.open(this._localizer.localize("Loading"));
-            await this._service.changePasswordAsync(this._changePasswordModel);
-            popup = this._snackBar.open(this._localizer.localize("PassChangeSuccess"), null, { duration: 5000 });
-        }
-        catch (e) {
-            popup.dismiss();
-            console.log(e);
-            if (e.error) {
-                var popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e.error));
+    public async changePasswordAsync(valid: boolean) {
+        if (valid) {
+            try {
+                if (this._changePasswordModel.newPassword != this._changePasswordModel.newPassword2) {
+                    var popup = this._snackBar.open(this._localizer.localize("PassNotMatch"));
+                    return;
+                }
+                var popup = this._snackBar.open(this._localizer.localize("Loading"));
+                await this._service.changePasswordAsync(this._changePasswordModel);
+                popup = this._snackBar.open(this._localizer.localize("PassChangeSuccess"), null, { duration: 5000 });
             }
-        }
+            catch (e) {
+                popup.dismiss();
+                console.log(e);
+                if (e.error) {
+                    var popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e.error));
+                }
+            }
+        }        
     }
 }

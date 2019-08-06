@@ -53,6 +53,9 @@ export class CoreLocalizerService {
         this._strings["ru-RU"]["Error"] = "Ошибка: {0}";
         this._strings["en-US"]["Error"] = "Error: {0}";
 
+        this._strings["ru-RU"]["NoData"] = "Данные отсутствуют";
+        this._strings["en-US"]["NoData"] = "There is no data";
+
         this._strings["ru-RU"]["FieldRequired"] = "Поле обязательно";
         this._strings["en-US"]["FieldRequired"] = "Field required";
 
@@ -86,7 +89,7 @@ export class CoreLocalizerService {
         this._strings["ru-RU"]["PageOf"] = "из";
         this._strings["en-US"]["PageOf"] = "of";
 
-        this._strings["ru-RU"]["ExcelExport"] = "Экспортировать все страници в Excel";
+        this._strings["ru-RU"]["ExcelExport"] = "Экспортировать все страницы в Excel";
         this._strings["en-US"]["ExcelExport"] = "Export all pages to excel";
 
         this._strings["ru-RU"]["Id"] = "Id";
@@ -163,6 +166,12 @@ export class CoreLocalizerService {
 
         this._strings["ru-RU"]["NewPasswordLabel"] = "Новый пароль";
         this._strings["en-US"]["NewPasswordLabel"] = "New password";
+
+        this._strings["ru-RU"]["NewPassword2Label"] = "Новый пароль повторно";
+        this._strings["en-US"]["NewPassword2Label"] = "Confirm password";
+
+        this._strings["ru-RU"]["PassNotMatch"] = "Пароли не совпадают";
+        this._strings["en-US"]["PassNotMatch"] = "Passwords does not match";
 
         this._strings["ru-RU"]["LoginHeader"] = "Войти";
         this._strings["en-US"]["LoginHeader"] = "Login";

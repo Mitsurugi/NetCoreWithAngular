@@ -17,11 +17,6 @@ namespace NetCoreWithAngular.Services
         {
         }
 
-        public override async Task<List<BookGridModel>> GetGridAsync(int pageSize, int pageNumber, string orderBy, BookFilterModel filter, string searchString)
-        {
-            return await base.GetGridAsync(pageSize, pageNumber, orderBy, filter, searchString);
-        }
-
         protected override IQueryable<Book> ApplySorting(IQueryable<Book> query, string orderBy)
         {
             if (string.IsNullOrEmpty(orderBy))
@@ -32,19 +27,19 @@ namespace NetCoreWithAngular.Services
 
         protected override async Task<BookViewModel> FillCreateModelAsync(BookViewModel model)
         {
-            model.GenreList = System.Enum.GetValues(typeof(Models.Genre)).Cast<Models.Genre>().ToList().Select(i => new Microsoft.AspNetCore.Mvc.Rendering.SelectListItem { Selected = model.Genre == i, Disabled = i == Genre.Drama, Text = _localizer[i.GetDisplayName()], Value = ((int)i).ToString() });
+            model.GenreList = System.Enum.GetValues(typeof(Models.Genre)).Cast<Models.Genre>().Select(i => new Microsoft.AspNetCore.Mvc.Rendering.SelectListItem { Selected = model.Genre == i, Disabled = i == Genre.Drama, Text = _localizer[i.GetDisplayName()], Value = ((int)i).ToString() }).ToList();
             return model;
         }
 
         protected override async Task<BookViewModel> FillEditModelAsync(BookViewModel model)
         {
-            model.GenreList = System.Enum.GetValues(typeof(Models.Genre)).Cast<Models.Genre>().ToList().Select(i => new Microsoft.AspNetCore.Mvc.Rendering.SelectListItem { Selected = model.Genre == i, Disabled = i == Genre.Drama, Text = _localizer[i.GetDisplayName()], Value = ((int)i).ToString() });
+            model.GenreList = System.Enum.GetValues(typeof(Models.Genre)).Cast<Models.Genre>().ToList().Select(i => new Microsoft.AspNetCore.Mvc.Rendering.SelectListItem { Selected = model.Genre == i, Disabled = i == Genre.Drama, Text = _localizer[i.GetDisplayName()], Value = ((int)i).ToString() }).ToList();
             return model;
         }
 
         protected override async Task<BookFilterModel> FillFilterModelAsync(BookFilterModel model)
         {
-            model.GenreList = System.Enum.GetValues(typeof(Models.Genre)).Cast<Models.Genre>().ToList().Select(i => new Microsoft.AspNetCore.Mvc.Rendering.SelectListItem { Selected = model.Genre == i, Disabled = i == Genre.Drama, Text = _localizer[i.GetDisplayName()], Value = ((int)i).ToString() });
+            model.GenreList = System.Enum.GetValues(typeof(Models.Genre)).Cast<Models.Genre>().ToList().Select(i => new Microsoft.AspNetCore.Mvc.Rendering.SelectListItem { Selected = model.Genre == i, Disabled = i == Genre.Drama, Text = _localizer[i.GetDisplayName()], Value = ((int)i).ToString() }).ToList();
             return model;
         }
 

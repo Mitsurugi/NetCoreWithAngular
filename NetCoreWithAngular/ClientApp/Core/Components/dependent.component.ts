@@ -61,7 +61,7 @@ export class DependentComponent<TKey, TParentKey, TParentView, TGrid extends IDe
     protected async getEditModelAsync(id: TKey) {
         try {
             var popup = this._snackBar.open(this._localizer.localize("Loading"));
-            this._itemEdit = await this._service.getEditModelAsync(id);
+            this._itemEdit = await this._service.getEditModelAsync(id, this._parentId);
             popup.dismiss();
         }
         catch (e) {
@@ -76,7 +76,7 @@ export class DependentComponent<TKey, TParentKey, TParentView, TGrid extends IDe
     public async ngOnInit() {
         try {
             var popup = this._snackBar.open(this._localizer.localize("Loading"));
-            this._filter = await this._service.getFilterModelAsync();
+            this._filter = await this._service.getFilterModelAsync(this._parentId);
             this._parent = await this._service.getParentAsync(this._parentId);
             await this.reloadGridAsync();
             popup.dismiss();
@@ -113,7 +113,7 @@ export class DependentComponent<TKey, TParentKey, TParentView, TGrid extends IDe
     public async clearFilterAsync() {
         try {
             var popup = this._snackBar.open(this._localizer.localize("Loading"));
-            this._filter = await this._service.getFilterModelAsync();
+            this._filter = await this._service.getFilterModelAsync(this._parentId);
             await this.reloadGridAsync();
             popup.dismiss();
         }
@@ -227,10 +227,9 @@ export class DependentComponent<TKey, TParentKey, TParentView, TGrid extends IDe
     
 
     public async deleteAsync(id: TKey) {
-        popup.dismiss();
         try {
             var popup = this._snackBar.open(this._localizer.localize("Loading"));
-            await this._service.deleteAsync(id);
+            await this._service.deleteAsync(id, this._parentId);
             await this.reloadGridAsync();
             popup.dismiss();
         }
@@ -244,10 +243,9 @@ export class DependentComponent<TKey, TParentKey, TParentView, TGrid extends IDe
     }
 
     public async deleteCheckedAsync() {
-        popup.dismiss();
         try {
             var popup = this._snackBar.open(this._localizer.localize("Loading"));
-            await this._service.deleteManyAsync(this._checkedItems);
+            await this._service.deleteManyAsync(this._checkedItems, this._parentId);
             await this.reloadGridAsync();
             popup.dismiss();
         }
@@ -313,7 +311,7 @@ export class DependentComponent<TKey, TParentKey, TParentView, TGrid extends IDe
     public async getImportTemplateAsync() {
         try {
             var popup = this._snackBar.open(this._localizer.localize("Loading"));
-            let b = await this._service.getImportTemplateAsync();
+            let b = await this._service.getImportTemplateAsync(this._parentId);
             popup.dismiss();
             saveAs(b, "ImportTemplate.xlsx");
         }

@@ -1,5 +1,7 @@
 ﻿<h2>{{_localizer.localize("AnimeEpisodes")}}</h2>
-<div class="grid">
+<div class="grid" *ngIf="!_items.length">{{_localizer.localize("NoData")}}</div>
+
+<div class="grid" *ngIf="_items.length">
     <div class="pagination">
         <button class="btn btn-default" (click)="prevPageAsync()">{{_localizer.localize("PrevPage")}}</button>
         <span>{{_localizer.localize("Page")}} <input name="currentPage" [(ngModel)]="_currentPage" type="number" required (change)="reloadGridAsync()" style="width:100px;" /> {{_localizer.localize("PageOf")}} {{_totalPages}}</span>

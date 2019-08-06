@@ -103,7 +103,7 @@ var DependentComponent = /** @class */ (function () {
                         _b.trys.push([0, 2, , 3]);
                         popup = this._snackBar.open(this._localizer.localize("Loading"));
                         _a = this;
-                        return [4 /*yield*/, this._service.getEditModelAsync(id)];
+                        return [4 /*yield*/, this._service.getEditModelAsync(id, this._parentId)];
                     case 1:
                         _a._itemEdit = _b.sent();
                         popup.dismiss();
@@ -130,7 +130,7 @@ var DependentComponent = /** @class */ (function () {
                         _c.trys.push([0, 4, , 5]);
                         popup = this._snackBar.open(this._localizer.localize("Loading"));
                         _a = this;
-                        return [4 /*yield*/, this._service.getFilterModelAsync()];
+                        return [4 /*yield*/, this._service.getFilterModelAsync(this._parentId)];
                     case 1:
                         _a._filter = _c.sent();
                         _b = this;
@@ -203,7 +203,7 @@ var DependentComponent = /** @class */ (function () {
                         _b.trys.push([0, 3, , 4]);
                         popup = this._snackBar.open(this._localizer.localize("Loading"));
                         _a = this;
-                        return [4 /*yield*/, this._service.getFilterModelAsync()];
+                        return [4 /*yield*/, this._service.getFilterModelAsync(this._parentId)];
                     case 1:
                         _a._filter = _b.sent();
                         return [4 /*yield*/, this.reloadGridAsync()];
@@ -371,28 +371,25 @@ var DependentComponent = /** @class */ (function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        popup.dismiss();
-                        _a.label = 1;
-                    case 1:
-                        _a.trys.push([1, 4, , 5]);
+                        _a.trys.push([0, 3, , 4]);
                         popup = this._snackBar.open(this._localizer.localize("Loading"));
-                        return [4 /*yield*/, this._service.deleteAsync(id)];
-                    case 2:
+                        return [4 /*yield*/, this._service.deleteAsync(id, this._parentId)];
+                    case 1:
                         _a.sent();
                         return [4 /*yield*/, this.reloadGridAsync()];
-                    case 3:
+                    case 2:
                         _a.sent();
                         popup.dismiss();
-                        return [3 /*break*/, 5];
-                    case 4:
+                        return [3 /*break*/, 4];
+                    case 3:
                         e_10 = _a.sent();
                         popup.dismiss();
                         console.log(e_10);
                         if (e_10.error) {
                             popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e_10.error));
                         }
-                        return [3 /*break*/, 5];
-                    case 5: return [2 /*return*/];
+                        return [3 /*break*/, 4];
+                    case 4: return [2 /*return*/];
                 }
             });
         });
@@ -403,28 +400,25 @@ var DependentComponent = /** @class */ (function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        popup.dismiss();
-                        _a.label = 1;
-                    case 1:
-                        _a.trys.push([1, 4, , 5]);
+                        _a.trys.push([0, 3, , 4]);
                         popup = this._snackBar.open(this._localizer.localize("Loading"));
-                        return [4 /*yield*/, this._service.deleteManyAsync(this._checkedItems)];
-                    case 2:
+                        return [4 /*yield*/, this._service.deleteManyAsync(this._checkedItems, this._parentId)];
+                    case 1:
                         _a.sent();
                         return [4 /*yield*/, this.reloadGridAsync()];
-                    case 3:
+                    case 2:
                         _a.sent();
                         popup.dismiss();
-                        return [3 /*break*/, 5];
-                    case 4:
+                        return [3 /*break*/, 4];
+                    case 3:
                         e_11 = _a.sent();
                         popup.dismiss();
                         console.log(e_11);
                         if (e_11.error) {
                             popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e_11.error));
                         }
-                        return [3 /*break*/, 5];
-                    case 5: return [2 /*return*/];
+                        return [3 /*break*/, 4];
+                    case 4: return [2 /*return*/];
                 }
             });
         });
@@ -527,7 +521,7 @@ var DependentComponent = /** @class */ (function () {
                     case 0:
                         _a.trys.push([0, 2, , 3]);
                         popup = this._snackBar.open(this._localizer.localize("Loading"));
-                        return [4 /*yield*/, this._service.getImportTemplateAsync()];
+                        return [4 /*yield*/, this._service.getImportTemplateAsync(this._parentId)];
                     case 1:
                         b = _a.sent();
                         popup.dismiss();

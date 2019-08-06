@@ -33,8 +33,8 @@ export class CoreComponent<TKey, TGrid extends IEntity<TKey>, TCreate extends IE
         this._snackBar = snackBar;
     }
 
-    protected async getCreateModelAsync() {        
-        try {
+    protected async getCreateModelAsync() {
+        try {            
             var popup = this._snackBar.open(this._localizer.localize("Loading"));
             this._itemCreate = await this._service.getCreateModelAsync();
             popup.dismiss();

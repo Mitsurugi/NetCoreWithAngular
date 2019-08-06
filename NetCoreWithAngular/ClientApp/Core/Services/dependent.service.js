@@ -90,11 +90,11 @@ var DependentService = /** @class */ (function () {
             });
         });
     };
-    DependentService.prototype.getEditModelAsync = function (id) {
+    DependentService.prototype.getEditModelAsync = function (id, parentId) {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, this._http.get('api/' + this._controller + '/getEditModel?id=' + id).toPromise()];
+                    case 0: return [4 /*yield*/, this._http.get('api/' + this._controller + '/getEditModel?id=' + id + '&parentId=' + parentId).toPromise()];
                     case 1: return [2 /*return*/, _a.sent()];
                 }
             });
@@ -110,11 +110,11 @@ var DependentService = /** @class */ (function () {
             });
         });
     };
-    DependentService.prototype.deleteAsync = function (id) {
+    DependentService.prototype.deleteAsync = function (id, parentId) {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, this._http.delete('api/' + this._controller + '/delete?id=' + id).toPromise()];
+                    case 0: return [4 /*yield*/, this._http.delete('api/' + this._controller + '/delete?id=' + id + '&parentId=' + parentId).toPromise()];
                     case 1:
                         _a.sent();
                         return [2 /*return*/];
@@ -122,11 +122,11 @@ var DependentService = /** @class */ (function () {
             });
         });
     };
-    DependentService.prototype.deleteManyAsync = function (ids) {
+    DependentService.prototype.deleteManyAsync = function (ids, parentId) {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, this._http.delete('api/' + this._controller + '/deleteMany', { params: StaticMethods.ArrayToHttpParams('ids', ids) }).toPromise()];
+                    case 0: return [4 /*yield*/, this._http.delete('api/' + this._controller + '/deleteMany?parentId=' + parentId, { params: StaticMethods.ArrayToHttpParams('ids', ids) }).toPromise()];
                     case 1:
                         _a.sent();
                         return [2 /*return*/];
@@ -134,11 +134,11 @@ var DependentService = /** @class */ (function () {
             });
         });
     };
-    DependentService.prototype.getFilterModelAsync = function () {
+    DependentService.prototype.getFilterModelAsync = function (parentId) {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, this._http.get('api/' + this._controller + '/getFilterModel').toPromise()];
+                    case 0: return [4 /*yield*/, this._http.get('api/' + this._controller + '/getFilterModel?parentId=' + parentId).toPromise()];
                     case 1: return [2 /*return*/, _a.sent()];
                 }
             });
@@ -154,11 +154,11 @@ var DependentService = /** @class */ (function () {
             });
         });
     };
-    DependentService.prototype.getImportTemplateAsync = function () {
+    DependentService.prototype.getImportTemplateAsync = function (parentId) {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, this._http.get('api/' + this._controller + '/getImportTemplate', { responseType: 'blob' }).toPromise()];
+                    case 0: return [4 /*yield*/, this._http.get('api/' + this._controller + '/getImportTemplate?parentId=' + parentId, { responseType: 'blob' }).toPromise()];
                     case 1: return [2 /*return*/, _a.sent()];
                 }
             });

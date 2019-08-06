@@ -42,14 +42,14 @@ namespace CoreLibrary
             _localizer = localizer;
         }
 
-        public virtual IQueryable<TEntity> GetQuery()
+        public virtual IQueryable<TEntity> GetQueryNoTracking()
         {
             return _repository.GetQueryNoTracking();
         }
 
-        public virtual async Task<TEntity> GetByIdAsync(TKey id)
+        public virtual IQueryable<TEntity> GetQueryWithTracking()
         {
-            return await GetQuery().SingleAsync(i => i.Id.Equals(id));
+            return _repository.GetQueryWithTracking();
         }
 
         public virtual async Task<TCreate> SaveCreateModelAsync(TCreate createView)
@@ -69,7 +69,7 @@ namespace CoreLibrary
 
         public virtual async Task<TEdit> SaveEditModelAsync(TEdit editView)
         {
-            var old = await GetByIdAsync(editView.Id);
+            var old = await GetQueryWithTracking().SingleAsync(i => i.Id.Equals(editView.Id));
             var entity = _mapper.Map<TEdit, TEntity>(editView, old);
             entity = await _repository.UpdateAsync(entity);
             await _repository.SaveChangesAsync();
@@ -78,7 +78,7 @@ namespace CoreLibrary
 
         public virtual async Task<TEdit> GetEditModelAsync(TKey id)
         {
-            var entity = await GetByIdAsync(id);
+            var entity = await GetQueryNoTracking().SingleAsync(i => i.Id.Equals(id));
 
             return await FillEditModelAsync(_mapper.Map<TEntity, TEdit>(entity));
         }
@@ -90,7 +90,8 @@ namespace CoreLibrary
 
         public virtual async Task DeleteAsync(TKey[] ids)
         {
-            await _repository.DeleteAsync(i => ids.Contains(i.Id));
+            var toDelete = await GetQueryNoTracking().Where(i => ids.Contains(i.Id)).Select(i => i.Id).ToArrayAsync();
+            await _repository.DeleteAsync(i => toDelete.Contains(i.Id));
             await _repository.SaveChangesAsync();
         }
 
@@ -101,7 +102,7 @@ namespace CoreLibrary
             if (pageSize < 1)
                 pageSize = 1;
 
-            var query = ApplyFilter(GetQuery(), filter);
+            var query = ApplyFilter(GetQueryNoTracking(), filter);
             query = ApplySorting(query, orderBy);
             query = ApplySearch(query, searchString);
 
@@ -113,7 +114,7 @@ namespace CoreLibrary
 
         public virtual async Task<int> GetPagesCountAsync(int pageSize, TFilter filter, string searchString)
         {
-            var query = ApplyFilter(GetQuery(), filter);
+            var query = ApplyFilter(GetQueryNoTracking(), filter);
             query = ApplySearch(query, searchString);
 
             var count = await query.CountAsync();
@@ -132,7 +133,7 @@ namespace CoreLibrary
 
         public virtual async Task<byte[]> GetExcelExportAsync(string orderBy, TFilter filter, string searchString)
         {
-            var query = ApplyFilter(GetQuery(), filter);
+            var query = ApplyFilter(GetQueryNoTracking(), filter);
             query = ApplySorting(query, orderBy);
             query = ApplySearch(query, searchString);
 

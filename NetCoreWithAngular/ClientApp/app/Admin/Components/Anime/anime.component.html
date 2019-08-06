@@ -1,17 +1,19 @@
 ﻿<h2>{{_localizer.localize("Animes")}}</h2>
-<div class="sorting">
-    <label>{{_localizer.localize("OrderBy")}}</label>
-    <select class="form-control" [(ngModel)]="_orderBy" (change)="reloadGridAsync()">
-        <option value="Position">{{_localizer.localize("ManualSorting")}}</option>
-        <option value="Id_desc">{{_localizer.localizeWithValues("OrderBy.DescendingX", _localizer.localize("Id"))}}</option>
-        <option value="Id">{{_localizer.localizeWithValues("OrderBy.AscendingX", _localizer.localize("Id"))}}</option>
-        <option value="Title">{{_localizer.localizeWithValues("OrderBy.AscendingX", _localizer.localize("Anime.Title"))}}</option>
-        <option value="Title_desc">{{_localizer.localizeWithValues("OrderBy.DescendingX", _localizer.localize("Anime.Title"))}}</option>
-    </select>
-    <div style="clear:both"></div>
-</div>
 
-<div class="grid">
+<div class="grid" *ngIf="!_items.length">{{_localizer.localize("NoData")}}</div>
+
+<div class="grid" *ngIf="_items.length">
+    <div class="sorting">
+        <label>{{_localizer.localize("OrderBy")}}</label>
+        <select class="form-control" [(ngModel)]="_orderBy" (change)="reloadGridAsync()">
+            <option value="Position">{{_localizer.localize("ManualSorting")}}</option>
+            <option value="Id_desc">{{_localizer.localizeWithValues("OrderBy.DescendingX", _localizer.localize("Id"))}}</option>
+            <option value="Id">{{_localizer.localizeWithValues("OrderBy.AscendingX", _localizer.localize("Id"))}}</option>
+            <option value="Title">{{_localizer.localizeWithValues("OrderBy.AscendingX", _localizer.localize("Anime.Title"))}}</option>
+            <option value="Title_desc">{{_localizer.localizeWithValues("OrderBy.DescendingX", _localizer.localize("Anime.Title"))}}</option>
+        </select>
+        <div style="clear:both"></div>
+    </div>
     <div class="pagination">
         <button class="btn btn-default" (click)="prevPageAsync()">{{_localizer.localize("PrevPage")}}</button>
         <span>{{_localizer.localize("Page")}} <input name="currentPage" [(ngModel)]="_currentPage" type="number" required (change)="reloadGridAsync()" style="width:100px;" /> {{_localizer.localize("PageOf")}} {{_totalPages}}</span>
@@ -38,7 +40,7 @@
             <ng-template ngFor let-i [ngForOf]="_items" let-n="index">
                 <tr cdkDrag cdkDragLockAxis="y">
                     <th>
-                        <input type="checkbox" [checked]="_checkedItems.indexOf(i.id) >= 0" (change)="toggleChecked(i.id)"/>
+                        <input type="checkbox" [checked]="_checkedItems.indexOf(i.id) >= 0" (change)="toggleChecked(i.id)" />
                     </th>
                     <td>
                         {{i.id}}

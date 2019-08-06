@@ -7,7 +7,7 @@ import { StaticMethods } from './staticMethods';
 @Injectable()
 export class CoreService<TKey, TGrid extends IEntity<TKey>, TCreate extends IEntity<TKey> = TGrid, TEdit extends IEntity<TKey> = TGrid, TFilter = TGrid> {
 
-    protected _controller = "";
+    _controller = "";
     protected _http: HttpClient;
 
     constructor(http: HttpClient) {

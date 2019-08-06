@@ -104,11 +104,11 @@ namespace CoreLibrary
         }
 
         [HttpGet]
-        public virtual async Task<ActionResult<TEdit>> GetEditModel([FromQuery] TKey id)
+        public virtual async Task<ActionResult<TEdit>> GetEditModel([FromQuery] TKey id, [FromQuery] TParentKey parentId)
         {
             try
             {
-                return await _service.GetEditModelAsync(id);
+                return await _service.GetEditModelAsync(id, parentId);
             }
             catch (Exception ex)
             {
@@ -137,11 +137,11 @@ namespace CoreLibrary
         }
 
         [HttpDelete]
-        public virtual async Task<IActionResult> Delete([FromQuery] TKey id)
+        public virtual async Task<IActionResult> Delete([FromQuery] TKey id, [FromQuery] TParentKey parentId)
         {
             try
             {
-                await _service.DeleteAsync(id);
+                await _service.DeleteAsync(id, parentId);
                 return Ok();
             }
             catch (Exception ex)
@@ -151,11 +151,11 @@ namespace CoreLibrary
         }
 
         [HttpDelete]
-        public virtual async Task<IActionResult> DeleteMany([FromQuery] TKey[] ids)
+        public virtual async Task<IActionResult> DeleteMany([FromQuery] TKey[] ids, [FromQuery] TParentKey parentId)
         {
             try
             {
-                await _service.DeleteAsync(ids);
+                await _service.DeleteAsync(ids, parentId);
                 return Ok();
             }
             catch (Exception ex)
@@ -165,11 +165,11 @@ namespace CoreLibrary
         }
 
         [HttpGet]
-        public virtual async Task<ActionResult<TFilter>> GetFilterModel()
+        public virtual async Task<ActionResult<TFilter>> GetFilterModel([FromQuery] TParentKey parentId)
         {
             try
             {
-                return await _service.GetFilterModelAsync();
+                return await _service.GetFilterModelAsync(parentId);
             }
             catch (Exception ex)
             {
@@ -192,11 +192,11 @@ namespace CoreLibrary
         }
 
         [HttpGet]
-        public virtual async Task<IActionResult> GetImportTemplate()
+        public virtual async Task<IActionResult> GetImportTemplate([FromQuery] TParentKey parentId)
         {
             try
             {
-                byte[] reportData = await _service.GetImportTemplateAsync();
+                byte[] reportData = await _service.GetImportTemplateAsync(parentId);
                 return File(reportData, "application/vnd.openxmlformat");
             } catch (Exception ex)
             {

@@ -14,9 +14,9 @@ class TokenResponse {
 @Injectable()
 export class CoreAccountService {
 
-    protected _accGlobals: AccountGlobals;
-    protected _controllerName = "identity";
-    protected _http: HttpClient;
+    _accGlobals: AccountGlobals;
+    _controllerName = "identity";
+    _http: HttpClient;
 
     constructor(http: HttpClient, accGlobals: AccountGlobals) {
         this._http = http;
@@ -40,6 +40,5 @@ export class CoreAccountService {
 
     public async changePasswordAsync(model: ChangePasswordModel) {
         await this._http.post('/api/' + this._controllerName + '/ChangePassword', model).toPromise();
-        this.deleteToken();
     }
 }
