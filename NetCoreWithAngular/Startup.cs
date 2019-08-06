@@ -43,7 +43,10 @@ namespace NetCoreWithAngular
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
             });
 
-            services.AddIdentity<User, IdentityRole<System.Guid>>().AddEntityFrameworkStores<ExampleContext>().AddDefaultTokenProviders();
+            services.AddIdentity<User, IdentityRole<System.Guid>>(options => 
+            {
+                options.Password.RequireDigit = false; options.Password.RequiredLength = 1; options.Password.RequiredUniqueChars = 1; options.Password.RequireLowercase = false; options.Password.RequireNonAlphanumeric = false; options.Password.RequireUppercase = false;
+            }).AddEntityFrameworkStores<ExampleContext>().AddDefaultTokenProviders();
 
             services.AddMvc();
             services.AddAutoMapper(typeof(MappingProfile));

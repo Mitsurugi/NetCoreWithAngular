@@ -85,7 +85,10 @@ namespace CoreLibrary.Localization
             ruRUDict.Add("FileNull", "Файл не выбран");
 
             enUSDict.Add("FileNotFound", "File not found");
-            ruRUDict.Add("FileNotFound", "Файл не найден");            
+            ruRUDict.Add("FileNotFound", "Файл не найден");
+
+            enUSDict.Add("LoginExists", "This login already exists");
+            ruRUDict.Add("LoginExists", "Это логин уже занят");
         }
 
         protected virtual void AddOrUpdateStrings()

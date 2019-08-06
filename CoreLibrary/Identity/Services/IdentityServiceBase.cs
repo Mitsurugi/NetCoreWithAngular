@@ -93,6 +93,9 @@ namespace CoreLibrary.Identity
 
         public virtual async Task CreateUserAsync(TIdentityUser user, string password)
         {
+            var exists = await FindUserByNameAsync(user.UserName);
+            if (exists != null)
+                throw new Exception(_localizer["LoginExists"]);
             var identityResult = await _userManager.CreateAsync(user, password);
 
             if (!identityResult.Succeeded)

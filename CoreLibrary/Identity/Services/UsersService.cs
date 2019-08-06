@@ -57,12 +57,11 @@ namespace CoreLibrary.Identity
 
         public virtual async Task<TCreate> SaveCreateModelAsync(TCreate createView)
         {
-            string role = createView.Role.Trim();
-            if (!string.IsNullOrEmpty(role))
+            if (!string.IsNullOrEmpty(createView.Role))
             {
-                var exists = await _identityService.RoleExistsAsync(role);
+                var exists = await _identityService.RoleExistsAsync(createView.Role);
                 if (!exists)
-                    throw new Exception(_localizer["RoleNotFound", role]);
+                    throw new Exception(_localizer["RoleNotFound", createView.Role]);
             }
 
             var create = _mapper.Map<TCreate, TEntity>(createView);
@@ -71,9 +70,9 @@ namespace CoreLibrary.Identity
 
             create = await _identityService.FindUserByNameAsync(create.UserName);
 
-            if (!string.IsNullOrEmpty(role))
+            if (!string.IsNullOrEmpty(createView.Role))
             {
-                await _identityService.AddUserToRoleAsync(create.Id, role);
+                await _identityService.AddUserToRoleAsync(create.Id, createView.Role);
             }
 
             createView = _mapper.Map<TEntity, TCreate>(create);
