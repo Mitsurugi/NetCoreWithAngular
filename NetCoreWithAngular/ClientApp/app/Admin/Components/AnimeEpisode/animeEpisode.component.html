@@ -27,7 +27,8 @@
                         {{i.title}}
                     </td>
                     <td>
-                        <button class="btn btn-default" (click)="toggleEditAsync(i.id)">{{_localizer.localize("Edit")}}</button>
+                        <button class="btn btn-default" (click)="toggleEditAsync(i.id)" *ngIf="_showEditId != i.id">{{_localizer.localize("Edit")}}</button>
+                        <button class="btn btn-default" (click)="toggleEditAsync(i.id)" *ngIf="_showEditId == i.id">{{_localizer.localize("Cancel")}}</button>
                     </td>
                     <td>
                         <button class="btn btn-default" (click)="deleteAsync(i.id)">{{_localizer.localize("Delete")}}</button>

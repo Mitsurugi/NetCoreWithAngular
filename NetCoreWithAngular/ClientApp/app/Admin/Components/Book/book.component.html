@@ -39,9 +39,9 @@
         <div style="clear:both"></div>
     </div>
     <div class="pagination">
-        <button class="btn btn-default" (click)="prevPageAsync()">{{_localizer.localize("PrevPage")}}</button>
+        <button class="btn btn-default" (click)="prevPageAsync()" [disabled]="_currentPage < 2">{{_localizer.localize("PrevPage")}}</button>
         <span>{{_localizer.localize("Page")}} <input name="currentPage" [(ngModel)]="_currentPage" type="number" required (change)="reloadGridAsync()" style="width:100px;" /> {{_localizer.localize("PageOf")}} {{_totalPages}}</span>
-        <button class="btn btn-default" (click)="nextPageAsync()">{{_localizer.localize("NextPage")}}</button>
+        <button class="btn btn-default" (click)="nextPageAsync()" [disabled]="_currentPage >= _totalPages">{{_localizer.localize("NextPage")}}</button>
         <button class="btn btn-default" (click)="getExcelExportAsync()">{{_localizer.localize("ExcelExport")}}</button>
     </div>
     <table class="table">
@@ -75,7 +75,8 @@
                         {{i.pageCount}}
                     </td>
                     <td>
-                        <button class="btn btn-default" (click)="toggleEditAsync(i.id)">{{_localizer.localize("Edit")}}</button>
+                        <button class="btn btn-default" (click)="toggleEditAsync(i.id)" *ngIf="_showEditId != i.id">{{_localizer.localize("Edit")}}</button>
+                        <button class="btn btn-default" (click)="toggleEditAsync(i.id)" *ngIf="_showEditId == i.id">{{_localizer.localize("Cancel")}}</button>
                     </td>
                     <td>
                         <button class="btn btn-default" (click)="deleteAsync(i.id)">{{_localizer.localize("Delete")}}</button>

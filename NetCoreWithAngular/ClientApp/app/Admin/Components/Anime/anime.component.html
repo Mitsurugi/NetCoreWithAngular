@@ -15,11 +15,11 @@
         <div style="clear:both"></div>
     </div>
     <div class="pagination">
-        <button class="btn btn-default" (click)="prevPageAsync()">{{_localizer.localize("PrevPage")}}</button>
+        <button class="btn btn-default" (click)="prevPageAsync()" [disabled]="_currentPage < 2" >{{_localizer.localize("PrevPage")}}</button>
         <span>{{_localizer.localize("Page")}} <input name="currentPage" [(ngModel)]="_currentPage" type="number" required (change)="reloadGridAsync()" style="width:100px;" /> {{_localizer.localize("PageOf")}} {{_totalPages}}</span>
-        <button class="btn btn-default" (click)="nextPageAsync()">{{_localizer.localize("NextPage")}}</button>
+        <button class="btn btn-default" (click)="nextPageAsync()" [disabled]="_currentPage >= _totalPages">{{_localizer.localize("NextPage")}}</button>
         <button class="btn btn-default" (click)="getExcelExportAsync()">{{_localizer.localize("ExcelExport")}}</button>
-        <button class="btn btn-default" (click)="deleteCheckedAsync()">{{_localizer.localize("DeleteSelected")}}</button>
+        <button class="btn btn-default" (click)="deleteCheckedAsync()" [disabled]="!_checkedItems.length">{{_localizer.localize("DeleteSelected")}}</button>
     </div>
     <table class="table">
         <thead>
