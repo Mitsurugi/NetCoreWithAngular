@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using CoreLibrary.Localization;
+﻿using CoreLibrary.Localization;
+using NetCoreWithAngular.Models;
 
 namespace NetCoreWithAngular.Localization
 {
@@ -25,14 +22,14 @@ namespace NetCoreWithAngular.Localization
             enUSDict.Add("BookGenre", "Genre");
             ruRUDict.Add("BookGenre", "Жанр");
 
-            enUSDict.Add("Genre.Fantasy", "Fantasy");
-            ruRUDict.Add("Genre.Fantasy", "Фэнтези");
-            enUSDict.Add("Genre.Horror", "Horror");
-            ruRUDict.Add("Genre.Horror", "Хорор");
-            enUSDict.Add("Genre.Drama", "Drama");
-            ruRUDict.Add("Genre.Drama", "Драма");
-            enUSDict.Add("Genre.Sci-Fi", "Sci-Fi");
-            ruRUDict.Add("Genre.Sci-Fi", "Sci-Fi");
+            enUSDict.Add($"{typeof(Genre).Name}.{Genre.Fantasy}", "Fantasy");
+            ruRUDict.Add($"{typeof(Genre).Name}.{Genre.Fantasy}", "Фэнтези");
+            enUSDict.Add($"{typeof(Genre).Name}.{Genre.Horror}", "Horror");
+            ruRUDict.Add($"{typeof(Genre).Name}.{Genre.Horror}", "Хорор");
+            enUSDict.Add($"{typeof(Genre).Name}.{Genre.Drama}", "Drama");
+            ruRUDict.Add($"{typeof(Genre).Name}.{Genre.Drama}", "Драма");
+            enUSDict.Add($"{typeof(Genre).Name}.{Genre.SciFi}", "Sci-Fi");
+            ruRUDict.Add($"{typeof(Genre).Name}.{Genre.SciFi}", "Sci-Fi");
         }
     }
 }
