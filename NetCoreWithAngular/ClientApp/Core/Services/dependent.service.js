@@ -84,7 +84,7 @@ var DependentService = /** @class */ (function () {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, this._http.post('/api/' + this._controller + '/saveCreateModel?parendId=' + parentId, item).toPromise()];
+                    case 0: return [4 /*yield*/, this._http.post('/api/' + this._controller + '/saveCreateModel?parentId=' + parentId, item).toPromise()];
                     case 1: return [2 /*return*/, _a.sent()];
                 }
             });
