@@ -23,7 +23,7 @@ namespace NetCoreWithAngular.Services
             int lastPos = 0;
             if (await GetQueryNoTracking().AnyAsync())
             {
-                lastPos = await GetQueryNoTracking().MaxAsync(i => i.Position);
+                lastPos = await GetQueryNoTracking().MaxAsync(i => i.Position, _cancellationToken);
             }
             createView.Position = lastPos + 1;
 
@@ -32,7 +32,7 @@ namespace NetCoreWithAngular.Services
         
         public override async Task DeleteAsync(int id)
         {
-            var delete = await GetQueryNoTracking().SingleAsync(i => i.Id == id);
+            var delete = await GetQueryNoTracking().SingleAsync(i => i.Id == id, _cancellationToken);
 
             if (delete.ImageId.HasValue)
                 await _fileService.DeleteAsync(delete.ImageId.Value);
@@ -43,7 +43,7 @@ namespace NetCoreWithAngular.Services
 
         public async Task MoveAsync(int id, int newPosition)
         {
-            var field = await GetQueryNoTracking().SingleOrDefaultAsync(i => i.Id == id);
+            var field = await GetQueryNoTracking().SingleOrDefaultAsync(i => i.Id == id, _cancellationToken);
             if (field == null) return;
             if (field.Position == newPosition) return;
 
