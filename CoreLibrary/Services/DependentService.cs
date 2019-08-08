@@ -10,6 +10,8 @@ using AutoMapper.QueryableExtensions;
 using ClosedXML.Excel;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Localization;
+using System.Threading;
+using Microsoft.AspNetCore.Http;
 
 namespace CoreLibrary
 {
@@ -19,7 +21,7 @@ namespace CoreLibrary
         where TParentEntity : class, IEntity<TParentKey>, new()
         where TParentView : class, IEntity<TParentKey>, new()
     {
-        public DependentService(IRepository<TEntity, TKey> repository, IRepository<TParentEntity, TParentKey> parentRepository, IMapper mapper, IStringLocalizer localizer) : base(repository, parentRepository, mapper, localizer)
+        public DependentService(IRepository<TEntity, TKey> repository, IRepository<TParentEntity, TParentKey> parentRepository, IMapper mapper, IStringLocalizer localizer, IHttpContextAccessor httpContext) : base(repository, parentRepository, mapper, localizer, httpContext)
         {
         }
     }
@@ -34,19 +36,20 @@ namespace CoreLibrary
         where TParentView : class, IEntity<TParentKey>, new()
     {
         protected readonly IRepository<TEntity, TKey> _repository;
-
         protected readonly IRepository<TParentEntity, TParentKey> _parentRepository;
-
         protected readonly IMapper _mapper;
-
         protected readonly IStringLocalizer _localizer;
+        protected readonly IHttpContextAccessor _httpContext;
+        protected CancellationToken _cancellationToken;
 
-        public DependentService(IRepository<TEntity, TKey> repository, IRepository<TParentEntity, TParentKey> parentRepository, IMapper mapper, IStringLocalizer localizer)
+        public DependentService(IRepository<TEntity, TKey> repository, IRepository<TParentEntity, TParentKey> parentRepository, IMapper mapper, IStringLocalizer localizer, IHttpContextAccessor httpContext)
         {
             _repository = repository;
             _mapper = mapper;
             _localizer = localizer;
             _parentRepository = parentRepository;
+            _httpContext = httpContext;
+            _cancellationToken = httpContext?.HttpContext?.RequestAborted ?? CancellationToken.None;
         }
 
         public virtual IQueryable<TEntity> GetQueryNoTracking(TParentKey parentId)
@@ -78,7 +81,7 @@ namespace CoreLibrary
 
         public virtual async Task<TEdit> SaveEditModelAsync(TEdit editView)
         {
-            var old = await GetQueryWithTracking(editView.ParentId).SingleAsync(i => i.Id.Equals(editView.Id));
+            var old = await GetQueryWithTracking(editView.ParentId).SingleAsync(i => i.Id.Equals(editView.Id), _cancellationToken);
             var entity = _mapper.Map<TEdit, TEntity>(editView, old);
             entity = await _repository.UpdateAsync(entity);
             await _repository.SaveChangesAsync();
@@ -87,7 +90,7 @@ namespace CoreLibrary
 
         public virtual async Task<TEdit> GetEditModelAsync(TKey id, TParentKey parentId)
         {
-            var entity = await GetQueryWithTracking(parentId).SingleAsync(i => i.Id.Equals(parentId)); ;
+            var entity = await GetQueryWithTracking(parentId).SingleAsync(i => i.Id.Equals(parentId), _cancellationToken);
 
             return await FillEditModelAsync(_mapper.Map<TEntity, TEdit>(entity), parentId);
         }
@@ -99,7 +102,7 @@ namespace CoreLibrary
 
         public virtual async Task DeleteAsync(TKey[] ids, TParentKey parentId)
         {
-            var toDelete = await GetQueryNoTracking(parentId).Where(i => ids.Contains(i.Id)).Select(i => i.Id).ToArrayAsync();
+            var toDelete = await GetQueryNoTracking(parentId).Where(i => ids.Contains(i.Id)).Select(i => i.Id).ToArrayAsync(_cancellationToken);
             await _repository.DeleteAsync(i => toDelete.Contains(i.Id));
             await _repository.SaveChangesAsync();
         }
@@ -115,7 +118,7 @@ namespace CoreLibrary
             query = ApplySorting(query, orderBy);
             query = ApplySearch(query, searchString);
 
-            var grid = await query.Skip(pageSize * (pageNumber - 1)).Take(pageSize).ProjectTo<TGrid>(_mapper.ConfigurationProvider).ToListAsync();
+            var grid = await query.Skip(pageSize * (pageNumber - 1)).Take(pageSize).ProjectTo<TGrid>(_mapper.ConfigurationProvider).ToListAsync(_cancellationToken);
             grid = await FillGridModelAsync(grid, parentId);
             return grid;
         }
@@ -125,7 +128,7 @@ namespace CoreLibrary
             var query = ApplyFilter(GetQueryNoTracking(parentId), filter);
             query = ApplySearch(query, searchString);
 
-            var count = await query.CountAsync();
+            var count = await query.CountAsync(_cancellationToken);
 
             int pages = (int)Math.Floor((double)count / pageSize);
 
@@ -144,7 +147,7 @@ namespace CoreLibrary
             var query = ApplyFilter(GetQueryNoTracking(parentId), filter);
             query = ApplySorting(query, orderBy);
             query = ApplySearch(query, searchString);
-            var grid = await query.ProjectTo<TGrid>(_mapper.ConfigurationProvider).ToListAsync();
+            var grid = await query.ProjectTo<TGrid>(_mapper.ConfigurationProvider).ToListAsync(_cancellationToken);
             grid = await FillGridModelAsync(grid, parentId);
 
             var wb = new XLWorkbook();
@@ -361,14 +364,14 @@ namespace CoreLibrary
 
         public virtual async Task<TParentEntity> GetParentAsync(TParentKey parentId)
         {
-            var parent = await _parentRepository.GetQueryNoTracking().SingleOrDefaultAsync(i => i.Id.Equals(parentId));
+            var parent = await _parentRepository.GetQueryNoTracking().SingleOrDefaultAsync(i => i.Id.Equals(parentId), _cancellationToken);
 
             return parent;
         }
 
         public virtual async Task<TParentView> GetParentViewAsync(TParentKey parentId)
         {
-            var parent = await _parentRepository.GetQueryNoTracking().SingleOrDefaultAsync(i => i.Id.Equals(parentId));
+            var parent = await _parentRepository.GetQueryNoTracking().SingleOrDefaultAsync(i => i.Id.Equals(parentId), _cancellationToken);
 
             return _mapper.Map<TParentEntity, TParentView>(parent);
         }

@@ -2,13 +2,14 @@
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using System.Collections.Generic;
+using System.Threading;
 
 namespace CoreLibrary
 {
     public interface IRepository<TEntity, in TKey> : IDisposable
         where TEntity : class, IEntity<TKey>
     {
+        CancellationToken CancellationToken { get; set; }
         IQueryable<TEntity> GetQueryNoTracking();
         IQueryable<TEntity> GetQueryWithTracking();
         Task<TEntity> AddAsync(TEntity entity);

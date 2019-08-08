@@ -3,10 +3,9 @@ using NetCoreWithAngular.ViewModels;
 using CoreLibrary;
 using System.Threading.Tasks;
 using AutoMapper;
-using System.Collections.Generic;
-using System.Linq;
 using Microsoft.Extensions.Localization;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Http;
 
 namespace NetCoreWithAngular.Services
 {
@@ -14,7 +13,7 @@ namespace NetCoreWithAngular.Services
     {
         private readonly IFileService<File, int> _fileService;
 
-        public AnimeService(IRepository<Anime, int> repository, IMapper mapper, IFileService<File, int> fileService, IStringLocalizer localizer) : base(repository, mapper, localizer)
+        public AnimeService(IRepository<Anime, int> repository, IMapper mapper, IFileService<File, int> fileService, IStringLocalizer localizer, IHttpContextAccessor httpContext) : base(repository, mapper, localizer, httpContext)
         {
             _fileService = fileService;
         }

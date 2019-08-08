@@ -3,7 +3,8 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
+using Microsoft.AspNetCore.Http;
+using System.Threading;
 
 namespace CoreLibrary
 {
@@ -11,22 +12,28 @@ namespace CoreLibrary
         where TDbContext : DbContext
         where TEntity : class, IEntity<TKey>
     {
-        protected readonly DbSet<TEntity> DbSet;
-        protected readonly TDbContext DbContext;
+        protected readonly DbSet<TEntity> _dbSet;
+        protected readonly TDbContext _dbContext;
+        protected IHttpContextAccessor _httpContext;
+        protected CancellationToken cancellationToken;
 
-        public BaseRepository(TDbContext dbContext)
+        public CancellationToken CancellationToken { get => cancellationToken; set => cancellationToken = value; }
+
+        public BaseRepository(TDbContext dbContext, IHttpContextAccessor httpContext)
         {
-            DbContext = dbContext;
-            DbSet = DbContext.Set<TEntity>();
+            _dbContext = dbContext;
+            _dbSet = _dbContext.Set<TEntity>();
+            _httpContext = httpContext;
+            CancellationToken = httpContext?.HttpContext?.RequestAborted ?? CancellationToken.None;
         }
 
         public virtual IQueryable<TEntity> GetQueryNoTracking()
         {
-            return DbSet.AsNoTracking();
+            return _dbSet.AsNoTracking();
         }
         public virtual IQueryable<TEntity> GetQueryWithTracking()
         {
-            return DbSet.AsTracking();
+            return _dbSet.AsTracking();
         }
 
         public virtual async Task<TEntity> AddAsync(TEntity entity)
@@ -34,7 +41,7 @@ namespace CoreLibrary
             if (entity == null)
                 throw new ArgumentNullException("entity");
 
-            var entityResult = await DbSet.AddAsync(entity);
+            var entityResult = await _dbSet.AddAsync(entity, CancellationToken);
 
             return entityResult.Entity;
         }
@@ -43,7 +50,7 @@ namespace CoreLibrary
         {
             if (entities == null || !entities.Any())
                 throw new ArgumentNullException("entities");
-            await DbSet.AddRangeAsync(entities);
+            await _dbSet.AddRangeAsync(entities, CancellationToken);
         }        
 
         public virtual async Task<TEntity> UpdateAsync(TEntity entity)
@@ -51,16 +58,16 @@ namespace CoreLibrary
             if (entity == null)
                 throw new ArgumentNullException("entity");
 
-            var updateEntity = await DbSet.AsTracking().SingleAsync(i => i.Id.Equals(entity.Id));
+            var updateEntity = await _dbSet.AsTracking().SingleAsync(i => i.Id.Equals(entity.Id), CancellationToken);
 
-            DbContext.Entry(updateEntity).CurrentValues.SetValues(entity);
+            _dbContext.Entry(updateEntity).CurrentValues.SetValues(entity);
 
             return updateEntity;
         }
 
         public virtual async Task UpdateAsync(Expression<Func<TEntity, bool>> predicate, Action<TEntity> updateFunc)
         {
-            await DbSet.Where(predicate).AsTracking().ForEachAsync(x => updateFunc(x));
+            await _dbSet.Where(predicate).AsTracking().ForEachAsync(x => updateFunc(x), CancellationToken);
         }
 
         public virtual async Task DeleteAsync(TKey id)
@@ -70,12 +77,12 @@ namespace CoreLibrary
 
         public virtual async Task DeleteAsync(Expression<Func<TEntity, bool>> predicate)
         {
-            await DbSet.Where(predicate).AsTracking().ForEachAsync(x => DbSet.Remove(x));
+            await _dbSet.Where(predicate).AsTracking().ForEachAsync(x => _dbSet.Remove(x), CancellationToken);
         }
 
         public virtual async Task SaveChangesAsync()
         {
-            await DbContext.SaveChangesAsync();
+            await _dbContext.SaveChangesAsync(CancellationToken);
         }
 
         public virtual void Dispose()
@@ -88,8 +95,8 @@ namespace CoreLibrary
         {
             if (disposing)
             {
-                if (DbContext != null)
-                    DbContext.Dispose();
+                if (_dbContext != null)
+                    _dbContext.Dispose();
             }
         }
     }

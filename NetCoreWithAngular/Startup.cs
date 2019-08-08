@@ -22,6 +22,7 @@ using Microsoft.AspNetCore.Localization;
 using System.Globalization;
 using System.Collections.Generic;
 using Microsoft.Extensions.Localization;
+using NetCoreWithAngular.HostedServices;
 
 namespace NetCoreWithAngular
 {
@@ -93,7 +94,7 @@ namespace NetCoreWithAngular
             services.AddScoped<IFrontDataService, FrontDataService>();
             services.AddScoped<IAnimeService, AnimeService>();
 
-            services.AddHostedService<BackgroundService>();
+            services.AddHostedService<HostedService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

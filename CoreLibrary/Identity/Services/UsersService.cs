@@ -11,6 +11,8 @@ using ClosedXML.Excel;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Localization;
+using System.Threading;
+using Microsoft.AspNetCore.Http;
 
 namespace CoreLibrary.Identity
 {
@@ -19,7 +21,7 @@ namespace CoreLibrary.Identity
         where TEntity : IdentityUser<TKey>, IUser<TKey>
         where TViewModel : class, IUserViewModel<TKey>, new()
     {
-        public UsersService(IIdentityService<TEntity, TKey> identityService, IMapper mapper, IStringLocalizer localizer) : base(identityService, mapper, localizer)
+        public UsersService(IIdentityService<TEntity, TKey> identityService, IMapper mapper, IStringLocalizer localizer, IHttpContextAccessor httpContext) : base(identityService, mapper, localizer, httpContext)
         {
         }
     }
@@ -38,11 +40,17 @@ namespace CoreLibrary.Identity
 
         protected readonly IStringLocalizer _localizer;
 
-        public UsersService(IIdentityService<TEntity, TKey> identityService, IMapper mapper, IStringLocalizer localizer)
+        protected readonly IHttpContextAccessor _httpContext;
+
+        protected CancellationToken _cancellationToken;
+
+        public UsersService(IIdentityService<TEntity, TKey> identityService, IMapper mapper, IStringLocalizer localizer, IHttpContextAccessor httpContext)
         {
             _identityService = identityService;
             _mapper = mapper;
             _localizer = localizer;
+            _httpContext = httpContext;
+            _cancellationToken = httpContext?.HttpContext?.RequestAborted ?? CancellationToken.None;
         }
 
         public virtual IQueryable<TEntity> GetQuery()
@@ -78,7 +86,7 @@ namespace CoreLibrary.Identity
             createView = _mapper.Map<TEntity, TCreate>(create);
 
             var list = new List<SelectListItem>();
-            list.AddRange(await _identityService.GetRoles().Select(i => new SelectListItem { Text = _localizer[$"Role.{i.Name}"], Value = i.Name, Selected = i.Name == createView.Role }).ToListAsync());
+            list.AddRange(await _identityService.GetRoles().Select(i => new SelectListItem { Text = _localizer[$"Role.{i.Name}"], Value = i.Name, Selected = i.Name == createView.Role }).ToListAsync(_cancellationToken));
             createView.RoleList = list;
 
             var roleEntity = _identityService.GetRoles().FirstOrDefault(i => i.Name == createView.Role);
@@ -94,7 +102,7 @@ namespace CoreLibrary.Identity
             var model = new TCreate();
 
             var list = new List<SelectListItem>();
-            list.AddRange( await _identityService.GetRoles().Select(i => new SelectListItem { Text = _localizer[$"Role.{i.Name}"], Value = i.Name }).ToListAsync() );
+            list.AddRange( await _identityService.GetRoles().Select(i => new SelectListItem { Text = _localizer[$"Role.{i.Name}"], Value = i.Name }).ToListAsync(_cancellationToken) );
             model.RoleList = list;
 
             model = await FillCreateModelAsync(model);
@@ -129,10 +137,10 @@ namespace CoreLibrary.Identity
             editView = _mapper.Map<TEntity, TEdit>(entity);
 
             var list = new List<SelectListItem>();
-            list.AddRange( await _identityService.GetRoles().Select(i => new SelectListItem { Text = _localizer[$"Role.{i.Name}"], Value = i.Name, Selected = i.Name == editView.Role }).ToListAsync() );
+            list.AddRange( await _identityService.GetRoles().Select(i => new SelectListItem { Text = _localizer[$"Role.{i.Name}"], Value = i.Name, Selected = i.Name == editView.Role }).ToListAsync(_cancellationToken) );
             editView.RoleList = list;
 
-            var roleEntity = await _identityService.GetRoles().FirstOrDefaultAsync(i => i.Name == editView.Role);
+            var roleEntity = await _identityService.GetRoles().FirstOrDefaultAsync(i => i.Name == editView.Role, _cancellationToken);
             if (roleEntity != null) editView.RoleDisplayName = _localizer[$"Role.{roleEntity.Name}"];
 
             editView = await FillEditModelAsync(editView);
@@ -147,10 +155,10 @@ namespace CoreLibrary.Identity
             var edit = _mapper.Map<TEntity, TEdit>(entity);
 
             var list = new List<SelectListItem>();
-            list.AddRange( await _identityService.GetRoles().Select(i => new SelectListItem { Text = _localizer[$"Role.{i.Name}"], Value = i.Name }).ToListAsync() );
+            list.AddRange( await _identityService.GetRoles().Select(i => new SelectListItem { Text = _localizer[$"Role.{i.Name}"], Value = i.Name }).ToListAsync(_cancellationToken) );
             edit.RoleList = list;
 
-            var roleEntity = await _identityService.GetRoles().FirstOrDefaultAsync(i => i.Name == edit.Role);
+            var roleEntity = await _identityService.GetRoles().FirstOrDefaultAsync(i => i.Name == edit.Role, _cancellationToken);
             if (roleEntity != null) edit.RoleDisplayName = _localizer[$"Role.{roleEntity.Name}"];
 
             edit = await FillEditModelAsync(edit);
@@ -183,9 +191,9 @@ namespace CoreLibrary.Identity
             query = ApplySorting(query, orderBy);
             query = ApplySearch(query, searchString);
 
-            var grid = await query.Skip(pageSize * (pageNumber - 1)).Take(pageSize).ProjectTo<TGrid>(_mapper.ConfigurationProvider).ToListAsync();
+            var grid = await query.Skip(pageSize * (pageNumber - 1)).Take(pageSize).ProjectTo<TGrid>(_mapper.ConfigurationProvider).ToListAsync(_cancellationToken);
 
-            var roles = await _identityService.GetRoles().ToListAsync();
+            var roles = await _identityService.GetRoles().ToListAsync(_cancellationToken);
             grid.AsParallel().ForAll(x => {
                 var roleEntity = roles.FirstOrDefault(i => i.Name == x.Role);
                 if (roleEntity != null) x.RoleDisplayName = _localizer[$"Role.{roleEntity.Name}"];
@@ -201,7 +209,7 @@ namespace CoreLibrary.Identity
             var query = ApplyFilter(GetQuery(), filter);
             query = ApplySearch(query, searchString);
 
-            var count = await query.CountAsync();
+            var count = await query.CountAsync(_cancellationToken);
 
             int pages = (int)Math.Floor((double)count / pageSize);
 
@@ -221,9 +229,9 @@ namespace CoreLibrary.Identity
             query = ApplySorting(query, orderBy);
             query = ApplySearch(query, searchString);
 
-            var grid = await query.ProjectTo<TGrid>(_mapper.ConfigurationProvider).ToListAsync();
+            var grid = await query.ProjectTo<TGrid>(_mapper.ConfigurationProvider).ToListAsync(_cancellationToken);
 
-            var roles = await _identityService.GetRoles().ToListAsync();
+            var roles = await _identityService.GetRoles().ToListAsync(_cancellationToken);
             grid.AsParallel().ForAll(x => {
                 var roleEntity = roles.FirstOrDefault(r => r.Name == x.Role);
                 if (roleEntity != null) x.RoleDisplayName = _localizer[$"Role.{roleEntity.Name}"];

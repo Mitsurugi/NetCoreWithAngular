@@ -5,15 +5,14 @@ using System.Threading.Tasks;
 using AutoMapper;
 using System.Collections.Generic;
 using System.Linq;
-using System;
 using Microsoft.Extensions.Localization;
-using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Http;
 
 namespace NetCoreWithAngular.Services
 {
     public class BookService : BaseService<Book, int, BookGridModel, BookViewModel, BookViewModel, BookFilterModel>
     {
-        public BookService(IRepository<Book, int> repository, IMapper mapper, IStringLocalizer localizer) : base(repository, mapper, localizer)
+        public BookService(IRepository<Book, int> repository, IMapper mapper, IStringLocalizer localizer, IHttpContextAccessor httpContext) : base(repository, mapper, localizer, httpContext)
         {
         }
 

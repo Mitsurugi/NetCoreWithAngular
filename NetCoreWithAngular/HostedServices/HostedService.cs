@@ -7,14 +7,14 @@ using NetCoreWithAngular.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace NetCoreWithAngular.Services
+namespace NetCoreWithAngular.HostedServices
 {
-    public class BackgroundService : IHostedService, IDisposable
+    public class HostedService : IHostedService, IDisposable
     {
         private Timer _timer;
         private IServiceProvider _serviceProvider;
 
-        public BackgroundService(IServiceProvider serviceProvider)
+        public HostedService(IServiceProvider serviceProvider)
         {
             _serviceProvider = serviceProvider;
         }
@@ -26,8 +26,8 @@ namespace NetCoreWithAngular.Services
 
         public async Task StartAsync(CancellationToken cancellationToken)
         {
-            _timer = new Timer(TimerEvent);
-            _timer.Change(0, 1000 * 60);
+            _timer = new Timer(async (state) => { await TimerEvent(cancellationToken); });
+            _timer.Change(0, 1000 * 10);
         }
 
         public async Task StopAsync(CancellationToken cancellationToken)
@@ -35,14 +35,15 @@ namespace NetCoreWithAngular.Services
             _timer?.Change(-1, -1);
         }
 
-        private async void TimerEvent(object state)
+        private async Task TimerEvent(CancellationToken cancellationToken)
         {
             try
             {
                 using (var scope = _serviceProvider.CreateScope())
                 {
                     var bookRepository = scope.ServiceProvider.GetRequiredService<IRepository<Book, int>>();
-                    if (!(await bookRepository.GetQueryNoTracking().AnyAsync()))
+                    bookRepository.CancellationToken = cancellationToken;
+                    if (!(await bookRepository.GetQueryNoTracking().AnyAsync(cancellationToken)))
                     {
                         for (int i = 1; i <= 10; i++)
                         {
@@ -60,7 +61,8 @@ namespace NetCoreWithAngular.Services
                 using (var scope = _serviceProvider.CreateScope())
                 {
                     var animeRepository = scope.ServiceProvider.GetRequiredService<IRepository<Anime, int>>();
-                    if (!(await animeRepository.GetQueryNoTracking().AnyAsync()))
+                    animeRepository.CancellationToken = cancellationToken;
+                    if (!(await animeRepository.GetQueryNoTracking().AnyAsync(cancellationToken)))
                     {
                         for (int i = 1; i <= 10; i++)
                         {
