@@ -39,8 +39,8 @@
                         <button class="btn btn-default" (click)="toggleEditAsync(i.id)" *ngIf="_showEditId == i.id">{{_localizer.localize("Cancel")}}</button>
                     </td>
                     <td>
-                        <button class="btn btn-default" (click)="togglePasswordReset(i.id)" *ngIf="_resetPasswordId != id">{{_localizer.localize("SetNewPassButton")}}</button>
-                        <button class="btn btn-default" (click)="togglePasswordReset(i.id)" *ngIf="_resetPasswordId == id">{{_localizer.localize("Cancel")}}</button>
+                        <button class="btn btn-default" (click)="togglePasswordReset(i.id)" *ngIf="_resetPasswordId != i.id">{{_localizer.localize("SetNewPassButton")}}</button>
+                        <button class="btn btn-default" (click)="togglePasswordReset(i.id)" *ngIf="_resetPasswordId == i.id">{{_localizer.localize("Cancel")}}</button>
                     </td>
                     <td>
                         <button class="btn btn-default" (click)="deleteAsync(i.id)">{{_localizer.localize("Delete")}}</button>
@@ -86,10 +86,13 @@
                 <form #editForm="ngForm">
                     <div class="form-group col-sm-3">
                         <label>{{_localizer.localize("LoginLabel")}} *</label>
-                        <input class="form-control" name="userName" [(ngModel)]="_itemEdit.userName" #userName="ngModel" type="text" required />
+                        <input class="form-control" name="userName" [(ngModel)]="_itemEdit.userName" #userName="ngModel" type="text" required pattern="^[a-zA-Z0-9]*$"/>
                         <div *ngIf="userName.invalid">
                             <p *ngIf="userName.errors.required" class="validation-text">
                                 {{_localizer.localizeWithValues("RequiredX",_localizer.localize("LoginLabel"))}}
+                            </p>
+                            <p *ngIf="userName.errors.pattern" class="validation-text">
+                                {{_localizer.localizeWithValues("OnlyENDigitsAndLettersAllowed")}}
                             </p>
                         </div>
                     </div>
@@ -130,10 +133,13 @@
         <form #createForm="ngForm">
             <div class="form-group col-sm-3">
                 <label>{{_localizer.localize("LoginLabel")}} *</label>
-                <input class="form-control" name="userName" [(ngModel)]="_itemCreate.userName" #userName="ngModel" type="text" required />
+                <input class="form-control" name="userName" [(ngModel)]="_itemCreate.userName" #userName="ngModel" type="text" required pattern="^[a-zA-Z0-9]*$"/>
                 <div *ngIf="userName.invalid">
                     <p *ngIf="userName.errors.required" class="validation-text">
                         {{_localizer.localizeWithValues("RequiredX",_localizer.localize("LoginLabel"))}}
+                    </p>
+                    <p *ngIf="userName.errors.pattern" class="validation-text">
+                        {{_localizer.localizeWithValues("OnlyENDigitsAndLettersAllowed")}}
                     </p>
                 </div>
             </div>

@@ -90,7 +90,7 @@ namespace CoreLibrary
 
         public virtual async Task<TEdit> GetEditModelAsync(TKey id, TParentKey parentId)
         {
-            var entity = await GetQueryWithTracking(parentId).SingleAsync(i => i.Id.Equals(parentId), _cancellationToken);
+            var entity = await GetQueryWithTracking(parentId).SingleAsync(i => i.Id.Equals(id), _cancellationToken);
 
             return await FillEditModelAsync(_mapper.Map<TEntity, TEdit>(entity), parentId);
         }

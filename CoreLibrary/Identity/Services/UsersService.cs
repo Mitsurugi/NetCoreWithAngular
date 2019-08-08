@@ -194,7 +194,7 @@ namespace CoreLibrary.Identity
             var grid = await query.Skip(pageSize * (pageNumber - 1)).Take(pageSize).ProjectTo<TGrid>(_mapper.ConfigurationProvider).ToListAsync(_cancellationToken);
 
             var roles = await _identityService.GetRoles().ToListAsync(_cancellationToken);
-            grid.AsParallel().ForAll(x => {
+            grid.AsParallel().WithCancellation(_cancellationToken).ForAll(x => {
                 var roleEntity = roles.FirstOrDefault(i => i.Name == x.Role);
                 if (roleEntity != null) x.RoleDisplayName = _localizer[$"Role.{roleEntity.Name}"];
             });
@@ -232,7 +232,7 @@ namespace CoreLibrary.Identity
             var grid = await query.ProjectTo<TGrid>(_mapper.ConfigurationProvider).ToListAsync(_cancellationToken);
 
             var roles = await _identityService.GetRoles().ToListAsync(_cancellationToken);
-            grid.AsParallel().ForAll(x => {
+            grid.AsParallel().WithCancellation(_cancellationToken).ForAll(x => {
                 var roleEntity = roles.FirstOrDefault(r => r.Name == x.Role);
                 if (roleEntity != null) x.RoleDisplayName = _localizer[$"Role.{roleEntity.Name}"];
             });

@@ -81,6 +81,9 @@ namespace CoreLibrary.Localization
             enUSDict.Add("InvalidLoginPass", "Invalid login or password");
             ruRUDict.Add("InvalidLoginPass", "Неправильный логин или пароль");
 
+            enUSDict.Add("InvalidCurrentPass", "Invalid current password");
+            ruRUDict.Add("InvalidCurrentPass", "Неправильный текущий пароль");
+
             enUSDict.Add("FileNull", "File is null");
             ruRUDict.Add("FileNull", "Файл не выбран");
 
@@ -88,7 +91,7 @@ namespace CoreLibrary.Localization
             ruRUDict.Add("FileNotFound", "Файл не найден");
 
             enUSDict.Add("LoginExists", "This login already exists");
-            ruRUDict.Add("LoginExists", "Это логин уже занят");
+            ruRUDict.Add("LoginExists", "Этот логин уже занят");
         }
 
         protected virtual void AddOrUpdateStrings()

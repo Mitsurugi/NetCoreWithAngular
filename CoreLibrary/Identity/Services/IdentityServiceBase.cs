@@ -123,6 +123,10 @@ namespace CoreLibrary.Identity
         public virtual async Task ChangePasswordAsync(TKey userId, string currentPassword, string newPassword)
         {
             var user = await FindUserByIdAsync(userId);
+            var valid = await VerifyPasswordAsync(user.UserName, currentPassword);
+            if (!valid)
+                throw new Exception(_localizer["InvalidCurrentPass"]);
+
             var identityResult = await _userManager.ChangePasswordAsync(user, currentPassword, newPassword);
 
             if (!identityResult.Succeeded)

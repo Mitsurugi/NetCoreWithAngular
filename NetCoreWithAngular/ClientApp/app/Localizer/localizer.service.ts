@@ -28,6 +28,9 @@ export class LocalizerService extends CoreLocalizerService {
         this._strings["ru-RU"]["OnlyDigitsAndLettersAllowed"] = "Можно вводить только буквы и цифры";
         this._strings["en-US"]["OnlyDigitsAndLettersAllowed"] = "Only digits and letters allowed";
 
+        this._strings["ru-RU"]["OnlyENDigitsAndLettersAllowed"] = "Можно вводить только латинские буквы и цифры";
+        this._strings["en-US"]["OnlyENDigitsAndLettersAllowed"] = "Only romanian letters and digits allowed";
+
         this._strings["ru-RU"]["AccountLabel"] = "Мой аккаунт";
         this._strings["en-US"]["AccountLabel"] = "My account";        
 

@@ -44,7 +44,7 @@ namespace NetCoreWithAngular.Services
 
         protected override async Task<List<BookGridModel>> FillGridModelAsync(List<BookGridModel> model)
         {
-            model.AsParallel().ForAll(i => i.GenreName = _localizer[$"{i.Genre.GetType().Name}.{i.Genre}"]);
+            model.ForEach(i => i.GenreName = _localizer[$"{i.Genre.GetType().Name}.{i.Genre}"]);
             return model;
         }
     }    
