@@ -26,16 +26,16 @@ export class DependentService<TKey, TParentKey, TParentView, TGrid extends IDepe
         return await this._http.get<TCreate>('api/' + this._controller + '/getCreateModel?parentId=' + parentId).toPromise();
     }
 
-    public async saveCreateModelAsync(item: TCreate): Promise<TCreate> {
-        return await this._http.post<TCreate>('/api/' + this._controller + '/saveCreateModel', item).toPromise();
+    public async saveCreateModelAsync(item: TCreate, parentId: TParentKey): Promise<TCreate> {
+        return await this._http.post<TCreate>('/api/' + this._controller + '/saveCreateModel?parendId=' + parentId, item).toPromise();
     }
 
     public async getEditModelAsync(id: TKey, parentId: TParentKey): Promise<TEdit> {
         return await this._http.get<TEdit>('api/' + this._controller + '/getEditModel?id=' + id + '&parentId=' + parentId).toPromise();
     }
 
-    public async saveEditModelAsync(item: TEdit): Promise<TEdit> {
-        return await this._http.post<TEdit>('/api/' + this._controller + '/saveEditModel', item).toPromise();
+    public async saveEditModelAsync(item: TEdit, parentId: TParentKey): Promise<TEdit> {
+        return await this._http.post<TEdit>('/api/' + this._controller + '/saveEditModel?parentId=' + parentId, item).toPromise();
     }
 
     public async deleteAsync(id: TKey, parentId: TParentKey, ) {

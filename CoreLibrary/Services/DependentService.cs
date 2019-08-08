@@ -62,14 +62,14 @@ namespace CoreLibrary
             return _repository.GetQueryWithTracking().Where(i => i.ParentId.Equals(parentId));
         }
 
-        public virtual async Task<TCreate> SaveCreateModelAsync(TCreate createView)
+        public virtual async Task<TCreate> SaveCreateModelAsync(TCreate createView, TParentKey parentId)
         {
             var create = _mapper.Map<TCreate, TEntity>(createView);
 
             create = await _repository.AddAsync(create);
             await _repository.SaveChangesAsync();
 
-            return await FillCreateModelAsync(_mapper.Map<TEntity, TCreate>(create), createView.ParentId);
+            return await FillCreateModelAsync(_mapper.Map<TEntity, TCreate>(create), parentId);
         }
 
         public virtual async Task<TCreate> GetCreateModelAsync(TParentKey parentId)
@@ -79,13 +79,13 @@ namespace CoreLibrary
             return await FillCreateModelAsync(model, parentId);
         }
 
-        public virtual async Task<TEdit> SaveEditModelAsync(TEdit editView)
+        public virtual async Task<TEdit> SaveEditModelAsync(TEdit editView, TParentKey parentId)
         {
             var old = await GetQueryWithTracking(editView.ParentId).SingleAsync(i => i.Id.Equals(editView.Id), _cancellationToken);
             var entity = _mapper.Map<TEdit, TEntity>(editView, old);
             entity = await _repository.UpdateAsync(entity);
             await _repository.SaveChangesAsync();
-            return await FillEditModelAsync(_mapper.Map<TEntity, TEdit>(entity), editView.ParentId);
+            return await FillEditModelAsync(_mapper.Map<TEntity, TEdit>(entity), parentId);
         }
 
         public virtual async Task<TEdit> GetEditModelAsync(TKey id, TParentKey parentId)
@@ -253,8 +253,7 @@ namespace CoreLibrary
             foreach (var row in rows)
             {
                 rowNumber++;
-                var item = await FillCreateModelAsync(new TCreate(), parentId);
-                item.ParentId = parentId;
+                var item = await FillCreateModelAsync(new TCreate() { ParentId = parentId }, parentId);
 
                 int colNumber = 0;
                 foreach (var field in fields)

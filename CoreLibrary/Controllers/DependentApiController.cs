@@ -85,7 +85,7 @@ namespace CoreLibrary
         }
 
         [HttpPost]
-        public virtual async Task<ActionResult<TCreate>> SaveCreateModel([FromBody] TCreate create)
+        public virtual async Task<ActionResult<TCreate>> SaveCreateModel([FromBody] TCreate create, [FromQuery] TParentKey parentId)
         {
             if (!ModelState.IsValid)
             {
@@ -94,7 +94,7 @@ namespace CoreLibrary
             
             try
             {
-                create = await _service.SaveCreateModelAsync(create);
+                create = await _service.SaveCreateModelAsync(create, parentId);
                 return create;
             }
             catch (Exception ex)
@@ -117,7 +117,7 @@ namespace CoreLibrary
         }
 
         [HttpPost]
-        public virtual async Task<ActionResult<TEdit>> SaveEditModel([FromBody] TEdit edit)
+        public virtual async Task<ActionResult<TEdit>> SaveEditModel([FromBody] TEdit edit, [FromQuery] TParentKey parentId)
         {
 
             if (!ModelState.IsValid)
@@ -127,7 +127,7 @@ namespace CoreLibrary
 
             try
             {
-                edit = await _service.SaveEditModelAsync(edit);
+                edit = await _service.SaveEditModelAsync(edit, parentId);
                 return edit;
             }
             catch (Exception ex)

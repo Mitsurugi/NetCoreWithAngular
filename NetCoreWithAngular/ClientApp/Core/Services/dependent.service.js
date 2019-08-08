@@ -80,11 +80,11 @@ var DependentService = /** @class */ (function () {
             });
         });
     };
-    DependentService.prototype.saveCreateModelAsync = function (item) {
+    DependentService.prototype.saveCreateModelAsync = function (item, parentId) {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, this._http.post('/api/' + this._controller + '/saveCreateModel', item).toPromise()];
+                    case 0: return [4 /*yield*/, this._http.post('/api/' + this._controller + '/saveCreateModel?parendId=' + parentId, item).toPromise()];
                     case 1: return [2 /*return*/, _a.sent()];
                 }
             });
@@ -100,11 +100,11 @@ var DependentService = /** @class */ (function () {
             });
         });
     };
-    DependentService.prototype.saveEditModelAsync = function (item) {
+    DependentService.prototype.saveEditModelAsync = function (item, parentId) {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, this._http.post('/api/' + this._controller + '/saveEditModel', item).toPromise()];
+                    case 0: return [4 /*yield*/, this._http.post('/api/' + this._controller + '/saveEditModel?parentId=' + parentId, item).toPromise()];
                     case 1: return [2 /*return*/, _a.sent()];
                 }
             });

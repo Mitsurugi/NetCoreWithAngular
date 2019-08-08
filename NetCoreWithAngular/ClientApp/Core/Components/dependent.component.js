@@ -431,7 +431,7 @@ var DependentComponent = /** @class */ (function () {
                     case 0:
                         _a.trys.push([0, 4, , 5]);
                         popup = this._snackBar.open(this._localizer.localize("Loading"));
-                        return [4 /*yield*/, this._service.saveCreateModelAsync(this._itemCreate)];
+                        return [4 /*yield*/, this._service.saveCreateModelAsync(this._itemCreate, this._parentId)];
                     case 1:
                         _a.sent();
                         this._isShowCreate = false;
@@ -465,7 +465,7 @@ var DependentComponent = /** @class */ (function () {
                         _b.trys.push([0, 3, , 4]);
                         popup = this._snackBar.open(this._localizer.localize("Loading"));
                         _a = this;
-                        return [4 /*yield*/, this._service.saveEditModelAsync(this._itemEdit)];
+                        return [4 /*yield*/, this._service.saveEditModelAsync(this._itemEdit, this._parentId)];
                     case 1:
                         _a._itemEdit = _b.sent();
                         return [4 /*yield*/, this.reloadGridAsync()];

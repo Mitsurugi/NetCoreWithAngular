@@ -261,7 +261,7 @@ export class DependentComponent<TKey, TParentKey, TParentView, TGrid extends IDe
     public async saveCreateModelAsync() {
         try {
             var popup = this._snackBar.open(this._localizer.localize("Loading"));
-            await this._service.saveCreateModelAsync(this._itemCreate);
+            await this._service.saveCreateModelAsync(this._itemCreate, this._parentId);
             this._isShowCreate = false;
             await this.getCreateModelAsync();
             await this.reloadGridAsync();
@@ -279,7 +279,7 @@ export class DependentComponent<TKey, TParentKey, TParentView, TGrid extends IDe
     public async saveEditModelAsync() {
         try {
             var popup = this._snackBar.open(this._localizer.localize("Loading"));
-            this._itemEdit = await this._service.saveEditModelAsync(this._itemEdit);
+            this._itemEdit = await this._service.saveEditModelAsync(this._itemEdit, this._parentId);
             await this.reloadGridAsync();
             popup.dismiss();
         }

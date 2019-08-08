@@ -23,8 +23,8 @@ namespace CoreLibrary
         where TParentEntity: class, IEntity<TParentKey>, new()
         where TParentView : class, IEntity<TParentKey>, new()
     {
-        Task<TCreate> SaveCreateModelAsync(TCreate create);
-        Task<TEdit> SaveEditModelAsync(TEdit editView);        
+        Task<TCreate> SaveCreateModelAsync(TCreate create, TParentKey parentId);
+        Task<TEdit> SaveEditModelAsync(TEdit editView, TParentKey parentId);        
 
         IQueryable<TEntity> GetQueryNoTracking(TParentKey parentId);
         IQueryable<TEntity> GetQueryWithTracking(TParentKey parentId);
