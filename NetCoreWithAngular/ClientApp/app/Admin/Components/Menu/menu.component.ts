@@ -7,10 +7,11 @@ import { LocalizerService } from '../../../Localizer/localizer.service';
     templateUrl: './menu.component.html',
     styleUrls: ['./menu.component.css']
 })
-export class MenuComponent implements OnInit {    
-    protected _isExpanded = false;
+export class MenuComponent implements OnInit {        
     protected _accGlobals: AccountGlobals;
     protected _localizer: LocalizerService;
+
+    isExpanded = false;
 
     constructor(accGlobals: AccountGlobals, localizer: LocalizerService) {
         this._accGlobals = accGlobals;
@@ -22,10 +23,10 @@ export class MenuComponent implements OnInit {
     }
 
     collapse() {
-        this._isExpanded = false;
+        this.isExpanded = false;
     }
 
     toggle() {
-        this._isExpanded = !this._isExpanded;
+        this.isExpanded = !this.isExpanded;
     }
 }

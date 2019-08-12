@@ -10,7 +10,7 @@
             <form #passwordChangeForm="ngForm">
                 <div class="form-group">
                     <label>{{_localizer.localize("CurrentPasswordLabel")}} *</label>
-                    <input class="form-control" name="currentPassword" [(ngModel)]="_changePasswordModel.currentPassword" #currentPassword="ngModel" type="password" required />
+                    <input class="form-control" name="currentPassword" [(ngModel)]="changePasswordModel.currentPassword" #currentPassword="ngModel" type="password" required />
                     <div *ngIf="currentPassword.invalid">
                         <p *ngIf="currentPassword.errors.required" class="validation-text">
                             {{_localizer.localizeWithValues("RequiredX",_localizer.localize("CurrentPasswordLabel"))}}
@@ -19,7 +19,7 @@
                 </div>
                 <div class="form-group">
                     <label>{{_localizer.localize("NewPasswordLabel")}} *</label>
-                    <input class="form-control" name="newPassword" [(ngModel)]="_changePasswordModel.newPassword" #newPassword="ngModel" type="password" required />
+                    <input class="form-control" name="newPassword" [(ngModel)]="changePasswordModel.newPassword" #newPassword="ngModel" type="password" required />
                     <div *ngIf="newPassword.invalid">
                         <p *ngIf="newPassword.errors.required" class="validation-text">
                             {{_localizer.localizeWithValues("RequiredX",_localizer.localize("NewPasswordLabel"))}}
@@ -28,7 +28,7 @@
                 </div>
                 <div class="form-group">
                     <label>{{_localizer.localize("NewPassword2Label")}} *</label>
-                    <input class="form-control" name="newPassword2" [(ngModel)]="_changePasswordModel.newPassword2" #newPassword2="ngModel" type="password" required />
+                    <input class="form-control" name="newPassword2" [(ngModel)]="changePasswordModel.newPassword2" #newPassword2="ngModel" type="password" required />
                     <div *ngIf="newPassword2.invalid">
                         <p *ngIf="newPassword2.errors.required" class="validation-text">
                             {{_localizer.localizeWithValues("RequiredX",_localizer.localize("NewPassword2Label"))}}

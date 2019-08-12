@@ -58,8 +58,8 @@ var AccountComponent = /** @class */ (function () {
         this._accGlobals = accGlobals;
         this._router = router;
         this._snackBar = snackBar;
-        this._loginModel = new LoginModel();
-        this._changePasswordModel = new ChangePasswordModel();
+        this.loginModel = new LoginModel();
+        this.changePasswordModel = new ChangePasswordModel();
     }
     AccountComponent.prototype.ngOnInit = function () {
         return __awaiter(this, void 0, void 0, function () {
@@ -78,12 +78,12 @@ var AccountComponent = /** @class */ (function () {
     };
     AccountComponent.prototype.changePassword = function () {
         var _this = this;
-        if (this._changePasswordModel.newPassword != this._changePasswordModel.newPassword2) {
+        if (this.changePasswordModel.newPassword != this.changePasswordModel.newPassword2) {
             var popup = this._snackBar.open(this._localizer.localize("PassNotMatch"));
             return;
         }
         var popup = this._snackBar.open(this._localizer.localize("Loading"));
-        this._service.changePassword(this._changePasswordModel).subscribe(function (data) { popup = _this._snackBar.open(_this._localizer.localize("PassChangeSuccess"), null, { duration: 5000 }); }, function (e) {
+        this._service.changePassword(this.changePasswordModel).subscribe(function (data) { popup = _this._snackBar.open(_this._localizer.localize("PassChangeSuccess"), null, { duration: 5000 }); }, function (e) {
             if (popup)
                 popup.dismiss();
             console.log(e);

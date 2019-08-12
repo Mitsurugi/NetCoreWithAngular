@@ -12,7 +12,7 @@ import { AccountGlobals } from '../../../../Core/Account/AccountGlobals';
 import { LocalizerService } from '../../../Localizer/localizer.service';
 var MenuComponent = /** @class */ (function () {
     function MenuComponent(accGlobals, localizer) {
-        this._isExpanded = false;
+        this.isExpanded = false;
         this._accGlobals = accGlobals;
         this._localizer = localizer;
     }
@@ -20,10 +20,10 @@ var MenuComponent = /** @class */ (function () {
         this._accGlobals.refresh();
     };
     MenuComponent.prototype.collapse = function () {
-        this._isExpanded = false;
+        this.isExpanded = false;
     };
     MenuComponent.prototype.toggle = function () {
-        this._isExpanded = !this._isExpanded;
+        this.isExpanded = !this.isExpanded;
     };
     MenuComponent = __decorate([
         Component({

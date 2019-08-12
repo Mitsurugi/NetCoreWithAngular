@@ -18,13 +18,14 @@ import { from } from 'rxjs';
 export class AccountComponent implements OnInit {
 
     protected _service: AccountService;
-    protected _accGlobals: AccountGlobals;
-    protected _loginModel: LoginModel;
-    protected _changePasswordModel: ChangePasswordModel;
+    protected _accGlobals: AccountGlobals;    
     protected _localizer: LocalizerService;
     protected _router: Router;
     protected _snackBar: MatSnackBar;
     protected _redirectUrl = "/admin";
+
+    loginModel: LoginModel;
+    changePasswordModel: ChangePasswordModel;
 
     constructor(service: AccountService, localizer: LocalizerService, accGlobals: AccountGlobals, router: Router, snackBar: MatSnackBar) {
         this._localizer = localizer;
@@ -32,8 +33,8 @@ export class AccountComponent implements OnInit {
         this._accGlobals = accGlobals;
         this._router = router;
         this._snackBar = snackBar;
-        this._loginModel = new LoginModel();
-        this._changePasswordModel = new ChangePasswordModel();
+        this.loginModel = new LoginModel();
+        this.changePasswordModel = new ChangePasswordModel();
     }
 
     async ngOnInit() {
@@ -49,13 +50,13 @@ export class AccountComponent implements OnInit {
     }
 
     changePassword() {
-        if (this._changePasswordModel.newPassword != this._changePasswordModel.newPassword2) {
+        if (this.changePasswordModel.newPassword != this.changePasswordModel.newPassword2) {
             var popup = this._snackBar.open(this._localizer.localize("PassNotMatch"));
             return;
         }
         var popup = this._snackBar.open(this._localizer.localize("Loading"));
 
-        this._service.changePassword(this._changePasswordModel).subscribe(
+        this._service.changePassword(this.changePasswordModel).subscribe(
             data => { popup = this._snackBar.open(this._localizer.localize("PassChangeSuccess"), null, { duration: 5000 }); },
             e => {
                 if (popup) popup.dismiss();
