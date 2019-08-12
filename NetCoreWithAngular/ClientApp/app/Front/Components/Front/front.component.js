@@ -9,16 +9,19 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 import { Component } from '@angular/core';
 import { FrontDataService } from '../../Services/frontData.service';
+import { takeUntil } from 'rxjs/operators';
+import { Subject } from "rxjs";
 var FrontComponent = /** @class */ (function () {
     function FrontComponent(service) {
+        this._destroyed = new Subject();
         this._service = service;
-        this._anime = new Array();
-        this._books = new Array();
+        this.anime = new Array();
+        this.books = new Array();
     }
     FrontComponent.prototype.ngOnInit = function () {
         var _this = this;
-        this._service.getAllAnime().subscribe(function (data) { return _this._anime = data; });
-        this._service.getAllBooks().subscribe(function (data) { return _this._books = data; });
+        this._service.getAllAnime().pipe(takeUntil(this._destroyed)).subscribe(function (data) { return _this.anime = data; });
+        this._service.getAllBooks().pipe(takeUntil(this._destroyed)).subscribe(function (data) { return _this.books = data; });
     };
     FrontComponent = __decorate([
         Component({

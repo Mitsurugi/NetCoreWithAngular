@@ -1,6 +1,8 @@
 ﻿import { Component, OnInit } from '@angular/core';
 import { FrontDataService } from '../../Services/frontData.service';
 import { FrontData } from '../../Models/FrontData';
+import { finalize, takeUntil } from 'rxjs/operators';
+import { Subject } from "rxjs";
 
 @Component({
     selector: 'front',
@@ -10,18 +12,20 @@ import { FrontData } from '../../Models/FrontData';
 })
 export class FrontComponent implements OnInit {
 
-    _anime: FrontData[];
-    _books: FrontData[];
+    protected _destroyed: Subject<void> = new Subject();
+    protected _service: FrontDataService;
 
-    _service: FrontDataService;
+    anime: FrontData[];
+    books: FrontData[];
+    
     constructor(service: FrontDataService) {
         this._service = service;
-        this._anime = new Array<FrontData>();
-        this._books = new Array<FrontData>();
+        this.anime = new Array<FrontData>();
+        this.books = new Array<FrontData>();
     }
 
     ngOnInit() {
-        this._service.getAllAnime().subscribe((data: FrontData[]) => this._anime = data);
-        this._service.getAllBooks().subscribe((data: FrontData[]) => this._books = data);
+        this._service.getAllAnime().pipe(takeUntil(this._destroyed)).subscribe((data: FrontData[]) => this.anime = data);
+        this._service.getAllBooks().pipe(takeUntil(this._destroyed)).subscribe((data: FrontData[]) => this.books = data);
     }
 }
