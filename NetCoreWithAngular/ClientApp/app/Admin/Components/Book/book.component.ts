@@ -18,11 +18,11 @@ export class BookComponent extends CoreComponent<number, BookGrid, Book, Book, B
 
     constructor(service: BookService, localizer: LocalizerService, snackBar: MatSnackBar) {
         super(service, localizer, snackBar);
-        this._pageSize = 3;
+        this.pageSize = 3;
     }
 
-    async saveCreateModelAsync() {
-        this._itemCreate.title = '*' + this._itemCreate.title + '*';
-        await super.saveCreateModelAsync();
+    saveCreateModel() {
+        this.itemCreate.title = '*' + this.itemCreate.title + '*';
+        super.saveCreateModel();
     }    
 }

@@ -6,6 +6,7 @@ using AutoMapper;
 using Microsoft.Extensions.Localization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Http;
+using System.Linq;
 
 namespace NetCoreWithAngular.Services
 {
@@ -43,6 +44,24 @@ namespace NetCoreWithAngular.Services
 
         public async Task MoveAsync(int id, int newPosition)
         {
+            bool needFix = false;
+            var items = await GetQueryNoTracking().OrderBy(i => i.Position).ToListAsync(_cancellationToken);
+            for (int i = 0; i < items.Count -1; i++)
+            {
+                if (items[i + 1].Position - items[i].Position != 1) needFix = true;
+            }
+            if (needFix)
+            {
+                int position = 0;
+                foreach(var item in items)
+                {
+                    item.Position = position;
+                    await _repository.UpdateAsync(item);
+                    position++;
+                }
+                await _repository.SaveChangesAsync();
+            }
+
             var field = await GetQueryNoTracking().SingleOrDefaultAsync(i => i.Id == id, _cancellationToken);
             if (field == null) return;
             if (field.Position == newPosition) return;

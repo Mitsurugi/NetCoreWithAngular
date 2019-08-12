@@ -73,51 +73,23 @@ var AccountComponent = /** @class */ (function () {
         });
     };
     AccountComponent.prototype.deleteToken = function () {
-        try {
-            var popup = this._snackBar.open(this._localizer.localize("Loading"));
-            this._service.deleteToken();
-            popup.dismiss();
-            this._router.navigate([this._redirectUrl]);
+        this._service.deleteToken();
+        this._router.navigate([this._redirectUrl]);
+    };
+    AccountComponent.prototype.changePassword = function () {
+        var _this = this;
+        if (this._changePasswordModel.newPassword != this._changePasswordModel.newPassword2) {
+            var popup = this._snackBar.open(this._localizer.localize("PassNotMatch"));
+            return;
         }
-        catch (e) {
-            popup.dismiss();
+        var popup = this._snackBar.open(this._localizer.localize("Loading"));
+        this._service.changePassword(this._changePasswordModel).subscribe(function (data) { popup = _this._snackBar.open(_this._localizer.localize("PassChangeSuccess"), null, { duration: 5000 }); }, function (e) {
+            if (popup)
+                popup.dismiss();
             console.log(e);
             if (e.error) {
-                var popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e.error));
+                var popup = _this._snackBar.open(_this._localizer.localizeWithValues("Error", e.error));
             }
-        }
-    };
-    AccountComponent.prototype.changePasswordAsync = function (valid) {
-        return __awaiter(this, void 0, void 0, function () {
-            var popup, popup, e_1, popup;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        if (!valid) return [3 /*break*/, 4];
-                        _a.label = 1;
-                    case 1:
-                        _a.trys.push([1, 3, , 4]);
-                        if (this._changePasswordModel.newPassword != this._changePasswordModel.newPassword2) {
-                            popup = this._snackBar.open(this._localizer.localize("PassNotMatch"));
-                            return [2 /*return*/];
-                        }
-                        popup = this._snackBar.open(this._localizer.localize("Loading"));
-                        return [4 /*yield*/, this._service.changePasswordAsync(this._changePasswordModel)];
-                    case 2:
-                        _a.sent();
-                        popup = this._snackBar.open(this._localizer.localize("PassChangeSuccess"), null, { duration: 5000 });
-                        return [3 /*break*/, 4];
-                    case 3:
-                        e_1 = _a.sent();
-                        popup.dismiss();
-                        console.log(e_1);
-                        if (e_1.error) {
-                            popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e_1.error));
-                        }
-                        return [3 /*break*/, 4];
-                    case 4: return [2 /*return*/];
-                }
-            });
         });
     };
     AccountComponent = __decorate([

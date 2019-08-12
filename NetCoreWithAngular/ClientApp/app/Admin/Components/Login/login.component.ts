@@ -6,6 +6,8 @@ import { LocalizerService } from '../../../Localizer/localizer.service';
 import { LoginModel } from '../../../../Core/Account/loginModel';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { finalize, takeUntil } from 'rxjs/operators';
+import { Subject } from "rxjs";
 
 @Component({
     selector: 'login',
@@ -15,13 +17,15 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 })
 export class LoginComponent implements OnInit {
 
-    _service: AccountService;
-    _accGlobals: AccountGlobals;
-    _loginModel: LoginModel;
-    _localizer: LocalizerService;
-    _router: Router;
-    _snackBar: MatSnackBar;
-    _redirectUrl = "/admin";
+    protected _destroyed: Subject<void> = new Subject();
+    protected _service: AccountService;
+    protected _accGlobals: AccountGlobals;
+    protected _localizer: LocalizerService;
+    protected _router: Router;
+    protected _snackBar: MatSnackBar;
+    protected _redirectUrl = "/admin";
+
+    loginModel: LoginModel;
 
     constructor(service: AccountService, localizer: LocalizerService, accGlobals: AccountGlobals, router: Router, snackBar: MatSnackBar) {
         this._localizer = localizer;
@@ -29,29 +33,30 @@ export class LoginComponent implements OnInit {
         this._accGlobals = accGlobals;
         this._router = router;
         this._snackBar = snackBar;
-        this._loginModel = new LoginModel();
+        this.loginModel = new LoginModel();
     }
 
-    public async ngOnInit() {
+    ngOnInit() {
         this._accGlobals.refresh();
         if (this._accGlobals.isLogged) {
             this._router.navigate([this._redirectUrl]);
         }
     }
 
-    public async getTokenAsync() {
-        try {
-            var popup = this._snackBar.open(this._localizer.localize("Loading"));
-            await this._service.getTokenAsync(this._loginModel);
-            popup.dismiss();
-            this._router.navigate([this._redirectUrl]);
-        }
-        catch (e) {
-            popup.dismiss();
-            console.log(e);
-            if (e.error) {
-                var popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e.error));
+    getToken() {
+        var popup = this._snackBar.open(this._localizer.localize("Loading"));
+        this._service.getToken(this.loginModel).pipe(finalize(() => { if (popup) popup.dismiss(); }), takeUntil(this._destroyed)).subscribe(
+            data => {
+                if (popup) { popup.dismiss(); }
+                this._router.navigate([this._redirectUrl]);
+            },
+            e => {
+                if (popup) { popup.dismiss(); }
+                console.log(e);
+                if (e.error) {
+                    var popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e.error));
+                }
             }
-        }
+        );
     }
 }

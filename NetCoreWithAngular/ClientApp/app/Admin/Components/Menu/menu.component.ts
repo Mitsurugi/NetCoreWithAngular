@@ -8,9 +8,9 @@ import { LocalizerService } from '../../../Localizer/localizer.service';
     styleUrls: ['./menu.component.css']
 })
 export class MenuComponent implements OnInit {    
-    _isExpanded = false;
-    _accGlobals: AccountGlobals;
-    _localizer: LocalizerService;
+    protected _isExpanded = false;
+    protected _accGlobals: AccountGlobals;
+    protected _localizer: LocalizerService;
 
     constructor(accGlobals: AccountGlobals, localizer: LocalizerService) {
         this._accGlobals = accGlobals;

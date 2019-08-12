@@ -5,21 +5,24 @@ import { saveAs } from 'file-saver';
 import { ActivatedRoute, Router } from "@angular/router";
 import { CoreLocalizerService } from '../Localization/coreLocalizer.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { finalize, takeUntil } from 'rxjs/operators';
+import { Subject } from "rxjs";
 
 @Component({
 })
-export class EditComponent<TKey, TGrid extends IEntity<TKey>, TCreate extends IEntity<TKey> = TGrid, TEdit extends IEntity<TKey> = TGrid, TFilter = TGrid> implements OnInit {    
+export class EditComponent<TKey, TGrid extends IEntity<TKey>, TCreate extends IEntity<TKey> = TGrid, TEdit extends IEntity<TKey> = TGrid, TFilter = TGrid> implements OnInit {
 
-    _service: CoreService<TKey, TGrid, TCreate, TEdit, TFilter>;
-    _router: Router;
-    _listUrl: string;
-    _localizer: CoreLocalizerService;
-    _snackBar: MatSnackBar;
+    protected _destroyed: Subject<void> = new Subject();
+    protected _service: CoreService<TKey, TGrid, TCreate, TEdit, TFilter>;
+    protected _router: Router;
+    protected _listUrl: string;
+    protected _localizer: CoreLocalizerService;
+    protected _snackBar: MatSnackBar;
 
-    @Input() _id?: TKey;
+    @Input() id?: TKey;
 
-    _itemEdit: TEdit;
-    _itemCreate: TCreate;
+    itemEdit: TEdit;
+    itemCreate: TCreate;
 
     constructor(service: CoreService<TKey, TGrid, TCreate, TEdit, TFilter>, localizer: CoreLocalizerService, snackBar: MatSnackBar, route: ActivatedRoute, router: Router, listUrl: string) {
 
@@ -30,90 +33,78 @@ export class EditComponent<TKey, TGrid extends IEntity<TKey>, TCreate extends IE
         this._localizer = localizer;
         this._snackBar = snackBar;
 
-        if (!this._id) {
-            route.params.subscribe(params => this._id = params['id']);
-        }
-        
-    }
-
-    protected async getCreateModelAsync() {
-        var popup = this._snackBar.open(this._localizer.localize("Loading"));
-        try {
-            this._itemCreate = await this._service.getCreateModelAsync();
-            popup.dismiss();
-        }
-        catch (e) {
-            popup.dismiss();
-            console.log(e);
-            if (e.error) {
-                var popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e.error));
-            }
+        if (!this.id) {
+            route.params.subscribe(params => this.id = params['id']);
         }
     }
 
-    protected async getEditModelAsync() {
+    protected getCreateModel() {
         var popup = this._snackBar.open(this._localizer.localize("Loading"));
-        try {
-            this._itemEdit = await this._service.getEditModelAsync(this._id);
-            popup.dismiss();
-        }
-        catch (e) {
-            popup.dismiss();
-            console.log(e);
-            if (e.error) {
-                var popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e.error));
+        this._service.getCreateModel().pipe(finalize(() => { if (popup) popup.dismiss(); }), takeUntil(this._destroyed)).subscribe(
+            data => {
+                this.itemCreate = data;
+            },
+            e => {
+                console.log(e);
+                if (e.error) {
+                    var popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e.error));
+                }
             }
+        );
+    }
+
+    protected getEditModel(id: TKey) {
+        var popup = this._snackBar.open(this._localizer.localize("Loading"));
+        this._service.getEditModel(id).pipe(finalize(() => { if (popup) popup.dismiss(); }), takeUntil(this._destroyed)).subscribe(
+            data => {
+                this.itemEdit = data;
+            },
+            e => {
+                console.log(e);
+                if (e.error) {
+                    var popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e.error));
+                }
+            }
+        );
+    }
+
+    ngOnInit() {
+        if (this.id) {
+            this.getEditModel(this.id);
+        } else {
+            this.getCreateModel();
         }
     }
 
-    public async ngOnInit() {
+    saveCreateModel() {
         var popup = this._snackBar.open(this._localizer.localize("Loading"));
-        try {
-            if (this._id) {
-                this.getEditModelAsync();
-            } else {
-                this.getCreateModelAsync();
+        this._service.saveCreateModel(this.itemCreate).pipe(finalize(() => { if (popup) popup.dismiss(); }), takeUntil(this._destroyed)).subscribe(
+            data => {
+                this.getCreateModel();
+                this._router.navigate([this._listUrl + '/edit/' + data.id]);
+            },
+            e => {
+                console.log(e);
+                if (e.error) {
+                    var popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e.error));
+                }
             }
-            popup.dismiss();
-        }
-        catch (e) {
-            popup.dismiss();
-            console.log(e);
-            if (e.error) {
-                var popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e.error));
-            }
-        }
-    }    
-
-    public async saveCreateModelAsync() {
-        var popup = this._snackBar.open(this._localizer.localize("Loading"));        
-        try {
-            var result = await this._service.saveCreateModelAsync(this._itemCreate);
-            await this.getCreateModelAsync();
-            popup.dismiss();
-            this._router.navigate([this._listUrl + '/edit/' + result.id]);
-        }
-        catch (e) {
-            popup.dismiss();
-            console.log(e);
-            if (e.error) {
-                var popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e.error));
-            }
-        }
+        );
     }
 
-    public async saveEditModelAsync() {
+    saveEditModel() {
         var popup = this._snackBar.open(this._localizer.localize("Loading"));
-        try {
-            this._itemEdit = await this._service.saveEditModelAsync(this._itemEdit);
-            popup = this._snackBar.open(this._localizer.localize("EditSuccess"), null, { duration: 5000 });
-        }
-        catch (e) {
-            popup.dismiss();
-            console.log(e);
-            if (e.error) {
-                var popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e.error));
+        this._service.saveEditModel(this.itemEdit).pipe(finalize(() => { if (popup) popup.dismiss(); }), takeUntil(this._destroyed)).subscribe(
+            data => {
+                this.getCreateModel();
+                var popup = this._snackBar.open(this._localizer.localize("EditSuccess"), null, { duration: 5000 });
+            },
+            e => {
+                console.log(e);
+                if (e.error) {
+                    var popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e.error));
+                }
             }
-        }
+        );
     }
 }

@@ -8,6 +8,7 @@ import { read } from 'fs';
 import { LocalizerService } from '../../../Localizer/localizer.service';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { finalize, takeUntil } from 'rxjs/operators';
 
 @Component({
     selector: 'anime',
@@ -17,85 +18,91 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 })
 export class AnimeComponent extends CoreComponent<number, Anime> {
 
-    _fileService: FileService<number>;
-    _animeService: AnimeService;
-    _orderBy = "Position";
+    protected _fileService: FileService<number>;
+    protected _animeService: AnimeService;
 
     constructor(service: AnimeService, localizer: LocalizerService, fileService: FileService<number>, animeService: AnimeService, snackBar: MatSnackBar) {
         super(service, localizer, snackBar);
         this._fileService = fileService;
         this._animeService = animeService;
+        this.orderBy = "Position";
     }
 
-    async deleteImageEditAsync() {        
-        try {
-            if (this._itemEdit.imageId != null) {
-                var popup = this._snackBar.open(this._localizer.localize("Loading"));
-                await this._fileService.deleteAsync(this._itemEdit.imageId);
-                this._itemEdit.imageId = null;
-                popup.dismiss();
+    deleteImageEdit() {
+        if (this.itemEdit.imageId != null) {
+            var popup = this._snackBar.open(this._localizer.localize("Loading"));
+            this._fileService.delete(this.itemEdit.imageId).pipe(finalize(() => { if (popup) popup.dismiss(); }), takeUntil(this._destroyed)).subscribe(
+                data => {
+                    this.itemEdit.imageId = null;
+                },
+                e => {
+                    console.log(e);
+                    if (e.error) {
+                        var popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e.error));
+                    }
+                }
+            );
+        }
+    }
+
+    deleteImageCreate() {
+        if (this.itemCreate.imageId != null) {
+            var popup = this._snackBar.open(this._localizer.localize("Loading"));
+            this._fileService.delete(this.itemCreate.imageId).pipe(finalize(() => { if (popup) popup.dismiss(); }), takeUntil(this._destroyed)).subscribe(
+                data => {
+                    this.itemCreate.imageId = null;
+                },
+                e => {
+                    console.log(e);
+                    if (e.error) {
+                        var popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e.error));
+                    }
+                }
+            );
+        }
+    }
+
+    uploadImageEdit(file: File) {        
+        var popup = this._snackBar.open(this._localizer.localize("Loading"));
+        this._fileService.upload(file).pipe(finalize(() => { if (popup) popup.dismiss(); }), takeUntil(this._destroyed)).subscribe(
+            data => {
+                this.itemEdit.imageId = data;
+            },
+            e => {
+                console.log(e);
+                if (e.error) {
+                    var popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e.error));
+                }
             }
-        }
-        catch (e) {
-            popup.dismiss();
-            console.log(e);
-            if (e.error) {
-                var popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e.error));
+        );
+    }
+
+    uploadImageCreate(file: File) {
+        var popup = this._snackBar.open(this._localizer.localize("Loading"));
+        this._fileService.upload(file).pipe(finalize(() => { if (popup) popup.dismiss(); }), takeUntil(this._destroyed)).subscribe(
+            data => {
+                this._fileService.delete(this.itemCreate.imageId).pipe(takeUntil(this._destroyed)).subscribe(() => {
+                    this.itemCreate.imageId = data;
+                });
+            },
+            e => {
+                console.log(e);
+                if (e.error) {
+                    var popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e.error));
+                }
             }
-        }
+        );
     }
 
-    async deleteImageCreateAsync() {        
-        try {
-            if (this._itemCreate.imageId != null) {
-                var popup = this._snackBar.open(this._localizer.localize("Loading"));
-                await this._fileService.deleteAsync(this._itemCreate.imageId);
-                this._itemCreate.imageId = null;
-                popup.dismiss();
-            }            
-        }
-        catch (e) {
-            var popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e.error));
-        }
-    }
-
-    async uploadImageEditAsync(file: File) {        
-        try {
-            var popup = this._snackBar.open(this._localizer.localize("Loading"));
-            let id = await this._fileService.uploadAsync(file);
-            this._itemEdit.imageId = id;
-            popup.dismiss();
-        }
-        catch (e) {
-            var popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e.error));
-        }
-    }
-
-    async uploadImageCreateAsync(file: File) {        
-        try {
-            var popup = this._snackBar.open(this._localizer.localize("Loading"));
-            await this.deleteImageCreateAsync();
-            let id = await this._fileService.uploadAsync(file);
-            this._itemCreate.imageId = id;
-            popup.dismiss();
-        }
-        catch (e) {
-            var popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e.error));
-        }
-    }
-
-    public async moveAsync(event: CdkDragDrop<Anime[]>) {
-        try {
-            var popup = this._snackBar.open(this._localizer.localize("Loading"));
-            var id = this._items[event.previousIndex].id;
-            var newPos = this._items[event.currentIndex].position;
-            moveItemInArray(this._items, event.previousIndex, event.currentIndex);
-            await this._animeService.moveAsync(id, newPos);
-            await this.reloadGridAsync();
-            popup.dismiss();
-        }
-        catch (e) {
-            var popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e.error));
-        }
+    move(event: CdkDragDrop<Anime[]>) {
+        var popup = this._snackBar.open(this._localizer.localize("Loading"));
+        var id = this.items[event.previousIndex].id;
+        var newPos = this.items[event.currentIndex].position;
+        moveItemInArray(this.items, event.previousIndex, event.currentIndex);
+        this._animeService.move(id, newPos).pipe(finalize(() => { if (popup) popup.dismiss(); }), takeUntil(this._destroyed)).subscribe(
+            data => {
+                this.reloadGrid();
+            }
+        );        
     }
 }

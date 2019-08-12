@@ -11,7 +11,7 @@ export class CoreLanguageComponent implements OnInit {
     {        
     }
 
-    public async ngOnInit() {
+    public ngOnInit() {
         if (localStorage.getItem("lang")) {
             this._lang = localStorage.getItem("lang");
         }

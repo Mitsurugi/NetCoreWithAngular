@@ -5,24 +5,24 @@ import { Observable } from 'rxjs';
 @Injectable()
 export class FileService<TKey> {
 
-    _controller = "file";
     protected _http: HttpClient;
+    protected _controller = "file";    
 
     constructor(http: HttpClient) {
         this._http = http;
     }
 
-    public async deleteAsync(id: TKey) {
-        await this._http.delete('api/' + this._controller + '/delete?id=' + id).toPromise();
+    delete(id: TKey): Observable<object>{
+        return this._http.delete('api/' + this._controller + '/delete?id=' + id);
     }
 
-    public async uploadAsync(file: File): Promise<TKey> {
+    upload(file: File): Observable<TKey> {
         let formData = new FormData();
         formData.append("file", file);
-        return await this._http.post<any>('/api/' + this._controller + '/upload', formData).toPromise();
+        return this._http.post<any>('/api/' + this._controller + '/upload', formData);
     }
 
-    public async downloadAsync(id: TKey): Promise<Blob> {
-        return await this._http.get<Blob>('api/' + this._controller + '/download?id=' + id, { responseType: 'blob' as 'json' }).toPromise();
+    download(id: TKey): Observable<Blob> {
+        return this._http.get<Blob>('api/' + this._controller + '/download?id=' + id, { responseType: 'blob' as 'json' });
     }
 }

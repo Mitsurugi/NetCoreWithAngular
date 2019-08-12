@@ -1,11 +1,11 @@
 ﻿<h2>{{_localizer.localize("Users")}}</h2>
-<div class="grid" *ngIf="!_items.length">{{_localizer.localize("NoData")}}</div>
-<div class="grid" *ngIf="_items.length">
+<div class="grid" *ngIf="!items?.length">{{_localizer.localize("NoData")}}</div>
+<div class="grid" *ngIf="items?.length">
     <div class="pagination">
-        <button class="btn btn-default" (click)="prevPageAsync()" [disabled]="_currentPage < 2">{{_localizer.localize("PrevPage")}}</button>
-        <span>{{_localizer.localize("Page")}} <input name="currentPage" [(ngModel)]="_currentPage" type="number" required (change)="reloadGridAsync()" style="width:100px;" /> {{_localizer.localize("PageOf")}} {{_totalPages}}</span>
-        <button class="btn btn-default" (click)="nextPageAsync()" [disabled]="_currentPage >= _totalPages">{{_localizer.localize("NextPage")}}</button>
-        <button class="btn btn-default" (click)="getExcelExportAsync()">{{_localizer.localize("ExcelExport")}}</button>
+        <button class="btn btn-default" (click)="prevPage()" [disabled]="currentPage < 2">{{_localizer.localize("PrevPage")}}</button>
+        <span>{{_localizer.localize("Page")}} <input name="currentPage" [(ngModel)]="currentPage" type="number" required (change)="reloadGrid()" style="width:100px;" /> {{_localizer.localize("PageOf")}} {{totalPages}}</span>
+        <button class="btn btn-default" (click)="nextPage()" [disabled]="currentPage >= totalPages">{{_localizer.localize("NextPage")}}</button>
+        <button class="btn btn-default" (click)="getExcelExport()">{{_localizer.localize("ExcelExport")}}</button>
     </div>
     <table class="table">
         <thead>
@@ -20,7 +20,7 @@
             </tr>
         </thead>
         <tbody>
-            <ng-template ngFor let-i [ngForOf]="_items" let-n="index">
+            <ng-template ngFor let-i [ngForOf]="items" let-n="index">
                 <tr>
                     <td>
                         {{i.id}}
@@ -35,26 +35,26 @@
                         {{i.phone}}
                     </td>
                     <td>
-                        <button class="btn btn-default" (click)="toggleEditAsync(i.id)" *ngIf="_showEditId != i.id">{{_localizer.localize("Edit")}}</button>
-                        <button class="btn btn-default" (click)="toggleEditAsync(i.id)" *ngIf="_showEditId == i.id">{{_localizer.localize("Cancel")}}</button>
+                        <button class="btn btn-default" (click)="toggleEdit(i.id)" *ngIf="showEditId != i.id">{{_localizer.localize("Edit")}}</button>
+                        <button class="btn btn-default" (click)="toggleEdit(i.id)" *ngIf="showEditId == i.id">{{_localizer.localize("Cancel")}}</button>
                     </td>
                     <td>
-                        <button class="btn btn-default" (click)="togglePasswordReset(i.id)" *ngIf="_resetPasswordId != i.id">{{_localizer.localize("SetNewPassButton")}}</button>
-                        <button class="btn btn-default" (click)="togglePasswordReset(i.id)" *ngIf="_resetPasswordId == i.id">{{_localizer.localize("Cancel")}}</button>
+                        <button class="btn btn-default" (click)="togglePasswordReset(i.id)" *ngIf="resetPasswordId != i.id">{{_localizer.localize("SetNewPassButton")}}</button>
+                        <button class="btn btn-default" (click)="togglePasswordReset(i.id)" *ngIf="resetPasswordId == i.id">{{_localizer.localize("Cancel")}}</button>
                     </td>
                     <td>
-                        <button class="btn btn-default" (click)="deleteAsync(i.id)">{{_localizer.localize("Delete")}}</button>
+                        <button class="btn btn-default" (click)="delete(i.id)">{{_localizer.localize("Delete")}}</button>
                     </td>
                 </tr>
-                <tr *ngIf="_showEditId==i.id; then edit"></tr>
-                <tr *ngIf="_resetPasswordId==i.id; then passwordReset"></tr>
+                <tr *ngIf="showEditId==i.id; then edit"></tr>
+                <tr *ngIf="resetPasswordId==i.id; then passwordReset"></tr>
             </ng-template>
         </tbody>
     </table>
 </div>
 <div class="create-new">
-    <button class="btn btn-default" (click)="toggleCreateAsync()">{{_localizer.localize("Create")}}</button>
-    <div *ngIf="_isShowCreate; then create"></div>
+    <button class="btn btn-default" (click)="toggleCreate()">{{_localizer.localize("Create")}}</button>
+    <div *ngIf="isShowCreate; then create"></div>
 </div>
 
 <ng-template #passwordReset>
@@ -71,7 +71,7 @@
                     </div>
                 </div>
                 <div class="form-group col-sm-10">
-                    <button class="btn btn-default" (click)="resetPasswordAsync(newPassword.value)" [disabled]="newPassword.invalid">{{_localizer.localize("Save")}}</button>
+                    <button class="btn btn-default" (click)="resetPassword(newPassword.value)" [disabled]="newPassword.invalid">{{_localizer.localize("Save")}}</button>
                 </div>
                 <div style="clear:both"></div>
             </div>
@@ -86,7 +86,7 @@
                 <form #editForm="ngForm">
                     <div class="form-group col-sm-3">
                         <label>{{_localizer.localize("LoginLabel")}} *</label>
-                        <input class="form-control" name="userName" [(ngModel)]="_itemEdit.userName" #userName="ngModel" type="text" required pattern="^[a-zA-Z0-9]*$"/>
+                        <input class="form-control" name="userName" [(ngModel)]="itemEdit.userName" #userName="ngModel" type="text" required pattern="^[a-zA-Z0-9]*$"/>
                         <div *ngIf="userName.invalid">
                             <p *ngIf="userName.errors.required" class="validation-text">
                                 {{_localizer.localizeWithValues("RequiredX",_localizer.localize("LoginLabel"))}}
@@ -98,7 +98,7 @@
                     </div>
                     <div class="form-group col-sm-3">
                         <label>{{_localizer.localize("Phone")}}</label>
-                        <input class="form-control" name="phone" [(ngModel)]="_itemEdit.phone" #phone="ngModel" type="text" pattern="^[0-9\s]*$" />
+                        <input class="form-control" name="phone" [(ngModel)]="itemEdit.phone" #phone="ngModel" type="text" pattern="^[0-9\s]*$" />
                         <div *ngIf="phone.invalid">
                             <p *ngIf="phone.errors.pattern" class="validation-text">
                                 {{_localizer.localize("OnlyDigitsAllowed")}}
@@ -107,8 +107,8 @@
                     </div>
                     <div class="form-group col-sm-3">
                         <label>{{_localizer.localize("Role")}}</label>
-                        <select class="form-control" name="role" [(ngModel)]="_itemEdit.role" #role="ngModel" required>
-                            <ng-template ngFor let-i [ngForOf]="_itemEdit.roleList" let-n="index">
+                        <select class="form-control" name="role" [(ngModel)]="itemEdit.role" #role="ngModel" required>
+                            <ng-template ngFor let-i [ngForOf]="itemEdit.roleList" let-n="index">
                                 <option value="{{i.value}}" [disabled]="i.disabled">{{i.text}}</option>
                             </ng-template>
                         </select>
@@ -119,7 +119,7 @@
                         </div>
                     </div>
                     <div class="form-group col-sm-10">
-                        <button class="btn btn-default" (click)="saveEditModelAsync()" [disabled]="editForm.invalid">{{_localizer.localize("Save")}}</button>
+                        <button class="btn btn-default" (click)="saveEditModel()" [disabled]="editForm.invalid">{{_localizer.localize("Save")}}</button>
                     </div>
                 </form>
                 <div style="clear:both"></div>
@@ -133,7 +133,7 @@
         <form #createForm="ngForm">
             <div class="form-group col-sm-3">
                 <label>{{_localizer.localize("LoginLabel")}} *</label>
-                <input class="form-control" name="userName" [(ngModel)]="_itemCreate.userName" #userName="ngModel" type="text" required pattern="^[a-zA-Z0-9]*$"/>
+                <input class="form-control" name="userName" [(ngModel)]="itemCreate.userName" #userName="ngModel" type="text" required pattern="^[a-zA-Z0-9]*$"/>
                 <div *ngIf="userName.invalid">
                     <p *ngIf="userName.errors.required" class="validation-text">
                         {{_localizer.localizeWithValues("RequiredX",_localizer.localize("LoginLabel"))}}
@@ -145,7 +145,7 @@
             </div>
             <div class="form-group col-sm-3">
                 <label>{{_localizer.localize("PasswordLabel")}}*</label>
-                <input class="form-control" name="password" [(ngModel)]="_itemCreate.password" #password="ngModel" type="password" required />
+                <input class="form-control" name="password" [(ngModel)]="itemCreate.password" #password="ngModel" type="password" required />
                 <div *ngIf="password.invalid">
                     <p *ngIf="password.errors.required" class="validation-text">
                         {{_localizer.localizeWithValues("RequiredX",_localizer.localize("PasswordLabel"))}}
@@ -154,7 +154,7 @@
             </div>
             <div class="form-group col-sm-3">
                 <label>{{_localizer.localize("Phone")}}</label>
-                <input class="form-control" name="phone" [(ngModel)]="_itemCreate.phone" #phone="ngModel" type="text" pattern="^[0-9\s]*$" />
+                <input class="form-control" name="phone" [(ngModel)]="itemCreate.phone" #phone="ngModel" type="text" pattern="^[0-9\s]*$" />
                 <div *ngIf="phone.touched && phone.invalid">
                     <p *ngIf="phone.errors.pattern" class="validation-text">
                         {{_localizer.localize("OnlyDigitsAllowed")}}
@@ -163,8 +163,8 @@
             </div>
             <div class="form-group col-sm-3">
                 <label>{{_localizer.localize("Role")}}</label>
-                <select class="form-control" name="role" [(ngModel)]="_itemCreate.role" #role="ngModel" required>
-                    <ng-template ngFor let-i [ngForOf]="_itemCreate.roleList" let-n="index">
+                <select class="form-control" name="role" [(ngModel)]="itemCreate.role" #role="ngModel" required>
+                    <ng-template ngFor let-i [ngForOf]="itemCreate.roleList" let-n="index">
                         <option value="{{i.value}}" [disabled]="i.disabled">{{i.text}}</option>
                     </ng-template>
                 </select>
@@ -175,7 +175,7 @@
                 </div>
             </div>
             <div class="form-group col-sm-10">
-                <button class="btn btn-default" (click)="saveCreateModelAsync()" [disabled]="createForm.invalid">{{_localizer.localize("Save")}}</button>
+                <button class="btn btn-default" (click)="saveCreateModel()" [disabled]="createForm.invalid">{{_localizer.localize("Save")}}</button>
             </div>
         </form>
         <div style="clear:both"></div>

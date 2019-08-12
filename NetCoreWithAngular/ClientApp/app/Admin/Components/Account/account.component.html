@@ -11,7 +11,7 @@
                 <div class="form-group">
                     <label>{{_localizer.localize("CurrentPasswordLabel")}} *</label>
                     <input class="form-control" name="currentPassword" [(ngModel)]="_changePasswordModel.currentPassword" #currentPassword="ngModel" type="password" required />
-                    <div *ngIf="passwordChangeForm.submited && currentPassword.invalid">
+                    <div *ngIf="currentPassword.invalid">
                         <p *ngIf="currentPassword.errors.required" class="validation-text">
                             {{_localizer.localizeWithValues("RequiredX",_localizer.localize("CurrentPasswordLabel"))}}
                         </p>
@@ -20,7 +20,7 @@
                 <div class="form-group">
                     <label>{{_localizer.localize("NewPasswordLabel")}} *</label>
                     <input class="form-control" name="newPassword" [(ngModel)]="_changePasswordModel.newPassword" #newPassword="ngModel" type="password" required />
-                    <div *ngIf="passwordChangeForm.submited && newPassword.invalid">
+                    <div *ngIf="newPassword.invalid">
                         <p *ngIf="newPassword.errors.required" class="validation-text">
                             {{_localizer.localizeWithValues("RequiredX",_localizer.localize("NewPasswordLabel"))}}
                         </p>
@@ -29,14 +29,14 @@
                 <div class="form-group">
                     <label>{{_localizer.localize("NewPassword2Label")}} *</label>
                     <input class="form-control" name="newPassword2" [(ngModel)]="_changePasswordModel.newPassword2" #newPassword2="ngModel" type="password" required />
-                    <div *ngIf="passwordChangeForm.submited && newPassword2.invalid">
+                    <div *ngIf="newPassword2.invalid">
                         <p *ngIf="newPassword2.errors.required" class="validation-text">
                             {{_localizer.localizeWithValues("RequiredX",_localizer.localize("NewPassword2Label"))}}
                         </p>
                     </div>
                 </div>
                 <div class="form-group">
-                    <button class="btn btn-default" (click)="changePasswordAsync(!passwordChangeForm.invalid)" [disabled]="passwordChangeForm.invalid">{{_localizer.localize("ChangePassButton")}}</button>
+                    <button class="btn btn-default" (click)="changePassword()" [disabled]="passwordChangeForm.invalid">{{_localizer.localize("ChangePassButton")}}</button>
                 </div>
             </form>
         </div>

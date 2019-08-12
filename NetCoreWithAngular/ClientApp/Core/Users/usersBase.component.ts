@@ -3,29 +3,32 @@ import { UsersService } from './users.service';
 import { IUser } from './IUser';
 import { CoreLocalizerService } from '../Localization/coreLocalizer.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { finalize, takeUntil } from 'rxjs/operators';
+import { Subject } from "rxjs";
 
 @Component({
 })
 export class UsersBaseComponent<TKey, TGrid extends IUser<TKey>, TCreate extends IUser<TKey> = TGrid, TEdit extends IUser<TKey> = TGrid, TFilter = TGrid> implements OnInit {
 
-    _service: UsersService<TKey, TGrid, TCreate, TEdit, TFilter>;
-    _localizer: CoreLocalizerService;
-    _snackBar: MatSnackBar;
+    protected _destroyed: Subject<void> = new Subject();
+    protected _service: UsersService<TKey, TGrid, TCreate, TEdit, TFilter>;
+    protected _localizer: CoreLocalizerService;
+    protected _snackBar: MatSnackBar;
 
-    _items: TGrid[];
-    _itemEdit: TEdit;
-    _itemCreate: TCreate;
-    _filter: TFilter;
-    _currentPage: number = 1;
-    _pageSize: number = 5;
-    _totalPages: number = 1;
-    _isShowCreate = false;
-    _showEditId?: TKey = null;
-    _checkedItems: TKey[] = [];
-    _importFile: File = null;
-    _isShowImport: boolean;
-    _orderBy: string = 'UserName';
-    _resetPasswordId?: TKey = null;
+    items: TGrid[];
+    itemEdit: TEdit;
+    itemCreate: TCreate;
+    filter: TFilter;
+    currentPage: number = 1;    
+    totalPages: number = 1;
+    pageSize: number = 10;
+    isShowCreate = false;
+    showEditId?: TKey = null;
+    checkedItems: TKey[] = [];
+    importFile: File = null;
+    isShowImport: boolean;
+    orderBy: string = 'UserName';
+    resetPasswordId?: TKey = null;
 
     constructor(service: UsersService<TKey, TGrid, TCreate, TEdit, TFilter>, localizer: CoreLocalizerService, snackBar: MatSnackBar) {
         this._service = service;
@@ -33,359 +36,310 @@ export class UsersBaseComponent<TKey, TGrid extends IUser<TKey>, TCreate extends
         this._snackBar = snackBar;
     }
 
-    protected async getCreateModelAsync() {
-        try {
-            var popup = this._snackBar.open(this._localizer.localize("Loading"));
-            this._itemCreate = await this._service.getCreateModelAsync();
-            popup.dismiss();
-        }
-        catch (e) {
-            popup.dismiss();
-            console.log(e);
-            if (e.error) {
-                var popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e.error));
-            }
-        }
-    }
-
-    protected async getEditModelAsync(id: TKey) {
-        try {
-            var popup = this._snackBar.open(this._localizer.localize("Loading"));
-            this._itemEdit = await this._service.getEditModelAsync(id);
-            popup.dismiss();
-        }
-        catch (e) {
-            popup.dismiss();
-            console.log(e);
-            if (e.error) {
-                var popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e.error));
-            }
-        }
-    }
-
-    public async ngOnInit() {
-        try {
-            var popup = this._snackBar.open(this._localizer.localize("Loading"));
-            this._filter = await this._service.getFilterModelAsync();
-            await this.reloadGridAsync();
-            popup.dismiss();
-        }
-        catch (e) {
-            popup.dismiss();
-            console.log(e);
-            if (e.error) {
-                var popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e.error));
-            }
-        }
-    }
-
-    public async reloadGridAsync() {
-        try {
-            var popup = this._snackBar.open(this._localizer.localize("Loading"));
-            this._showEditId = null;
-            this._resetPasswordId = null;
-            this._totalPages = await this._service.getPagesCountAsync(this._pageSize, this._filter);
-            if (this._currentPage < 1) this._currentPage = 1;
-            if (this._currentPage > this._totalPages) this._currentPage = this._totalPages;
-            this._items = await this._service.getGridAsync(this._currentPage, this._pageSize, this._orderBy, this._filter);
-            popup.dismiss();
-        }
-        catch (e) {
-            popup.dismiss();
-            console.log(e);
-            if (e.error) {
-                var popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e.error));
-            }
-        }
-    }
-
-    public async clearFilterAsync() {
-        try {
-            var popup = this._snackBar.open(this._localizer.localize("Loading"));
-            this._filter = await this._service.getFilterModelAsync();
-            await this.reloadGridAsync();
-            popup.dismiss();
-        }
-        catch (e) {
-            popup.dismiss();
-            console.log(e);
-            if (e.error) {
-                var popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e.error));
-            }
-        }
-    }
-
-    public async nextPageAsync() {
-        if (this._currentPage < this._totalPages) {
-            this._currentPage++;
-            try {
-                var popup = this._snackBar.open(this._localizer.localize("Loading"));
-                await this.reloadGridAsync();
-                popup.dismiss();
-            }
-            catch (e) {
-                popup.dismiss();
+    protected getCreateModel() {
+        var popup = this._snackBar.open(this._localizer.localize("Loading"));
+        this._service.getCreateModel().pipe(finalize(() => { if (popup) popup.dismiss(); }), takeUntil(this._destroyed)).subscribe(
+            data => {
+                this.itemCreate = data;
+            },
+            e => {
                 console.log(e);
                 if (e.error) {
                     var popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e.error));
                 }
             }
-        }
+        );
     }
 
-    public async prevPageAsync() {
-        if (this._currentPage > 1) {
-            this._currentPage--;
-            try {
-                var popup = this._snackBar.open(this._localizer.localize("Loading"));
-                await this.reloadGridAsync();
-                popup.dismiss();
-            }
-            catch (e) {
-                popup.dismiss();
+    protected getEditModel(id: TKey) {
+        var popup = this._snackBar.open(this._localizer.localize("Loading"));
+        this._service.getEditModel(id).pipe(finalize(() => { if (popup) popup.dismiss(); }), takeUntil(this._destroyed)).subscribe(
+            data => {
+                this.itemEdit = data;
+            },
+            e => {
                 console.log(e);
                 if (e.error) {
                     var popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e.error));
                 }
             }
+        );
+    }
+
+    ngOnInit() {
+        var popup = this._snackBar.open(this._localizer.localize("Loading"));
+        this._service.getFilterModel().pipe(finalize(() => { if (popup) popup.dismiss(); }), takeUntil(this._destroyed)).subscribe(
+            data => {
+                this.filter = data;
+                this.reloadGrid();
+            },
+            e => {
+                console.log(e);
+                if (e.error) {
+                    var popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e.error));
+                }
+            }
+        );
+    }
+
+    reloadGrid() {
+        var popup = this._snackBar.open(this._localizer.localize("Loading"));
+        this.showEditId = null;
+        this.resetPasswordId = null;
+
+        this._service.getPagesCount(this.pageSize, this.filter).pipe(finalize(() => { if (popup) popup.dismiss(); }), takeUntil(this._destroyed)).subscribe(
+            data => {
+                this.totalPages = data;
+                if (this.currentPage < 1) this.currentPage = 1;
+                if (this.currentPage > this.totalPages) this.currentPage = this.totalPages;
+                this._service.getGrid(this.currentPage, this.pageSize, this.orderBy, this.filter).pipe(finalize(() => { if (popup) popup.dismiss(); }), takeUntil(this._destroyed)).subscribe(
+                    data => { this.items = data; if (popup) popup.dismiss(); },
+                    e => {
+                        console.log(e);
+                        if (e.error) {
+                            var popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e.error));
+                        }
+                    }
+                );
+            },
+            e => {
+                console.log(e);
+                if (e.error) {
+                    var popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e.error));
+                }
+            }
+        );
+    }
+
+    clearFilter() {
+        var popup = this._snackBar.open(this._localizer.localize("Loading"));
+        this._service.getFilterModel().pipe(finalize(() => { if (popup) popup.dismiss(); }), takeUntil(this._destroyed)).subscribe(
+            data => {
+                this.filter = data;
+                this.reloadGrid();
+            },
+            e => {
+                console.log(e);
+                if (e.error) {
+                    var popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e.error));
+                }
+            }
+        );        
+    }
+
+    nextPage() {
+        if (this.currentPage < this.totalPages) {
+            this.currentPage++;
+            this.reloadGrid();            
         }
     }
 
-    public async toggleCreateAsync() {        
-        if (this._isShowCreate) {
-            this._isShowCreate = false;
+    prevPage() {
+        if (this.currentPage > 1) {
+            this.currentPage--;
+            this.reloadGrid();
+        }
+    }
+
+    toggleCreate() {
+        if (this.isShowCreate) {
+            this.isShowCreate = false;
         }
         else {
-            try {
-                var popup = this._snackBar.open(this._localizer.localize("Loading"));
-                await this.getCreateModelAsync();
-                this._isShowCreate = true;
-                this._isShowImport = false;
-                popup.dismiss();
-            }
-            catch (e) {
-                popup.dismiss();
-                console.log(e);
-                if (e.error) {
-                    var popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e.error));
-                }
-            }
+            this.getCreateModel();
+            this.isShowCreate = true;
+            this.isShowImport = false;            
         }
     }
 
-    public toggleImport() {
-        if (this._isShowImport) {
-            this._isShowImport = false;
+    toggleImport() {
+        if (this.isShowImport) {
+            this.isShowImport = false;
         }
         else {
-            try {
-                this._isShowImport = true;
-                this._isShowCreate = false;
-            }
-            catch (e) {
-                popup.dismiss();
-                console.log(e);
-                if (e.error) {
-                    var popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e.error));
-                }
-            }
+            this.isShowImport = true;
+            this.isShowCreate = false;            
         }
     }
 
-    public async toggleEditAsync(id: TKey) {
-        if (this._showEditId == id) {
-            this._showEditId = null;
+    toggleEdit(id: TKey) {
+        if (this.showEditId == id) {
+            this.showEditId = null;
         }
         else {
-            try {
-                var popup = this._snackBar.open(this._localizer.localize("Loading"));
-                await this.getEditModelAsync(id);
-                this._showEditId = id;
-                popup.dismiss();
-            }
-            catch (e) {
-                popup.dismiss();
+            this.getEditModel(id);
+            this.showEditId = id;
+        }
+    }
+
+    delete(id: TKey) {
+        var popup = this._snackBar.open(this._localizer.localize("Loading"));
+        this._service.delete(id).pipe(finalize(() => { if (popup) popup.dismiss(); }), takeUntil(this._destroyed)).subscribe(
+            data => {
+                this.reloadGrid();
+            },
+            e => {
                 console.log(e);
                 if (e.error) {
                     var popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e.error));
                 }
             }
-        }
-    }    
-
-    public async deleteAsync(id: TKey) {
-        try {
-            var popup = this._snackBar.open(this._localizer.localize("Loading"));
-            await this._service.deleteAsync(id);
-            await this.reloadGridAsync();
-            popup.dismiss();
-        }
-        catch (e) {
-            popup.dismiss();
-            console.log(e);
-            if (e.error) {
-                var popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e.error));
-            }
-        }
+        );
     }
 
-    public async deleteCheckedAsync() {
-        try {
-            var popup = this._snackBar.open(this._localizer.localize("Loading"));
-            await this._service.deleteManyAsync(this._checkedItems);
-            await this.reloadGridAsync();
-            popup.dismiss();
-        }
-        catch (e) {
-            popup.dismiss();
-            console.log(e);
-            if (e.error) {
-                var popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e.error));
+    deleteChecked() {
+        var popup = this._snackBar.open(this._localizer.localize("Loading"));
+        this._service.deleteMany(this.checkedItems).pipe(finalize(() => { if (popup) popup.dismiss(); }), takeUntil(this._destroyed)).subscribe(
+            data => {
+                this.reloadGrid();
+            },
+            e => {
+                console.log(e);
+                if (e.error) {
+                    var popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e.error));
+                }
             }
-        }
+        );
     }
 
-    public async saveCreateModelAsync() {
-        try {
-            var popup = this._snackBar.open(this._localizer.localize("Loading"));
-            await this._service.saveCreateModelAsync(this._itemCreate);
-            this._isShowCreate = false;
-            await this.getCreateModelAsync();
-            await this.reloadGridAsync();
-            popup.dismiss();
-        }
-        catch (e) {
-            popup.dismiss();
-            console.log(e);
-            if (e.error) {
-                var popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e.error));
+    saveCreateModel() {
+        var popup = this._snackBar.open(this._localizer.localize("Loading"));
+        this._service.saveCreateModel(this.itemCreate).pipe(finalize(() => { if (popup) popup.dismiss(); }), takeUntil(this._destroyed)).subscribe(
+            data => {
+                this.isShowCreate = false;
+                this.getCreateModel();
+                this.reloadGrid();
+            },
+            e => {
+                console.log(e);
+                if (e.error) {
+                    var popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e.error));
+                }
             }
-        }
+        );
     }
 
-    public async saveEditModelAsync() {
-        try {
-            var popup = this._snackBar.open(this._localizer.localize("Loading"));
-            this._itemEdit = await this._service.saveEditModelAsync(this._itemEdit);
-            await this.reloadGridAsync();
-            popup.dismiss();
-        }
-        catch (e) {
-            popup.dismiss();
-            console.log(e);
-            if (e.error) {
-                var popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e.error));
+    saveEditModel() {
+        var popup = this._snackBar.open(this._localizer.localize("Loading"));
+        this._service.saveEditModel(this.itemEdit).pipe(finalize(() => { if (popup) popup.dismiss(); }), takeUntil(this._destroyed)).subscribe(
+            data => {
+                this.itemEdit = data;
+                this.reloadGrid();
+            },
+            e => {
+                console.log(e);
+                if (e.error) {
+                    var popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e.error));
+                }
             }
-        }
+        );
     }
 
-    public async getExcelExportAsync() {
-        try {
-            var popup = this._snackBar.open(this._localizer.localize("Loading"));
-            let b = await this._service.getExcelExportAsync(this._orderBy, this._filter);
-            popup.dismiss();
-            saveAs(b, "ExcelExport.xlsx");
-        }
-        catch (e) {
-            popup.dismiss();
-            console.log(e);
-            if (e.error) {
-                var popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e.error));
+    getExcelExport() {
+        var popup = this._snackBar.open(this._localizer.localize("Loading"));
+        this._service.getExcelExport(this.orderBy, this.filter).pipe(finalize(() => { if (popup) popup.dismiss(); }), takeUntil(this._destroyed)).subscribe(
+            data => {
+                saveAs(data, "ExcelExport.xlsx");
+            },
+            e => {
+                console.log(e);
+                if (e.error) {
+                    var popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e.error));
+                }
             }
-        }
+        );        
     }
 
-    public async getImportTemplateAsync() {
-        try {
-            var popup = this._snackBar.open(this._localizer.localize("Loading"));
-            let b = await this._service.getImportTemplateAsync();
-            popup.dismiss();
-            saveAs(b, "ImportTemplate.xlsx");
-        }
-        catch (e) {
-            popup.dismiss();
-            console.log(e);
-            if (e.error) {
-                var popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e.error));
+    getImportTemplate() {
+        var popup = this._snackBar.open(this._localizer.localize("Loading"));
+        this._service.getImportTemplate().pipe(finalize(() => { if (popup) popup.dismiss(); }), takeUntil(this._destroyed)).subscribe(
+            data => {
+                saveAs(data, "ImportTemplate.xlsx");
+            },
+            e => {
+                console.log(e);
+                if (e.error) {
+                    var popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e.error));
+                }
             }
-        }
+        );        
     }
 
-    public async importAsync() {
-        if (this._importFile == null) {
+    import() {
+        if (this.importFile == null) {
             var popup = this._snackBar.open(this._localizer.localize("ImportFileNull"), null, { duration: 5000 });
         }
         else {
-            try {
-                var popup = this._snackBar.open(this._localizer.localize("Loading"));
-                await this._service.importAsync(this._importFile);
-                await this.reloadGridAsync();
-                var popup = this._snackBar.open(this._localizer.localize("ImportSuccess"), null, { duration: 5000 });
-            }
-            catch (e) {
-                popup.dismiss();
-                console.log(e);
-                if (e.error) {
-                    var popup = this._snackBar.open(this._localizer.localizeWithValues("Error", JSON.stringify(e.error)));
+            var popup = this._snackBar.open(this._localizer.localize("Loading"));
+            this._service.import(this.importFile).pipe(finalize(() => { if (popup) popup.dismiss(); }), takeUntil(this._destroyed)).subscribe(
+                data => {
+                    this.reloadGrid();
+                    var popup = this._snackBar.open(this._localizer.localize("ImportSuccess"), null, { duration: 5000 });
+                },
+                e => {
+                    console.log(e);
+                    if (e.error) {
+                        var popup = this._snackBar.open(this._localizer.localizeWithValues("Error", JSON.stringify(e.error)));
+                    }
                 }
-            }
+            );            
         }
     }
 
-    public setImportFile(file: File) {
-        this._importFile = file;
+    setImportFile(file: File) {
+        this.importFile = file;
     }
 
-    public toggleChecked(id: TKey) {
-        var index = this._checkedItems.indexOf(id);
-        if (index < 0) { this._checkedItems.push(id); }
+    toggleChecked(id: TKey) {
+        var index = this.checkedItems.indexOf(id);
+        if (index < 0) { this.checkedItems.push(id); }
         else {
-            this._checkedItems = this._checkedItems.slice(0, index).concat(this._checkedItems.slice(index + 1, this._checkedItems.length));
+            this.checkedItems = this.checkedItems.slice(0, index).concat(this.checkedItems.slice(index + 1, this.checkedItems.length));
         }
     }
 
-    public toggleCheckAll() {
+    toggleCheckAll() {
         let checked = true;
-        this._items.forEach(i => {
-            var index = this._checkedItems.indexOf(i.id);
+        this.items.forEach(i => {
+            var index = this.checkedItems.indexOf(i.id);
             if (index < 0) checked = false;
         });
 
         if (checked) {
-            this._items.forEach(i => {
-                var index = this._checkedItems.indexOf(i.id);
-                this._checkedItems = this._checkedItems.slice(0, index).concat(this._checkedItems.slice(index + 1, this._checkedItems.length));
+            this.items.forEach(i => {
+                var index = this.checkedItems.indexOf(i.id);
+                this.checkedItems = this.checkedItems.slice(0, index).concat(this.checkedItems.slice(index + 1, this.checkedItems.length));
             });
         } else {
-            this._items.forEach(i => {
-                var index = this._checkedItems.indexOf(i.id);
-                if (index < 0) { this._checkedItems.push(i.id); }
+            this.items.forEach(i => {
+                var index = this.checkedItems.indexOf(i.id);
+                if (index < 0) { this.checkedItems.push(i.id); }
             });
         }
     }
 
-    public async resetPasswordAsync(newPassword: string) {
-        try {
-            var popup = this._snackBar.open(this._localizer.localize("Loading"));
-            await this._service.resetPasswordAsync(this._resetPasswordId, newPassword);
-            await this.reloadGridAsync();
-            popup = this._snackBar.open(this._localizer.localize("PassResetSuccess"), null, { duration: 5000 });
-        }
-        catch (e) {
-            popup.dismiss();
-            console.log(e);
-            if (e.error) {
-                var popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e.error));
+    resetPassword(newPassword: string) {
+        var popup = this._snackBar.open(this._localizer.localize("Loading"));
+        this._service.resetPassword(this.resetPasswordId, newPassword).pipe(finalize(() => { if (popup) popup.dismiss(); }), takeUntil(this._destroyed)).subscribe(
+            data => {
+                this.resetPasswordId = null;
+                var popup = this._snackBar.open(this._localizer.localize("PassResetSuccess"), null, { duration: 5000 });
+            },
+            e => {
+                console.log(e);
+                if (e.error) {
+                    var popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e.error));
+                }
             }
-        }
+        );        
     }
 
-    public togglePasswordReset(id: TKey) {
-        if (this._resetPasswordId == id) {
-            this._resetPasswordId = null;
+    togglePasswordReset(id: TKey) {
+        if (this.resetPasswordId == id) {
+            this.resetPasswordId = null;
         }
         else {
-            this._resetPasswordId = id;            
+            this.resetPasswordId = id;
         }
     }
 }

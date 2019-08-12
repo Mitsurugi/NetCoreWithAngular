@@ -1,11 +1,10 @@
 ﻿<h2>{{_localizer.localize("Animes")}}</h2>
 
-<div class="grid" *ngIf="!_items.length">{{_localizer.localize("NoData")}}</div>
-
-<div class="grid" *ngIf="_items.length">
+<div class="grid" *ngIf="!items?.length">{{_localizer.localize("NoData")}}</div>
+<div class="grid" *ngIf="items?.length">
     <div class="sorting">
         <label>{{_localizer.localize("OrderBy")}}</label>
-        <select class="form-control" [(ngModel)]="_orderBy" (change)="reloadGridAsync()">
+        <select class="form-control" [(ngModel)]="orderBy" (change)="reloadGrid()">
             <option value="Position">{{_localizer.localize("ManualSorting")}}</option>
             <option value="Id_desc">{{_localizer.localizeWithValues("OrderBy.DescendingX", _localizer.localize("Id"))}}</option>
             <option value="Id">{{_localizer.localizeWithValues("OrderBy.AscendingX", _localizer.localize("Id"))}}</option>
@@ -15,11 +14,11 @@
         <div style="clear:both"></div>
     </div>
     <div class="pagination">
-        <button class="btn btn-default" (click)="prevPageAsync()" [disabled]="_currentPage < 2" >{{_localizer.localize("PrevPage")}}</button>
-        <span>{{_localizer.localize("Page")}} <input name="currentPage" [(ngModel)]="_currentPage" type="number" required (change)="reloadGridAsync()" style="width:100px;" /> {{_localizer.localize("PageOf")}} {{_totalPages}}</span>
-        <button class="btn btn-default" (click)="nextPageAsync()" [disabled]="_currentPage >= _totalPages">{{_localizer.localize("NextPage")}}</button>
-        <button class="btn btn-default" (click)="getExcelExportAsync()">{{_localizer.localize("ExcelExport")}}</button>
-        <button class="btn btn-default" (click)="deleteCheckedAsync()" [disabled]="!_checkedItems.length">{{_localizer.localize("DeleteSelected")}}</button>
+        <button class="btn btn-default" (click)="prevPage()" [disabled]="currentPage < 2">{{_localizer.localize("PrevPage")}}</button>
+        <span>{{_localizer.localize("Page")}} <input name="currentPage" [(ngModel)]="currentPage" type="number" required (change)="reloadGrid()" style="width:100px;" /> {{_localizer.localize("PageOf")}} {{totalPages}}</span>
+        <button class="btn btn-default" (click)="nextPage()" [disabled]="currentPage >= totalPages">{{_localizer.localize("NextPage")}}</button>
+        <button class="btn btn-default" (click)="getExcelExport()">{{_localizer.localize("ExcelExport")}}</button>
+        <button class="btn btn-default" (click)="deleteChecked()" [disabled]="!checkedItems.length">{{_localizer.localize("DeleteSelected")}}</button>
     </div>
     <table class="table">
         <thead>
@@ -36,11 +35,11 @@
                 <th></th>
             </tr>
         </thead>
-        <tbody cdkDropList (cdkDropListDropped)="moveAsync($event)">
-            <ng-template ngFor let-i [ngForOf]="_items" let-n="index">
+        <tbody cdkDropList (cdkDropListDropped)="move($event)">
+            <ng-template ngFor let-i [ngForOf]="items" let-n="index">
                 <tr cdkDrag cdkDragLockAxis="y">
                     <th>
-                        <input type="checkbox" [checked]="_checkedItems.indexOf(i.id) >= 0" (change)="toggleChecked(i.id)" />
+                        <input type="checkbox" [checked]="checkedItems.indexOf(i.id) >= 0" (change)="toggleChecked(i.id)" />
                     </th>
                     <td>
                         {{i.id}}
@@ -61,7 +60,7 @@
                         <button class="btn btn-default" [routerLink]="['/admin/anime/edit', i.id]">{{_localizer.localize("Edit")}}</button>
                     </td>
                     <td>
-                        <button class="btn btn-default" (click)="deleteAsync(i.id)">{{_localizer.localize("Delete")}}</button>
+                        <button class="btn btn-default" (click)="delete(i.id)">{{_localizer.localize("Delete")}}</button>
                     </td>
                 </tr>
                 <tr *ngIf="_showEditId==i.id; then edit"></tr>
@@ -71,7 +70,7 @@
 </div>
 <div class="create-new">
     <button class="btn btn-default" [routerLink]="['/admin/anime/create']">{{_localizer.localize("Create")}}</button>
-    <div *ngIf="_isShowCreate; then create"></div>
+    <div *ngIf="isShowCreate; then create"></div>
 </div>
 
 <ng-template #edit>
@@ -81,7 +80,7 @@
                 <form #editForm="ngForm">
                     <div class="form-group col-sm-3">
                         <label>{{_localizer.localize("Anime.Title")}} *</label>
-                        <input class="form-control" name="title" [(ngModel)]="_itemEdit.title" #title="ngModel" type="text" required />
+                        <input class="form-control" name="title" [(ngModel)]="itemEdit.title" #title="ngModel" type="text" required />
                         <div *ngIf="title.invalid">
                             <p *ngIf="title.errors.required" class="validation-text">
                                 {{_localizer.localizeWithValues("RequiredX", _localizer.localize("Anime.Title"))}}
@@ -90,7 +89,7 @@
                     </div>
                     <div class="form-group col-sm-3">
                         <label>{{_localizer.localize("Anime.SeasonCount")}} *</label>
-                        <input class="form-control" name="seasonCount" [(ngModel)]="_itemEdit.seasonCount" #seasonCount="ngModel" type="number" required />
+                        <input class="form-control" name="seasonCount" [(ngModel)]="itemEdit.seasonCount" #seasonCount="ngModel" type="number" required />
                         <div *ngIf="seasonCount.invalid">
                             <p *ngIf="seasonCount.errors.required" class="validation-text">
                                 {{_localizer.localizeWithValues("RequiredX", _localizer.localize("Anime.SeasonCount"))}}
@@ -99,10 +98,10 @@
                     </div>
                     <div class="form-group col-sm-3">
                         <label>{{_localizer.localize("Anime.Image")}}</label>
-                        <input type="file" (change)="uploadImageEditAsync($event.target.files[0])" />
+                        <input type="file" (change)="uploadImageEdit($event.target.files[0])" />
                     </div>
                     <div class="form-group col-sm-10">
-                        <button class="btn btn-default" (click)="saveEditModelAsync()" [disabled]="editForm.invalid">{{_localizer.localize("Save")}}</button>
+                        <button class="btn btn-default" (click)="saveEditModel()" [disabled]="editForm.invalid">{{_localizer.localize("Save")}}</button>
                     </div>
                 </form>
                 <div style="clear:both"></div>
@@ -116,7 +115,7 @@
         <form #createForm="ngForm">
             <div class="form-group col-sm-3">
                 <label>{{_localizer.localize("Anime.Title")}} *</label>
-                <input class="form-control" name="title" [(ngModel)]="_itemCreate.title" #title="ngModel" type="text" required />
+                <input class="form-control" name="title" [(ngModel)]="itemCreate.title" #title="ngModel" type="text" required />
                 <div *ngIf="title.touched && title.invalid">
                     <p *ngIf="title.errors.required" class="validation-text">
                         {{_localizer.localizeWithValues("RequiredX", _localizer.localize("Anime.Title"))}}
@@ -125,7 +124,7 @@
             </div>
             <div class="form-group col-sm-3">
                 <label>{{_localizer.localize("Anime.SeasonCount")}} *</label>
-                <input class="form-control" name="seasonCount" [(ngModel)]="_itemCreate.seasonCount" #seasonCount="ngModel" type="number" required />
+                <input class="form-control" name="seasonCount" [(ngModel)]="itemCreate.seasonCount" #seasonCount="ngModel" type="number" required />
                 <div *ngIf="seasonCount.touched && seasonCount.invalid">
                     <p *ngIf="seasonCount.errors.required" class="validation-text">
                         {{_localizer.localizeWithValues("RequiredX", _localizer.localize("Anime.SeasonCount"))}}
@@ -134,10 +133,10 @@
             </div>
             <div class="form-group col-sm-3">
                 <label>{{_localizer.localize("Anime.Image")}}</label>
-                <input type="file" (change)="uploadImageCreateAsync($event.target.files[0])" />
+                <input type="file" (change)="uploadImageCreate($event.target.files[0])" />
             </div>
             <div class="form-group col-sm-10">
-                <button class="btn btn-default" (click)="saveCreateModelAsync()" [disabled]="createForm.invalid">{{_localizer.localize("Save")}}</button>
+                <button class="btn btn-default" (click)="saveCreateModel()" [disabled]="createForm.invalid">{{_localizer.localize("Save")}}</button>
             </div>
         </form>
         <div style="clear:both"></div>

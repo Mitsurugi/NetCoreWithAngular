@@ -17,14 +17,14 @@ import { from } from 'rxjs';
 })
 export class AccountComponent implements OnInit {
 
-    _service: AccountService;
-    _accGlobals: AccountGlobals;
-    _loginModel: LoginModel;
-    _changePasswordModel: ChangePasswordModel;
-    _localizer: LocalizerService;
-    _router: Router;
-    _snackBar: MatSnackBar;
-    _redirectUrl = "/admin";
+    protected _service: AccountService;
+    protected _accGlobals: AccountGlobals;
+    protected _loginModel: LoginModel;
+    protected _changePasswordModel: ChangePasswordModel;
+    protected _localizer: LocalizerService;
+    protected _router: Router;
+    protected _snackBar: MatSnackBar;
+    protected _redirectUrl = "/admin";
 
     constructor(service: AccountService, localizer: LocalizerService, accGlobals: AccountGlobals, router: Router, snackBar: MatSnackBar) {
         this._localizer = localizer;
@@ -36,47 +36,34 @@ export class AccountComponent implements OnInit {
         this._changePasswordModel = new ChangePasswordModel();
     }
 
-    public async ngOnInit() {
+    async ngOnInit() {
         this._accGlobals.refresh();
         if (!this._accGlobals.isLogged) {
             this._router.navigate([this._redirectUrl]);
         }
     }
 
-    public deleteToken() {
-        try {
-            var popup = this._snackBar.open(this._localizer.localize("Loading"));
-            this._service.deleteToken();
-            popup.dismiss();
-            this._router.navigate([this._redirectUrl]);
-        }
-        catch (e) {
-            popup.dismiss();
-            console.log(e);
-            if (e.error) {
-                var popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e.error));
-            }
-        }
+    deleteToken() {
+        this._service.deleteToken();
+        this._router.navigate([this._redirectUrl]);
     }
 
-    public async changePasswordAsync(valid: boolean) {
-        if (valid) {
-            try {
-                if (this._changePasswordModel.newPassword != this._changePasswordModel.newPassword2) {
-                    var popup = this._snackBar.open(this._localizer.localize("PassNotMatch"));
-                    return;
-                }
-                var popup = this._snackBar.open(this._localizer.localize("Loading"));
-                await this._service.changePasswordAsync(this._changePasswordModel);
-                popup = this._snackBar.open(this._localizer.localize("PassChangeSuccess"), null, { duration: 5000 });
-            }
-            catch (e) {
-                popup.dismiss();
+    changePassword() {
+        if (this._changePasswordModel.newPassword != this._changePasswordModel.newPassword2) {
+            var popup = this._snackBar.open(this._localizer.localize("PassNotMatch"));
+            return;
+        }
+        var popup = this._snackBar.open(this._localizer.localize("Loading"));
+
+        this._service.changePassword(this._changePasswordModel).subscribe(
+            data => { popup = this._snackBar.open(this._localizer.localize("PassChangeSuccess"), null, { duration: 5000 }); },
+            e => {
+                if (popup) popup.dismiss();
                 console.log(e);
                 if (e.error) {
                     var popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e.error));
                 }
             }
-        }        
+        );       
     }
 }

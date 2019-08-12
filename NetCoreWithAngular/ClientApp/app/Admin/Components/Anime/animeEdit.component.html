@@ -2,10 +2,10 @@
 <button class="btn btn-default" [routerLink]="['/admin/anime']">{{_localizer.localize("BackToList")}}</button>
 
 <div class="create-new">
-    <div *ngIf="_id && _itemEdit; then edit"></div>
-    <div *ngIf="!_id && _itemCreate; then create"></div>
-    <div *ngIf="_id" style="margin-top:30px;">
-        <anime-episodes [_parentId]="_id"></anime-episodes>
+    <div *ngIf="id && itemEdit; then edit"></div>
+    <div *ngIf="!id && itemCreate; then create"></div>
+    <div *ngIf="id" style="margin-top:30px;">
+        <anime-episodes [parentId]="id"></anime-episodes>
     </div>
 </div>
 
@@ -14,7 +14,7 @@
         <form #editForm="ngForm">
             <div class="form-group col-sm-3">
                 <label>{{_localizer.localize("Anime.Title")}} *</label>
-                <input class="form-control" name="title" [(ngModel)]="_itemEdit.title" #title="ngModel" type="text" required />
+                <input class="form-control" name="title" [(ngModel)]="itemEdit.title" #title="ngModel" type="text" required />
                 <div *ngIf="title.invalid">
                     <p *ngIf="title.errors.required" class="validation-text">
                         {{_localizer.localizeWithValues("RequiredX", _localizer.localize("Anime.Title"))}}
@@ -23,7 +23,7 @@
             </div>
             <div class="form-group col-sm-3">
                 <label>{{_localizer.localize("Anime.SeasonCount")}} *</label>
-                <input class="form-control" name="seasonCount" [(ngModel)]="_itemEdit.seasonCount" #seasonCount="ngModel" type="number" required />
+                <input class="form-control" name="seasonCount" [(ngModel)]="itemEdit.seasonCount" #seasonCount="ngModel" type="number" required />
                 <div *ngIf="seasonCount.invalid">
                     <p *ngIf="seasonCount.errors.required" class="validation-text">
                         {{_localizer.localizeWithValues("RequiredX", _localizer.localize("Anime.SeasonCount"))}}
@@ -32,10 +32,10 @@
             </div>
             <div class="form-group col-sm-3">
                 <label>{{_localizer.localize("Anime.Image")}}</label>
-                <input type="file" (change)="uploadImageEditAsync($event.target.files[0])" />
+                <input type="file" (change)="uploadImageEdit($event.target.files[0])" />
             </div>
             <div class="form-group col-sm-10">
-                <button class="btn btn-default" (click)="saveEditModelAsync()" [disabled]="editForm.invalid">{{_localizer.localize("Save")}}</button>
+                <button class="btn btn-default" (click)="saveEditModel()" [disabled]="editForm.invalid">{{_localizer.localize("Save")}}</button>
             </div>
         </form>
         <div style="clear:both"></div>
@@ -47,7 +47,7 @@
         <form #createForm="ngForm">
             <div class="form-group col-sm-3">
                 <label>{{_localizer.localize("Anime.Title")}} *</label>
-                <input class="form-control" name="title" [(ngModel)]="_itemCreate.title" #title="ngModel" type="text" required />
+                <input class="form-control" name="title" [(ngModel)]="itemCreate.title" #title="ngModel" type="text" required />
                 <div *ngIf="title.touched && title.invalid">
                     <p *ngIf="title.errors.required" class="validation-text">
                         {{_localizer.localizeWithValues("RequiredX", _localizer.localize("Anime.Title"))}}
@@ -56,7 +56,7 @@
             </div>
             <div class="form-group col-sm-3">
                 <label>{{_localizer.localize("Anime.SeasonCount")}} *</label>
-                <input class="form-control" name="seasonCount" [(ngModel)]="_itemCreate.seasonCount" #seasonCount="ngModel" type="number" required />
+                <input class="form-control" name="seasonCount" [(ngModel)]="itemCreate.seasonCount" #seasonCount="ngModel" type="number" required />
                 <div *ngIf="seasonCount.touched && seasonCount.invalid">
                     <p *ngIf="seasonCount.errors.required" class="validation-text">
                         {{_localizer.localizeWithValues("RequiredX", _localizer.localize("Anime.SeasonCount"))}}
@@ -65,10 +65,10 @@
             </div>
             <div class="form-group col-sm-3">
                 <label>{{_localizer.localize("Anime.Image")}}</label>
-                <input type="file" (change)="uploadImageCreateAsync($event.target.files[0])" />
+                <input type="file" (change)="uploadImageCreate($event.target.files[0])" />
             </div>
             <div class="form-group col-sm-10">
-                <button class="btn btn-default" (click)="saveCreateModelAsync()" [disabled]="createForm.invalid">{{_localizer.localize("Save")}}</button>
+                <button class="btn btn-default" (click)="saveCreateModel()" [disabled]="createForm.invalid">{{_localizer.localize("Save")}}</button>
             </div>
         </form>
         <div style="clear:both"></div>

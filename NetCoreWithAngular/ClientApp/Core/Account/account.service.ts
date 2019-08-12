@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { AccountGlobals } from './AccountGlobals';
 import { LoginModel } from './loginModel';
 import { ChangePasswordModel } from './changePasswordModel';
+import { map } from 'rxjs/operators';
 
 class TokenResponse {
     token: string;
@@ -14,31 +15,34 @@ class TokenResponse {
 @Injectable()
 export class CoreAccountService {
 
-    _accGlobals: AccountGlobals;
-    _controllerName = "identity";
-    _http: HttpClient;
+    protected _controllerName = "identity";
+    protected _http: HttpClient;
+    protected _accGlobals: AccountGlobals;    
 
     constructor(http: HttpClient, accGlobals: AccountGlobals) {
         this._http = http;
         this._accGlobals = accGlobals;
     }
 
-    public async getTokenAsync(model: LoginModel) {
-        let data = await this._http.post<TokenResponse>('/api/' + this._controllerName + '/tokenRequest', model).toPromise();
-        localStorage.setItem('token', data.token);
-        localStorage.setItem('login', data.login);
-        localStorage.setItem('role', data.role);
-        this._accGlobals.refresh();
+    getToken(model: LoginModel): Observable<object> {
+        return this._http.post<TokenResponse>('/api/' + this._controllerName + '/tokenRequest', model).pipe(
+            map((data) => {
+                localStorage.setItem('token', data.token);
+                localStorage.setItem('login', data.login);
+                localStorage.setItem('role', data.role);
+                this._accGlobals.refresh();
+                return data;
+            }));
     }
 
-    public deleteToken() {
+    deleteToken() {
         localStorage.removeItem("token");
         localStorage.removeItem("login");
         localStorage.removeItem("role");
-        this._accGlobals.refresh();        
+        this._accGlobals.refresh();
     }
 
-    public async changePasswordAsync(model: ChangePasswordModel) {
-        await this._http.post('/api/' + this._controllerName + '/ChangePassword', model).toPromise();
+    changePassword(model: ChangePasswordModel): Observable<object> {
+        return this._http.post('/api/' + this._controllerName + '/ChangePassword', model);
     }
 }

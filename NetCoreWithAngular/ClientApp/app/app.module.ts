@@ -55,7 +55,7 @@ const appRoutes: Routes = [
     providers: [
         { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
         { provide: HTTP_INTERCEPTORS, useClass: LanguageInterceptor, multi: true },
-        { provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: { duration: 5000, horizontalPosition: "center", verticalPosition: "top" } }],
+        { provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: { horizontalPosition: "center", verticalPosition: "top" } }],
     bootstrap: [AppComponent]
 })
 export class AppModule { }

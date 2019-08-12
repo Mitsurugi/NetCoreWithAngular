@@ -8,66 +8,66 @@ import { IUser } from './IUser';
 @Injectable()
 export class UsersService<TKey, TGrid extends IUser<TKey>, TCreate extends IUser<TKey> = TGrid, TEdit extends IUser<TKey> = TGrid, TFilter = TGrid> {
 
-    _controller = "users";
-    protected _http: HttpClient;
+    protected _controller = "users";
+    protected _http: HttpClient;    
 
     constructor(http: HttpClient) {
         this._http = http;
     }
 
-    public async getPagesCountAsync(pageSize: number, filter: TFilter): Promise<number> {
-        return await this._http.get<number>('api/' + this._controller + '/getPagesCount?pageSize=' + pageSize, { params: StaticMethods.ObjectToHttpParams('filter', filter) }).toPromise();
+    getPagesCount(pageSize: number, filter: TFilter): Observable<number> {
+        return this._http.get<number>('api/' + this._controller + '/getPagesCount?pageSize=' + pageSize, { params: StaticMethods.ObjectToHttpParams('filter', filter) });
     }
 
-    public async getGridAsync(pageNumber: number, pageSize: number, orderBy: string, filter: TFilter): Promise<TGrid[]> {
-        return await this._http.get<TGrid[]>('api/' + this._controller + '/getGrid?pageNumber=' + pageNumber + '&pageSize=' + pageSize + '&orderBy=' + orderBy, { params: StaticMethods.ObjectToHttpParams('filter', filter) }).toPromise();
+    getGrid(pageNumber: number, pageSize: number, orderBy: string, filter: TFilter): Observable<TGrid[]> {
+        return this._http.get<TGrid[]>('api/' + this._controller + '/getGrid?pageNumber=' + pageNumber + '&pageSize=' + pageSize + '&orderBy=' + orderBy, { params: StaticMethods.ObjectToHttpParams('filter', filter) });
     }
 
-    public async getCreateModelAsync(): Promise<TCreate> {
-        return await this._http.get<TCreate>('api/' + this._controller + '/getCreateModel').toPromise();
+    getCreateModel(): Observable<TCreate> {
+        return this._http.get<TCreate>('api/' + this._controller + '/getCreateModel');
     }
 
-    public async saveCreateModelAsync(item: TCreate): Promise<TCreate> {
-        return await this._http.post<TCreate>('/api/' + this._controller + '/saveCreateModel', item).toPromise();
+    saveCreateModel(item: TCreate): Observable<TCreate> {
+        return this._http.post<TCreate>('/api/' + this._controller + '/saveCreateModel', item);
     }
 
-    public async getEditModelAsync(id: TKey): Promise<TEdit> {
-        return await this._http.get<TEdit>('api/' + this._controller + '/getEditModel?id=' + id).toPromise();
+    getEditModel(id: TKey): Observable<TEdit> {
+        return this._http.get<TEdit>('api/' + this._controller + '/getEditModel?id=' + id);
     }
 
-    public async saveEditModelAsync(item: TEdit): Promise<TEdit> {
-        return await this._http.post<TEdit>('/api/' + this._controller + '/saveEditModel', item).toPromise();
+    saveEditModel(item: TEdit): Observable<TEdit> {
+        return this._http.post<TEdit>('/api/' + this._controller + '/saveEditModel', item);
     }
 
-    public async deleteAsync(id: TKey) {
-        await this._http.delete('api/' + this._controller + '/delete?id=' + id).toPromise();
+    delete(id: TKey): Observable<object> {
+        return this._http.delete('api/' + this._controller + '/delete?id=' + id);
     }
 
-    public async deleteManyAsync(ids: TKey[]) {
-        await this._http.delete('api/' + this._controller + '/deleteMany', { params: StaticMethods.ArrayToHttpParams('ids', ids) }).toPromise();
+    deleteMany(ids: TKey[]): Observable<object> {
+        return this._http.delete('api/' + this._controller + '/deleteMany', { params: StaticMethods.ArrayToHttpParams('ids', ids) });
     }
 
-    public async getFilterModelAsync(): Promise<TFilter> {
-        return await this._http.get<TFilter>('api/' + this._controller + '/getFilterModel').toPromise();
+    getFilterModel(): Observable<TFilter> {
+        return this._http.get<TFilter>('api/' + this._controller + '/getFilterModel');
     }
 
-    public async getExcelExportAsync(orderBy: string, filter: TFilter): Promise<Blob> {
-        return await this._http.get<Blob>('api/' + this._controller + '/getExcelExport?orderBy=' + orderBy, { responseType: 'blob' as 'json', params: StaticMethods.ObjectToHttpParams('filter', filter) }).toPromise();        
+    getExcelExport(orderBy: string, filter: TFilter): Observable<Blob> {
+        return this._http.get<Blob>('api/' + this._controller + '/getExcelExport?orderBy=' + orderBy, { responseType: 'blob' as 'json', params: StaticMethods.ObjectToHttpParams('filter', filter) });
     }
 
-    public async getImportTemplateAsync(): Promise<Blob> {
-        return await this._http.get<Blob>('api/' + this._controller + '/getImportTemplate', { responseType: 'blob' as 'json' }).toPromise();
+    getImportTemplate(): Observable<Blob> {
+        return this._http.get<Blob>('api/' + this._controller + '/getImportTemplate', { responseType: 'blob' as 'json' });
     }
 
-    public async resetPasswordAsync(id: TKey, newPassword: string) {
+    resetPassword(id: TKey, newPassword: string): Observable<object> {
         let formData = new FormData();
         formData.append("newPassword", newPassword);
-        return await this._http.post('/api/' + this._controller + '/ResetPassword?id=' + id, formData).toPromise();
+        return this._http.post('/api/' + this._controller + '/ResetPassword?id=' + id, formData);
     }
 
-    public async importAsync(file: File) {
+    import(file: File): Observable<object> {
         let formData = new FormData();
         formData.append("file", file);
-        return await this._http.post('/api/' + this._controller + '/import', formData).toPromise();
+        return this._http.post('/api/' + this._controller + '/import', formData);
     }
 }
