@@ -37,6 +37,8 @@ namespace CoreLibrary
         protected readonly IHttpContextAccessor _httpContext;
         protected CancellationToken _cancellationToken;
 
+        public virtual CancellationToken CancellationToken { get => _cancellationToken; set { _cancellationToken = value; _repository.CancellationToken = value; } }
+
         public BaseService(IRepository<TEntity, TKey> repository, IMapper mapper, IStringLocalizer localizer, IHttpContextAccessor httpContext)
         {
             _repository = repository;

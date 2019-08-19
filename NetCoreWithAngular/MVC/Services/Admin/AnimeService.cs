@@ -7,6 +7,7 @@ using Microsoft.Extensions.Localization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Http;
 using System.Linq;
+using System.Threading;
 
 namespace NetCoreWithAngular.Services
 {
@@ -18,6 +19,8 @@ namespace NetCoreWithAngular.Services
         {
             _fileService = fileService;
         }
+
+        public override CancellationToken CancellationToken { get => base.CancellationToken; set { base.CancellationToken = value; _fileService.CancellationToken = value; } }
 
         public override async Task<AnimeViewModel> SaveCreateModelAsync(AnimeViewModel createView)
         {

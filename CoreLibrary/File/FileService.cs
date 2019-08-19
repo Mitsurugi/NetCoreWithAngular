@@ -17,6 +17,8 @@ namespace CoreLibrary
 
         protected CancellationToken _cancellationToken;
 
+        public virtual CancellationToken CancellationToken { get => _cancellationToken; set { _cancellationToken = value; _repository.CancellationToken = value; } }
+
         public FileService(IRepository<TFile, TKey> repository, IMapper mapper, IHttpContextAccessor httpContext)
         {
             _repository = repository;

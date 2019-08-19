@@ -4,9 +4,8 @@ using System.Collections.Generic;
 
 namespace NetCoreWithAngular.Services
 {
-    public interface IFrontDataService
+    public interface IAnimeService
     {
-        Task<List<FrontDataViewModel>> GetAllBooksAsync();
-        Task<List<FrontDataViewModel>> GetAllAnimeAsync();
+        Task MoveAsync(int id, int newPosition);
     }
 }

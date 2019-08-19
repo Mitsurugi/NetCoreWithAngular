@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.Threading;
 using System.IO;
 using Microsoft.AspNetCore.Identity;
 
@@ -22,6 +23,7 @@ namespace CoreLibrary.Identity
         where TGrid : class, IUserViewModel<TKey>, new()
         where TFilter: class, new()
     {
+        CancellationToken CancellationToken { get; set; }
         IQueryable<TEntity> GetQuery();
         Task<TEntity> GetByIdAsync(TKey id);
         Task<TCreate> SaveCreateModelAsync(TCreate create);

@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.Threading;
 using System.IO;
 
 namespace CoreLibrary
@@ -19,6 +20,7 @@ namespace CoreLibrary
         where TGrid : class, IEntity<TKey>, new()
         where TFilter: class, new()
     {
+        CancellationToken CancellationToken { get; set; }
         IQueryable<TEntity> GetQueryNoTracking();
         IQueryable<TEntity> GetQueryWithTracking();
         Task<TCreate> SaveCreateModelAsync(TCreate create);

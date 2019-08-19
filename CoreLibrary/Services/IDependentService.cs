@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.Threading;
 using System.IO;
 
 namespace CoreLibrary
@@ -23,6 +24,7 @@ namespace CoreLibrary
         where TParentEntity: class, IEntity<TParentKey>, new()
         where TParentView : class, IEntity<TParentKey>, new()
     {
+        CancellationToken CancellationToken { get; set; }
         Task<TCreate> SaveCreateModelAsync(TCreate create, TParentKey parentId);
         Task<TEdit> SaveEditModelAsync(TEdit editView, TParentKey parentId);        
 

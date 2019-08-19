@@ -44,6 +44,8 @@ namespace CoreLibrary.Identity
 
         protected CancellationToken _cancellationToken;
 
+        public virtual CancellationToken CancellationToken { get => _cancellationToken; set => _cancellationToken = value; }
+
         public UsersService(IIdentityService<TEntity, TKey> identityService, IMapper mapper, IStringLocalizer localizer, IHttpContextAccessor httpContext)
         {
             _identityService = identityService;
