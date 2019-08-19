@@ -1,10 +1,10 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
+using System;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Http;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace CoreLibrary
 {
@@ -51,7 +51,7 @@ namespace CoreLibrary
             if (entities == null || !entities.Any())
                 throw new ArgumentNullException("entities");
             await _dbSet.AddRangeAsync(entities, CancellationToken);
-        }        
+        }
 
         public virtual async Task<TEntity> UpdateAsync(TEntity entity)
         {

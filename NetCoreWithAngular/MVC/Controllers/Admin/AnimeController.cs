@@ -1,12 +1,12 @@
 ﻿using CoreLibrary;
-using NetCoreWithAngular.Models;
-using NetCoreWithAngular.ViewModels;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.Extensions.Localization;
-using NetCoreWithAngular.Services;
 using Microsoft.AspNetCore.Mvc;
-using System.Threading.Tasks;
+using Microsoft.Extensions.Localization;
+using NetCoreWithAngular.Models;
+using NetCoreWithAngular.Services;
+using NetCoreWithAngular.ViewModels;
 using System;
+using System.Threading.Tasks;
 
 namespace NetCoreWithAngular.Controllers
 {

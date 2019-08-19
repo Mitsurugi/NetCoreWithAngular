@@ -5,7 +5,7 @@ namespace NetCoreWithAngular.Models
 {
     public enum Genre
     {
-        [Display(Name ="Genre.Fantasy")]
+        [Display(Name = "Genre.Fantasy")]
         Fantasy = 1,
         [Display(Name = "Genre.Horror")]
         Horror = 2,

@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace CoreLibrary
+﻿namespace CoreLibrary
 {
     public class HasListAttribute : System.Attribute
     {

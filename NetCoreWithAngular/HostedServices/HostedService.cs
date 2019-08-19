@@ -1,11 +1,11 @@
-﻿using System;
-using System.Threading.Tasks;
-using System.Threading;
-using Microsoft.Extensions.Hosting;
-using CoreLibrary;
-using NetCoreWithAngular.Models;
+﻿using CoreLibrary;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using NetCoreWithAngular.Models;
+using System;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace NetCoreWithAngular.HostedServices
 {
@@ -44,7 +44,7 @@ namespace NetCoreWithAngular.HostedServices
 
                 await Task.WhenAll(t1, t2);
             }
-            catch { }            
+            catch { }
         }
 
         private async Task CreateBooks(CancellationToken cancellationToken)

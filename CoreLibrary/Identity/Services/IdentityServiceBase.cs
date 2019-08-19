@@ -1,18 +1,18 @@
-﻿using System;
-using System.Text;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Security.Claims;
-using Microsoft.AspNetCore.Identity;
-using System.IdentityModel.Tokens.Jwt;
-using Microsoft.IdentityModel.Tokens;
+﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Localization;
+using Microsoft.IdentityModel.Tokens;
+using System;
+using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
+using System.Security.Claims;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace CoreLibrary.Identity
 {
     public class IdentityServiceBase<TIdentityUser, TKey> : IIdentityService<TIdentityUser, TKey>
-        where TKey: System.IEquatable<TKey>
+        where TKey : System.IEquatable<TKey>
         where TIdentityUser : IdentityUser<TKey>, IUser<TKey>
     {
         protected readonly UserManager<TIdentityUser> _userManager;
@@ -48,7 +48,7 @@ namespace CoreLibrary.Identity
             if (roles.Any())
             {
                 string r = "";
-                foreach(var role in roles)
+                foreach (var role in roles)
                 {
                     r += $"{role}, ";
                 }
@@ -101,7 +101,7 @@ namespace CoreLibrary.Identity
             if (!identityResult.Succeeded)
             {
                 string errorText = "";
-                foreach(var error in identityResult.Errors)
+                foreach (var error in identityResult.Errors)
                 {
                     errorText = string.IsNullOrEmpty(errorText) ? error.Description : $"; {error.Description}";
                 }
@@ -112,13 +112,13 @@ namespace CoreLibrary.Identity
 
         public virtual async Task<TIdentityUser> FindUserByIdAsync(TKey userId)
         {
-            return await _userManager.FindByIdAsync(userId.ToString());            
+            return await _userManager.FindByIdAsync(userId.ToString());
         }
 
         public virtual async Task<TIdentityUser> FindUserByNameAsync(string userName)
         {
             return await _userManager.FindByNameAsync(userName);
-        }        
+        }
 
         public virtual async Task ChangePasswordAsync(TKey userId, string currentPassword, string newPassword)
         {
@@ -274,7 +274,7 @@ namespace CoreLibrary.Identity
             var user = await FindUserByIdAsync(userId);
 
             return await _userManager.GetRolesAsync(user);
-        }        
+        }
 
         public virtual async Task<bool> IsUserInRoleAsync(TKey userId, string roleName)
         {

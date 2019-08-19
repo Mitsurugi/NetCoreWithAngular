@@ -1,8 +1,8 @@
 ﻿using CoreLibrary;
-using NetCoreWithAngular.Models;
-using NetCoreWithAngular.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.Localization;
+using NetCoreWithAngular.Models;
+using NetCoreWithAngular.ViewModels;
 
 namespace NetCoreWithAngular.Controllers
 {

@@ -1,11 +1,11 @@
-﻿using NetCoreWithAngular.ViewModels;
+﻿using System.Threading;
 using System.Threading.Tasks;
-using System.Collections.Generic;
 
 namespace NetCoreWithAngular.Services
 {
     public interface IAnimeService
     {
+        CancellationToken CancellationToken { get; set; }
         Task MoveAsync(int id, int newPosition);
     }
 }

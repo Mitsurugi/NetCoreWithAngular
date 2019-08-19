@@ -1,13 +1,13 @@
-﻿using NetCoreWithAngular.Models;
-using NetCoreWithAngular.ViewModels;
-using CoreLibrary;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
-using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore;
-using System.Threading;
+using CoreLibrary;
 using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
+using NetCoreWithAngular.Models;
+using NetCoreWithAngular.ViewModels;
+using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace NetCoreWithAngular.Services
 {

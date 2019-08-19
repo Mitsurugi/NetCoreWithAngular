@@ -12,7 +12,7 @@ namespace NetCoreWithAngular.Models
         public int ParentId { get; set; }
 
         public string Title { get; set; }
-        
+
         public Anime Anime { get; set; }
     }
 }

@@ -1,9 +1,9 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Localization;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Localization;
 
 namespace CoreLibrary
 {
@@ -50,7 +50,7 @@ namespace CoreLibrary
             catch (Exception ex)
             {
                 return BadRequest(ex.GetFullMessage());
-            }            
+            }
         }
 
         [HttpGet]
@@ -77,7 +77,7 @@ namespace CoreLibrary
             catch (Exception ex)
             {
                 return BadRequest(ex.GetFullMessage());
-            }            
+            }
         }
 
         [HttpPost]
@@ -86,8 +86,8 @@ namespace CoreLibrary
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
-            }   
-            
+            }
+
             try
             {
                 create = await _service.SaveCreateModelAsync(create);
@@ -109,7 +109,7 @@ namespace CoreLibrary
             catch (Exception ex)
             {
                 return BadRequest(ex.GetFullMessage());
-            }            
+            }
         }
 
         [HttpPost]
@@ -170,7 +170,7 @@ namespace CoreLibrary
             catch (Exception ex)
             {
                 return BadRequest(ex.GetFullMessage());
-            }            
+            }
         }
 
         [HttpGet]
@@ -184,7 +184,7 @@ namespace CoreLibrary
             catch (Exception ex)
             {
                 return BadRequest(ex.GetFullMessage());
-            }            
+            }
         }
 
         [HttpGet]
@@ -207,7 +207,7 @@ namespace CoreLibrary
             if (file == null)
                 return BadRequest(_localizer["FileNull"]);
             try
-            {                
+            {
                 await _service.ImportAsync(file.OpenReadStream());
             }
             catch (Exception ex)

@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using Microsoft.Extensions.Localization;
+using System.Collections.Generic;
 using System.Globalization;
-using Microsoft.Extensions.Localization;
 using System.Linq;
 
 namespace CoreLibrary.Localization
@@ -8,7 +8,7 @@ namespace CoreLibrary.Localization
     public class CoreLibraryStringLocalizer : IStringLocalizer
     {
         private CultureInfo _currentCulture { get; set; }
-        protected Dictionary<string, Dictionary<string,string>> _strings { get; set; }
+        protected Dictionary<string, Dictionary<string, string>> _strings { get; set; }
 
         public CoreLibraryStringLocalizer() : this(CultureInfo.CurrentUICulture)
         {
@@ -22,7 +22,8 @@ namespace CoreLibrary.Localization
             AddOrUpdateStrings();
         }
 
-        public LocalizedString this[string name] {
+        public LocalizedString this[string name]
+        {
             get
             {
                 if (!_strings.ContainsKey(_currentCulture.Name))
@@ -38,7 +39,8 @@ namespace CoreLibrary.Localization
             }
         }
 
-        public LocalizedString this[string name, params object[] arguments] {
+        public LocalizedString this[string name, params object[] arguments]
+        {
             get
             {
                 return new LocalizedString(name, string.Format(this[name].Value, arguments));

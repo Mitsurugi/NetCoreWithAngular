@@ -1,8 +1,8 @@
-﻿using System.Linq;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using System.Threading;
+﻿using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace CoreLibrary
 {
@@ -20,13 +20,13 @@ namespace CoreLibrary
         where TCreate : class, IDependentEntity<TKey, TParentKey>, new()
         where TEdit : class, IDependentEntity<TKey, TParentKey>, new()
         where TGrid : class, IDependentEntity<TKey, TParentKey>, new()
-        where TFilter: class, new()
-        where TParentEntity: class, IEntity<TParentKey>, new()
+        where TFilter : class, new()
+        where TParentEntity : class, IEntity<TParentKey>, new()
         where TParentView : class, IEntity<TParentKey>, new()
     {
         CancellationToken CancellationToken { get; set; }
         Task<TCreate> SaveCreateModelAsync(TCreate create, TParentKey parentId);
-        Task<TEdit> SaveEditModelAsync(TEdit editView, TParentKey parentId);        
+        Task<TEdit> SaveEditModelAsync(TEdit editView, TParentKey parentId);
 
         IQueryable<TEntity> GetQueryNoTracking(TParentKey parentId);
         IQueryable<TEntity> GetQueryWithTracking(TParentKey parentId);

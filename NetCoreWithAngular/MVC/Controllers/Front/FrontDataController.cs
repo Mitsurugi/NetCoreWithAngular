@@ -1,11 +1,11 @@
-﻿using System.Threading.Tasks;
-using System.Collections.Generic;
-using NetCoreWithAngular.ViewModels;
+﻿using Microsoft.AspNetCore.Mvc;
 using NetCoreWithAngular.Services;
-using Microsoft.AspNetCore.Mvc;
+using NetCoreWithAngular.ViewModels;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace NetCoreWithAngular.Controllers
-{    
+{
     [ApiController]
     [Route("api/[controller]/[action]")]
     public class FrontDataController : Controller

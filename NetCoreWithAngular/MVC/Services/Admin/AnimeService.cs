@@ -1,13 +1,13 @@
-﻿using NetCoreWithAngular.Models;
-using NetCoreWithAngular.ViewModels;
+﻿using AutoMapper;
 using CoreLibrary;
-using System.Threading.Tasks;
-using AutoMapper;
-using Microsoft.Extensions.Localization;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Localization;
+using NetCoreWithAngular.Models;
+using NetCoreWithAngular.ViewModels;
 using System.Linq;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace NetCoreWithAngular.Services
 {
@@ -33,7 +33,7 @@ namespace NetCoreWithAngular.Services
 
             return await base.SaveCreateModelAsync(createView);
         }
-        
+
         public override async Task DeleteAsync(int id)
         {
             var delete = await GetQueryNoTracking().SingleAsync(i => i.Id == id, _cancellationToken);
@@ -49,14 +49,14 @@ namespace NetCoreWithAngular.Services
         {
             bool needFix = false;
             var items = await GetQueryNoTracking().OrderBy(i => i.Position).ToListAsync(_cancellationToken);
-            for (int i = 0; i < items.Count -1; i++)
+            for (int i = 0; i < items.Count - 1; i++)
             {
                 if (items[i + 1].Position - items[i].Position != 1) needFix = true;
             }
             if (needFix)
             {
                 int position = 0;
-                foreach(var item in items)
+                foreach (var item in items)
                 {
                     item.Position = position;
                     await _repository.UpdateAsync(item);
@@ -72,7 +72,8 @@ namespace NetCoreWithAngular.Services
             if (newPosition > field.Position)
             {
                 await _repository.UpdateAsync(f => f.Position > field.Position && f.Position <= newPosition, f => f.Position = f.Position - 1);
-            } else
+            }
+            else
             {
                 await _repository.UpdateAsync(f => f.Position < field.Position && f.Position >= newPosition, f => f.Position = f.Position + 1);
             }

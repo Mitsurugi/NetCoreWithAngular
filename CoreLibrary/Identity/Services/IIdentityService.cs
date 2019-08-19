@@ -1,14 +1,14 @@
-﻿using System.Collections.Generic;
+﻿using Microsoft.AspNetCore.Identity;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Identity;
 
 namespace CoreLibrary.Identity
 {
     public interface IIdentityService<TIdentityUser, TKey>
-        where TKey: System.IEquatable<TKey>
+        where TKey : System.IEquatable<TKey>
         where TIdentityUser : IdentityUser<TKey>, IUser<TKey>
-    {        
+    {
         //Auth
 
         Task SignOutAsync();
@@ -18,14 +18,14 @@ namespace CoreLibrary.Identity
 
         //Users
 
-        IQueryable<TIdentityUser> GetUsersQuery();        
-        Task CreateUserAsync(TIdentityUser user, string password);        
+        IQueryable<TIdentityUser> GetUsersQuery();
+        Task CreateUserAsync(TIdentityUser user, string password);
         Task<TIdentityUser> FindUserByIdAsync(TKey userId);
-        Task<TIdentityUser> FindUserByNameAsync(string userName);        
+        Task<TIdentityUser> FindUserByNameAsync(string userName);
         Task ChangePasswordAsync(TKey userId, string currentPassword, string newPassword);
         Task<string> GeneratePasswordResetTokenAsync(TKey userId);
         Task ResetPasswordWithTokenAsync(TKey userId, string token, string newPassword);
-        Task ResetPasswordAsync(TKey userId, string newPassword);        
+        Task ResetPasswordAsync(TKey userId, string newPassword);
         Task DeleteUserAsync(TKey userId);
         Task EditUserAsync(TIdentityUser user);
 

@@ -1,13 +1,13 @@
-﻿using System.Collections.Generic;
-using CoreLibrary;
-using NetCoreWithAngular.Models;
+﻿using CoreLibrary;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using NetCoreWithAngular.Models;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace NetCoreWithAngular.ViewModels
 {
     public class BookViewModel : IEntity<int>
-    {        
+    {
         [ImportIgnore]
         public int Id { get; set; }
 
@@ -20,12 +20,12 @@ namespace NetCoreWithAngular.ViewModels
 
         [Display(Name = "BookPageCount")]
         public int? PageCount { get; set; }
-        
+
         [Display(Name = "BookGenre")]
         [HasList("GenreList")]
         public Genre? Genre { get; set; }
 
         [ImportIgnore]
-        public List<SelectListItem> GenreList { get; set; }        
+        public List<SelectListItem> GenreList { get; set; }
     }
 }

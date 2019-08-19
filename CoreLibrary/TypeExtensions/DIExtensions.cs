@@ -1,5 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using CoreLibrary.Identity;
+﻿using CoreLibrary.Identity;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace CoreLibrary
 {
@@ -10,11 +10,11 @@ namespace CoreLibrary
             services.AddScoped(typeof(IFileService<,>), typeof(FileService<,>));
 
             services.AddScoped(typeof(IUsersService<,,>), typeof(UsersService<,,>));
-            services.AddScoped(typeof(IUsersService<,,,,,>), typeof(UsersService<,,,,,>));            
+            services.AddScoped(typeof(IUsersService<,,,,,>), typeof(UsersService<,,,,,>));
 
             services.AddScoped(typeof(IBaseService<,,,,,>), typeof(BaseService<,,,,,>));
             services.AddScoped(typeof(IBaseService<,,>), typeof(BaseService<,,>));
-            
+
             services.AddScoped(typeof(IDependentService<,,,,,,,,>), typeof(DependentService<,,,,,,,,>));
             services.AddScoped(typeof(IDependentService<,,,,,>), typeof(DependentService<,,,,,>));
 

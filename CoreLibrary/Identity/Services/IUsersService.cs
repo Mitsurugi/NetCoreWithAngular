@@ -1,9 +1,9 @@
-﻿using System.Linq;
+﻿using Microsoft.AspNetCore.Identity;
 using System.Collections.Generic;
-using System.Threading.Tasks;
-using System.Threading;
 using System.IO;
-using Microsoft.AspNetCore.Identity;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace CoreLibrary.Identity
 {
@@ -21,13 +21,13 @@ namespace CoreLibrary.Identity
         where TCreate : class, IUserViewModel<TKey>, new()
         where TEdit : class, IUserViewModel<TKey>, new()
         where TGrid : class, IUserViewModel<TKey>, new()
-        where TFilter: class, new()
+        where TFilter : class, new()
     {
         CancellationToken CancellationToken { get; set; }
         IQueryable<TEntity> GetQuery();
         Task<TEntity> GetByIdAsync(TKey id);
         Task<TCreate> SaveCreateModelAsync(TCreate create);
-        Task<TCreate> GetCreateModelAsync();        
+        Task<TCreate> GetCreateModelAsync();
         Task<TEdit> SaveEditModelAsync(TEdit editView);
         Task<TEdit> GetEditModelAsync(TKey id);
         Task DeleteAsync(TKey id);

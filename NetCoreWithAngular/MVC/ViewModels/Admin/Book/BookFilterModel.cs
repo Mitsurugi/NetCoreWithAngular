@@ -1,6 +1,6 @@
-﻿using NetCoreWithAngular.Models;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using NetCoreWithAngular.Models;
 using System.Collections.Generic;
-using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace NetCoreWithAngular.ViewModels
 {

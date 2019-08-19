@@ -1,9 +1,5 @@
-﻿using CoreLibrary;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using CoreLibrary.Identity;
 using Microsoft.AspNetCore.Identity;
-using CoreLibrary.Identity;
-using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace NetCoreWithAngular.Models
 {

@@ -1,28 +1,26 @@
-﻿using System.Text;
-using System.Security.Claims;
+﻿using AutoMapper;
+using CoreLibrary;
+using CoreLibrary.Identity;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Localization;
+using Microsoft.AspNetCore.SpaServices.Webpack;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Localization;
 using Microsoft.IdentityModel.Tokens;
 using NetCoreWithAngular.DataAccess;
-using NetCoreWithAngular.Models;
-using NetCoreWithAngular.ViewModels;
-using NetCoreWithAngular.Services;
-using Microsoft.AspNetCore.SpaServices.Webpack;
-using CoreLibrary;
-using CoreLibrary.Identity;
-using CoreLibrary.Localization;
-using AutoMapper;
-using Microsoft.AspNetCore.Localization;
-using System.Globalization;
-using System.Collections.Generic;
-using Microsoft.Extensions.Localization;
 using NetCoreWithAngular.HostedServices;
+using NetCoreWithAngular.Models;
+using NetCoreWithAngular.Services;
+using NetCoreWithAngular.ViewModels;
+using System.Collections.Generic;
+using System.Globalization;
+using System.Security.Claims;
+using System.Text;
 
 namespace NetCoreWithAngular
 {
@@ -44,7 +42,7 @@ namespace NetCoreWithAngular
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
             });
 
-            services.AddIdentity<User, IdentityRole<System.Guid>>(options => 
+            services.AddIdentity<User, IdentityRole<System.Guid>>(options =>
             {
                 options.Password.RequireDigit = false; options.Password.RequiredLength = 1; options.Password.RequiredUniqueChars = 1; options.Password.RequireLowercase = false; options.Password.RequireNonAlphanumeric = false; options.Password.RequireUppercase = false;
             }).AddEntityFrameworkStores<ExampleContext>().AddDefaultTokenProviders();
@@ -52,7 +50,8 @@ namespace NetCoreWithAngular
             services.AddMvc();
             services.AddAutoMapper(typeof(MappingProfile));
 
-            services.AddAuthentication(options => {
+            services.AddAuthentication(options =>
+            {
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
                 options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
                 options.DefaultForbidScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -85,7 +84,7 @@ namespace NetCoreWithAngular
             //Custom Services
             services.AddScoped(typeof(IRepository<,>), typeof(ExampleRepository<,>));
             services.AddScoped<IIdentityService<User, System.Guid>, IdentityService>();
-            services.RegisterBaseServices();            
+            services.RegisterBaseServices();
 
             services.AddScoped<IBaseService<Book, int, BookGridModel, BookViewModel, BookViewModel, BookFilterModel>, BookService>();
             services.AddScoped<IBaseService<Anime, int, AnimeViewModel>, AnimeService>();

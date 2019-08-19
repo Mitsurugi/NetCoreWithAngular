@@ -1,5 +1,4 @@
-﻿using CoreLibrary;
-using AutoMapper;
+﻿using AutoMapper;
 using NetCoreWithAngular.Models;
 using NetCoreWithAngular.ViewModels;
 

@@ -1,13 +1,13 @@
-﻿using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
-using AutoMapper;
+﻿using AutoMapper;
 using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace CoreLibrary
 {
     public class FileService<TFile, TKey> : IFileService<TFile, TKey>
-        where TFile: FileModel<TKey>, new()
+        where TFile : FileModel<TKey>, new()
     {
         protected readonly IRepository<TFile, TKey> _repository;
 
@@ -36,7 +36,7 @@ namespace CoreLibrary
         {
             await _repository.DeleteAsync(id);
             await _repository.SaveChangesAsync();
-        }        
+        }
 
         public virtual async Task<TFile> UploadAsync(IFormFile file)
         {

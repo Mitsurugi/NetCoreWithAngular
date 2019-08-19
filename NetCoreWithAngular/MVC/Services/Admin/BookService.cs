@@ -1,12 +1,12 @@
-﻿using NetCoreWithAngular.Models;
-using NetCoreWithAngular.ViewModels;
+﻿using AutoMapper;
 using CoreLibrary;
-using System.Threading.Tasks;
-using AutoMapper;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Localization;
+using NetCoreWithAngular.Models;
+using NetCoreWithAngular.ViewModels;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.Extensions.Localization;
-using Microsoft.AspNetCore.Http;
+using System.Threading.Tasks;
 
 namespace NetCoreWithAngular.Services
 {
@@ -47,5 +47,5 @@ namespace NetCoreWithAngular.Services
             model.ForEach(i => i.GenreName = _localizer[$"{i.Genre.GetType().Name}.{i.Genre}"]);
             return model;
         }
-    }    
+    }
 }

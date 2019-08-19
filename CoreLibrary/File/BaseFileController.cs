@@ -1,15 +1,14 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Localization;
-using Microsoft.AspNetCore.Authorization;
+using System;
+using System.Threading.Tasks;
 
 namespace CoreLibrary
-{    
+{
     [Route("api/[controller]/[action]")]
     public class BaseFileController<TFile, TKey> : Controller
-        where TFile: FileModel<TKey>, new()
+        where TFile : FileModel<TKey>, new()
     {
         protected readonly IFileService<TFile, TKey> _service;
         protected readonly IStringLocalizer _localizer;
@@ -55,14 +54,14 @@ namespace CoreLibrary
             if (file == null)
                 return BadRequest(_localizer["FileNull"]);
             try
-            {                
+            {
                 var entity = await _service.UploadAsync(file);
                 return Ok(entity.Id);
             }
             catch (Exception ex)
             {
                 return BadRequest(ex.GetFullMessage());
-            }            
+            }
         }
     }
 }

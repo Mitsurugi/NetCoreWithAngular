@@ -1,10 +1,10 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Localization;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.Extensions.Localization;
 
 namespace CoreLibrary.Identity
 {
@@ -23,7 +23,7 @@ namespace CoreLibrary.Identity
     [ApiController]
     [Route("api/[controller]/[action]")]
     public class UsersBaseController<TEntity, TKey, TGrid, TCreate, TEdit, TFilter> : Controller
-        where TKey: System.IEquatable<TKey>
+        where TKey : System.IEquatable<TKey>
         where TEntity : IdentityUser<TKey>, IUser<TKey>
         where TCreate : class, IUserViewModel<TKey>, new()
         where TEdit : class, IUserViewModel<TKey>, new()
@@ -39,7 +39,7 @@ namespace CoreLibrary.Identity
         {
             _service = service;
             _localizer = localizer;
-            _pageSize = 10;            
+            _pageSize = 10;
         }
 
         [HttpGet]
@@ -53,7 +53,7 @@ namespace CoreLibrary.Identity
             catch (Exception ex)
             {
                 return BadRequest(ex.GetFullMessage());
-            }            
+            }
         }
 
         [HttpGet]
@@ -80,7 +80,7 @@ namespace CoreLibrary.Identity
             catch (Exception ex)
             {
                 return BadRequest(ex.GetFullMessage());
-            }            
+            }
         }
 
         [HttpPost]
@@ -92,8 +92,8 @@ namespace CoreLibrary.Identity
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
-            }   
-            
+            }
+
             try
             {
                 create = await _service.SaveCreateModelAsync(create);
@@ -115,7 +115,7 @@ namespace CoreLibrary.Identity
             catch (Exception ex)
             {
                 return BadRequest(ex.GetFullMessage());
-            }            
+            }
         }
 
         [HttpPost]
@@ -176,7 +176,7 @@ namespace CoreLibrary.Identity
             catch (Exception ex)
             {
                 return BadRequest(ex.GetFullMessage());
-            }            
+            }
         }
 
         [HttpGet]
@@ -190,7 +190,7 @@ namespace CoreLibrary.Identity
             catch (Exception ex)
             {
                 return BadRequest(ex.GetFullMessage());
-            }            
+            }
         }
 
         [HttpGet]
@@ -213,7 +213,7 @@ namespace CoreLibrary.Identity
             if (file == null)
                 return BadRequest(_localizer["FileNull"]);
             try
-            {                
+            {
                 await _service.ImportAsync(file.OpenReadStream());
             }
             catch (Exception ex)

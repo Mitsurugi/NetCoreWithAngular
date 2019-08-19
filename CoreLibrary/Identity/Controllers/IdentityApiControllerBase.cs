@@ -1,8 +1,8 @@
-﻿using System;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Threading.Tasks;
 
 namespace CoreLibrary.Identity
 {
@@ -17,7 +17,7 @@ namespace CoreLibrary.Identity
         public IdentityApiControllerBase(IIdentityService<TIdentityUser, TKey> service)
         {
             _service = service;
-        }        
+        }
 
         [HttpPost]
         public virtual async Task<IActionResult> TokenRequest(LoginModel model)
@@ -58,6 +58,6 @@ namespace CoreLibrary.Identity
             {
                 return BadRequest(ex.GetFullMessage());
             }
-        }       
+        }
     }
 }
