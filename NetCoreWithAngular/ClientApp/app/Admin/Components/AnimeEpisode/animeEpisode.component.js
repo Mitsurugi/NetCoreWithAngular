@@ -21,15 +21,16 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 import { Component } from '@angular/core';
-import { DependentComponent } from '../../../../Core/Components/dependent.component';
+import { DependentComponent } from '../../../Core/Components/dependent.component';
 import { AnimeEpisodeService } from '../../Services/animeEpisode.service';
 import { ActivatedRoute } from "@angular/router";
 import { LocalizerService } from '../../../Localizer/localizer.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatDialog } from '@angular/material/dialog';
 var AnimeEpisodeComponent = /** @class */ (function (_super) {
     __extends(AnimeEpisodeComponent, _super);
-    function AnimeEpisodeComponent(service, localizer, route, snackBar) {
-        return _super.call(this, service, localizer, snackBar, route) || this;
+    function AnimeEpisodeComponent(service, localizer, route, snackBar, dialog) {
+        return _super.call(this, service, localizer, snackBar, dialog, route) || this;
     }
     AnimeEpisodeComponent = __decorate([
         Component({
@@ -38,7 +39,7 @@ var AnimeEpisodeComponent = /** @class */ (function (_super) {
             styleUrls: ['./animeEpisode.component.css'],
             providers: [AnimeEpisodeService]
         }),
-        __metadata("design:paramtypes", [AnimeEpisodeService, LocalizerService, ActivatedRoute, MatSnackBar])
+        __metadata("design:paramtypes", [AnimeEpisodeService, LocalizerService, ActivatedRoute, MatSnackBar, MatDialog])
     ], AnimeEpisodeComponent);
     return AnimeEpisodeComponent;
 }(DependentComponent));

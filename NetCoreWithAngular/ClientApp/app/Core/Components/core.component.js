@@ -8,13 +8,16 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 import { Component } from '@angular/core';
-import { UsersService } from './users.service';
+import { CoreService } from '../Services/core.service';
+import { saveAs } from 'file-saver';
 import { CoreLocalizerService } from '../Localization/coreLocalizer.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { finalize, takeUntil } from 'rxjs/operators';
 import { Subject } from "rxjs";
-var UsersBaseComponent = /** @class */ (function () {
-    function UsersBaseComponent(service, localizer, snackBar) {
+import { MatDialog } from '@angular/material/dialog';
+import { YesNoComponent } from '../Components/YesNoDialog/yesNo.component';
+var CoreComponent = /** @class */ (function () {
+    function CoreComponent(service, localizer, snackBar, dialog) {
         this._destroyed = new Subject();
         this.currentPage = 1;
         this.totalPages = 1;
@@ -23,13 +26,13 @@ var UsersBaseComponent = /** @class */ (function () {
         this.showEditId = null;
         this.checkedItems = [];
         this.importFile = null;
-        this.orderBy = 'UserName';
-        this.resetPasswordId = null;
+        this.orderBy = 'Id_desc';
         this._service = service;
         this._localizer = localizer;
         this._snackBar = snackBar;
+        this._dialog = dialog;
     }
-    UsersBaseComponent.prototype.getCreateModel = function () {
+    CoreComponent.prototype.getCreateModel = function () {
         var _this = this;
         var popup = this._snackBar.open(this._localizer.localize("Loading"));
         this._service.getCreateModel().pipe(finalize(function () { if (popup)
@@ -42,7 +45,7 @@ var UsersBaseComponent = /** @class */ (function () {
             }
         });
     };
-    UsersBaseComponent.prototype.getEditModel = function (id) {
+    CoreComponent.prototype.getEditModel = function (id) {
         var _this = this;
         var popup = this._snackBar.open(this._localizer.localize("Loading"));
         this._service.getEditModel(id).pipe(finalize(function () { if (popup)
@@ -55,7 +58,7 @@ var UsersBaseComponent = /** @class */ (function () {
             }
         });
     };
-    UsersBaseComponent.prototype.ngOnInit = function () {
+    CoreComponent.prototype.ngOnInit = function () {
         var _this = this;
         var popup = this._snackBar.open(this._localizer.localize("Loading"));
         this._service.getFilterModel().pipe(finalize(function () { if (popup)
@@ -69,11 +72,10 @@ var UsersBaseComponent = /** @class */ (function () {
             }
         });
     };
-    UsersBaseComponent.prototype.reloadGrid = function () {
+    CoreComponent.prototype.reloadGrid = function () {
         var _this = this;
         var popup = this._snackBar.open(this._localizer.localize("Loading"));
         this.showEditId = null;
-        this.resetPasswordId = null;
         this._service.getPagesCount(this.pageSize, this.filter).pipe(finalize(function () { if (popup)
             popup.dismiss(); }), takeUntil(this._destroyed)).subscribe(function (data) {
             _this.totalPages = data;
@@ -96,7 +98,7 @@ var UsersBaseComponent = /** @class */ (function () {
             }
         });
     };
-    UsersBaseComponent.prototype.clearFilter = function () {
+    CoreComponent.prototype.clearFilter = function () {
         var _this = this;
         var popup = this._snackBar.open(this._localizer.localize("Loading"));
         this._service.getFilterModel().pipe(finalize(function () { if (popup)
@@ -110,19 +112,19 @@ var UsersBaseComponent = /** @class */ (function () {
             }
         });
     };
-    UsersBaseComponent.prototype.nextPage = function () {
+    CoreComponent.prototype.nextPage = function () {
         if (this.currentPage < this.totalPages) {
             this.currentPage++;
             this.reloadGrid();
         }
     };
-    UsersBaseComponent.prototype.prevPage = function () {
+    CoreComponent.prototype.prevPage = function () {
         if (this.currentPage > 1) {
             this.currentPage--;
             this.reloadGrid();
         }
     };
-    UsersBaseComponent.prototype.toggleCreate = function () {
+    CoreComponent.prototype.toggleCreate = function () {
         if (this.isShowCreate) {
             this.isShowCreate = false;
         }
@@ -132,7 +134,7 @@ var UsersBaseComponent = /** @class */ (function () {
             this.isShowImport = false;
         }
     };
-    UsersBaseComponent.prototype.toggleImport = function () {
+    CoreComponent.prototype.toggleImport = function () {
         if (this.isShowImport) {
             this.isShowImport = false;
         }
@@ -141,7 +143,7 @@ var UsersBaseComponent = /** @class */ (function () {
             this.isShowCreate = false;
         }
     };
-    UsersBaseComponent.prototype.toggleEdit = function (id) {
+    CoreComponent.prototype.toggleEdit = function (id) {
         if (this.showEditId == id) {
             this.showEditId = null;
         }
@@ -150,33 +152,47 @@ var UsersBaseComponent = /** @class */ (function () {
             this.showEditId = id;
         }
     };
-    UsersBaseComponent.prototype.delete = function (id) {
+    CoreComponent.prototype.delete = function (id) {
         var _this = this;
-        var popup = this._snackBar.open(this._localizer.localize("Loading"));
-        this._service.delete(id).pipe(finalize(function () { if (popup)
-            popup.dismiss(); }), takeUntil(this._destroyed)).subscribe(function (data) {
-            _this.reloadGrid();
-        }, function (e) {
-            console.log(e);
-            if (e.error) {
-                var popup = _this._snackBar.open(_this._localizer.localizeWithValues("Error", e.error));
+        var dialogRef = this._dialog.open(YesNoComponent, {
+            data: this._localizer.localize('DeleteConfirmation')
+        });
+        dialogRef.afterClosed().subscribe(function (result) {
+            if (result) {
+                var popup = _this._snackBar.open(_this._localizer.localize("Loading"));
+                _this._service.delete(id).pipe(finalize(function () { if (popup)
+                    popup.dismiss(); }), takeUntil(_this._destroyed)).subscribe(function (data) {
+                    _this.reloadGrid();
+                }, function (e) {
+                    console.log(e);
+                    if (e.error) {
+                        var popup = _this._snackBar.open(_this._localizer.localizeWithValues("Error", e.error));
+                    }
+                });
             }
         });
     };
-    UsersBaseComponent.prototype.deleteChecked = function () {
+    CoreComponent.prototype.deleteChecked = function () {
         var _this = this;
-        var popup = this._snackBar.open(this._localizer.localize("Loading"));
-        this._service.deleteMany(this.checkedItems).pipe(finalize(function () { if (popup)
-            popup.dismiss(); }), takeUntil(this._destroyed)).subscribe(function (data) {
-            _this.reloadGrid();
-        }, function (e) {
-            console.log(e);
-            if (e.error) {
-                var popup = _this._snackBar.open(_this._localizer.localizeWithValues("Error", e.error));
+        var dialogRef = this._dialog.open(YesNoComponent, {
+            data: this._localizer.localize('DeleteConfirmation')
+        });
+        dialogRef.afterClosed().subscribe(function (result) {
+            if (result) {
+                var popup = _this._snackBar.open(_this._localizer.localize("Loading"));
+                _this._service.deleteMany(_this.checkedItems).pipe(finalize(function () { if (popup)
+                    popup.dismiss(); }), takeUntil(_this._destroyed)).subscribe(function (data) {
+                    _this.reloadGrid();
+                }, function (e) {
+                    console.log(e);
+                    if (e.error) {
+                        var popup = _this._snackBar.open(_this._localizer.localizeWithValues("Error", e.error));
+                    }
+                });
             }
         });
     };
-    UsersBaseComponent.prototype.saveCreateModel = function () {
+    CoreComponent.prototype.saveCreateModel = function () {
         var _this = this;
         var popup = this._snackBar.open(this._localizer.localize("Loading"));
         this._service.saveCreateModel(this.itemCreate).pipe(finalize(function () { if (popup)
@@ -191,7 +207,7 @@ var UsersBaseComponent = /** @class */ (function () {
             }
         });
     };
-    UsersBaseComponent.prototype.saveEditModel = function () {
+    CoreComponent.prototype.saveEditModel = function () {
         var _this = this;
         var popup = this._snackBar.open(this._localizer.localize("Loading"));
         this._service.saveEditModel(this.itemEdit).pipe(finalize(function () { if (popup)
@@ -205,7 +221,7 @@ var UsersBaseComponent = /** @class */ (function () {
             }
         });
     };
-    UsersBaseComponent.prototype.getExcelExport = function () {
+    CoreComponent.prototype.getExcelExport = function () {
         var _this = this;
         var popup = this._snackBar.open(this._localizer.localize("Loading"));
         this._service.getExcelExport(this.orderBy, this.filter).pipe(finalize(function () { if (popup)
@@ -218,7 +234,7 @@ var UsersBaseComponent = /** @class */ (function () {
             }
         });
     };
-    UsersBaseComponent.prototype.getImportTemplate = function () {
+    CoreComponent.prototype.getImportTemplate = function () {
         var _this = this;
         var popup = this._snackBar.open(this._localizer.localize("Loading"));
         this._service.getImportTemplate().pipe(finalize(function () { if (popup)
@@ -231,7 +247,7 @@ var UsersBaseComponent = /** @class */ (function () {
             }
         });
     };
-    UsersBaseComponent.prototype.import = function () {
+    CoreComponent.prototype.import = function () {
         var _this = this;
         if (this.importFile == null) {
             var popup = this._snackBar.open(this._localizer.localize("ImportFileNull"), null, { duration: 5000 });
@@ -250,10 +266,10 @@ var UsersBaseComponent = /** @class */ (function () {
             });
         }
     };
-    UsersBaseComponent.prototype.setImportFile = function (file) {
+    CoreComponent.prototype.setImportFile = function (file) {
         this.importFile = file;
     };
-    UsersBaseComponent.prototype.toggleChecked = function (id) {
+    CoreComponent.prototype.toggleChecked = function (id) {
         var index = this.checkedItems.indexOf(id);
         if (index < 0) {
             this.checkedItems.push(id);
@@ -262,7 +278,7 @@ var UsersBaseComponent = /** @class */ (function () {
             this.checkedItems = this.checkedItems.slice(0, index).concat(this.checkedItems.slice(index + 1, this.checkedItems.length));
         }
     };
-    UsersBaseComponent.prototype.toggleCheckAll = function () {
+    CoreComponent.prototype.toggleCheckAll = function () {
         var _this = this;
         var checked = true;
         this.items.forEach(function (i) {
@@ -285,33 +301,11 @@ var UsersBaseComponent = /** @class */ (function () {
             });
         }
     };
-    UsersBaseComponent.prototype.resetPassword = function (newPassword) {
-        var _this = this;
-        var popup = this._snackBar.open(this._localizer.localize("Loading"));
-        this._service.resetPassword(this.resetPasswordId, newPassword).pipe(finalize(function () { if (popup)
-            popup.dismiss(); }), takeUntil(this._destroyed)).subscribe(function (data) {
-            _this.resetPasswordId = null;
-            var popup = _this._snackBar.open(_this._localizer.localize("PassResetSuccess"), null, { duration: 5000 });
-        }, function (e) {
-            console.log(e);
-            if (e.error) {
-                var popup = _this._snackBar.open(_this._localizer.localizeWithValues("Error", e.error));
-            }
-        });
-    };
-    UsersBaseComponent.prototype.togglePasswordReset = function (id) {
-        if (this.resetPasswordId == id) {
-            this.resetPasswordId = null;
-        }
-        else {
-            this.resetPasswordId = id;
-        }
-    };
-    UsersBaseComponent = __decorate([
+    CoreComponent = __decorate([
         Component({}),
-        __metadata("design:paramtypes", [UsersService, CoreLocalizerService, MatSnackBar])
-    ], UsersBaseComponent);
-    return UsersBaseComponent;
+        __metadata("design:paramtypes", [CoreService, CoreLocalizerService, MatSnackBar, MatDialog])
+    ], CoreComponent);
+    return CoreComponent;
 }());
-export { UsersBaseComponent };
-//# sourceMappingURL=usersBase.component.js.map
+export { CoreComponent };
+//# sourceMappingURL=core.component.js.map

@@ -1,4 +1,4 @@
-﻿import { IDependentEntity } from '../../../../Core/Models/IDependentEntity'
+﻿import { IDependentEntity } from '../../../Core/Models/IDependentEntity'
 
 export class AnimeEpisode implements IDependentEntity<number, number> {
     id?: number;

@@ -1,4 +1,4 @@
-﻿import { SelectListItem } from '../../../../Core/Models/SelectListItem';
+﻿import { SelectListItem } from '../../../Core/Models/SelectListItem';
 
 enum Genre {
     Fantasy = 1,

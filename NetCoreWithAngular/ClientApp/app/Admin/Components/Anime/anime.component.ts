@@ -1,13 +1,14 @@
 ﻿import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { CoreComponent } from '../../../../Core/Components/core.component';
+import { CoreComponent } from '../../../Core/Components/core.component';
 import { AnimeService } from '../../Services/anime.service';
-import { FileService } from '../../../../Core/Services/file.service';
+import { FileService } from '../../../Core/Services/file.service';
 import { Anime } from '../../Models/Anime/anime';
 import { read } from 'fs';
 import { LocalizerService } from '../../../Localizer/localizer.service';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatDialog } from '@angular/material/dialog';
 import { finalize, takeUntil } from 'rxjs/operators';
 
 @Component({
@@ -21,8 +22,8 @@ export class AnimeComponent extends CoreComponent<number, Anime> {
     protected _fileService: FileService<number>;
     protected _animeService: AnimeService;
 
-    constructor(service: AnimeService, localizer: LocalizerService, fileService: FileService<number>, animeService: AnimeService, snackBar: MatSnackBar) {
-        super(service, localizer, snackBar);
+    constructor(service: AnimeService, localizer: LocalizerService, fileService: FileService<number>, animeService: AnimeService, snackBar: MatSnackBar, dialog: MatDialog) {
+        super(service, localizer, snackBar, dialog);
         this._fileService = fileService;
         this._animeService = animeService;
         this.orderBy = "Position";

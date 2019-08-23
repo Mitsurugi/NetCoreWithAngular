@@ -13,7 +13,8 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { MatSnackBarModule, MAT_SNACK_BAR_DEFAULT_OPTIONS } from '@angular/material/snack-bar';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { TokenInterceptor } from '../Core/Account/token.interceptor';
+import { MatDialogModule } from '@angular/material/dialog';
+import { TokenInterceptor } from './Core/Account/token.interceptor';
 import { AppComponent } from './app.component';
 import { NotFoundComponent } from './Front/Components/NonFound/notFound.component';
 import { AdminComponent } from './Admin/Components/AdminMain/admin.component';
@@ -26,9 +27,10 @@ import { AnimeEditComponent } from './Admin/Components/Anime/animeEdit.component
 import { AnimeEpisodeComponent } from './Admin/Components/AnimeEpisode/animeEpisode.component';
 import { FrontComponent } from './Front/Components/Front/front.component';
 import { UsersComponent } from './Admin/Components/User/users.component';
-import { LanguageInterceptor } from '../Core/Localization/language.interceptor';
+import { LanguageInterceptor } from './Core/Localization/language.interceptor';
 import { LanguageComponent } from './Localizer/Component/language.component';
 import { LoginComponent } from './Admin/Components/Login/login.component';
+import { YesNoComponent } from './Core/Components/YesNoDialog/yesNo.component';
 var adminRoutes = [
     { path: '', component: UsersComponent },
     { path: 'account', component: AccountComponent },
@@ -55,14 +57,15 @@ var AppModule = /** @class */ (function () {
     }
     AppModule = __decorate([
         NgModule({
-            imports: [BrowserModule, FormsModule, HttpClientModule, RouterModule.forRoot(appRoutes), DragDropModule, MatSnackBarModule, BrowserAnimationsModule],
-            declarations: [AppComponent, NotFoundComponent, LoginComponent, AdminComponent, AccountComponent, MenuComponent, AnimeComponent, AnimeEditComponent, BookComponent, BookEditComponent, FrontComponent, AnimeEpisodeComponent, UsersComponent, LanguageComponent],
+            bootstrap: [AppComponent],
+            imports: [BrowserModule, FormsModule, HttpClientModule, RouterModule.forRoot(appRoutes), DragDropModule, MatSnackBarModule, BrowserAnimationsModule, MatDialogModule],
+            declarations: [AppComponent, NotFoundComponent, LoginComponent, AdminComponent, AccountComponent, MenuComponent, AnimeComponent, AnimeEditComponent, BookComponent, BookEditComponent, FrontComponent, AnimeEpisodeComponent, UsersComponent, LanguageComponent, YesNoComponent],
+            entryComponents: [YesNoComponent],
             providers: [
                 { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
                 { provide: HTTP_INTERCEPTORS, useClass: LanguageInterceptor, multi: true },
                 { provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: { horizontalPosition: "center", verticalPosition: "top" } }
-            ],
-            bootstrap: [AppComponent]
+            ]
         })
     ], AppModule);
     return AppModule;

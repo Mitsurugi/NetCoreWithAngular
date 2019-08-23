@@ -5,8 +5,10 @@ import { CoreLocalizerService } from '../Localization/coreLocalizer.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { finalize, takeUntil } from 'rxjs/operators';
 import { Subject } from "rxjs";
+import { MatDialog } from '@angular/material/dialog';
+import { YesNoComponent } from '../Components/YesNoDialog/yesNo.component';
 
-@Component({
+@Component({    
 })
 export class UsersBaseComponent<TKey, TGrid extends IUser<TKey>, TCreate extends IUser<TKey> = TGrid, TEdit extends IUser<TKey> = TGrid, TFilter = TGrid> implements OnInit {
 
@@ -14,6 +16,7 @@ export class UsersBaseComponent<TKey, TGrid extends IUser<TKey>, TCreate extends
     protected _service: UsersService<TKey, TGrid, TCreate, TEdit, TFilter>;
     protected _localizer: CoreLocalizerService;
     protected _snackBar: MatSnackBar;
+    protected _dialog: MatDialog;
 
     items: TGrid[];
     itemEdit: TEdit;
@@ -30,10 +33,11 @@ export class UsersBaseComponent<TKey, TGrid extends IUser<TKey>, TCreate extends
     orderBy: string = 'UserName';
     resetPasswordId?: TKey = null;
 
-    constructor(service: UsersService<TKey, TGrid, TCreate, TEdit, TFilter>, localizer: CoreLocalizerService, snackBar: MatSnackBar) {
+    constructor(service: UsersService<TKey, TGrid, TCreate, TEdit, TFilter>, localizer: CoreLocalizerService, snackBar: MatSnackBar, dialog: MatDialog) {
         this._service = service;
         this._localizer = localizer;
         this._snackBar = snackBar;
+        this._dialog = dialog;
     }
 
     protected getCreateModel() {
@@ -173,33 +177,49 @@ export class UsersBaseComponent<TKey, TGrid extends IUser<TKey>, TCreate extends
     }
 
     delete(id: TKey) {
-        var popup = this._snackBar.open(this._localizer.localize("Loading"));
-        this._service.delete(id).pipe(finalize(() => { if (popup) popup.dismiss(); }), takeUntil(this._destroyed)).subscribe(
-            data => {
-                this.reloadGrid();
-            },
-            e => {
-                console.log(e);
-                if (e.error) {
-                    var popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e.error));
-                }
+        var dialogRef = this._dialog.open(YesNoComponent, {
+            data: this._localizer.localize('DeleteConfirmation')
+        });
+
+        dialogRef.afterClosed().subscribe(result => {
+            if (result) {
+                var popup = this._snackBar.open(this._localizer.localize("Loading"));
+                this._service.delete(id).pipe(finalize(() => { if (popup) popup.dismiss(); }), takeUntil(this._destroyed)).subscribe(
+                    data => {
+                        this.reloadGrid();
+                    },
+                    e => {
+                        console.log(e);
+                        if (e.error) {
+                            var popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e.error));
+                        }
+                    }
+                );
             }
-        );
-    }
+        });
+    }           
 
     deleteChecked() {
-        var popup = this._snackBar.open(this._localizer.localize("Loading"));
-        this._service.deleteMany(this.checkedItems).pipe(finalize(() => { if (popup) popup.dismiss(); }), takeUntil(this._destroyed)).subscribe(
-            data => {
-                this.reloadGrid();
-            },
-            e => {
-                console.log(e);
-                if (e.error) {
-                    var popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e.error));
-                }
+        var dialogRef = this._dialog.open(YesNoComponent, {
+            data: this._localizer.localize('DeleteConfirmation')
+        });
+
+        dialogRef.afterClosed().subscribe(result => {
+            if (result) {
+                var popup = this._snackBar.open(this._localizer.localize("Loading"));
+                this._service.deleteMany(this.checkedItems).pipe(finalize(() => { if (popup) popup.dismiss(); }), takeUntil(this._destroyed)).subscribe(
+                    data => {
+                        this.reloadGrid();
+                    },
+                    e => {
+                        console.log(e);
+                        if (e.error) {
+                            var popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e.error));
+                        }
+                    }
+                );
             }
-        );
+        });        
     }
 
     saveCreateModel() {

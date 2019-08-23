@@ -22,7 +22,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { DependentService } from '../../../Core/Services/dependent.service';
+import { DependentService } from '../../Core/Services/dependent.service';
 var AnimeEpisodeService = /** @class */ (function (_super) {
     __extends(AnimeEpisodeService, _super);
     function AnimeEpisodeService(http) {

@@ -15,8 +15,10 @@ import { CoreLocalizerService } from '../Localization/coreLocalizer.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { finalize, takeUntil } from 'rxjs/operators';
 import { Subject } from "rxjs";
+import { MatDialog } from '@angular/material/dialog';
+import { YesNoComponent } from '../Components/YesNoDialog/yesNo.component';
 var DependentComponent = /** @class */ (function () {
-    function DependentComponent(service, localizer, snackBar, route) {
+    function DependentComponent(service, localizer, snackBar, dialog, route) {
         var _this = this;
         this._destroyed = new Subject();
         this.currentPage = 1;
@@ -31,6 +33,7 @@ var DependentComponent = /** @class */ (function () {
         this._service = service;
         this._localizer = localizer;
         this._snackBar = snackBar;
+        this._dialog = dialog;
         if (!this.parentId) {
             route.params.subscribe(function (params) { return _this.parentId = params['parentId']; });
         }
@@ -158,27 +161,41 @@ var DependentComponent = /** @class */ (function () {
     };
     DependentComponent.prototype.delete = function (id) {
         var _this = this;
-        var popup = this._snackBar.open(this._localizer.localize("Loading"));
-        this._service.delete(id, this.parentId).pipe(finalize(function () { if (popup)
-            popup.dismiss(); }), takeUntil(this._destroyed)).subscribe(function (data) {
-            _this.reloadGrid();
-        }, function (e) {
-            console.log(e);
-            if (e.error) {
-                var popup = _this._snackBar.open(_this._localizer.localizeWithValues("Error", e.error));
+        var dialogRef = this._dialog.open(YesNoComponent, {
+            data: this._localizer.localize('DeleteConfirmation')
+        });
+        dialogRef.afterClosed().subscribe(function (result) {
+            if (result) {
+                var popup = _this._snackBar.open(_this._localizer.localize("Loading"));
+                _this._service.delete(id, _this.parentId).pipe(finalize(function () { if (popup)
+                    popup.dismiss(); }), takeUntil(_this._destroyed)).subscribe(function (data) {
+                    _this.reloadGrid();
+                }, function (e) {
+                    console.log(e);
+                    if (e.error) {
+                        var popup = _this._snackBar.open(_this._localizer.localizeWithValues("Error", e.error));
+                    }
+                });
             }
         });
     };
     DependentComponent.prototype.deleteChecked = function () {
         var _this = this;
-        var popup = this._snackBar.open(this._localizer.localize("Loading"));
-        this._service.deleteMany(this.checkedItems, this.parentId).pipe(finalize(function () { if (popup)
-            popup.dismiss(); }), takeUntil(this._destroyed)).subscribe(function (data) {
-            _this.reloadGrid();
-        }, function (e) {
-            console.log(e);
-            if (e.error) {
-                var popup = _this._snackBar.open(_this._localizer.localizeWithValues("Error", e.error));
+        var dialogRef = this._dialog.open(YesNoComponent, {
+            data: this._localizer.localize('DeleteConfirmation')
+        });
+        dialogRef.afterClosed().subscribe(function (result) {
+            if (result) {
+                var popup = _this._snackBar.open(_this._localizer.localize("Loading"));
+                _this._service.deleteMany(_this.checkedItems, _this.parentId).pipe(finalize(function () { if (popup)
+                    popup.dismiss(); }), takeUntil(_this._destroyed)).subscribe(function (data) {
+                    _this.reloadGrid();
+                }, function (e) {
+                    console.log(e);
+                    if (e.error) {
+                        var popup = _this._snackBar.open(_this._localizer.localizeWithValues("Error", e.error));
+                    }
+                });
             }
         });
     };
@@ -297,7 +314,7 @@ var DependentComponent = /** @class */ (function () {
     ], DependentComponent.prototype, "parentId", void 0);
     DependentComponent = __decorate([
         Component({}),
-        __metadata("design:paramtypes", [DependentService, CoreLocalizerService, MatSnackBar, ActivatedRoute])
+        __metadata("design:paramtypes", [DependentService, CoreLocalizerService, MatSnackBar, MatDialog, ActivatedRoute])
     ], DependentComponent);
     return DependentComponent;
 }());

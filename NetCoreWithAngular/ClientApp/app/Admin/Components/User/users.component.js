@@ -21,14 +21,15 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 import { Component } from '@angular/core';
-import { UsersService } from '../../../../Core/Users/users.service';
-import { UsersBaseComponent } from '../../../../Core/Users/usersBase.component';
+import { UsersService } from '../../../Core/Users/users.service';
+import { UsersBaseComponent } from '../../../Core/Users/usersBase.component';
 import { LocalizerService } from '../../../Localizer/localizer.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatDialog } from '@angular/material/dialog';
 var UsersComponent = /** @class */ (function (_super) {
     __extends(UsersComponent, _super);
-    function UsersComponent(service, localizer, snackBar) {
-        return _super.call(this, service, localizer, snackBar) || this;
+    function UsersComponent(service, localizer, snackBar, dualog) {
+        return _super.call(this, service, localizer, snackBar, dualog) || this;
     }
     UsersComponent = __decorate([
         Component({
@@ -37,7 +38,7 @@ var UsersComponent = /** @class */ (function (_super) {
             styleUrls: ['./users.component.css'],
             providers: [UsersService]
         }),
-        __metadata("design:paramtypes", [UsersService, LocalizerService, MatSnackBar])
+        __metadata("design:paramtypes", [UsersService, LocalizerService, MatSnackBar, MatDialog])
     ], UsersComponent);
     return UsersComponent;
 }(UsersBaseComponent));

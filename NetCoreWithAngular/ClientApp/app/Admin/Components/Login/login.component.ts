@@ -1,9 +1,9 @@
 ﻿import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { AccountService } from '../../Services/account.service';
-import { AccountGlobals } from '../../../../Core/Account/AccountGlobals';
+import { AccountGlobals } from '../../../Core/Account/AccountGlobals';
 import { LocalizerService } from '../../../Localizer/localizer.service';
-import { LoginModel } from '../../../../Core/Account/loginModel';
+import { LoginModel } from '../../../Core/Account/loginModel';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { finalize, takeUntil } from 'rxjs/operators';

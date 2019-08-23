@@ -1,5 +1,5 @@
-﻿import { SelectListItem } from '../../../../Core/Models/SelectListItem';
-import { IUser } from '../../../../Core/Users/IUser';
+﻿import { SelectListItem } from '../../../Core/Models/SelectListItem';
+import { IUser } from '../../../Core/Users/IUser';
 
 export class User implements IUser<string> {
     roleDisplayName: string;

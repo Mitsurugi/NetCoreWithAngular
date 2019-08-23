@@ -1,22 +1,28 @@
-﻿import { Component, OnInit } from '@angular/core';
-import { CoreService } from '../Services/core.service';
-import { IEntity } from '../Models/IEntity'
+﻿import { Input, Component, OnInit } from '@angular/core';
+import { DependentService } from '../Services/dependent.service';
+import { IDependentEntity } from '../Models/IDependentEntity';
+import { ActivatedRoute } from "@angular/router";
 import { saveAs } from 'file-saver';
 import { CoreLocalizerService } from '../Localization/coreLocalizer.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { finalize, takeUntil } from 'rxjs/operators';
 import { Subject } from "rxjs";
-
+import { MatDialog } from '@angular/material/dialog';
+import { YesNoComponent } from '../Components/YesNoDialog/yesNo.component';
 
 @Component({
 })
-export class CoreComponent<TKey, TGrid extends IEntity<TKey>, TCreate extends IEntity<TKey> = TGrid, TEdit extends IEntity<TKey> = TGrid, TFilter = TGrid> implements OnInit {
+export class DependentComponent<TKey, TParentKey, TParentView, TGrid extends IDependentEntity<TKey, TParentKey>, TCreate extends IDependentEntity<TKey, TParentKey> = TGrid, TEdit extends IDependentEntity<TKey, TParentKey> = TGrid, TFilter = TGrid> implements OnInit {
 
     protected _destroyed: Subject<void> = new Subject();
-    protected _service: CoreService<TKey, TGrid, TCreate, TEdit, TFilter>;
+    protected _service: DependentService<TKey, TParentKey, TParentView, TGrid, TCreate, TEdit, TFilter>;
     protected _localizer: CoreLocalizerService;
     protected _snackBar: MatSnackBar;
+    protected _dialog: MatDialog;
 
+    @Input() parentId: TParentKey;
+
+    parent: TParentView;
     items: TGrid[];
     itemEdit: TEdit;
     itemCreate: TCreate;
@@ -27,19 +33,26 @@ export class CoreComponent<TKey, TGrid extends IEntity<TKey>, TCreate extends IE
     isShowCreate = false;
     showEditId?: TKey = null;
     checkedItems: TKey[] = [];
+    checkAllChecked: boolean[] = [];
     importFile: File = null;
     isShowImport: boolean;
     orderBy: string = 'Id_desc';
 
-    constructor(service: CoreService<TKey, TGrid, TCreate, TEdit, TFilter>, localizer: CoreLocalizerService, snackBar: MatSnackBar) {
+
+    constructor(service: DependentService<TKey, TParentKey, TParentView, TGrid, TCreate, TEdit, TFilter>, localizer: CoreLocalizerService, snackBar: MatSnackBar, dialog: MatDialog, route: ActivatedRoute) {
         this._service = service;
         this._localizer = localizer;
         this._snackBar = snackBar;
+        this._dialog = dialog;
+
+        if (!this.parentId) {
+            route.params.subscribe(params => this.parentId = params['parentId']);
+        }        
     }
 
     protected getCreateModel() {
         var popup = this._snackBar.open(this._localizer.localize("Loading"));
-        this._service.getCreateModel().pipe(finalize(() => { if (popup) popup.dismiss(); }), takeUntil(this._destroyed)).subscribe(
+        this._service.getCreateModel(this.parentId).pipe(finalize(() => { if (popup) popup.dismiss(); }), takeUntil(this._destroyed)).subscribe(
             data => {
                 this.itemCreate = data;
             },
@@ -54,7 +67,7 @@ export class CoreComponent<TKey, TGrid extends IEntity<TKey>, TCreate extends IE
 
     protected getEditModel(id: TKey) {
         var popup = this._snackBar.open(this._localizer.localize("Loading"));
-        this._service.getEditModel(id).pipe(finalize(() => { if (popup) popup.dismiss(); }), takeUntil(this._destroyed)).subscribe(
+        this._service.getEditModel(id, this.parentId).pipe(finalize(() => { if (popup) popup.dismiss(); }), takeUntil(this._destroyed)).subscribe(
             data => {
                 this.itemEdit = data;
             },
@@ -69,7 +82,8 @@ export class CoreComponent<TKey, TGrid extends IEntity<TKey>, TCreate extends IE
 
     ngOnInit() {
         var popup = this._snackBar.open(this._localizer.localize("Loading"));
-        this._service.getFilterModel().pipe(finalize(() => { if (popup) popup.dismiss(); }), takeUntil(this._destroyed)).subscribe(
+        this._service.getParent(this.parentId).pipe(takeUntil(this._destroyed)).subscribe((data) => { this.parent = data; });
+        this._service.getFilterModel(this.parentId).pipe(finalize(() => { if (popup) popup.dismiss(); }), takeUntil(this._destroyed)).subscribe(
             data => {
                 this.filter = data;
                 this.reloadGrid();
@@ -87,12 +101,12 @@ export class CoreComponent<TKey, TGrid extends IEntity<TKey>, TCreate extends IE
         var popup = this._snackBar.open(this._localizer.localize("Loading"));
         this.showEditId = null;
 
-        this._service.getPagesCount(this.pageSize, this.filter).pipe(finalize(() => { if (popup) popup.dismiss(); }), takeUntil(this._destroyed)).subscribe(
+        this._service.getPagesCount(this.pageSize, this.parentId, this.filter).pipe(finalize(() => { if (popup) popup.dismiss(); }), takeUntil(this._destroyed)).subscribe(
             data => {
                 this.totalPages = data;
                 if (this.currentPage < 1) this.currentPage = 1;
                 if (this.currentPage > this.totalPages) this.currentPage = this.totalPages;
-                this._service.getGrid(this.currentPage, this.pageSize, this.orderBy, this.filter).pipe(finalize(() => { if (popup) popup.dismiss(); }), takeUntil(this._destroyed)).subscribe(
+                this._service.getGrid(this.parentId, this.currentPage, this.pageSize, this.orderBy, this.filter).pipe(finalize(() => { if (popup) popup.dismiss(); }), takeUntil(this._destroyed)).subscribe(
                     data => { this.items = data; if (popup) popup.dismiss(); },
                     e => {
                         console.log(e);
@@ -113,7 +127,7 @@ export class CoreComponent<TKey, TGrid extends IEntity<TKey>, TCreate extends IE
 
     clearFilter() {
         var popup = this._snackBar.open(this._localizer.localize("Loading"));
-        this._service.getFilterModel().pipe(finalize(() => { if (popup) popup.dismiss(); }), takeUntil(this._destroyed)).subscribe(
+        this._service.getFilterModel(this.parentId).pipe(finalize(() => { if (popup) popup.dismiss(); }), takeUntil(this._destroyed)).subscribe(
             data => {
                 this.filter = data;
                 this.reloadGrid();
@@ -173,38 +187,54 @@ export class CoreComponent<TKey, TGrid extends IEntity<TKey>, TCreate extends IE
     }
 
     delete(id: TKey) {
-        var popup = this._snackBar.open(this._localizer.localize("Loading"));
-        this._service.delete(id).pipe(finalize(() => { if (popup) popup.dismiss(); }), takeUntil(this._destroyed)).subscribe(
-            data => {
-                this.reloadGrid();
-            },
-            e => {
-                console.log(e);
-                if (e.error) {
-                    var popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e.error));
-                }
+        var dialogRef = this._dialog.open(YesNoComponent, {
+            data: this._localizer.localize('DeleteConfirmation')
+        });
+
+        dialogRef.afterClosed().subscribe(result => {
+            if (result) {
+                var popup = this._snackBar.open(this._localizer.localize("Loading"));
+                this._service.delete(id, this.parentId).pipe(finalize(() => { if (popup) popup.dismiss(); }), takeUntil(this._destroyed)).subscribe(
+                    data => {
+                        this.reloadGrid();
+                    },
+                    e => {
+                        console.log(e);
+                        if (e.error) {
+                            var popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e.error));
+                        }
+                    }
+                );
             }
-        );
+        });
     }
 
     deleteChecked() {
-        var popup = this._snackBar.open(this._localizer.localize("Loading"));
-        this._service.deleteMany(this.checkedItems).pipe(finalize(() => { if (popup) popup.dismiss(); }), takeUntil(this._destroyed)).subscribe(
-            data => {
-                this.reloadGrid();
-            },
-            e => {
-                console.log(e);
-                if (e.error) {
-                    var popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e.error));
-                }
+        var dialogRef = this._dialog.open(YesNoComponent, {
+            data: this._localizer.localize('DeleteConfirmation')
+        });
+
+        dialogRef.afterClosed().subscribe(result => {
+            if (result) {
+                var popup = this._snackBar.open(this._localizer.localize("Loading"));
+                this._service.deleteMany(this.checkedItems, this.parentId).pipe(finalize(() => { if (popup) popup.dismiss(); }), takeUntil(this._destroyed)).subscribe(
+                    data => {
+                        this.reloadGrid();
+                    },
+                    e => {
+                        console.log(e);
+                        if (e.error) {
+                            var popup = this._snackBar.open(this._localizer.localizeWithValues("Error", e.error));
+                        }
+                    }
+                );
             }
-        );
+        });
     }
 
     saveCreateModel() {
         var popup = this._snackBar.open(this._localizer.localize("Loading"));
-        this._service.saveCreateModel(this.itemCreate).pipe(finalize(() => { if (popup) popup.dismiss(); }), takeUntil(this._destroyed)).subscribe(
+        this._service.saveCreateModel(this.itemCreate, this.parentId).pipe(finalize(() => { if (popup) popup.dismiss(); }), takeUntil(this._destroyed)).subscribe(
             data => {
                 this.isShowCreate = false;
                 this.getCreateModel();
@@ -221,7 +251,7 @@ export class CoreComponent<TKey, TGrid extends IEntity<TKey>, TCreate extends IE
 
     saveEditModel() {
         var popup = this._snackBar.open(this._localizer.localize("Loading"));
-        this._service.saveEditModel(this.itemEdit).pipe(finalize(() => { if (popup) popup.dismiss(); }), takeUntil(this._destroyed)).subscribe(
+        this._service.saveEditModel(this.itemEdit, this.parentId).pipe(finalize(() => { if (popup) popup.dismiss(); }), takeUntil(this._destroyed)).subscribe(
             data => {
                 this.itemEdit = data;
                 this.reloadGrid();
@@ -237,7 +267,7 @@ export class CoreComponent<TKey, TGrid extends IEntity<TKey>, TCreate extends IE
 
     getExcelExport() {
         var popup = this._snackBar.open(this._localizer.localize("Loading"));
-        this._service.getExcelExport(this.orderBy, this.filter).pipe(finalize(() => { if (popup) popup.dismiss(); }), takeUntil(this._destroyed)).subscribe(
+        this._service.getExcelExport(this.parentId, this.orderBy, this.filter).pipe(finalize(() => { if (popup) popup.dismiss(); }), takeUntil(this._destroyed)).subscribe(
             data => {
                 saveAs(data, "ExcelExport.xlsx");
             },
@@ -252,7 +282,7 @@ export class CoreComponent<TKey, TGrid extends IEntity<TKey>, TCreate extends IE
 
     getImportTemplate() {
         var popup = this._snackBar.open(this._localizer.localize("Loading"));
-        this._service.getImportTemplate().pipe(finalize(() => { if (popup) popup.dismiss(); }), takeUntil(this._destroyed)).subscribe(
+        this._service.getImportTemplate(this.parentId).pipe(finalize(() => { if (popup) popup.dismiss(); }), takeUntil(this._destroyed)).subscribe(
             data => {
                 saveAs(data, "ImportTemplate.xlsx");
             },
@@ -271,7 +301,7 @@ export class CoreComponent<TKey, TGrid extends IEntity<TKey>, TCreate extends IE
         }
         else {
             var popup = this._snackBar.open(this._localizer.localize("Loading"));
-            this._service.import(this.importFile).pipe(finalize(() => { if (popup) popup.dismiss(); }), takeUntil(this._destroyed)).subscribe(
+            this._service.import(this.parentId, this.importFile).pipe(finalize(() => { if (popup) popup.dismiss(); }), takeUntil(this._destroyed)).subscribe(
                 data => {
                     this.reloadGrid();
                     var popup = this._snackBar.open(this._localizer.localize("ImportSuccess"), null, { duration: 5000 });

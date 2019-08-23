@@ -21,17 +21,18 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 import { Component } from '@angular/core';
-import { CoreComponent } from '../../../../Core/Components/core.component';
+import { CoreComponent } from '../../../Core/Components/core.component';
 import { AnimeService } from '../../Services/anime.service';
-import { FileService } from '../../../../Core/Services/file.service';
+import { FileService } from '../../../Core/Services/file.service';
 import { LocalizerService } from '../../../Localizer/localizer.service';
 import { moveItemInArray } from '@angular/cdk/drag-drop';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatDialog } from '@angular/material/dialog';
 import { finalize, takeUntil } from 'rxjs/operators';
 var AnimeComponent = /** @class */ (function (_super) {
     __extends(AnimeComponent, _super);
-    function AnimeComponent(service, localizer, fileService, animeService, snackBar) {
-        var _this = _super.call(this, service, localizer, snackBar) || this;
+    function AnimeComponent(service, localizer, fileService, animeService, snackBar, dialog) {
+        var _this = _super.call(this, service, localizer, snackBar, dialog) || this;
         _this._fileService = fileService;
         _this._animeService = animeService;
         _this.orderBy = "Position";
@@ -113,7 +114,7 @@ var AnimeComponent = /** @class */ (function (_super) {
             styleUrls: ['./anime.component.css'],
             providers: [AnimeService, FileService]
         }),
-        __metadata("design:paramtypes", [AnimeService, LocalizerService, FileService, AnimeService, MatSnackBar])
+        __metadata("design:paramtypes", [AnimeService, LocalizerService, FileService, AnimeService, MatSnackBar, MatDialog])
     ], AnimeComponent);
     return AnimeComponent;
 }(CoreComponent));

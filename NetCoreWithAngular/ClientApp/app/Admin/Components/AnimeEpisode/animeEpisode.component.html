@@ -40,7 +40,7 @@
 </div>
 <div class="create-new">
     <button class="btn btn-default" (click)="toggleCreate()">{{_localizer.localize("Create")}}</button>
-    <div *ngIf="isShowCreate; then create"></div>
+    <div *ngIf="isShowCreate && itemCreate; then create"></div>
 </div>
 
 <ng-template #edit>

@@ -63,14 +63,14 @@
                         <button class="btn btn-default" (click)="delete(i.id)">{{_localizer.localize("Delete")}}</button>
                     </td>
                 </tr>
-                <tr *ngIf="_showEditId==i.id; then edit"></tr>
+                <tr *ngIf="_showEditId==i.id && itemEdit; then edit"></tr>
             </ng-template>
         </tbody>
     </table>
 </div>
 <div class="create-new">
     <button class="btn btn-default" [routerLink]="['/admin/anime/create']">{{_localizer.localize("Create")}}</button>
-    <div *ngIf="isShowCreate; then create"></div>
+    <div *ngIf="isShowCreate && itemCreate; then create"></div>
 </div>
 
 <ng-template #edit>

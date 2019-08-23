@@ -1,6 +1,6 @@
 ﻿import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { EditComponent } from '../../../../Core/Components/edit.component';
+import { EditComponent } from '../../../Core/Components/edit.component';
 import { BookService } from '../../Services/book.service';
 import { Book } from '../../Models/Book/book';
 import { BookGrid } from '../../Models/book/bookGrid';

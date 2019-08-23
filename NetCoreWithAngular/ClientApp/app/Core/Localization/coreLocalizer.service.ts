@@ -193,6 +193,9 @@ export class CoreLocalizerService {
 
         this._strings["ru-RU"]["ClearFilter"] = "Очистить";
         this._strings["en-US"]["ClearFilter"] = "Clear";
+
+        this._strings["ru-RU"]["DeleteConfirmation"] = "Подтвердите удаление";
+        this._strings["en-US"]["DeleteConfirmation"] = "Do you realy want to delete";
     }
 
     protected AddOrUpdateStrings() {

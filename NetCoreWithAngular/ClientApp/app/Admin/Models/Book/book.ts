@@ -1,5 +1,5 @@
-﻿import { IEntity } from '../../../../Core/Models/IEntity'
-import { SelectListItem } from '../../../../Core/Models/SelectListItem';
+﻿import { IEntity } from '../../../Core/Models/IEntity'
+import { SelectListItem } from '../../../Core/Models/SelectListItem';
 
 export enum Genre {
     Fantasy = 1,

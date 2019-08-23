@@ -1,8 +1,8 @@
 ﻿import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { EditComponent } from '../../../../Core/Components/edit.component';
+import { EditComponent } from '../../../Core/Components/edit.component';
 import { AnimeService } from '../../Services/anime.service';
-import { FileService } from '../../../../Core/Services/file.service';
+import { FileService } from '../../../Core/Services/file.service';
 import { Anime } from '../../Models/Anime/anime';
 import { read } from 'fs';
 import { ActivatedRoute, Router } from '@angular/router';

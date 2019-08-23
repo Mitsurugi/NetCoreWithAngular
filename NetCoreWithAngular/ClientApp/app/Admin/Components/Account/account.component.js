@@ -44,10 +44,10 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 import { Component } from '@angular/core';
 import { AccountService } from '../../Services/account.service';
-import { AccountGlobals } from '../../../../Core/Account/AccountGlobals';
+import { AccountGlobals } from '../../../Core/Account/AccountGlobals';
 import { LocalizerService } from '../../../Localizer/localizer.service';
-import { LoginModel } from '../../../../Core/Account/loginModel';
-import { ChangePasswordModel } from '../../../../Core/Account/changePasswordModel';
+import { LoginModel } from '../../../Core/Account/loginModel';
+import { ChangePasswordModel } from '../../../Core/Account/changePasswordModel';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 var AccountComponent = /** @class */ (function () {

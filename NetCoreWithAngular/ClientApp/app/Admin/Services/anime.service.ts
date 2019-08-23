@@ -1,8 +1,8 @@
 ﻿import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { CoreService } from '../../../Core/Services/core.service';
+import { CoreService } from '../../Core/Services/core.service';
 import { Observable, from } from 'rxjs';
-import { FileService } from '../../../Core/Services/file.service';
+import { FileService } from '../../Core/Services/file.service';
 import { Anime } from '../Models/Anime/anime';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { map } from "rxjs/operators";

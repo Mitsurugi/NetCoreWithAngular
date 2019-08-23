@@ -21,9 +21,9 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 import { Component } from '@angular/core';
-import { EditComponent } from '../../../../Core/Components/edit.component';
+import { EditComponent } from '../../../Core/Components/edit.component';
 import { AnimeService } from '../../Services/anime.service';
-import { FileService } from '../../../../Core/Services/file.service';
+import { FileService } from '../../../Core/Services/file.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LocalizerService } from '../../../Localizer/localizer.service';
 import { MatSnackBar } from '@angular/material/snack-bar';

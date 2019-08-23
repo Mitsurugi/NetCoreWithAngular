@@ -1,4 +1,4 @@
-﻿import { IEntity } from '../../../../Core/Models/IEntity'
+﻿import { IEntity } from '../../../Core/Models/IEntity'
 import { Genre } from '../Book/book'
  
 export class BookGrid implements IEntity<number> {

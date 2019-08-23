@@ -18,7 +18,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 import { Injectable } from '@angular/core';
-import { CoreLocalizerService } from '../../Core/Localization/coreLocalizer.service';
+import { CoreLocalizerService } from '../Core/Localization/coreLocalizer.service';
 var LocalizerService = /** @class */ (function (_super) {
     __extends(LocalizerService, _super);
     function LocalizerService() {

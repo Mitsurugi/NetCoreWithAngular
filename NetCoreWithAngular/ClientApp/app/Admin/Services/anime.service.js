@@ -22,8 +22,8 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { CoreService } from '../../../Core/Services/core.service';
-import { FileService } from '../../../Core/Services/file.service';
+import { CoreService } from '../../Core/Services/core.service';
+import { FileService } from '../../Core/Services/file.service';
 import { DomSanitizer } from '@angular/platform-browser';
 import { map } from "rxjs/operators";
 var AnimeService = /** @class */ (function (_super) {

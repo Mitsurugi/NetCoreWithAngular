@@ -1,6 +1,6 @@
 ﻿import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { DependentService } from '../../../Core/Services/dependent.service';
+import { DependentService } from '../../Core/Services/dependent.service';
 import { Observable } from 'rxjs';
 import { AnimeEpisode } from '../Models/AnimeEpisode/animeEpisode';
 import { Anime } from '../Models/Anime/anime';

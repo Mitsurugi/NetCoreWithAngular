@@ -21,14 +21,15 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 import { Component } from '@angular/core';
-import { CoreComponent } from '../../../../Core/Components/core.component';
+import { CoreComponent } from '../../../Core/Components/core.component';
 import { BookService } from '../../Services/book.service';
 import { LocalizerService } from '../../../Localizer/localizer.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatDialog } from '@angular/material/dialog';
 var BookComponent = /** @class */ (function (_super) {
     __extends(BookComponent, _super);
-    function BookComponent(service, localizer, snackBar) {
-        var _this = _super.call(this, service, localizer, snackBar) || this;
+    function BookComponent(service, localizer, snackBar, dialog) {
+        var _this = _super.call(this, service, localizer, snackBar, dialog) || this;
         _this.pageSize = 3;
         return _this;
     }
@@ -43,7 +44,7 @@ var BookComponent = /** @class */ (function (_super) {
             styleUrls: ['./book.component.css'],
             providers: [BookService]
         }),
-        __metadata("design:paramtypes", [BookService, LocalizerService, MatSnackBar])
+        __metadata("design:paramtypes", [BookService, LocalizerService, MatSnackBar, MatDialog])
     ], BookComponent);
     return BookComponent;
 }(CoreComponent));

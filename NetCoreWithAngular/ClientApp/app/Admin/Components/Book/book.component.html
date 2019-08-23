@@ -82,7 +82,7 @@
                         <button class="btn btn-default" (click)="delete(i.id)">{{_localizer.localize("Delete")}}</button>
                     </td>
                 </tr>
-                <tr *ngIf="showEditId==i.id; then edit"></tr>
+                <tr *ngIf="showEditId==i.id && itemEdit; then edit"></tr>
             </ng-template>
         </tbody>
     </table>
@@ -91,7 +91,7 @@
 <div class="create-new">
     <button class="btn btn-default" (click)="toggleCreate()">{{_localizer.localize("Create")}}</button>
     <button class="btn btn-default" (click)="toggleImport()">{{_localizer.localize("ImportButton")}}</button>
-    <div *ngIf="isShowCreate; then create"></div>
+    <div *ngIf="isShowCreate && itemCreate; then create"></div>
     <div *ngIf="isShowImport; then import"></div>
 </div>
 

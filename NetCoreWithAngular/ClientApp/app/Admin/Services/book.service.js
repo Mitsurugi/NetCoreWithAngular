@@ -22,7 +22,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { CoreService } from '../../../Core/Services/core.service';
+import { CoreService } from '../../Core/Services/core.service';
 import { BookGrid } from '../Models/book/bookGrid';
 import { map } from 'rxjs/operators';
 var BookService = /** @class */ (function (_super) {

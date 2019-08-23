@@ -1,6 +1,6 @@
 ﻿import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { CoreLocalizerService } from '../../Core/Localization/coreLocalizer.service';
+import { CoreLocalizerService } from '../Core/Localization/coreLocalizer.service';
 
 @Injectable()
 export class LocalizerService extends CoreLocalizerService {
