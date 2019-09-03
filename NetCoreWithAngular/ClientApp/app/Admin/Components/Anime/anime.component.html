@@ -63,7 +63,7 @@
                         <button class="btn btn-default" (click)="delete(i.id)">{{_localizer.localize("Delete")}}</button>
                     </td>
                 </tr>
-                <tr *ngIf="_showEditId==i.id && itemEdit; then edit"></tr>
+                <tr *ngIf="showEditId==i.id && itemEdit; then edit"></tr>
             </ng-template>
         </tbody>
     </table>
