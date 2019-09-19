@@ -280,24 +280,23 @@ var CoreComponent = /** @class */ (function () {
     };
     CoreComponent.prototype.toggleCheckAll = function () {
         var _this = this;
-        var checked = true;
+        var checked = false;
         this.items.forEach(function (i) {
             var index = _this.checkedItems.indexOf(i.id);
             if (index < 0)
-                checked = false;
+                checked = true;
         });
         if (checked) {
-            this.items.forEach(function (i) {
-                var index = _this.checkedItems.indexOf(i.id);
-                _this.checkedItems = _this.checkedItems.slice(0, index).concat(_this.checkedItems.slice(index + 1, _this.checkedItems.length));
-            });
-        }
-        else {
             this.items.forEach(function (i) {
                 var index = _this.checkedItems.indexOf(i.id);
                 if (index < 0) {
                     _this.checkedItems.push(i.id);
                 }
+            });
+        }
+        else {
+            this.items.forEach(function (i) {
+                _this.checkedItems = [];
             });
         }
     };

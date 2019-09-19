@@ -1,12 +1,10 @@
 ﻿<h2>{{_localizer.localize("AnimeEpisodes")}}</h2>
+<div class="create-new">
+    <button class="btn btn-default" (click)="toggleCreate()">{{_localizer.localize("Create")}}</button>
+    <div *ngIf="isShowCreate && itemCreate; then create"></div>
+</div>
 <div class="grid" *ngIf="!items?.length">{{_localizer.localize("NoData")}}</div>
 <div class="grid" *ngIf="items?.length">
-    <div class="pagination">
-        <button class="btn btn-default" (click)="prevPage()">{{_localizer.localize("PrevPage")}}</button>
-        <span>{{_localizer.localize("Page")}} <input name="currentPage" [(ngModel)]="currentPage" type="number" required (change)="reloadGrid()" style="width:100px;" /> {{_localizer.localize("PageOf")}} {{totalPages}}</span>
-        <button class="btn btn-default" (click)="nextPage()">{{_localizer.localize("NextPage")}}</button>
-        <button class="btn btn-default" (click)="getExcelExport()">{{_localizer.localize("ExcelExport")}}</button>
-    </div>
     <table class="table">
         <thead>
             <tr>
@@ -37,10 +35,12 @@
             </ng-template>
         </tbody>
     </table>
-</div>
-<div class="create-new">
-    <button class="btn btn-default" (click)="toggleCreate()">{{_localizer.localize("Create")}}</button>
-    <div *ngIf="isShowCreate && itemCreate; then create"></div>
+    <div class="pagination">
+        <button class="btn btn-default" (click)="prevPage()">{{_localizer.localize("PrevPage")}}</button>
+        <span>{{_localizer.localize("Page")}} <input name="currentPage" [(ngModel)]="currentPage" type="number" required (change)="reloadGrid()" style="width:100px;" /> {{_localizer.localize("PageOf")}} {{totalPages}}</span>
+        <button class="btn btn-default" (click)="nextPage()">{{_localizer.localize("NextPage")}}</button>
+        <button class="btn btn-default" (click)="getExcelExport()">{{_localizer.localize("ExcelExport")}}</button>
+    </div>
 </div>
 
 <ng-template #edit>

@@ -319,22 +319,21 @@ export class CoreComponent<TKey, TGrid extends IEntity<TKey>, TCreate extends IE
     }
 
     toggleCheckAll() {
-        let checked = true;
+        let checked = false;
         this.items.forEach(i => {
             var index = this.checkedItems.indexOf(i.id);
-            if (index < 0) checked = false;
+            if (index < 0) checked = true;
         });
 
         if (checked) {
             this.items.forEach(i => {
                 var index = this.checkedItems.indexOf(i.id);
-                this.checkedItems = this.checkedItems.slice(0, index).concat(this.checkedItems.slice(index + 1, this.checkedItems.length));
+                if (index < 0) { this.checkedItems.push(i.id); }
             });
         } else {
             this.items.forEach(i => {
-                var index = this.checkedItems.indexOf(i.id);
-                if (index < 0) { this.checkedItems.push(i.id); }
-            });
+                this.checkedItems = [];
+            });            
         }
     }
 }

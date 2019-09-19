@@ -1,30 +1,15 @@
 ﻿<h2>{{_localizer.localize("Animes")}}</h2>
-
+<div class="create-new">
+    <button class="btn btn-default" [routerLink]="['/admin/anime/create']">{{_localizer.localize("Create")}}</button>
+    <div *ngIf="isShowCreate && itemCreate; then create"></div>
+</div>
 <div class="grid" *ngIf="!items?.length">{{_localizer.localize("NoData")}}</div>
 <div class="grid" *ngIf="items?.length">
-    <div class="sorting">
-        <label>{{_localizer.localize("OrderBy")}}</label>
-        <select class="form-control" [(ngModel)]="orderBy" (change)="reloadGrid()">
-            <option value="Position">{{_localizer.localize("ManualSorting")}}</option>
-            <option value="Id_desc">{{_localizer.localizeWithValues("OrderBy.DescendingX", _localizer.localize("Id"))}}</option>
-            <option value="Id">{{_localizer.localizeWithValues("OrderBy.AscendingX", _localizer.localize("Id"))}}</option>
-            <option value="Title">{{_localizer.localizeWithValues("OrderBy.AscendingX", _localizer.localize("Anime.Title"))}}</option>
-            <option value="Title_desc">{{_localizer.localizeWithValues("OrderBy.DescendingX", _localizer.localize("Anime.Title"))}}</option>
-        </select>
-        <div style="clear:both"></div>
-    </div>
-    <div class="pagination">
-        <button class="btn btn-default" (click)="prevPage()" [disabled]="currentPage < 2">{{_localizer.localize("PrevPage")}}</button>
-        <span>{{_localizer.localize("Page")}} <input name="currentPage" [(ngModel)]="currentPage" type="number" required (change)="reloadGrid()" style="width:100px;" /> {{_localizer.localize("PageOf")}} {{totalPages}}</span>
-        <button class="btn btn-default" (click)="nextPage()" [disabled]="currentPage >= totalPages">{{_localizer.localize("NextPage")}}</button>
-        <button class="btn btn-default" (click)="getExcelExport()">{{_localizer.localize("ExcelExport")}}</button>
-        <button class="btn btn-default" (click)="deleteChecked()" [disabled]="!checkedItems.length">{{_localizer.localize("DeleteSelected")}}</button>
-    </div>
     <table class="table">
         <thead>
             <tr>
                 <th>
-                    <button class="btn btn-default" (click)="toggleCheckAll()">{{_localizer.localize("CheckAllButton")}}</button>
+                    <input type="checkbox" (click)="toggleCheckAll()" [checked]="checkedItems.length == items.length" />
                 </th>
                 <th>{{_localizer.localize("Id")}}</th>
                 <th>{{_localizer.localize("Anime.Title")}}</th>
@@ -67,10 +52,24 @@
             </ng-template>
         </tbody>
     </table>
-</div>
-<div class="create-new">
-    <button class="btn btn-default" [routerLink]="['/admin/anime/create']">{{_localizer.localize("Create")}}</button>
-    <div *ngIf="isShowCreate && itemCreate; then create"></div>
+    <div class="pagination">
+        <button class="btn btn-default" (click)="prevPage()" [disabled]="currentPage < 2">{{_localizer.localize("PrevPage")}}</button>
+        <span>{{_localizer.localize("Page")}} <input name="currentPage" [(ngModel)]="currentPage" type="number" required (change)="reloadGrid()" style="width:100px;" /> {{_localizer.localize("PageOf")}} {{totalPages}}</span>
+        <button class="btn btn-default" (click)="nextPage()" [disabled]="currentPage >= totalPages">{{_localizer.localize("NextPage")}}</button>
+        <button class="btn btn-default" (click)="getExcelExport()">{{_localizer.localize("ExcelExport")}}</button>
+        <button class="btn btn-default" (click)="deleteChecked()" [disabled]="!checkedItems.length">{{_localizer.localize("DeleteSelected")}}</button>
+    </div>
+    <div class="sorting">
+        <label>{{_localizer.localize("OrderBy")}}</label>
+        <select class="form-control" [(ngModel)]="orderBy" (change)="reloadGrid()">
+            <option value="Position">{{_localizer.localize("ManualSorting")}}</option>
+            <option value="Id_desc">{{_localizer.localizeWithValues("OrderBy.DescendingX", _localizer.localize("Id"))}}</option>
+            <option value="Id">{{_localizer.localizeWithValues("OrderBy.AscendingX", _localizer.localize("Id"))}}</option>
+            <option value="Title">{{_localizer.localizeWithValues("OrderBy.AscendingX", _localizer.localize("Anime.Title"))}}</option>
+            <option value="Title_desc">{{_localizer.localizeWithValues("OrderBy.DescendingX", _localizer.localize("Anime.Title"))}}</option>
+        </select>
+        <div style="clear:both"></div>
+    </div>
 </div>
 
 <ng-template #edit>
