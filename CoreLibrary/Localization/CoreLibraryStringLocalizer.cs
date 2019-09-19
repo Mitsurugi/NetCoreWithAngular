@@ -80,6 +80,9 @@ namespace CoreLibrary.Localization
             enUSDict.Add("RoleNotFound", "Role '{0}' not found");
             ruRUDict.Add("RoleNotFound", "Роль '{0}' не найдена");
 
+            enUSDict.Add("UserNotFound", "User not found");
+            ruRUDict.Add("UserNotFound", "Пользователь не найден");
+
             enUSDict.Add("InvalidLoginPass", "Invalid login or password");
             ruRUDict.Add("InvalidLoginPass", "Неправильный логин или пароль");
 

@@ -54,44 +54,42 @@
         <button class="btn btn-default" (click)="prevPage()" [disabled]="currentPage < 2">{{_localizer.localize("PrevPage")}}</button>
         <span>{{_localizer.localize("Page")}} <input name="currentPage" [(ngModel)]="currentPage" type="number" required (change)="reloadGrid()" style="width:100px;" /> {{_localizer.localize("PageOf")}} {{totalPages}}</span>
         <button class="btn btn-default" (click)="nextPage()" [disabled]="currentPage >= totalPages">{{_localizer.localize("NextPage")}}</button>
-    </div>
-    <div class="filter" *ngIf="filter">
-        <h3>{{_localizer.localize("Filter")}}</h3>
-        <form #filterForm="ngForm">
-            <div class="form-group col-sm-3">
-                <label>{{_localizer.localize("Book.Title")}}</label>
-                <input class="form-control" name="title" [(ngModel)]="filter.title" #title="ngModel" type="text" />
+    </div>    
+</div>
+<div class="filter" *ngIf="filter">
+    <h3>{{_localizer.localize("Filter")}}</h3>
+    <form #filterForm="ngForm">
+        <div class="form-group col-sm-3">
+            <label>{{_localizer.localize("Book.Title")}}</label>
+            <input class="form-control" name="title" [(ngModel)]="filter.title" #title="ngModel" type="text" />
+        </div>
+        <div class="form-group col-sm-3">
+            <label>{{_localizer.localize("Book.Author")}}</label>
+            <input class="form-control" name="author" [(ngModel)]="filter.author" #author="ngModel" type="text" pattern="^[a-zA-Z\s]*$" />
+            <div *ngIf="author.touched && author.invalid">
+                <p *ngIf="author.errors.pattern" class="validation-text">
+                    {{_localizer.localize("OnlyLettersAllowed")}}
+                </p>
             </div>
-            <div class="form-group col-sm-3">
-                <label>{{_localizer.localize("Book.Author")}}</label>
-                <input class="form-control" name="author" [(ngModel)]="filter.author" #author="ngModel" type="text" pattern="^[a-zA-Z\s]*$" />
-                <div *ngIf="author.touched && author.invalid">
-                    <p *ngIf="author.errors.pattern" class="validation-text">
-                        {{_localizer.localize("OnlyLettersAllowed")}}
-                    </p>
-                </div>
-            </div>
-            <div class="form-group col-sm-3">
-                <label>{{_localizer.localize("Book.Genre")}}</label>
-                <select class="form-control" name="genre" [(ngModel)]="filter.genre" #genre="ngModel">
-                    <ng-template ngFor let-i [ngForOf]="filter.genreList" let-n="index">
-                        <option value="{{i.value}}" [disabled]="i.disabled">{{i.text}}</option>
-                    </ng-template>
-                </select>
-            </div>
-            <div class="form-group col-sm-3">
-                <label>{{_localizer.localize("Book.PageCount")}}</label>
-                <input class="form-control" name="pageCount" [(ngModel)]="filter.pageCount" #pageCount="ngModel" type="number" />
-            </div>
-            <div class="form-group col-sm-5">
-                <button class="btn btn-default" (click)="reloadGrid()" [disabled]="filterForm.invalid">{{_localizer.localize("Apply")}}</button>
-            </div>
-            <div class="form-group col-sm-5">
-                <button class="btn btn-default" (click)="clearFilter()" [disabled]="filterForm.invalid">{{_localizer.localize("ClearFilter")}}</button>
-            </div>
-        </form>
-        <div style="clear:both"></div>
-    </div>
+        </div>
+        <div class="form-group col-sm-3">
+            <label>{{_localizer.localize("Book.Genre")}}</label>
+            <select class="form-control" name="genre" [(ngModel)]="filter.genre" #genre="ngModel">
+                <ng-template ngFor let-i [ngForOf]="filter.genreList" let-n="index">
+                    <option value="{{i.value}}" [disabled]="i.disabled">{{i.text}}</option>
+                </ng-template>
+            </select>
+        </div>
+        <div class="form-group col-sm-3">
+            <label>{{_localizer.localize("Book.PageCount")}}</label>
+            <input class="form-control" name="pageCount" [(ngModel)]="filter.pageCount" #pageCount="ngModel" type="number" />
+        </div>
+        <div class="form-group col-sm-5">
+            <button class="btn btn-default" (click)="reloadGrid()" [disabled]="filterForm.invalid">{{_localizer.localize("Apply")}}</button>
+            <button class="btn btn-default" (click)="clearFilter()" [disabled]="filterForm.invalid">{{_localizer.localize("ClearFilter")}}</button>
+        </div>
+    </form>
+    <div style="clear:both"></div>
 </div>
 
 <ng-template #import>

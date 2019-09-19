@@ -388,7 +388,8 @@ namespace CoreLibrary
             {
                 var value = prop.GetValue(filter);
                 if (value == null || !entityProperties.Any(i => i.Name == prop.Name)) continue;
-                if (value.Equals(Activator.CreateInstance(prop.PropertyType))) continue;
+                object defVal = prop.PropertyType == typeof(string) ? "" : Activator.CreateInstance(prop.PropertyType);
+                if (value.Equals(defVal)) continue;
 
                 var t = prop.PropertyType;
                 if (t.IsGenericType && t.GetGenericTypeDefinition() == typeof(Nullable<>))
@@ -396,7 +397,7 @@ namespace CoreLibrary
                     t = Nullable.GetUnderlyingType(prop.PropertyType);
                 }
 
-                if (t.IsPrimitive || t == typeof(DateTime))
+                if (t.IsPrimitive)
                 {
                     query = query.Where(i => EF.Property<object>(i, prop.Name).Equals(value));
                     continue;
@@ -409,6 +410,13 @@ namespace CoreLibrary
                 if (t.IsEnum)
                 {
                     query = query.Where(i => Enum.Equals(EF.Property<object>(i, prop.Name), value));
+                    continue;
+                }
+
+                if (t == typeof(DateTime))
+                {
+                    var val = (DateTime)value;
+                    query = query.Where(i => EF.Property<DateTime>(i, prop.Name).Date == val.Date);
                     continue;
                 }
             }
