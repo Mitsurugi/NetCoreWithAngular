@@ -5,6 +5,7 @@
 </div>
 <div class="grid" *ngIf="!items?.length">{{_localizer.localize("NoData")}}</div>
 <div class="grid" *ngIf="items?.length">
+    <button class="btn btn-default" (click)="getExcelExport()">{{_localizer.localize("ExcelExport")}}</button>
     <table class="table">
         <thead>
             <tr>
@@ -39,7 +40,6 @@
         <button class="btn btn-default" (click)="prevPage()">{{_localizer.localize("PrevPage")}}</button>
         <span>{{_localizer.localize("Page")}} <input name="currentPage" [(ngModel)]="currentPage" type="number" required (change)="reloadGrid()" style="width:100px;" /> {{_localizer.localize("PageOf")}} {{totalPages}}</span>
         <button class="btn btn-default" (click)="nextPage()">{{_localizer.localize("NextPage")}}</button>
-        <button class="btn btn-default" (click)="getExcelExport()">{{_localizer.localize("ExcelExport")}}</button>
     </div>
 </div>
 
