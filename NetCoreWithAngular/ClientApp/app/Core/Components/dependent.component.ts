@@ -295,7 +295,7 @@ export class DependentComponent<TKey, TParentKey, TParentView, TGrid extends IDe
         );
     }
 
-    import() {
+    importPost() {
         if (this.importFile == null) {
             var popup = this._snackBar.open(this._localizer.localize("ImportFileNull"), null, { duration: 5000 });
         }

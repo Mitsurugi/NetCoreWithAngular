@@ -285,7 +285,7 @@ export class CoreComponent<TKey, TGrid extends IEntity<TKey>, TCreate extends IE
         );
     }
 
-    import() {
+    importPost() {
         if (this.importFile == null) {
             var popup = this._snackBar.open(this._localizer.localize("ImportFileNull"), null, { duration: 5000 });
         }
