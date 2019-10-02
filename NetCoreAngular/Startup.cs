@@ -58,6 +58,7 @@ namespace NetCoreAngular
 
             services.AddMvc();
             services.AddAutoMapper(typeof(MappingProfile));
+            services.AddHttpContextAccessor();
 
             services.AddAuthentication(options =>
             {
