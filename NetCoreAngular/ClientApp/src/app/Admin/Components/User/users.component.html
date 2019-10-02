@@ -1,0 +1,185 @@
+<h2>{{_localizer.localize("Users")}}</h2>
+<div class="create-new">
+  <button class="btn btn-default" (click)="toggleCreate()">{{_localizer.localize("Create")}}</button>
+  <div *ngIf="isShowCreate && itemCreate; then create"></div>
+</div>
+<div class="grid" *ngIf="!items?.length">{{_localizer.localize("NoData")}}</div>
+<div class="grid" *ngIf="items?.length">
+  <button class="btn btn-default" (click)="getExcelExport()">{{_localizer.localize("ExcelExport")}}</button>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>{{_localizer.localize("Id")}}</th>
+        <th>{{_localizer.localize("LoginLabel")}}</th>
+        <th>{{_localizer.localize("Role")}}</th>
+        <th>{{_localizer.localize("Phone")}}</th>
+        <th></th>
+        <th></th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <ng-template ngFor let-i [ngForOf]="items" let-n="index">
+        <tr>
+          <td>
+            {{i.id}}
+          </td>
+          <td>
+            {{i.userName}}
+          </td>
+          <td>
+            {{i.roleDisplayName}}
+          </td>
+          <td>
+            {{i.phone}}
+          </td>
+          <td>
+            <button class="btn btn-default" (click)="toggleEdit(i.id)" *ngIf="showEditId != i.id">{{_localizer.localize("Edit")}}</button>
+            <button class="btn btn-default" (click)="toggleEdit(i.id)" *ngIf="showEditId == i.id">{{_localizer.localize("Cancel")}}</button>
+          </td>
+          <td>
+            <button class="btn btn-default" (click)="togglePasswordReset(i.id)" *ngIf="resetPasswordId != i.id">{{_localizer.localize("SetNewPassButton")}}</button>
+            <button class="btn btn-default" (click)="togglePasswordReset(i.id)" *ngIf="resetPasswordId == i.id">{{_localizer.localize("Cancel")}}</button>
+          </td>
+          <td>
+            <button class="btn btn-default" (click)="delete(i.id)">{{_localizer.localize("Delete")}}</button>
+          </td>
+        </tr>
+        <tr *ngIf="showEditId==i.id && itemEdit; then edit"></tr>
+        <tr *ngIf="resetPasswordId==i.id; then passwordReset"></tr>
+      </ng-template>
+    </tbody>
+  </table>
+  <div class="pagination">
+    <button class="btn btn-default" (click)="prevPage()" [disabled]="currentPage < 2">{{_localizer.localize("PrevPage")}}</button>
+    <span>{{_localizer.localize("Page")}} <input name="currentPage" [(ngModel)]="currentPage" type="number" required (change)="reloadGrid()" style="width:100px;" /> {{_localizer.localize("PageOf")}} {{totalPages}}</span>
+    <button class="btn btn-default" (click)="nextPage()" [disabled]="currentPage >= totalPages">{{_localizer.localize("NextPage")}}</button>
+  </div>
+</div>
+
+<ng-template #passwordReset>
+  <tr>
+    <td colspan="5">
+      <div class="edit-div">
+        <div class="form-group col-sm-3">
+          <label>{{_localizer.localize("NewPasswordLabel")}} *</label>
+          <input class="form-control" name="newPassword" #newPassword type="password" required />
+          <div *ngIf="newPassword.invalid">
+            <p *ngIf="newPassword.errors.required" class="validation-text">
+              {{_localizer.localizeWithValues("RequiredX",_localizer.localize("NewPasswordLabel"))}}
+            </p>
+          </div>
+        </div>
+        <div class="form-group col-sm-10">
+          <button class="btn btn-default" (click)="resetPassword(newPassword.value)" [disabled]="newPassword.invalid">{{_localizer.localize("Save")}}</button>
+        </div>
+        <div style="clear:both"></div>
+      </div>
+    </td>
+  </tr>
+</ng-template>
+
+<ng-template #edit>
+  <tr class="edit-row">
+    <td colspan="7">
+      <div class="edit-div">
+        <form #editForm="ngForm">
+          <div class="form-group col-sm-3">
+            <label>{{_localizer.localize("LoginLabel")}} *</label>
+            <input class="form-control" name="userName" [(ngModel)]="itemEdit.userName" #userName="ngModel" type="text" required pattern="^[a-zA-Z0-9]*$" />
+            <div *ngIf="userName.invalid">
+              <p *ngIf="userName.errors.required" class="validation-text">
+                {{_localizer.localizeWithValues("RequiredX",_localizer.localize("LoginLabel"))}}
+              </p>
+              <p *ngIf="userName.errors.pattern" class="validation-text">
+                {{_localizer.localizeWithValues("OnlyENDigitsAndLettersAllowed")}}
+              </p>
+            </div>
+          </div>
+          <div class="form-group col-sm-3">
+            <label>{{_localizer.localize("Phone")}}</label>
+            <input class="form-control" name="phone" [(ngModel)]="itemEdit.phone" #phone="ngModel" type="text" pattern="^[0-9\s]*$" />
+            <div *ngIf="phone.invalid">
+              <p *ngIf="phone.errors.pattern" class="validation-text">
+                {{_localizer.localize("OnlyDigitsAllowed")}}
+              </p>
+            </div>
+          </div>
+          <div class="form-group col-sm-3">
+            <label>{{_localizer.localize("Role")}}</label>
+            <select class="form-control" name="role" [(ngModel)]="itemEdit.role" #role="ngModel" required>
+              <ng-template ngFor let-i [ngForOf]="itemEdit.roleList" let-n="index">
+                <option value=""></option>
+                <option [ngValue]="i.value" [disabled]="i.disabled">{{i.text}}</option>
+              </ng-template>
+            </select>
+            <div *ngIf="role.invalid">
+              <p *ngIf="role.errors.required" class="validation-text">
+                {{_localizer.localizeWithValues("RequiredX", _localizer.localize("Role"))}}
+              </p>
+            </div>
+          </div>
+          <div class="form-group col-sm-10">
+            <button class="btn btn-default" (click)="saveEditModel()" [disabled]="editForm.invalid">{{_localizer.localize("Save")}}</button>
+          </div>
+        </form>
+        <div style="clear:both"></div>
+      </div>
+    </td>
+  </tr>
+</ng-template>
+
+<ng-template #create>
+  <div>
+    <form #createForm="ngForm">
+      <div class="form-group col-sm-3">
+        <label>{{_localizer.localize("LoginLabel")}} *</label>
+        <input class="form-control" name="userName" [(ngModel)]="itemCreate.userName" #userName="ngModel" type="text" required pattern="^[a-zA-Z0-9]*$" />
+        <div *ngIf="userName.invalid">
+          <p *ngIf="userName.errors.required" class="validation-text">
+            {{_localizer.localizeWithValues("RequiredX",_localizer.localize("LoginLabel"))}}
+          </p>
+          <p *ngIf="userName.errors.pattern" class="validation-text">
+            {{_localizer.localizeWithValues("OnlyENDigitsAndLettersAllowed")}}
+          </p>
+        </div>
+      </div>
+      <div class="form-group col-sm-3">
+        <label>{{_localizer.localize("PasswordLabel")}}*</label>
+        <input class="form-control" name="password" [(ngModel)]="itemCreate.password" #password="ngModel" type="password" required />
+        <div *ngIf="password.invalid">
+          <p *ngIf="password.errors.required" class="validation-text">
+            {{_localizer.localizeWithValues("RequiredX",_localizer.localize("PasswordLabel"))}}
+          </p>
+        </div>
+      </div>
+      <div class="form-group col-sm-3">
+        <label>{{_localizer.localize("Phone")}}</label>
+        <input class="form-control" name="phone" [(ngModel)]="itemCreate.phone" #phone="ngModel" type="text" pattern="^[0-9\s]*$" />
+        <div *ngIf="phone.touched && phone.invalid">
+          <p *ngIf="phone.errors.pattern" class="validation-text">
+            {{_localizer.localize("OnlyDigitsAllowed")}}
+          </p>
+        </div>
+      </div>
+      <div class="form-group col-sm-3">
+        <label>{{_localizer.localize("Role")}}</label>
+        <select class="form-control" name="role" [(ngModel)]="itemCreate.role" #role="ngModel" required>
+          <ng-template ngFor let-i [ngForOf]="itemCreate.roleList" let-n="index">
+            <option value=""></option>
+            <option [ngValue]="i.value" [disabled]="i.disabled">{{i.text}}</option>
+          </ng-template>
+        </select>
+        <div *ngIf="role.invalid">
+          <p *ngIf="role.errors.required" class="validation-text">
+            {{_localizer.localizeWithValues("RequiredX", _localizer.localize("Role"))}}
+          </p>
+        </div>
+      </div>
+      <div class="form-group col-sm-10">
+        <button class="btn btn-default" (click)="saveCreateModel()" [disabled]="createForm.invalid">{{_localizer.localize("Save")}}</button>
+      </div>
+    </form>
+    <div style="clear:both"></div>
+  </div>
+</ng-template>

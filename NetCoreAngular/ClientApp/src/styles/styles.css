@@ -1,0 +1,59 @@
+/* You can add global styles to this file, and also import other style files */
+
+/* Provide sufficient contrast against white background */
+a {
+  cursor: pointer;
+}
+
+.btn {
+  margin: 0px 5px;
+}
+
+.pagination span {
+  padding: 5px;
+}
+
+.validation-text {
+  color: red;
+}
+
+.edit-div {
+  border: 1px solid grey;
+  padding: 10px;
+}
+
+.filter {
+  border: 1px solid grey;
+  padding: 10px;
+}
+
+.message {
+  margin-top: 10px;
+  color: deepskyblue;
+}
+
+.grid {
+  padding: 10px;
+}
+
+  .grid tr {
+    background-color: white;
+  }
+
+    .grid tr.edit-row {
+      background-color: white !important;
+    }
+
+    .grid tr:hover {
+      background-color: lightgrey;
+    }
+
+.create-new {
+  margin-top: 10px;
+}
+
+  .create-new > div {
+    border: 1px solid grey;
+    padding: 10px;
+  }
+
