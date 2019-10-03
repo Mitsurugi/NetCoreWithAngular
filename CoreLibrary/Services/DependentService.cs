@@ -109,7 +109,7 @@ namespace CoreLibrary
             await _repository.SaveChangesAsync();
         }
 
-        public virtual async Task<List<TGrid>> GetGridAsync(int pageSize, int pageNumber, TParentKey parentId, string orderBy, TFilter filter, string searchString)
+        public virtual async Task<List<TGrid>> GetGridAsync(int pageSize, int pageNumber, TParentKey parentId, string orderBy, TFilter filter)
         {
             if (pageNumber < 1)
                 pageNumber = 1;
@@ -118,17 +118,15 @@ namespace CoreLibrary
 
             var query = ApplyFilter(GetQueryNoTracking(parentId), filter);
             query = ApplySorting(query, orderBy);
-            query = ApplySearch(query, searchString);
 
             var grid = await query.Skip(pageSize * (pageNumber - 1)).Take(pageSize).ProjectTo<TGrid>(_mapper.ConfigurationProvider).ToListAsync(_cancellationToken);
             grid = await FillGridModelAsync(grid, parentId);
             return grid;
         }
 
-        public virtual async Task<int> GetPagesCountAsync(int pageSize, TParentKey parentId, TFilter filter, string searchString)
+        public virtual async Task<int> GetPagesCountAsync(int pageSize, TParentKey parentId, TFilter filter)
         {
             var query = ApplyFilter(GetQueryNoTracking(parentId), filter);
-            query = ApplySearch(query, searchString);
 
             var count = await query.CountAsync(_cancellationToken);
 
@@ -144,11 +142,10 @@ namespace CoreLibrary
             return await FillFilterModelAsync(new TFilter(), parentId);
         }
 
-        public virtual async Task<byte[]> GetExcelExportAsync(TParentKey parentId, string orderBy, TFilter filter, string searchString)
+        public virtual async Task<byte[]> GetExcelExportAsync(TParentKey parentId, string orderBy, TFilter filter)
         {
             var query = ApplyFilter(GetQueryNoTracking(parentId), filter);
             query = ApplySorting(query, orderBy);
-            query = ApplySearch(query, searchString);
             var grid = await query.ProjectTo<TGrid>(_mapper.ConfigurationProvider).ToListAsync(_cancellationToken);
             grid = await FillGridModelAsync(grid, parentId);
 
@@ -396,11 +393,6 @@ namespace CoreLibrary
         }
 
         protected virtual IQueryable<TEntity> ApplyFilter(IQueryable<TEntity> query, TFilter filter)
-        {
-            return query;
-        }
-
-        protected virtual IQueryable<TEntity> ApplySearch(IQueryable<TEntity> query, string searchString)
         {
             return query;
         }

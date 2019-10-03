@@ -43,12 +43,12 @@ namespace CoreLibrary
         }
 
         [HttpGet]
-        public virtual async Task<ActionResult<int>> GetPagesCount([FromQuery] TParentKey parentId, [FromQuery] int? pageSize = null, [FromQuery] TFilter filter = null, [FromQuery] string searchString = null)
+        public virtual async Task<ActionResult<int>> GetPagesCount([FromQuery] TParentKey parentId, [FromQuery] int? pageSize = null, [FromQuery] TFilter filter = null)
         {
             try
             {
                 if (!pageSize.HasValue) pageSize = _pageSize;
-                return await _service.GetPagesCountAsync(pageSize.Value, parentId, filter, searchString);
+                return await _service.GetPagesCountAsync(pageSize.Value, parentId, filter);
             }
             catch (Exception ex)
             {
@@ -57,13 +57,13 @@ namespace CoreLibrary
         }
 
         [HttpGet]
-        public virtual async Task<ActionResult<List<TGrid>>> GetGrid([FromQuery] TParentKey parentId, [FromQuery] int pageNumber, [FromQuery] int? pageSize = null, [FromQuery] string orderBy = null, [FromQuery] TFilter filter = null, [FromQuery] string searchString = null)
+        public virtual async Task<ActionResult<List<TGrid>>> GetGrid([FromQuery] TParentKey parentId, [FromQuery] int pageNumber, [FromQuery] int? pageSize = null, [FromQuery] string orderBy = null, [FromQuery] TFilter filter = null)
         {
             if (!pageSize.HasValue) pageSize = _pageSize;
 
             try
             {
-                return await _service.GetGridAsync(pageSize.Value, pageNumber, parentId, orderBy, filter, searchString);
+                return await _service.GetGridAsync(pageSize.Value, pageNumber, parentId, orderBy, filter);
             }
             catch (Exception ex)
             {
@@ -178,11 +178,11 @@ namespace CoreLibrary
         }
 
         [HttpGet]
-        public virtual async Task<IActionResult> GetExcelExport([FromQuery] TParentKey parentId, [FromQuery] string orderBy = null, [FromQuery] TFilter filter = null, [FromQuery] string searchString = null)
+        public virtual async Task<IActionResult> GetExcelExport([FromQuery] TParentKey parentId, [FromQuery] string orderBy = null, [FromQuery] TFilter filter = null)
         {
             try
             {
-                byte[] reportData = await _service.GetExcelExportAsync(parentId, orderBy, filter, searchString);
+                byte[] reportData = await _service.GetExcelExportAsync(parentId, orderBy, filter);
                 return File(reportData, "application/vnd.openxmlformat");
             }
             catch (Exception ex)

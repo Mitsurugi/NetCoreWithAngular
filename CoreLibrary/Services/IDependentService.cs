@@ -32,9 +32,9 @@ namespace CoreLibrary
         IQueryable<TEntity> GetQueryWithTracking(TParentKey parentId);
         Task<TCreate> GetCreateModelAsync(TParentKey parentId);
         Task<TEdit> GetEditModelAsync(TKey id, TParentKey parentId);
-        Task<int> GetPagesCountAsync(int pageSize, TParentKey parentId, TFilter filter, string searchString);
-        Task<List<TGrid>> GetGridAsync(int pageSize, int pageNumber, TParentKey parentId, string orderBy, TFilter filter, string searchString);
-        Task<byte[]> GetExcelExportAsync(TParentKey parentId, string orderBy, TFilter filter, string searchString);
+        Task<int> GetPagesCountAsync(int pageSize, TParentKey parentId, TFilter filter);
+        Task<List<TGrid>> GetGridAsync(int pageSize, int pageNumber, TParentKey parentId, string orderBy, TFilter filter);
+        Task<byte[]> GetExcelExportAsync(TParentKey parentId, string orderBy, TFilter filter);
         Task ImportAsync(TParentKey parentId, Stream file);
         Task DeleteAsync(TKey id, TParentKey parentId);
         Task DeleteAsync(TKey[] ids, TParentKey parentId);

@@ -29,10 +29,10 @@ namespace CoreLibrary
         Task<TEdit> GetEditModelAsync(TKey id);
         Task DeleteAsync(TKey id);
         Task DeleteAsync(TKey[] ids);
-        Task<int> GetPagesCountAsync(int pageSize, TFilter filter, string searchSting);
-        Task<List<TGrid>> GetGridAsync(int pageSize, int pageNumber, string orderBy, TFilter filter, string searchSting);
+        Task<int> GetPagesCountAsync(int pageSize, TFilter filter);
+        Task<List<TGrid>> GetGridAsync(int pageSize, int pageNumber, string orderBy, TFilter filter);
         Task<TFilter> GetFilterModelAsync();
-        Task<byte[]> GetExcelExportAsync(string orderBy, TFilter filter, string searchString);
+        Task<byte[]> GetExcelExportAsync(string orderBy, TFilter filter);
         Task<byte[]> GetImportTemplateAsync();
         Task ImportAsync(Stream file);
     }
