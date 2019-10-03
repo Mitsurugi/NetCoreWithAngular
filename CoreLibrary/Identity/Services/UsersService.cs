@@ -497,106 +497,11 @@ namespace CoreLibrary.Identity
 
         protected virtual IQueryable<TEntity> ApplyFilter(IQueryable<TEntity> query, TFilter filter)
         {
-            if (filter == null)
-            {
-                return query;
-            }
-
-            var filterProperties = typeof(TFilter).GetProperties();
-            var entityProperties = typeof(TEntity).GetProperties();
-            foreach (var prop in filterProperties)
-            {
-                var value = prop.GetValue(filter);
-                if (value == null || !entityProperties.Any(i => i.Name == prop.Name)) continue;
-                if (value.Equals(Activator.CreateInstance(prop.PropertyType))) continue;
-
-                var t = prop.PropertyType;
-                if (t.IsGenericType && t.GetGenericTypeDefinition() == typeof(Nullable<>))
-                {
-                    t = Nullable.GetUnderlyingType(prop.PropertyType);
-                }
-
-                if (t.IsPrimitive || t == typeof(DateTime))
-                {
-                    query = query.Where(i => EF.Property<object>(i, prop.Name).Equals(value));
-                    continue;
-                }
-                if (t == typeof(string))
-                {
-                    if (string.IsNullOrEmpty((string)value)) continue;
-                    query = query.Where(i => EF.Property<string>(i, prop.Name).Contains((string)value, StringComparison.InvariantCultureIgnoreCase));
-                }
-                if (t.IsEnum)
-                {
-                    query = query.Where(i => Enum.Equals(EF.Property<object>(i, prop.Name), value));
-                    continue;
-                }
-            }
-
             return query;
         }
 
         protected virtual IQueryable<TEntity> ApplySearch(IQueryable<TEntity> query, string searchString)
         {
-            if (string.IsNullOrEmpty(searchString))
-            {
-                return query;
-            }
-
-            searchString = searchString.Trim();
-
-            string[] keyWords = searchString.Split(' ', options: StringSplitOptions.RemoveEmptyEntries);
-
-            var entityProperties = typeof(TEntity).GetProperties();
-            foreach (var prop in entityProperties)
-            {
-                var t = prop.PropertyType;
-                if (t.IsGenericType && t.GetGenericTypeDefinition() == typeof(Nullable<>))
-                {
-                    t = Nullable.GetUnderlyingType(prop.PropertyType);
-                }
-
-                if (t == typeof(string))
-                {
-                    query = query.Where(i => keyWords.Any(x => EF.Property<string>(i, prop.Name).Contains(x, StringComparison.InvariantCultureIgnoreCase)));
-                    continue;
-                }
-                if (t.IsPrimitive || t == typeof(DateTime))
-                {
-                    var keyValues = new List<object>();
-                    foreach (var w in keyWords)
-                    {
-                        try
-                        {
-                            object val = t.GetMethod("Parse", new[] { typeof(string) }).Invoke(null, new object[] { w });
-                            keyValues.Add(val);
-                        }
-                        catch { }
-                    }
-                    if (keyValues.Any())
-                    {
-                        query = query.Where(i => keyValues.Any(x => EF.Property<object>(i, prop.Name).Equals(x)));
-                    }
-                }
-                if (t.IsEnum)
-                {
-                    var keyValues = new List<object>();
-                    foreach (var w in keyWords)
-                    {
-                        try
-                        {
-                            object val = Enum.Parse(t, w);
-                            keyValues.Add(val);
-                        }
-                        catch { }
-                    }
-                    if (keyValues.Any())
-                    {
-                        query = query.Where(i => keyValues.Any(x => Enum.Equals(EF.Property<object>(i, prop.Name), x)));
-                    }
-                }
-            }
-
             return query;
         }
 

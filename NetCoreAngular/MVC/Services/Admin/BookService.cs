@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using CoreLibrary;
 using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Localization;
 using NetCoreAngular.Models;
 using NetCoreAngular.ViewModels;
@@ -46,6 +47,19 @@ namespace NetCoreAngular.Services
         {
             model.ForEach(i => i.GenreName = _localizer[$"{i.Genre.GetType().Name}.{i.Genre}"]);
             return model;
+        }
+
+        protected override IQueryable<Book> ApplyFilter(IQueryable<Book> query, BookFilterModel filter)
+        {
+            if (!string.IsNullOrEmpty(filter.Author))
+                query = query.Where(i => EF.Functions.Like(i.Author, $"%{filter.Author}%"));
+            if (filter.Genre.HasValue)
+                query = query.Where(i => i.Genre == filter.Genre);
+            if (filter.PageCount.HasValue)
+                query = query.Where(i => i.PageCount == filter.PageCount);
+            if (!string.IsNullOrEmpty(filter.Title))
+                query = query.Where(i => EF.Functions.Like(i.Title, $"%{filter.Title}%"));
+            return query;
         }
     }
 }

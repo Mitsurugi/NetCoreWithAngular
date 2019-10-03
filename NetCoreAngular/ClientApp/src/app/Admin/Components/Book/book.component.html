@@ -1,214 +1,215 @@
 <h2>{{_localizer.localize("Books")}}</h2>
 <div class="create-new">
-    <button class="btn btn-default" (click)="toggleCreate()">{{_localizer.localize("Create")}}</button>
-    <button class="btn btn-default" (click)="toggleImport()">{{_localizer.localize("ImportButton")}}</button>
-    <div *ngIf="isShowCreate && itemCreate; then create"></div>
-    <div *ngIf="isShowImport; then import"></div>
+  <button class="btn btn-default" (click)="toggleCreate()">{{_localizer.localize("Create")}}</button>
+  <button class="btn btn-default" (click)="toggleImport()">{{_localizer.localize("ImportButton")}}</button>
+  <div *ngIf="isShowCreate && itemCreate; then create"></div>
+  <div *ngIf="isShowImport; then import"></div>
 </div>
 <div class="grid" *ngIf="!items?.length">{{_localizer.localize("NoData")}}</div>
 <div class="grid" *ngIf="items?.length">
-    <button class="btn btn-default" (click)="getExcelExport()">{{_localizer.localize("ExcelExport")}}</button>
-    <table class="table">
-        <thead>
-            <tr>
-                <th>{{_localizer.localize("Id")}}</th>
-                <th>{{_localizer.localize("Book.Title")}}</th>
-                <th>{{_localizer.localize("Book.Author")}}</th>
-                <th>{{_localizer.localize("Book.Genre")}}</th>
-                <th>{{_localizer.localize("Book.PageCount")}}</th>
-                <th></th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            <ng-template ngFor let-i [ngForOf]="items" let-n="index">
-                <tr>
-                    <td>
-                        {{i.id}}
-                    </td>
-                    <td>
-                        {{i.title}}
-                    </td>
-                    <td>
-                        {{i.author}}
-                    </td>
-                    <td>
-                        {{i.genreName}}
-                    </td>
-                    <td>
-                        {{i.pageCount}}
-                    </td>
-                    <td>
-                        <button class="btn btn-default" (click)="toggleEdit(i.id)" *ngIf="showEditId != i.id">{{_localizer.localize("Edit")}}</button>
-                        <button class="btn btn-default" (click)="toggleEdit(i.id)" *ngIf="showEditId == i.id">{{_localizer.localize("Cancel")}}</button>
-                    </td>
-                    <td>
-                        <button class="btn btn-default" (click)="delete(i.id)">{{_localizer.localize("Delete")}}</button>
-                    </td>
-                </tr>
-                <tr *ngIf="showEditId==i.id && itemEdit; then edit"></tr>
-            </ng-template>
-        </tbody>
-    </table>
-    <div class="pagination">
-        <button class="btn btn-default" (click)="prevPage()" [disabled]="currentPage < 2">{{_localizer.localize("PrevPage")}}</button>
-        <span>{{_localizer.localize("Page")}} <input name="currentPage" [(ngModel)]="currentPage" type="number" required (change)="reloadGrid()" style="width:100px;" /> {{_localizer.localize("PageOf")}} {{totalPages}}</span>
-        <button class="btn btn-default" (click)="nextPage()" [disabled]="currentPage >= totalPages">{{_localizer.localize("NextPage")}}</button>
-    </div>    
+  <button class="btn btn-default" (click)="getExcelExport()">{{_localizer.localize("ExcelExport")}}</button>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>{{_localizer.localize("Id")}}</th>
+        <th>{{_localizer.localize("Book.Title")}}</th>
+        <th>{{_localizer.localize("Book.Author")}}</th>
+        <th>{{_localizer.localize("Book.Genre")}}</th>
+        <th>{{_localizer.localize("Book.PageCount")}}</th>
+        <th></th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <ng-template ngFor let-i [ngForOf]="items" let-n="index">
+        <tr>
+          <td>
+            {{i.id}}
+          </td>
+          <td>
+            {{i.title}}
+          </td>
+          <td>
+            {{i.author}}
+          </td>
+          <td>
+            {{i.genreName}}
+          </td>
+          <td>
+            {{i.pageCount}}
+          </td>
+          <td>
+            <button class="btn btn-default" (click)="toggleEdit(i.id)" *ngIf="showEditId != i.id">{{_localizer.localize("Edit")}}</button>
+            <button class="btn btn-default" (click)="toggleEdit(i.id)" *ngIf="showEditId == i.id">{{_localizer.localize("Cancel")}}</button>
+          </td>
+          <td>
+            <button class="btn btn-default" (click)="delete(i.id)">{{_localizer.localize("Delete")}}</button>
+          </td>
+        </tr>
+        <tr *ngIf="showEditId==i.id && itemEdit; then edit"></tr>
+      </ng-template>
+    </tbody>
+  </table>
+  <div class="pagination">
+    <button class="btn btn-default" (click)="prevPage()" [disabled]="currentPage < 2">{{_localizer.localize("PrevPage")}}</button>
+    <span>{{_localizer.localize("Page")}} <input name="currentPage" [(ngModel)]="currentPage" type="number" required (change)="reloadGrid()" style="width:100px;" /> {{_localizer.localize("PageOf")}} {{totalPages}}</span>
+    <button class="btn btn-default" (click)="nextPage()" [disabled]="currentPage >= totalPages">{{_localizer.localize("NextPage")}}</button>
+  </div>
 </div>
 <div class="filter" *ngIf="filter">
-    <h3>{{_localizer.localize("Filter")}}</h3>
-    <form #filterForm="ngForm">
-        <div class="form-group col-sm-3">
-            <label>{{_localizer.localize("Book.Title")}}</label>
-            <input class="form-control" name="title" [(ngModel)]="filter.title" #title="ngModel" type="text" />
-        </div>
-        <div class="form-group col-sm-3">
-            <label>{{_localizer.localize("Book.Author")}}</label>
-            <input class="form-control" name="author" [(ngModel)]="filter.author" #author="ngModel" type="text" pattern="^[a-zA-Z\s]*$" />
-            <div *ngIf="author.touched && author.invalid">
-                <p *ngIf="author.errors.pattern" class="validation-text">
-                    {{_localizer.localize("OnlyLettersAllowed")}}
-                </p>
-            </div>
-        </div>
-        <div class="form-group col-sm-3">
-            <label>{{_localizer.localize("Book.Genre")}}</label>
-            <select class="form-control" name="genre" [(ngModel)]="filter.genre" #genre="ngModel">
-                <ng-template ngFor let-i [ngForOf]="filter.genreList" let-n="index">
-                    <option [ngValue]="i.value" [disabled]="i.disabled">{{i.text}}</option>
-                </ng-template>
-            </select>
-        </div>
-        <div class="form-group col-sm-3">
-            <label>{{_localizer.localize("Book.PageCount")}}</label>
-            <input class="form-control" name="pageCount" [(ngModel)]="filter.pageCount" #pageCount="ngModel" type="number" />
-        </div>
-        <div class="form-group col-sm-5">
-            <button class="btn btn-default" (click)="reloadGrid()" [disabled]="filterForm.invalid">{{_localizer.localize("Apply")}}</button>
-            <button class="btn btn-default" (click)="clearFilter()" [disabled]="filterForm.invalid">{{_localizer.localize("ClearFilter")}}</button>
-        </div>
-    </form>
-    <div style="clear:both"></div>
+  <h3>{{_localizer.localize("Filter")}}</h3>
+  <form #filterForm="ngForm">
+    <div class="form-group col-sm-3">
+      <label>{{_localizer.localize("Book.Title")}}</label>
+      <input class="form-control" name="title" [(ngModel)]="filter.title" #title="ngModel" type="text" />
+    </div>
+    <div class="form-group col-sm-3">
+      <label>{{_localizer.localize("Book.Author")}}</label>
+      <input class="form-control" name="author" [(ngModel)]="filter.author" #author="ngModel" type="text" pattern="^[a-zA-Z\s]*$" />
+      <div *ngIf="author.touched && author.invalid">
+        <p *ngIf="author.errors.pattern" class="validation-text">
+          {{_localizer.localize("OnlyLettersAllowed")}}
+        </p>
+      </div>
+    </div>
+    <div class="form-group col-sm-3">
+      <label>{{_localizer.localize("Book.Genre")}}</label>
+      <select class="form-control" name="genre" [(ngModel)]="filter.genre" #genre="ngModel">
+        <option value=""></option>
+        <ng-template ngFor let-i [ngForOf]="filter.genreList" let-n="index">
+          <option [ngValue]="i.value" [disabled]="i.disabled">{{i.text}}</option>
+        </ng-template>
+      </select>
+    </div>
+    <div class="form-group col-sm-3">
+      <label>{{_localizer.localize("Book.PageCount")}}</label>
+      <input class="form-control" name="pageCount" [(ngModel)]="filter.pageCount" #pageCount="ngModel" type="number" />
+    </div>
+    <div class="form-group col-sm-5">
+      <button class="btn btn-default" (click)="reloadGrid()" [disabled]="filterForm.invalid">{{_localizer.localize("Apply")}}</button>
+      <button class="btn btn-default" (click)="clearFilter()" [disabled]="filterForm.invalid">{{_localizer.localize("ClearFilter")}}</button>
+    </div>
+  </form>
+  <div style="clear:both"></div>
 </div>
 
 <ng-template #import>
-    <div>
-        <div class="form-group col-sm-2">
-            <input type="file" (change)="setImportFile($event.target.files[0])" />
-        </div>
-        <div class="form-group col-sm-1">
-            <a (click)="getImportTemplate()">{{_localizer.localize("ImportTemplate")}}</a>
-        </div>
-        <div style="clear:both"></div>
-        <div class="form-group col-sm-10">
-            <button class="btn btn-default" (click)="importPost()">{{_localizer.localize("ImportSubmit")}}</button>
-        </div>
-        <div class="form-group col-sm-10">
-            {{_importResult}}
-        </div>
-        <div style="clear:both"></div>
+  <div>
+    <div class="form-group col-sm-2">
+      <input type="file" (change)="setImportFile($event.target.files[0])" />
     </div>
+    <div class="form-group col-sm-1">
+      <a (click)="getImportTemplate()">{{_localizer.localize("ImportTemplate")}}</a>
+    </div>
+    <div style="clear:both"></div>
+    <div class="form-group col-sm-10">
+      <button class="btn btn-default" (click)="importPost()">{{_localizer.localize("ImportSubmit")}}</button>
+    </div>
+    <div class="form-group col-sm-10">
+      {{_importResult}}
+    </div>
+    <div style="clear:both"></div>
+  </div>
 </ng-template>
 
 <ng-template #edit>
-    <tr class="edit-row">
-        <td colspan="7">
-            <div class="edit-div">
-                <form #editForm="ngForm">
-                    <div class="form-group col-sm-3">
-                        <label>{{_localizer.localize("Book.Title")}} *</label>
-                        <input class="form-control" name="title" [(ngModel)]="itemEdit.title" #title="ngModel" type="text" required />
-                        <div *ngIf="title.invalid">
-                            <p *ngIf="title.errors.required" class="validation-text">
-                                {{_localizer.localizeWithValues("RequiredX",_localizer.localize("Book.Title"))}}
-                            </p>
-                        </div>
-                    </div>
-                    <div class="form-group col-sm-3">
-                        <label>{{_localizer.localize("Book.Author")}} *</label>
-                        <input class="form-control" name="author" [(ngModel)]="itemEdit.author" #author="ngModel" type="text" required pattern="^[a-zA-Z\s]*$" />
-                        <div *ngIf="author.invalid">
-                            <p *ngIf="author.errors.required" class="validation-text">
-                                {{_localizer.localizeWithValues("RequiredX",_localizer.localize("Book.Author"))}}
-                            </p>
-                            <p *ngIf="author.errors.pattern" class="validation-text">
-                                {{_localizer.localize("OnlyLettersAllowed")}}
-                            </p>
-                        </div>
-                    </div>
-                    <div class="form-group col-sm-3">
-                        <label>{{_localizer.localize("Book.Genre")}}</label>
-                        <select class="form-control" name="genre" [(ngModel)]="itemEdit.genre" #genre="ngModel">
-                            <ng-template ngFor let-i [ngForOf]="itemEdit.genreList" let-n="index">
-                                <option [ngValue]="i.value" [disabled]="i.disabled">{{i.text}}</option>
-                            </ng-template>
-                        </select>
-                    </div>
-                    <div class="form-group col-sm-3">
-                        <label>{{_localizer.localize("Book.PageCount")}} *</label>
-                        <input class="form-control" name="pageCount" [(ngModel)]="itemEdit.pageCount" #pageCount="ngModel" type="text" required />
-                        <div *ngIf="pageCount.invalid">
-                            <p *ngIf="pageCount.errors.required" class="validation-text">
-                                {{_localizer.localizeWithValues("RequiredX",_localizer.localize("Book.PageCount"))}}
-                            </p>
-                        </div>
-                    </div>
-                    <div class="form-group col-sm-10">
-                        <button class="btn btn-default" (click)="saveEditModel()" [disabled]="editForm.invalid">{{_localizer.localize("Save")}}</button>
-                    </div>
-                </form>
-                <div style="clear:both"></div>
+  <tr class="edit-row">
+    <td colspan="7">
+      <div class="edit-div">
+        <form #editForm="ngForm">
+          <div class="form-group col-sm-3">
+            <label>{{_localizer.localize("Book.Title")}} *</label>
+            <input class="form-control" name="title" [(ngModel)]="itemEdit.title" #title="ngModel" type="text" required />
+            <div *ngIf="title.invalid">
+              <p *ngIf="title.errors.required" class="validation-text">
+                {{_localizer.localizeWithValues("RequiredX",_localizer.localize("Book.Title"))}}
+              </p>
             </div>
-        </td>
-    </tr>
+          </div>
+          <div class="form-group col-sm-3">
+            <label>{{_localizer.localize("Book.Author")}} *</label>
+            <input class="form-control" name="author" [(ngModel)]="itemEdit.author" #author="ngModel" type="text" required pattern="^[a-zA-Z\s]*$" />
+            <div *ngIf="author.invalid">
+              <p *ngIf="author.errors.required" class="validation-text">
+                {{_localizer.localizeWithValues("RequiredX",_localizer.localize("Book.Author"))}}
+              </p>
+              <p *ngIf="author.errors.pattern" class="validation-text">
+                {{_localizer.localize("OnlyLettersAllowed")}}
+              </p>
+            </div>
+          </div>
+          <div class="form-group col-sm-3">
+            <label>{{_localizer.localize("Book.Genre")}}</label>
+            <select class="form-control" name="genre" [(ngModel)]="itemEdit.genre" #genre="ngModel">
+              <ng-template ngFor let-i [ngForOf]="itemEdit.genreList" let-n="index">
+                <option [ngValue]="i.value" [disabled]="i.disabled">{{i.text}}</option>
+              </ng-template>
+            </select>
+          </div>
+          <div class="form-group col-sm-3">
+            <label>{{_localizer.localize("Book.PageCount")}} *</label>
+            <input class="form-control" name="pageCount" [(ngModel)]="itemEdit.pageCount" #pageCount="ngModel" type="text" required />
+            <div *ngIf="pageCount.invalid">
+              <p *ngIf="pageCount.errors.required" class="validation-text">
+                {{_localizer.localizeWithValues("RequiredX",_localizer.localize("Book.PageCount"))}}
+              </p>
+            </div>
+          </div>
+          <div class="form-group col-sm-10">
+            <button class="btn btn-default" (click)="saveEditModel()" [disabled]="editForm.invalid">{{_localizer.localize("Save")}}</button>
+          </div>
+        </form>
+        <div style="clear:both"></div>
+      </div>
+    </td>
+  </tr>
 </ng-template>
 
 <ng-template #create>
-    <div>
-        <form #createForm="ngForm">
-            <div class="form-group col-sm-3">
-                <label>{{_localizer.localize("Book.Title")}} *</label>
-                <input class="form-control" name="title" [(ngModel)]="itemCreate.title" #title="ngModel" type="text" required />
-                <div *ngIf="title.touched && title.invalid">
-                    <p *ngIf="title.errors.required" class="validation-text">
-                        {{_localizer.localizeWithValues("RequiredX",_localizer.localize("Book.Title"))}}
-                    </p>
-                </div>
-            </div>
-            <div class="form-group col-sm-3">
-                <label>{{_localizer.localize("Book.Author")}} *</label>
-                <input class="form-control" name="author" [(ngModel)]="itemCreate.author" #author="ngModel" type="text" required pattern="^[a-zA-Z\s]*$" />
-                <div *ngIf="author.touched && author.invalid">
-                    <p *ngIf="author.errors.required" class="validation-text">
-                        {{_localizer.localizeWithValues("RequiredX",_localizer.localize("Book.Author"))}}
-                    </p>
-                    <p *ngIf="author.errors.pattern" class="validation-text">
-                        {{_localizer.localize("OnlyLettersAllowed")}}
-                    </p>
-                </div>
-            </div>
-            <div class="form-group col-sm-3">
-                <label>{{_localizer.localize("Book.Genre")}}</label>
-                <select class="form-control" name="genre" [(ngModel)]="itemCreate.genre" #genre="ngModel">
-                    <ng-template ngFor let-i [ngForOf]="itemCreate.genreList" let-n="index">
-                        <option [ngValue]="i.value" [disabled]="i.disabled">{{i.text}}</option>
-                    </ng-template>
-                </select>
-            </div>
-            <div class="form-group col-sm-3">
-                <label>{{_localizer.localize("Book.PageCount")}} *</label>
-                <input class="form-control" name="pageCount" [(ngModel)]="itemCreate.pageCount" #pageCount="ngModel" type="number" required />
-                <div *ngIf="pageCount.touched && pageCount.invalid">
-                    <p *ngIf="pageCount.errors.required" class="validation-text">
-                        {{_localizer.localizeWithValues("RequiredX",_localizer.localize("Book.PageCount"))}}
-                    </p>
-                </div>
-            </div>
-            <div class="form-group col-sm-10">
-                <button class="btn btn-default" (click)="saveCreateModel()" [disabled]="createForm.invalid">{{_localizer.localize("Save")}}</button>
-            </div>
-        </form>
-        <div style="clear:both"></div>
-    </div>
+  <div>
+    <form #createForm="ngForm">
+      <div class="form-group col-sm-3">
+        <label>{{_localizer.localize("Book.Title")}} *</label>
+        <input class="form-control" name="title" [(ngModel)]="itemCreate.title" #title="ngModel" type="text" required />
+        <div *ngIf="title.touched && title.invalid">
+          <p *ngIf="title.errors.required" class="validation-text">
+            {{_localizer.localizeWithValues("RequiredX",_localizer.localize("Book.Title"))}}
+          </p>
+        </div>
+      </div>
+      <div class="form-group col-sm-3">
+        <label>{{_localizer.localize("Book.Author")}} *</label>
+        <input class="form-control" name="author" [(ngModel)]="itemCreate.author" #author="ngModel" type="text" required pattern="^[a-zA-Z\s]*$" />
+        <div *ngIf="author.touched && author.invalid">
+          <p *ngIf="author.errors.required" class="validation-text">
+            {{_localizer.localizeWithValues("RequiredX",_localizer.localize("Book.Author"))}}
+          </p>
+          <p *ngIf="author.errors.pattern" class="validation-text">
+            {{_localizer.localize("OnlyLettersAllowed")}}
+          </p>
+        </div>
+      </div>
+      <div class="form-group col-sm-3">
+        <label>{{_localizer.localize("Book.Genre")}}</label>
+        <select class="form-control" name="genre" [(ngModel)]="itemCreate.genre" #genre="ngModel">
+          <ng-template ngFor let-i [ngForOf]="itemCreate.genreList" let-n="index">
+            <option [ngValue]="i.value" [disabled]="i.disabled">{{i.text}}</option>
+          </ng-template>
+        </select>
+      </div>
+      <div class="form-group col-sm-3">
+        <label>{{_localizer.localize("Book.PageCount")}} *</label>
+        <input class="form-control" name="pageCount" [(ngModel)]="itemCreate.pageCount" #pageCount="ngModel" type="number" required />
+        <div *ngIf="pageCount.touched && pageCount.invalid">
+          <p *ngIf="pageCount.errors.required" class="validation-text">
+            {{_localizer.localizeWithValues("RequiredX",_localizer.localize("Book.PageCount"))}}
+          </p>
+        </div>
+      </div>
+      <div class="form-group col-sm-10">
+        <button class="btn btn-default" (click)="saveCreateModel()" [disabled]="createForm.invalid">{{_localizer.localize("Save")}}</button>
+      </div>
+    </form>
+    <div style="clear:both"></div>
+  </div>
 </ng-template>
