@@ -1,4 +1,4 @@
-﻿import { Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CoreService } from '../Services/core.service';
 import { IEntity } from '../Models/IEntity'
 import { saveAs } from 'file-saver';
@@ -91,7 +91,7 @@ export class CoreComponent<TKey, TGrid extends IEntity<TKey>, TCreate extends IE
         var popup = this._snackBar.open(this._localizer.localize("Loading"));
         this.showEditId = null;
 
-        this._service.getPagesCount(this.pageSize, this.filter).pipe(finalize(() => { if (popup) popup.dismiss(); }), takeUntil(this._destroyed)).subscribe(
+        this._service.getPagesCount(this.pageSize, this.filter).pipe(takeUntil(this._destroyed)).subscribe(
             data => {
                 this.totalPages = data;
                 if (this.currentPage < 1) this.currentPage = 1;
@@ -291,7 +291,7 @@ export class CoreComponent<TKey, TGrid extends IEntity<TKey>, TCreate extends IE
         }
         else {
             var popup = this._snackBar.open(this._localizer.localize("Loading"));
-            this._service.import(this.importFile).pipe(finalize(() => { if (popup) popup.dismiss(); }), takeUntil(this._destroyed)).subscribe(
+            this._service.import(this.importFile).pipe(takeUntil(this._destroyed)).subscribe(
                 data => {
                     this.reloadGrid();
                     var popup = this._snackBar.open(this._localizer.localize("ImportSuccess"), null, { duration: 5000 });

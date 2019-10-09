@@ -1,4 +1,4 @@
-﻿import { Input, Component, OnInit } from '@angular/core';
+import { Input, Component, OnInit } from '@angular/core';
 import { DependentService } from '../Services/dependent.service';
 import { IDependentEntity } from '../Models/IDependentEntity';
 import { ActivatedRoute } from "@angular/router";
@@ -101,7 +101,7 @@ export class DependentComponent<TKey, TParentKey, TParentView, TGrid extends IDe
         var popup = this._snackBar.open(this._localizer.localize("Loading"));
         this.showEditId = null;
 
-        this._service.getPagesCount(this.pageSize, this.parentId, this.filter).pipe(finalize(() => { if (popup) popup.dismiss(); }), takeUntil(this._destroyed)).subscribe(
+        this._service.getPagesCount(this.pageSize, this.parentId, this.filter).pipe(takeUntil(this._destroyed)).subscribe(
             data => {
                 this.totalPages = data;
                 if (this.currentPage < 1) this.currentPage = 1;
@@ -301,7 +301,7 @@ export class DependentComponent<TKey, TParentKey, TParentView, TGrid extends IDe
         }
         else {
             var popup = this._snackBar.open(this._localizer.localize("Loading"));
-            this._service.import(this.parentId, this.importFile).pipe(finalize(() => { if (popup) popup.dismiss(); }), takeUntil(this._destroyed)).subscribe(
+            this._service.import(this.parentId, this.importFile).pipe(takeUntil(this._destroyed)).subscribe(
                 data => {
                     this.reloadGrid();
                     var popup = this._snackBar.open(this._localizer.localize("ImportSuccess"), null, { duration: 5000 });
