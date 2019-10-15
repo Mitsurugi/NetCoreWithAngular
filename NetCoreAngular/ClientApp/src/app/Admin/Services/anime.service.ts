@@ -6,9 +6,13 @@ import { FileService } from '../../Core/Services/file.service';
 import { Anime } from '../Models/Anime/anime';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { map } from "rxjs/operators";
+import { finalize, takeUntil } from 'rxjs/operators';
+import { Subject } from "rxjs";
 
 @Injectable()
 export class AnimeService extends CoreService<number, Anime> {
+
+    protected _destroyed: Subject<void> = new Subject();
 
     protected _fileService: FileService<number>;
     protected _sanitizer: DomSanitizer;
@@ -23,7 +27,7 @@ export class AnimeService extends CoreService<number, Anime> {
         return super.getGrid(pageNumber, pageSize, orderBy, filter).pipe(map(data => {
             data.forEach(i => {
                 if (i.imageId) {
-                    this._fileService.download(i.imageId).subscribe(data => {
+                    this._fileService.download(i.imageId).pipe(takeUntil(this._destroyed)).subscribe(data => {
                         let url = window.URL.createObjectURL(data);
                         i.imageUrl = this._sanitizer.bypassSecurityTrustResourceUrl(url);
                     });                    

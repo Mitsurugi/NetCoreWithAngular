@@ -1,4 +1,4 @@
-﻿import { Input, Component, OnInit } from '@angular/core';
+import { Input, Component, OnInit } from '@angular/core';
 import { CoreService } from '../Services/core.service';
 import { IEntity } from '../Models/IEntity'
 import { saveAs } from 'file-saver';
@@ -34,7 +34,7 @@ export class EditComponent<TKey, TGrid extends IEntity<TKey>, TCreate extends IE
         this._snackBar = snackBar;
 
         if (!this.id) {
-            route.params.subscribe(params => this.id = params['id']);
+            route.params.pipe(takeUntil(this._destroyed)).subscribe(params => this.id = params['id']);
         }
     }
 

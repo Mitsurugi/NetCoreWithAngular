@@ -1,4 +1,4 @@
-﻿import { Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { AccountService } from '../../Services/account.service';
 import { AccountGlobals } from '../../../Core/Account/AccountGlobals';
@@ -7,7 +7,8 @@ import { LoginModel } from '../../../Core/Account/loginModel';
 import { ChangePasswordModel } from '../../../Core/Account/changePasswordModel';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { from } from 'rxjs';
+import { finalize, takeUntil } from 'rxjs/operators';
+import { Subject } from "rxjs";
 
 @Component({
     selector: 'account',
@@ -16,6 +17,8 @@ import { from } from 'rxjs';
     providers: [AccountService]
 })
 export class AccountComponent implements OnInit {
+
+    protected _destroyed: Subject<void> = new Subject();
 
     protected _service: AccountService;
     protected _accGlobals: AccountGlobals;    
@@ -56,7 +59,7 @@ export class AccountComponent implements OnInit {
         }
         var popup = this._snackBar.open(this._localizer.localize("Loading"));
 
-        this._service.changePassword(this.changePasswordModel).subscribe(
+        this._service.changePassword(this.changePasswordModel).pipe(takeUntil(this._destroyed)).subscribe(
             data => { popup = this._snackBar.open(this._localizer.localize("PassChangeSuccess"), null, { duration: 5000 }); },
             e => {
                 if (popup) popup.dismiss();

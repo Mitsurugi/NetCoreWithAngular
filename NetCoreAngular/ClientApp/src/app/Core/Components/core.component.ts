@@ -181,7 +181,7 @@ export class CoreComponent<TKey, TGrid extends IEntity<TKey>, TCreate extends IE
             data: this._localizer.localize('DeleteConfirmation')
         });
 
-        dialogRef.afterClosed().subscribe(result => {
+        dialogRef.afterClosed().pipe(takeUntil(this._destroyed)).subscribe(result => {
             if (result) {
                 var popup = this._snackBar.open(this._localizer.localize("Loading"));
                 this._service.delete(id).pipe(finalize(() => { if (popup) popup.dismiss(); }), takeUntil(this._destroyed)).subscribe(
@@ -204,7 +204,7 @@ export class CoreComponent<TKey, TGrid extends IEntity<TKey>, TCreate extends IE
             data: this._localizer.localize('DeleteConfirmation')
         });
 
-        dialogRef.afterClosed().subscribe(result => {
+        dialogRef.afterClosed().pipe(takeUntil(this._destroyed)).subscribe(result => {
             if (result) {
                 var popup = this._snackBar.open(this._localizer.localize("Loading"));
                 this._service.deleteMany(this.checkedItems).pipe(finalize(() => { if (popup) popup.dismiss(); }), takeUntil(this._destroyed)).subscribe(

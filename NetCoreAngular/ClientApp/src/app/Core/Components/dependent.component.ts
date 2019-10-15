@@ -191,7 +191,7 @@ export class DependentComponent<TKey, TParentKey, TParentView, TGrid extends IDe
             data: this._localizer.localize('DeleteConfirmation')
         });
 
-        dialogRef.afterClosed().subscribe(result => {
+        dialogRef.afterClosed().pipe(takeUntil(this._destroyed)).subscribe(result => {
             if (result) {
                 var popup = this._snackBar.open(this._localizer.localize("Loading"));
                 this._service.delete(id, this.parentId).pipe(finalize(() => { if (popup) popup.dismiss(); }), takeUntil(this._destroyed)).subscribe(
@@ -214,7 +214,7 @@ export class DependentComponent<TKey, TParentKey, TParentView, TGrid extends IDe
             data: this._localizer.localize('DeleteConfirmation')
         });
 
-        dialogRef.afterClosed().subscribe(result => {
+        dialogRef.afterClosed().pipe(takeUntil(this._destroyed)).subscribe(result => {
             if (result) {
                 var popup = this._snackBar.open(this._localizer.localize("Loading"));
                 this._service.deleteMany(this.checkedItems, this.parentId).pipe(finalize(() => { if (popup) popup.dismiss(); }), takeUntil(this._destroyed)).subscribe(

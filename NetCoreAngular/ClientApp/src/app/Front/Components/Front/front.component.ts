@@ -1,4 +1,4 @@
-﻿import { Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FrontDataService } from '../../Services/frontData.service';
 import { FrontData } from '../../Models/FrontData';
 import { finalize, takeUntil } from 'rxjs/operators';
@@ -13,6 +13,7 @@ import { Subject } from "rxjs";
 export class FrontComponent implements OnInit {
 
     protected _destroyed: Subject<void> = new Subject();
+
     protected _service: FrontDataService;
 
     anime: FrontData[];
