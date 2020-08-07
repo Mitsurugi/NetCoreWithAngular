@@ -27,7 +27,7 @@ import { LoginComponent } from './Admin/Components/Login/login.component';
 import { YesNoComponent } from './Core/Components/YesNoDialog/yesNo.component';
 
 const adminRoutes: Routes = [
-    { path: '', component: UsersComponent },
+    { path: '', redirectTo: '/admin/anime', pathMatch: 'full' },
     { path: 'account', component: AccountComponent },
     { path: 'users', component: UsersComponent },
     { path: 'anime', component: AnimeComponent },
